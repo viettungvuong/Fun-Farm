@@ -18,6 +18,8 @@ public class PlantButton : MonoBehaviour
 
 
     public void ChoosePlant(){
-        playerPlant.PlantTree(rb.position, plant);
+        var newPlant = Instantiate(plant); // create new copy of scriptable object
+        newPlant.currentStage = 0;
+        playerPlant.PlantTree(rb.position, newPlant);
     }
 }

@@ -18,26 +18,30 @@ public class PlantManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
 
+    void Start(){
         plantFromTiles = new Dictionary<Vector3Int, Plant>();
         lastLevelTime = new Dictionary<Plant, DateTime>();
     }
 
-    private void LateUpdate() {
+    private void FixedUpdate() {
         DateTime now = DateTime.Now;
         
         foreach (var entry in lastLevelTime)
         {
             Plant plant = entry.Key;
 
+            Debug.Log(plant.currentStage);
+
             if (plant.currentStage>=maxStage){
                 continue; // max level so do nothing
+                // plant.currentStage = 0;
             }
 
             DateTime lastTime = entry.Value;
 
             double secondsDifference = (now - lastTime).TotalSeconds;
-            Debug.Log(secondsDifference);
 
             if (secondsDifference>plant.levelUpTime){
                 plant.currentStage++; // level up

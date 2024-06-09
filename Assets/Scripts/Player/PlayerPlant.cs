@@ -14,7 +14,7 @@ public class PlayerPlant : MonoBehaviour
         }
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
         plant.gridPosition = cellPosition; // store position
-        plantTilemap.SetTile(cellPosition, plant.tiles[0]);
+        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]);
 
         PlantManager.instance.AddPlant(worldPosition, plant);
     }
