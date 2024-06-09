@@ -10,7 +10,7 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    public Tilemap tilemap;
+    public Tilemap groundTilemap;
 
     public Tilemap highlightTilemap; // for highlighting
     public Tile highlightTile;
@@ -32,8 +32,8 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
 
-        minBounds = tilemap.localBounds.min;
-        maxBounds = tilemap.localBounds.max;
+        minBounds = groundTilemap.localBounds.min;
+        maxBounds = groundTilemap.localBounds.max;
 
         previousPos = rb.position;
     }
@@ -89,7 +89,7 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate() {
         Vector2 newPosition = rb.position + new Vector2(moveXSpeed, moveYSpeed) * Time.fixedDeltaTime;
 
-        // move within tilemap bound
+        // move within groundTilemap bound
         newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
         newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
 
@@ -98,9 +98,9 @@ public class PlayerMove : MonoBehaviour
         moveXSpeed = 0f;
         moveYSpeed = 0f;
 
-        Vector3Int cellPosition = tilemap.WorldToCell(rb.position); // check whether the position is plantable
-        Debug.Log(MapManager.instance.Plantable(rb.position));
-        highlightTilemap.SetTile(tilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
+        Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position); 
+        highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
+
         if (MapManager.instance.Plantable(rb.position))
         {
             highlightTilemap.SetTile(cellPosition, highlightTile);
@@ -110,7 +110,7 @@ public class PlayerMove : MonoBehaviour
             highlightTilemap.SetTile(cellPosition, null);
         }
         highlightTilemap.RefreshAllTiles();
-        
+
         previousPos = rb.position;
 
     }
