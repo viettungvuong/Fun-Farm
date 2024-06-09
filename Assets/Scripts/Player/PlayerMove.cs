@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
 
     public Tilemap highlightTilemap; // for highlighting
     public Tile highlightTile;
+    public GameObject panel;
 
     private Vector3 minBounds;
     private Vector3 maxBounds;
@@ -101,13 +102,15 @@ public class PlayerMove : MonoBehaviour
         Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position); 
         highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
 
-        if (MapManager.instance.Plantable(rb.position))
+        if (MapManager.instance.Plantable(rb.position)) // plantable position
         {
             highlightTilemap.SetTile(cellPosition, highlightTile);
+            panel.SetActive(true);
         }
         else
         {
             highlightTilemap.SetTile(cellPosition, null);
+            panel.SetActive(false); // hide planting panel when the position is not plantable
         }
         highlightTilemap.RefreshAllTiles();
 

@@ -7543,6 +7543,7 @@ MonoBehaviour:
   groundTilemap: {fileID: 1975896200}
   highlightTilemap: {fileID: 1151183920}
   highlightTile: {fileID: 11400000, guid: bf165adecac494d0d8adb210d85eb027, type: 2}
+  panel: {fileID: 1127889740}
 --- !u!50 &1576466733
 Rigidbody2D:
   serializedVersion: 4
