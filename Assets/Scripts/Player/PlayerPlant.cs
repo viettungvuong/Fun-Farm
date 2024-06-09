@@ -7,8 +7,6 @@ public class PlayerPlant : MonoBehaviour
 {
     public Tilemap plantTilemap;
 
-
-
     public void PlantTree(Vector3 worldPosition, Tile plantTile){
         bool plantable = MapManager.instance.Plantable(worldPosition);
         if (!plantable){
