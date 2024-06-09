@@ -9,7 +9,7 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    public float moveSpeed;
+    private float moveSpeed;
 
     private float moveXSpeed = 0f;
     private float moveYSpeed = 0f;
@@ -19,12 +19,13 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
         if (Input.GetKeyDown(KeyCode.UpArrow)){ // up
             animator.SetBool("up", true);
             animator.SetBool("down", false);

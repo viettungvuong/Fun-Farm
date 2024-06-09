@@ -11,9 +11,13 @@ public class MapManager : MonoBehaviour
 
     private Dictionary<TileBase, TileData> dataFromTiles;
 
+    public static MapManager instance;
+
 
     private void Awake()
     {
+        instance = this;
+
         dataFromTiles = new Dictionary<TileBase, TileData>();
 
         foreach (var tileData in tileDatas)
@@ -23,7 +27,18 @@ public class MapManager : MonoBehaviour
                 dataFromTiles.Add(tile, tileData); // save data of tiles
             }
         }
-       
+    }
 
+    public float GetWalkingSpeed(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        TileBase tile = map.GetTile(gridPosition);
+
+        if (tile == null)
+            return 1f;
+
+        float walkingSpeed = dataFromTiles[tile].walkSpeed;
+
+        return walkingSpeed;
     }
 }

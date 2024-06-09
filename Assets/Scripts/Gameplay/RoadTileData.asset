@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b2fccc214a04e0eacd2bd1d0839b6d, type: 3}
+  m_Name: RoadTileData
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 250ecfb6b7b6f442d9b76c5d8c589ecc, type: 2}
+  - {fileID: 11400000, guid: ca45f9b4483d5413cae92877deaa0890, type: 2}
+  - {fileID: 11400000, guid: a2886bea90ef744b895420b1036fcccb, type: 2}
+  - {fileID: 11400000, guid: afb6126eac8174624b370849987e52b9, type: 2}
+  - {fileID: 11400000, guid: eba4851c210b6436baece0fff052d8d5, type: 2}
+  - {fileID: 11400000, guid: a11a0af0136444112b437fc44327c612, type: 2}
+  - {fileID: 11400000, guid: 9f3ee5859546a44bdb51576448ad58a7, type: 2}
+  - {fileID: 11400000, guid: 305482dafba7249bc8a4e9cd03fdb5b8, type: 2}
+  - {fileID: 11400000, guid: 46856af0a34354c6fa26fb624df8879b, type: 2}
+  - {fileID: 11400000, guid: 2b6421d9595e646e1b2d5b90f66a40fa, type: 2}
+  - {fileID: 11400000, guid: 4c07a665323c648ec8818aa1cbf03c01, type: 2}
+  - {fileID: 11400000, guid: 87637fefeee1d4895ae3052c40a57705, type: 2}
+  - {fileID: 11400000, guid: c97c278acc86f4d9ea4d538fd7894ccc, type: 2}
+  - {fileID: 11400000, guid: f3cb7dc2fa75144a48b23c7807b07752, type: 2}
+  - {fileID: 11400000, guid: d1eae4cbdab5e4d68b4bacc04062df1c, type: 2}
+  - {fileID: 11400000, guid: bc8e6198c514c4cf9ba172d4aae85e92, type: 2}
+  - {fileID: 11400000, guid: 25e20154618e84fd2bea6594dd382569, type: 2}
+  walkSpeed: 10
