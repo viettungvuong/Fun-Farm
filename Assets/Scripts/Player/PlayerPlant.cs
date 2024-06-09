@@ -12,9 +12,9 @@ public class PlayerPlant : MonoBehaviour
         if (!plantable){
             return;
         }
-        Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition); 
+        Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
+        plant.gridPosition = cellPosition; // store position
         plantTilemap.SetTile(cellPosition, plant.tiles[0]);
-
 
         PlantManager.instance.AddPlant(worldPosition, plant);
     }
