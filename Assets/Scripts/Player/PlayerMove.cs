@@ -11,6 +11,10 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rb;
 
     public Tilemap tilemap;
+
+    public Tilemap highlightTilemap; // for highlighting
+    public Tile highlightTile;
+
     private Vector3 minBounds;
     private Vector3 maxBounds;
 
@@ -18,6 +22,8 @@ public class PlayerMove : MonoBehaviour
 
     private float moveXSpeed = 0f;
     private float moveYSpeed = 0f;
+
+    private Vector3 previousPos;
 
     void Start()
     {
@@ -28,12 +34,15 @@ public class PlayerMove : MonoBehaviour
 
         minBounds = tilemap.localBounds.min;
         maxBounds = tilemap.localBounds.max;
+
+        previousPos = rb.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
+
         if (Input.GetKeyDown(KeyCode.UpArrow)){ // up
             animator.SetBool("up", true);
             animator.SetBool("down", false);
@@ -76,6 +85,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+
     private void FixedUpdate() {
         Vector2 newPosition = rb.position + new Vector2(moveXSpeed, moveYSpeed) * Time.fixedDeltaTime;
 
@@ -87,5 +97,21 @@ public class PlayerMove : MonoBehaviour
 
         moveXSpeed = 0f;
         moveYSpeed = 0f;
+
+        Vector3Int cellPosition = tilemap.WorldToCell(rb.position); // check whether the position is plantable
+        Debug.Log(MapManager.instance.Plantable(rb.position));
+        highlightTilemap.SetTile(tilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
+        if (MapManager.instance.Plantable(rb.position))
+        {
+            highlightTilemap.SetTile(cellPosition, highlightTile);
+        }
+        else
+        {
+            highlightTilemap.SetTile(cellPosition, null);
+        }
+        highlightTilemap.RefreshAllTiles();
+        
+        previousPos = rb.position;
+
     }
 }
