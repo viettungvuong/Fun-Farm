@@ -7,13 +7,15 @@ public class PlayerPlant : MonoBehaviour
 {
     public Tilemap plantTilemap;
 
-    public void PlantTree(Vector3 worldPosition, Tile plantTile){
+    public void PlantTree(Vector3 worldPosition, Plant plant){
         bool plantable = MapManager.instance.Plantable(worldPosition);
         if (!plantable){
             return;
         }
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition); 
-        plantTilemap.SetTile(cellPosition, plantTile);
+        plantTilemap.SetTile(cellPosition, plant.tiles[0]);
 
+
+        PlantManager.instance.AddPlant(worldPosition, plant);
     }
 }

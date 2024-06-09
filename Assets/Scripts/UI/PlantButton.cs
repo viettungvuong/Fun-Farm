@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class PlantButton : MonoBehaviour
 {
-    public Tile plantTile;
+    public Plant plant;
     public GameObject player;
     PlayerPlant playerPlant;
     Rigidbody2D rb;
@@ -18,6 +18,6 @@ public class PlantButton : MonoBehaviour
 
 
     public void ChoosePlant(){
-        playerPlant.PlantTree(rb.position, plantTile);
+        playerPlant.PlantTree(rb.position, plant);
     }
 }
