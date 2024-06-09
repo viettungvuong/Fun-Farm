@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMove : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rb;
+
+    public Tilemap tilemap;
+    private Vector3 minBounds;
+    private Vector3 maxBounds;
 
     private float moveSpeed;
 
@@ -20,6 +25,9 @@ public class PlayerMove : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
+
+        minBounds = tilemap.localBounds.min;
+        maxBounds = tilemap.localBounds.max;
     }
 
     // Update is called once per frame
@@ -69,7 +77,14 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        rb.velocity = new Vector2(moveXSpeed, moveYSpeed);
+        Vector2 newPosition = rb.position + new Vector2(moveXSpeed, moveYSpeed) * Time.fixedDeltaTime;
+
+        // move within tilemap bound
+        newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
+        newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
+
+        rb.MovePosition(newPosition);
+
         moveXSpeed = 0f;
         moveYSpeed = 0f;
     }
