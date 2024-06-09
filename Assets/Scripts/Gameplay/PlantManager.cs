@@ -27,27 +27,37 @@ public class PlantManager : MonoBehaviour
 
     private void FixedUpdate() {
         DateTime now = DateTime.Now;
-        
+
+        // update in temp dictionary
+        var updates = new Dictionary<Plant, DateTime>();
+
         foreach (var entry in lastLevelTime)
         {
             Plant plant = entry.Key;
 
             Debug.Log(plant.currentStage);
 
-            if (plant.currentStage>=maxStage){
+            if (plant.currentStage >= maxStage)
+            {
                 continue; // max level so do nothing
-                // plant.currentStage = 0;
             }
 
             DateTime lastTime = entry.Value;
 
             double secondsDifference = (now - lastTime).TotalSeconds;
 
-            if (secondsDifference>plant.levelUpTime){
+            if (secondsDifference > plant.levelUpTime)
+            {
                 plant.currentStage++; // level up
                 map.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
-                lastLevelTime[plant] = now; // reupdate last level time
+                updates[plant] = now; // collect the update
             }
+        }
+
+        // change update to dictionary
+        foreach (var update in updates)
+        {
+            lastLevelTime[update.Key] = update.Value;
         }
     }
 
