@@ -30,4 +30,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de916d8e68c13434ea93903948520f9a, type: 2}
   - {fileID: 11400000, guid: 9e18499dc51f74d7fb83bc61b4d2392b, type: 2}
   - {fileID: 11400000, guid: 70b308c6a5ecb423d8c02758121c672c, type: 2}
-  walkSpeed: 2
+  walkSpeed: 1
+  plantable: 0

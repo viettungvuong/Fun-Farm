@@ -35,8 +35,6 @@ public class PlantManager : MonoBehaviour
         {
             Plant plant = entry.Key;
 
-            Debug.Log(plant.currentStage);
-
             if (plant.currentStage >= maxStage)
             {
                 continue; // max level so do nothing

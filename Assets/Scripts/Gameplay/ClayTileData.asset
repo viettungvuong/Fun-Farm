@@ -22,5 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aab006289169244e5bc76a8d966da47d, type: 2}
   - {fileID: 11400000, guid: 808cc6664049842288ded58c985d39c0, type: 2}
   - {fileID: 11400000, guid: 8c3270ab0526e4892bebf679279bea14, type: 2}
-  walkSpeed: 5
+  walkSpeed: 3
   plantable: 1

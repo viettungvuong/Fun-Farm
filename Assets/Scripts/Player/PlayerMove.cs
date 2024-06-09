@@ -1,8 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
+public enum PlayerOrientation{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+}
 
 public class PlayerMove : MonoBehaviour
 {
@@ -11,20 +18,18 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rb;
 
     public Tilemap groundTilemap;
-
     public Tilemap highlightTilemap; // for highlighting
     public Tile highlightTile;
     public GameObject panel;
 
     private Vector3 minBounds;
     private Vector3 maxBounds;
-
     private float moveSpeed;
-
     private float moveXSpeed = 0f;
     private float moveYSpeed = 0f;
-
     private Vector3 previousPos;
+
+    [HideInInspector] public PlayerOrientation orientation;
 
     void Start()
     {
@@ -39,55 +44,70 @@ public class PlayerMove : MonoBehaviour
         previousPos = rb.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)){ // up
-            animator.SetBool("up", true);
-            animator.SetBool("down", false);
-            animator.SetBool("horizontal", false);
+        if (Input.GetKeyDown(KeyCode.UpArrow)) // up
+        {
+            SetOrientation(PlayerOrientation.UP);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) // down
         {
-            animator.SetBool("up", false);
-            animator.SetBool("down", true);
-            animator.SetBool("horizontal", false);
+            SetOrientation(PlayerOrientation.DOWN);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.LeftArrow)){
-            animator.SetBool("horizontal", true);
-            if (Input.GetKeyDown(KeyCode.RightArrow)){
-                spriteRenderer.flipX = false;
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            SetOrientation(Input.GetKeyDown(KeyCode.RightArrow) ? PlayerOrientation.RIGHT : PlayerOrientation.LEFT);
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            string animationName;
+
+            switch (orientation){
+                case PlayerOrientation.UP:{
+                        animationName = "PlayerWalkUp";
+                        break;
+                }
+                case PlayerOrientation.DOWN:{
+                        animationName = "PlayerWalkDown";
+                        break;
+                }
+                default:{
+                        animationName = "PlayerWalkHorizontal";
+                        break;
+                }
             }
-            else{
-                spriteRenderer.flipX = true;
+
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
+            // this ensures animation not reset when pressing
+            {
+                animator.Play(animationName);
             }
         }
 
-        if (Input.GetKey(KeyCode.UpArrow)){
-            animator.SetTrigger("upWalk");
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
             moveYSpeed = moveSpeed;
         }
-        else if (Input.GetKey(KeyCode.DownArrow)){
-            animator.SetTrigger("downWalk");
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
             moveYSpeed = -moveSpeed;
         }
-        else if (Input.GetKey(KeyCode.RightArrow)||Input.GetKey(KeyCode.LeftArrow)){
-            animator.SetTrigger("horizontalWalk");
-            if (Input.GetKey(KeyCode.RightArrow)){
-                spriteRenderer.flipX = false;
-                moveXSpeed = moveSpeed;
-            }
-            else{
-                spriteRenderer.flipX = true;
-                moveXSpeed = -moveSpeed;
-            }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            moveXSpeed = moveSpeed;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            moveXSpeed = -moveSpeed;
         }
     }
 
-
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         Vector2 newPosition = rb.position + new Vector2(moveXSpeed, moveYSpeed) * Time.fixedDeltaTime;
 
         // move within groundTilemap bound
@@ -97,9 +117,9 @@ public class PlayerMove : MonoBehaviour
         rb.MovePosition(newPosition);
 
         moveXSpeed = 0f;
-        moveYSpeed = 0f;
+        moveYSpeed = 0f; // reset speed
 
-        Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position); 
+        Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position);
         highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
 
         if (MapManager.instance.Plantable(rb.position)) // plantable position
@@ -115,6 +135,15 @@ public class PlayerMove : MonoBehaviour
         highlightTilemap.RefreshAllTiles();
 
         previousPos = rb.position;
+    }
+
+    private void SetOrientation(PlayerOrientation newOrientation)
+    {
+        orientation = newOrientation;
+        animator.SetBool("up", orientation == PlayerOrientation.UP);
+        animator.SetBool("down", orientation == PlayerOrientation.DOWN);
+        animator.SetBool("horizontal", orientation == PlayerOrientation.LEFT || orientation == PlayerOrientation.RIGHT);
+        spriteRenderer.flipX = orientation == PlayerOrientation.LEFT;
 
     }
 }
