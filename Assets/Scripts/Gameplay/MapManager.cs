@@ -10,7 +10,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] private List<TileData> tileDatas;
 
     private Dictionary<TileBase, TileData> dataFromTiles;
-
     public static MapManager instance;
 
 
@@ -40,5 +39,18 @@ public class MapManager : MonoBehaviour
         float walkingSpeed = dataFromTiles[tile].walkSpeed;
 
         return walkingSpeed;
+    }
+
+    public bool Plantable(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        TileBase tile = map.GetTile(gridPosition);
+
+        if (tile == null)
+            return false;
+
+        bool plantable = dataFromTiles[tile].plantable;
+
+        return plantable;       
     }
 }
