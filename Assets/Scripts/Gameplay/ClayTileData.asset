@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b2fccc214a04e0eacd2bd1d0839b6d, type: 3}
+  m_Name: ClayTileData
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 4bc2db485fbf44c87a1ef354d518be63, type: 2}
+  - {fileID: 11400000, guid: c0ed3a8ed926f47348bf83392d6ff0df, type: 2}
+  - {fileID: 11400000, guid: 8900bff1b30ca4ac78c0d20994b894e8, type: 2}
+  - {fileID: 11400000, guid: 3a84e106e6af6469e91c3006251576e1, type: 2}
+  - {fileID: 11400000, guid: a1487699c7a3d46f6937fd43230ae753, type: 2}
+  - {fileID: 11400000, guid: c41101627de814a7da3a070d47864eac, type: 2}
+  - {fileID: 11400000, guid: aab006289169244e5bc76a8d966da47d, type: 2}
+  - {fileID: 11400000, guid: 808cc6664049842288ded58c985d39c0, type: 2}
+  - {fileID: 11400000, guid: 8c3270ab0526e4892bebf679279bea14, type: 2}
+  walkSpeed: 5
