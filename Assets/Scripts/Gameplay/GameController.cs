@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static float GetAnimationLength(Animator animator, string animationName)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        foreach (var clip in clips)
+        {
+            if (clip.name == animationName)
+            {
+                return clip.length;
+            }
+        }
+        return 0f;
     }
 }

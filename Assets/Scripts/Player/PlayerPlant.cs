@@ -25,6 +25,7 @@ public class PlayerPlant : MonoBehaviour
 
     private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, Plant plant)
     {
+
         string animationName;
 
         switch (playerMove.orientation){
@@ -46,10 +47,11 @@ public class PlayerPlant : MonoBehaviour
         if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
         // this ensures animation not reset when pressing
         {
-            animator.Play(animationName);
-            Debug.Log(GetAnimationLength(animationName));
+            animator.SetBool("idle", false);
+            animator.SetTrigger("plant");
             // đợi animation xong
-            yield return new WaitForSeconds(GetAnimationLength(animationName));
+            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
+            animator.SetBool("idle", true);
         }
 
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
@@ -59,16 +61,5 @@ public class PlayerPlant : MonoBehaviour
         PlantManager.instance.AddPlant(worldPosition, plant);
     }
 
-    private float GetAnimationLength(string animationName)
-    {
-        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-        foreach (var clip in clips)
-        {
-            if (clip.name == animationName)
-            {
-                return clip.length;
-            }
-        }
-        return 0f;
-    }
+
 }

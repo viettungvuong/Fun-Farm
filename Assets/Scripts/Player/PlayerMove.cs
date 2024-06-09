@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -31,6 +32,8 @@ public class PlayerMove : MonoBehaviour
 
     [HideInInspector] public PlayerOrientation orientation;
 
+    private bool changingAnimation = false;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,68 +45,82 @@ public class PlayerMove : MonoBehaviour
         maxBounds = groundTilemap.localBounds.max;
 
         previousPos = rb.position;
+
+        orientation = PlayerOrientation.DOWN;
     }
 
     void Update()
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
+        bool holdArrowKey = false;
+        PlayerOrientation prevOrientation = orientation;
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) // up
+        if (Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKey(KeyCode.UpArrow)) // press up
         {
             SetOrientation(PlayerOrientation.UP);
+
+            if (Input.GetKey(KeyCode.UpArrow)) // hold up
+            {
+                moveYSpeed = moveSpeed;
+                holdArrowKey = true;
+            }
+            else{
+                holdArrowKey = false;
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) // down
+        else if (Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKey(KeyCode.DownArrow)) // down
         {
             SetOrientation(PlayerOrientation.DOWN);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            SetOrientation(Input.GetKeyDown(KeyCode.RightArrow) ? PlayerOrientation.RIGHT : PlayerOrientation.LEFT);
-        }
-
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            string animationName;
-
-            switch (orientation){
-                case PlayerOrientation.UP:{
-                        animationName = "PlayerWalkUp";
-                        break;
-                }
-                case PlayerOrientation.DOWN:{
-                        animationName = "PlayerWalkDown";
-                        break;
-                }
-                default:{
-                        animationName = "PlayerWalkHorizontal";
-                        break;
-                }
-            }
-
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-            // this ensures animation not reset when pressing
+            if (Input.GetKey(KeyCode.DownArrow))
             {
-                animator.Play(animationName);
+                moveYSpeed = -moveSpeed;
+                holdArrowKey = true;
+            }
+            else{
+                holdArrowKey = false;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) 
+        || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            SetOrientation(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKey(KeyCode.RightArrow) ? PlayerOrientation.RIGHT : PlayerOrientation.LEFT);
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                holdArrowKey = true;
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    moveXSpeed = moveSpeed;
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    moveXSpeed = -moveSpeed;
+                }
+            }
+            else{
+                holdArrowKey = false;
             }
         }
 
-        if (Input.GetKey(KeyCode.UpArrow))
+
+        if (holdArrowKey)
         {
-            moveYSpeed = moveSpeed;
+            if (!changingAnimation){
+                if (prevOrientation != orientation)
+                {
+                    StartOrientationChange();
+                }
+                else if (prevOrientation == orientation)
+                {
+                    // ensure animation to rotate player by arrow
+                    animator.SetBool("idle", false);
+                    StartCoroutine(WalkCoroutine());
+                }
+            }
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            moveYSpeed = -moveSpeed;
+        else{
+            animator.SetBool("idle", true);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            moveXSpeed = moveSpeed;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            moveXSpeed = -moveSpeed;
-        }
+
     }
 
     private void FixedUpdate()
@@ -145,5 +162,66 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("horizontal", orientation == PlayerOrientation.LEFT || orientation == PlayerOrientation.RIGHT);
         spriteRenderer.flipX = orientation == PlayerOrientation.LEFT;
 
+    }
+
+    private IEnumerator WalkCoroutine()
+    {
+            string animationName;
+
+            switch (orientation){
+                case PlayerOrientation.UP:{
+                        animationName = "PlayerWalkUp";
+                        break;
+                }
+                case PlayerOrientation.DOWN:{
+                        animationName = "PlayerWalkDown";
+                        break;
+                }
+                default:{
+                        animationName = "PlayerWalkHorizontal";
+                        break;
+                }
+            }
+
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
+            // this ensures animation not reset when pressing
+            {
+                animator.SetTrigger("walk");
+                yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+            }
+        
+    }
+
+    private void StartOrientationChange()
+    {
+        string animationName;
+        switch (orientation)
+        {
+            case PlayerOrientation.UP:
+            {               
+                animationName = "PlayerIdleUp";
+                break;
+            }
+            case PlayerOrientation.DOWN:
+            {               
+                animationName = "PlayerIdleDown";
+                break;
+            }
+            default:
+            {               
+                animationName = "PlayerIdleHorizontal";
+                break;
+            }
+        }
+        changingAnimation = true;
+        animator.SetBool("idle", true);
+        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName));
+    }
+
+    private void EndOrientationChange()
+    {
+        changingAnimation = false;
+        animator.SetBool("idle", false);
     }
 }
