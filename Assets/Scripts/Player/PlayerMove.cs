@@ -226,7 +226,7 @@ public class PlayerMove : MonoBehaviour
         }
         changingAnimation = true;
         animator.SetBool("idle", true);
-        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName)+0.5f);
+        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName)+0.25f);
     }
 
     private void EndOrientationChange()
