@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 573766176366255923}
   - component: {fileID: 5647710133540907320}
   - component: {fileID: 6121841857472381701}
+  - component: {fileID: -3474386442701982307}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -301,3 +302,17 @@ MonoBehaviour:
   currentHealth: 0
   maxMoney: 1
   currentMoney: 0
+--- !u!114 &-3474386442701982307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255516e7c47b9487ca18207690857b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
+  unit: {fileID: 0}

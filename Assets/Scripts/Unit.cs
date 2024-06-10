@@ -9,7 +9,7 @@ public class Unit : MonoBehaviour
 
     [HideInInspector] public int currentHealth;
 
-    void Awake()
+    public virtual void Awake() // virtual for polymorphism
     {
         currentHealth = maxHealth;
     }

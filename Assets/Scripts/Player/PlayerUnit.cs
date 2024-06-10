@@ -6,8 +6,9 @@ public class PlayerUnit : Unit
 {
     public int maxMoney;
     [HideInInspector] public int currentMoney;
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         currentMoney = maxMoney;
     }
 }
