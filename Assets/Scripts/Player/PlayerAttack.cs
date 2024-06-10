@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    PlayerOrientation orientation;
+    PlayerMove playerMove;
     Animator animator;
     [HideInInspector] public bool isAttacking = false;
     void Start()
     {
-        orientation = GetComponent<PlayerMove>().orientation;
+        playerMove = GetComponent<PlayerMove>();
         animator = GetComponent<Animator>();
     }
 
@@ -18,12 +18,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)){  // press space to attack
             animator.SetBool("idle", false);
+            isAttacking = true;
             StartCoroutine(AttackCoroutine());
         }
     }
 
     public IEnumerator AttackCoroutine(){
         string animationName;
+        PlayerOrientation orientation = playerMove.orientation;
         switch (orientation)
         {
             case PlayerOrientation.UP:
@@ -42,9 +44,11 @@ public class PlayerAttack : MonoBehaviour
                 break;
             }
         }
+        Debug.Log(animationName);
 
         animator.Play(animationName);
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         animator.SetBool("idle", true);
+        isAttacking = false;
     }
 }

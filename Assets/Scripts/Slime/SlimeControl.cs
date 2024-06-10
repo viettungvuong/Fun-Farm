@@ -35,4 +35,12 @@ public class SlimeControl : MonoBehaviour
         Vector3Int randomCellPosition = new Vector3Int(bounds.xMax, randomY);
         return plantTilemap.CellToWorld(randomCellPosition);
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.name=="Player"){ // hit player
+            if (other.gameObject.GetComponent<PlayerAttack>().isAttacking==true){ // player is in attacking mode
+
+            }
+        }
+    }
 }
