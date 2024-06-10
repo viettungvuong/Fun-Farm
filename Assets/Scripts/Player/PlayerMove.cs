@@ -34,6 +34,7 @@ public class PlayerMove : MonoBehaviour
 
     private bool changingAnimation = false;
     private PlayerPlant playerPlant;
+    private PlayerAttack playerAttack;
 
     void Start()
     {
@@ -50,6 +51,7 @@ public class PlayerMove : MonoBehaviour
         orientation = PlayerOrientation.DOWN;
 
         playerPlant = GetComponent<PlayerPlant>();
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     void Update()
@@ -121,12 +123,12 @@ public class PlayerMove : MonoBehaviour
             }
         }
         else{
-            if (playerPlant.isPlanting==false){
+            if (playerPlant.isPlanting==false&&playerAttack.isAttacking==false){ // not planting then start the idle animation
                 animator.SetBool("idle", true);
             }
-            // else{
-            //     animator.SetBool("idle", true);
-            // }
+            else{
+                animator.SetBool("idle", false);
+            }
 
         }
 

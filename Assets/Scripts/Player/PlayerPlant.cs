@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class PlayerPlant : MonoBehaviour
 {
-    public bool isPlanting = false;
+    [HideInInspector] public bool isPlanting = false;
     public Tilemap plantTilemap;
 
     PlayerMove playerMove;
