@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 8242212119944172467}
   - component: {fileID: 4014417368897572481}
   - component: {fileID: 436781378712855968}
-  - component: {fileID: 938106814954449994}
   - component: {fileID: 8277240417199412176}
   - component: {fileID: 573766176366255923}
   - component: {fileID: 5647710133540907320}
+  - component: {fileID: 6121841857472381701}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -189,7 +189,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -202,22 +202,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &938106814954449994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927298600777772009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff7bef7ec1ac4af881847c2dae4e6e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMoney: 500000
-  maxHealth: 100
-  currentMoney: 0
-  currentHealth: 0
 --- !u!114 &8277240417199412176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,3 +284,20 @@ PolygonCollider2D:
       - {x: 0.6582248, y: -0.43904686}
       - {x: 0.40625, y: 0.625}
   m_UseDelaunayMesh: 0
+--- !u!114 &6121841857472381701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff7bef7ec1ac4af881847c2dae4e6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  damage: 20
+  currentHealth: 0
+  maxMoney: 1
+  currentMoney: 0

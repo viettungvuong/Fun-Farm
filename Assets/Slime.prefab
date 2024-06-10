@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8776696748131475051}
   - component: {fileID: 5143796025001038701}
   - component: {fileID: 4802300289182788626}
+  - component: {fileID: -6979375923345555564}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -121,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3db16a1ae7344d3bb70dc607376b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slimeDamage: 0
   speed: 1
   plantTilemap: {fileID: 0}
 --- !u!61 &5143796025001038701
@@ -195,3 +197,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-6979375923345555564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409269588054559371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22a210082f774cfdb7dba3005508a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  damage: 5
+  currentHealth: 0
