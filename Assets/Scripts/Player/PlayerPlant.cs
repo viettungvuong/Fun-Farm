@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class PlayerPlant : MonoBehaviour
 {
+    public bool isPlanting = false;
     public Tilemap plantTilemap;
 
     PlayerMove playerMove;
@@ -20,12 +21,14 @@ public class PlayerPlant : MonoBehaviour
         if (!plantable){
             return;
         }
-        StartCoroutine(PlantTreeCoroutine(worldPosition, plant));
+        StartCoroutine(PlantTreeCoroutine(worldPosition, plant)); // planting tree animation
+        
+
     }
 
     private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, Plant plant)
     {
-
+        isPlanting = true;
         string animationName;
 
         switch (playerMove.orientation){
@@ -42,17 +45,14 @@ public class PlayerPlant : MonoBehaviour
                     break;
             }
         }
+        animator.SetBool("idle", false);
+        animator.SetTrigger("plant");
+        // wait for animation to complete
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
+        animator.ResetTrigger("plant");
+        animator.SetBool("idle", true);
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-        // this ensures animation not reset when pressing
-        {
-            animator.SetBool("idle", false);
-            animator.SetTrigger("plant");
-            // đợi animation xong
-            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
-            animator.SetBool("idle", true);
-        }
+        isPlanting = false;
 
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
         plant.gridPosition = cellPosition; // store position

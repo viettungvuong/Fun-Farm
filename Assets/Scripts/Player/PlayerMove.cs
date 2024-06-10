@@ -33,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector] public PlayerOrientation orientation;
 
     private bool changingAnimation = false;
+    private PlayerPlant playerPlant;
 
     void Start()
     {
@@ -47,6 +48,8 @@ public class PlayerMove : MonoBehaviour
         previousPos = rb.position;
 
         orientation = PlayerOrientation.DOWN;
+
+        playerPlant = GetComponent<PlayerPlant>();
     }
 
     void Update()
@@ -107,7 +110,7 @@ public class PlayerMove : MonoBehaviour
             if (!changingAnimation){
                 if (prevOrientation != orientation)
                 {
-                    StartOrientationChange();
+                    StartOrientationChange(); // play animation to change orientation
                 }
                 else if (prevOrientation == orientation)
                 {
@@ -118,7 +121,13 @@ public class PlayerMove : MonoBehaviour
             }
         }
         else{
-            animator.SetBool("idle", true);
+            if (playerPlant.isPlanting==false){
+                animator.SetBool("idle", true);
+            }
+            // else{
+            //     animator.SetBool("idle", true);
+            // }
+
         }
 
     }
@@ -189,6 +198,7 @@ public class PlayerMove : MonoBehaviour
             {
                 animator.SetTrigger("walk");
                 yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+                animator.ResetTrigger("walk");
             }
         
     }
@@ -216,7 +226,7 @@ public class PlayerMove : MonoBehaviour
         }
         changingAnimation = true;
         animator.SetBool("idle", true);
-        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName));
+        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName)+0.5f);
     }
 
     private void EndOrientationChange()
