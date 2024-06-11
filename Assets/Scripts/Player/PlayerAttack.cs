@@ -44,7 +44,6 @@ public class PlayerAttack : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(animationName);
 
         animator.Play(animationName);
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
