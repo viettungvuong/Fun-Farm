@@ -28,6 +28,17 @@ public class PlayerPlant : MonoBehaviour
 
     private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, Plant plant)
     {
+
+        Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
+        plant.gridPosition = cellPosition; // store position
+        bool plantEligible = PlantManager.instance.AddPlant(worldPosition, plant);
+
+        if (plantEligible==false){
+            yield break;
+        }
+
+        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]); // set plant on tilemap
+
         isPlanting = true;
         string animationName;
 
@@ -54,12 +65,54 @@ public class PlayerPlant : MonoBehaviour
 
         isPlanting = false;
 
-        Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
-        plant.gridPosition = cellPosition; // store position
-        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]);
-
-        PlantManager.instance.AddPlant(worldPosition, plant);
     }
 
+    public void WaterTree(Vector3 worldPosition){
+        bool plantable = MapManager.instance.Plantable(worldPosition);
+        if (!plantable){
+            return;
+        }
+        bool planted = MapManager.instance.Planted(worldPosition);
+        if (planted){
+            return;
+        }
 
+        PlantManager.instance.WaterPlant(worldPosition);
+    }
+
+    private IEnumerator WaterTreeCoroutine(Vector3 worldPosition)
+    {
+        bool water = PlantManager.instance.WaterPlant(worldPosition);
+        if (water==false){ // failed to water
+            yield break;
+        }
+
+        isPlanting = true;
+        string animationName;
+
+        switch (playerMove.orientation){
+            case PlayerOrientation.UP:{
+                    animationName = "PlayerWaterUp";
+                    break;
+            }
+            case PlayerOrientation.DOWN:{
+                    animationName = "PlayerWaterDown";
+                    break;
+            }
+            default:{
+                    animationName = "PlayerWaterHorizontal";
+                    break;
+            }
+        }
+        animator.SetBool("idle", false);
+        animator.SetTrigger("water");
+        // wait for animation to complete
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
+        animator.ResetTrigger("plant");
+        animator.SetBool("idle", true);
+
+        isPlanting = false;
+
+
+    }
 }

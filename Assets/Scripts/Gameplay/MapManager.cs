@@ -53,4 +53,12 @@ public class MapManager : MonoBehaviour
 
         return plantable;       
     }
+
+    public bool Planted(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        TileBase tile = map.GetTile(gridPosition);
+
+        return tile != null;
+    }
 }

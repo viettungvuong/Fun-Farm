@@ -9,10 +9,11 @@ public class PlantManager : MonoBehaviour
     [SerializeField] private Tilemap map;
 
 
-    private Dictionary<Vector3Int, Plant> plantFromTiles; // position of plants
-    private Dictionary<Plant, DateTime> lastLevelTime; // last time this plant was updated
+    private Dictionary<Vector3Int, Plant> plantPos; // position of plants
+    private Dictionary<Plant, DateTime> lastLevelTime, lastWateredTime; // last time this plant was leveled and planted
     public static PlantManager instance;
     private int maxStage = 2;
+    private const int plantDamage = 20;
 
 
     private void Awake()
@@ -21,11 +22,17 @@ public class PlantManager : MonoBehaviour
     }
 
     void Start(){
-        plantFromTiles = new Dictionary<Vector3Int, Plant>();
+        plantPos = new Dictionary<Vector3Int, Plant>();
         lastLevelTime = new Dictionary<Plant, DateTime>();
+        lastWateredTime = new Dictionary<Plant, DateTime>();
     }
 
     private void FixedUpdate() {
+        CheckPlantLevel();
+        CheckDeterioration(plantDamage);
+    }
+
+    private void CheckPlantLevel(){
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
@@ -59,24 +66,73 @@ public class PlantManager : MonoBehaviour
         }
     }
 
+    private void CheckDeterioration(int damage){
+        DateTime now = DateTime.Now;
+
+        // update in temp dictionary
+        var updates = new Dictionary<Plant, DateTime>();
+
+        foreach (var entry in lastWateredTime)
+        {
+            Plant plant = entry.Key;
+
+            if (plant.health <= 0)
+            {
+                continue; // max level so do nothing
+            }
+
+            DateTime lastTime = entry.Value;
+
+            double secondsDifference = (now - lastTime).TotalSeconds;
+
+            if (secondsDifference > plant.deteriorateTime)
+            {
+                plant.health -= damage; // reduce health of plant
+            }
+        }
+    }
+
     public int GetPlantLevel(Vector3 worldPosition){
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        if (gridPosition == null||plantFromTiles.ContainsKey(gridPosition)==false)
+        if (gridPosition == null||plantPos.ContainsKey(gridPosition)==false)
             return -1;
 
-        return plantFromTiles[gridPosition].currentStage;
+        return plantPos[gridPosition].currentStage;
     }
 
-    public void AddPlant(Vector3 worldPosition, Plant plant){
+    public bool AddPlant(Vector3 worldPosition, Plant plant){
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
         if (gridPosition == null)
-            return;
+            return false;
 
         // check whether another plant is here later
 
-        plantFromTiles.Add(gridPosition, plant);
-        lastLevelTime.Add(plant, DateTime.Now);       
+        plantPos.Add(gridPosition, plant);
+        lastLevelTime.Add(plant, DateTime.Now);
+        lastWateredTime.Add(plant, DateTime.Now);
+        return true; 
+    }
+
+    public bool WaterPlant(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        if (gridPosition == null)
+            return false;
+
+        if (plantPos.ContainsKey(gridPosition)==false||plantPos[gridPosition]==null){
+            return false; // no plant here to water
+        }
+
+        Plant plant = plantPos[gridPosition]; // get plant at position
+
+        if (lastWateredTime.ContainsKey(plant)==false){
+            lastWateredTime.Add(plant, DateTime.Now);
+        }
+        else{
+            lastWateredTime[plant] = DateTime.Now;
+        }
+        return true;
     }
 }
