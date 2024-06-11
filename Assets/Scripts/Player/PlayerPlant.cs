@@ -10,10 +10,18 @@ public class PlayerPlant : MonoBehaviour
 
     PlayerMove playerMove;
     Animator animator;
+    Rigidbody2D rb;
 
     void Start(){
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update(){
+        if (Input.GetKeyDown(KeyCode.P)) {
+            WaterTree(rb.position);
+        } // press P to plant
     }
 
     public void PlantTree(Vector3 worldPosition, Plant plant){

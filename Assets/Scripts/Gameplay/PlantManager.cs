@@ -13,7 +13,7 @@ public class PlantManager : MonoBehaviour
     private Dictionary<Plant, DateTime> lastLevelTime, lastWateredTime; // last time this plant was leveled and planted
     public static PlantManager instance;
     private int maxStage = 2;
-    private const int plantDamage = 20;
+    private const int plantDamage = 50;
 
 
     private void Awake()
@@ -31,6 +31,22 @@ public class PlantManager : MonoBehaviour
         CheckPlantLevel();
         CheckDeterioration(plantDamage);
     }
+
+    private void ColorPlant(Plant plant, Color color){
+        TileBase tile = map.GetTile(plant.gridPosition);
+        
+        if (tile != null)
+        {
+            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+            
+            TilemapRenderer tilemapRenderer = map.GetComponent<TilemapRenderer>();
+            tilemapRenderer.GetPropertyBlock(materialPropertyBlock);
+
+            // set black color for deterioration
+            materialPropertyBlock.SetColor("_Color", color);
+        }
+    }
+
 
     private void CheckPlantLevel(){
         DateTime now = DateTime.Now;
@@ -88,6 +104,12 @@ public class PlantManager : MonoBehaviour
             if (secondsDifference > plant.deteriorateTime)
             {
                 plant.health -= damage; // reduce health of plant
+
+                // if (plant.health<=0){
+
+                // }
+
+                ColorPlant(plant, Color.black);
             }
         }
     }
@@ -133,6 +155,10 @@ public class PlantManager : MonoBehaviour
         else{
             lastWateredTime[plant] = DateTime.Now;
         }
+        plant.health += plantDamage; 
+        
+        ColorPlant(plant, Color.white); // fresh plant again
+
         return true;
     }
 }

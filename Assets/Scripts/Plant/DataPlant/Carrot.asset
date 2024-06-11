@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: 
   tiles:
+  - {fileID: 11400000, guid: 4817aa64107c54b84be553d3a93c25a7, type: 2}
+  - {fileID: 11400000, guid: 315fbf43694bd4d598c3b8d87beedf77, type: 2}
   - {fileID: 11400000, guid: 9aeb3b27d5f39484c96149d290bc15f4, type: 2}
   - {fileID: 11400000, guid: a5ee8cdb981f5418fb2d0cbbfb7a97eb, type: 2}
   - {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
   gridPosition: {x: -5, y: -2, z: 0}
   levelUpTime: 5
   currentStage: 2
+  health: 100
+  deteriorateTime: 10
