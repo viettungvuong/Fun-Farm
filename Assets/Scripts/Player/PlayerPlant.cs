@@ -45,7 +45,7 @@ public class PlayerPlant : MonoBehaviour
             yield break;
         }
 
-        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]); // set plant on tilemap
+
 
         isPlanting = true;
         string animationName;
@@ -72,7 +72,7 @@ public class PlayerPlant : MonoBehaviour
         animator.SetBool("idle", true);
 
         isPlanting = false;
-
+        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]); // set plant on tilemap
     }
 
     public void WaterTree(Vector3 worldPosition){

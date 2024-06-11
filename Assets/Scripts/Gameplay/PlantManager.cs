@@ -12,7 +12,7 @@ public class PlantManager : MonoBehaviour
     private Dictionary<Vector3Int, Plant> plantPos; // position of plants
     private Dictionary<Plant, DateTime> lastLevelTime, lastWateredTime; // last time this plant was leveled and planted
     public static PlantManager instance;
-    private int maxStage = 2;
+    private int maxStage = 4;
     private const int plantDamage = 50;
 
 

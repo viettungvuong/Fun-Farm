@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 public class Plant : ScriptableObject
 {
     public Tile[] tiles;
-    public Tile[] dieTiles; // when deteriorate (2 stages)
     [HideInInspector] public Vector3Int gridPosition;
     public double levelUpTime;
     [HideInInspector] public int currentStage=0;
