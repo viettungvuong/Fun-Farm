@@ -10,7 +10,7 @@ public class PlantManager : MonoBehaviour
 
 
     private Dictionary<Vector3Int, Plant> plantPos; // position of plants
-    private Dictionary<Plant, DateTime> lastLevelTime, lastWateredTime; // last time this plant was leveled and planted
+    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime; // last time this plant was leveled and planted
     public static PlantManager instance;
     private int maxStage = 4;
     private const int plantDamage = 50;
@@ -24,7 +24,7 @@ public class PlantManager : MonoBehaviour
     void Start(){
         plantPos = new Dictionary<Vector3Int, Plant>();
         lastLevelTime = new Dictionary<Plant, DateTime>();
-        lastWateredTime = new Dictionary<Plant, DateTime>();
+        lastCheckFreshTime = new Dictionary<Plant, DateTime>();
     }
 
     private void FixedUpdate() {
@@ -88,13 +88,13 @@ public class PlantManager : MonoBehaviour
         // update in temp dictionary
         var updates = new Dictionary<Plant, DateTime>();
 
-        foreach (var entry in lastWateredTime)
+        foreach (var entry in lastCheckFreshTime)
         {
             Plant plant = entry.Key;
 
             if (plant.health <= 0)
             {
-                continue; // max level so do nothing
+                continue; // die
             }
 
             DateTime lastTime = entry.Value;
@@ -103,6 +103,8 @@ public class PlantManager : MonoBehaviour
 
             if (secondsDifference > plant.deteriorateTime)
             {
+                Debug.Log("Deteriorated");
+                lastCheckFreshTime[plant] = DateTime.Now; 
                 plant.health -= damage; // reduce health of plant
 
                 // if (plant.health<=0){
@@ -133,7 +135,7 @@ public class PlantManager : MonoBehaviour
 
         plantPos.Add(gridPosition, plant);
         lastLevelTime.Add(plant, DateTime.Now);
-        lastWateredTime.Add(plant, DateTime.Now);
+        lastCheckFreshTime.Add(plant, DateTime.Now);
         return true; 
     }
 
@@ -149,11 +151,11 @@ public class PlantManager : MonoBehaviour
 
         Plant plant = plantPos[gridPosition]; // get plant at position
 
-        if (lastWateredTime.ContainsKey(plant)==false){
-            lastWateredTime.Add(plant, DateTime.Now);
+        if (lastCheckFreshTime.ContainsKey(plant)==false){
+            lastCheckFreshTime.Add(plant, DateTime.Now);
         }
         else{
-            lastWateredTime[plant] = DateTime.Now;
+            lastCheckFreshTime[plant] = DateTime.Now;
         }
         plant.health += plantDamage; 
         

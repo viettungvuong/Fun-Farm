@@ -32,7 +32,7 @@ public class Unit : MonoBehaviour
     IEnumerator DieCoroutine(){
         string animationName = "Die";
         animator.SetTrigger("die");
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.2f);
         GetComponent<HealthBar>().healthSlider.gameObject.SetActive(false); // delete health bar
         gameObject.SetActive(false); // delete game object
     }

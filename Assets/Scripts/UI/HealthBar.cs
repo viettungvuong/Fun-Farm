@@ -35,8 +35,6 @@ public class HealthBar : MonoBehaviour
     private void LateUpdate() {
         healthSlider.value = unit.currentHealth;
         float healthPercentage = (float)unit.currentHealth / (float)unit.maxHealth;
-        Debug.Log(unit.currentHealth + " " + unit.maxHealth);
-        Debug.Log(healthPercentage);
     
         if (healthPercentage >= 0.8f&&healthPercentage<=1f) {
             // Health >= 80%: green

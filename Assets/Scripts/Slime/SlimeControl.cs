@@ -43,12 +43,10 @@ public class SlimeControl : MonoBehaviour
             Unit playerUnit = GetComponent<Unit>();
             if (other.gameObject.GetComponent<PlayerAttack>().isAttacking==true){ // player is in attacking mode
                 unit.TakeDamage(playerUnit.damage);
-                Debug.Log("Slime damage: " + unit.currentHealth);
             }
             else{
                 // inflict damage on player
                 playerUnit.TakeDamage(unit.damage);
-                Debug.Log("Player damage: " + playerUnit.currentHealth);
             }
         }
     }
