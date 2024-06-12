@@ -51,39 +51,42 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    private void MoveTowardsPlayer()
+   private void MoveTowardsPlayer()
     {
         if (player == null) return;
 
+        // ensures that skeleton only moves in 4 direction: up, down, right, left
         Vector3 direction = player.position - transform.position;
-        Vector3 moveDirection = direction.normalized * moveSpeed * Time.deltaTime;
 
-        // orientation based on move direction
-        if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y))
+        // axis of movement
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            if (moveDirection.x > 0)
+            // Move horizontally
+            if (direction.x > 0)
             {
                 SetOrientation(Orientation.RIGHT);
+                transform.position += Vector3.right * moveSpeed * Time.deltaTime;
             }
             else
             {
                 SetOrientation(Orientation.LEFT);
+                transform.position += Vector3.left * moveSpeed * Time.deltaTime;
             }
         }
         else
         {
-            if (moveDirection.y > 0)
+            // Move vertically
+            if (direction.y > 0)
             {
                 SetOrientation(Orientation.UP);
+                transform.position += Vector3.up * moveSpeed * Time.deltaTime;
             }
             else
             {
                 SetOrientation(Orientation.DOWN);
+                transform.position += Vector3.down * moveSpeed * Time.deltaTime;
             }
         }
-
-        // move towards player
-        transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
     }
 
 
