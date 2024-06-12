@@ -10886,6 +10886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch Animated_0
       objectReference: {fileID: 0}
+    - target: {fileID: 8654784986864341607, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 2.18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
