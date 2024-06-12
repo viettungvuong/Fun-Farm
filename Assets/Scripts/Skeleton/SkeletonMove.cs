@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class SkeletonMove : MonoBehaviour
 {
@@ -9,7 +10,12 @@ public class SkeletonMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     public float moveSpeed;
-    public Transform player; // Reference to the player's transform
+    public GameObject player;
+    public GameObject[] torches;
+    int torchSabotaged = 0;
+    private int numTorches;
+
+    private GameObject currentTargetTorch;
 
     void Start()
     {
@@ -18,19 +24,69 @@ public class SkeletonMove : MonoBehaviour
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        numTorches = torches.Length;
+        if (numTorches > 0)
+        {
+            currentTargetTorch = torches[torchSabotaged];
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position)<=1.5f){
-            StartCoroutine(AttackCoroutine());
+        if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
+        {
+            HandleTorchSabotage();
         }
-        else{
-            animator.SetBool("walk", true);
-            MoveTowardsPlayer();
+        else
+        {
+            HandlePlayerAttack();
         }
+    }
 
+    private void HandleTorchSabotage()
+    {
+        if (currentTargetTorch != null)
+        {
+            float distanceToTorch = Vector3.Distance(currentTargetTorch.transform.position, transform.position);
+            if (distanceToTorch <= 1.5f)
+            {
+                StartCoroutine(AttackCoroutine(true));
+                torchSabotaged++;
+                Light2D torchLight = currentTargetTorch.GetComponent<Light2D>();
+                torchLight.intensity = 0.1f;
+                Torch torch = currentTargetTorch.GetComponent<Torch>();
+                torch.sabotaged = true;
+                if (torchSabotaged < numTorches)
+                {
+                    currentTargetTorch = torches[torchSabotaged];
+                }
+                else
+                {
+                    currentTargetTorch = null;
+                }
+            }
+            else
+            {
+                animator.SetBool("walk", true);
+                MoveTowards(currentTargetTorch.transform);
+            }
+        }
+    }
+
+    private void HandlePlayerAttack()
+    {
+        float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        if (distanceToPlayer <= 1.5f)
+        {
+            StartCoroutine(AttackCoroutine(false));
+        }
+        else
+        {
+            animator.SetBool("walk", true);
+            MoveTowards(player.transform);
+        }
     }
 
     private void SetOrientation(Orientation newOrientation)
@@ -45,12 +101,10 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-   private void MoveTowardsPlayer()
+    private void MoveTowards(Transform targetTransform)
     {
-        if (player == null) return;
-
         // ensures that skeleton only moves in 4 direction: up, down, right, left
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = targetTransform.position - transform.position;
 
         // axis of movement
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
@@ -60,11 +114,9 @@ public class SkeletonMove : MonoBehaviour
             {
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime;
                 SetOrientation(Orientation.RIGHT);
-
             }
             else
             {
-
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime;
                 SetOrientation(Orientation.LEFT);
             }
@@ -79,42 +131,13 @@ public class SkeletonMove : MonoBehaviour
             }
             else
             {
-
                 transform.position += Vector3.down * moveSpeed * Time.deltaTime;
                 SetOrientation(Orientation.DOWN);
             }
         }
     }
 
-
-    // private IEnumerator WalkCoroutine()
-    // {
-    //     string animationName;
-
-    //     switch (orientation)
-    //     {
-    //         case Orientation.UP:
-    //             animationName = "SkeletonWalkUp";
-    //             break;
-    //         case Orientation.DOWN:
-    //             animationName = "SkeletonWalkDown";
-    //             break;
-    //         default:
-    //             animationName = "SkeletonWalkHorizontal";
-    //             break;
-    //     }
-
-    //     AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-    //     if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-    //     // this ensures animation not reset when pressing
-    //     {
-    //         animator.SetTrigger("walk");
-    //         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-    //         animator.ResetTrigger("walk");
-    //     }
-    // }
-
-    private IEnumerator AttackCoroutine()
+    public IEnumerator AttackCoroutine(bool torchSabotage = false)
     {
         string animationName;
 
@@ -133,12 +156,12 @@ public class SkeletonMove : MonoBehaviour
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-        // this ensures animation not reset when pressing
         {
             animator.SetBool("walk", false);
             animator.SetTrigger("attack");
             yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-            // animator.ResetTrigger("attack");
+
+            animator.ResetTrigger("attack");
         }
     }
 }

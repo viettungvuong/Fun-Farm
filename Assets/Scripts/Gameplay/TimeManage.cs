@@ -12,10 +12,14 @@ public class TimeManage : MonoBehaviour
 
     private DateTime lastUpdated;
 
+    public static TimeManage instance;
+
     void Awake()
     {
         lastUpdated = DateTime.Now;
         UpdateLight();
+
+        instance = this;
     }
 
     // Update is called once per frame
@@ -39,6 +43,10 @@ public class TimeManage : MonoBehaviour
         UpdateLight();
     }
 
+    public bool IsDay(){
+        return currentHour >= 6 && currentHour <= 18;
+    }
+
     void UpdateLight()
     {
         float maxIntensity = 2.0f;
@@ -46,16 +54,14 @@ public class TimeManage : MonoBehaviour
         Color dayColor = Color.white;
         Color nightColor = new Color(0.1f, 0.1f, 0.35f); // dark blue
 
-        if (currentHour >= 6 && currentHour <= 18)
+        if (IsDay())
         {
-            Debug.Log("Day time");
             // Day time
             globalLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, (currentHour - 6) / 12f);
             globalLight.color = dayColor;
         }
         else
         {
-            Debug.Log("Night time");
             // Night time
             if (currentHour > 18)
             {
