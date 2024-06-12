@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -11,6 +12,8 @@ public class TimeManage : MonoBehaviour
     public Light2D globalLight;
 
     private DateTime lastUpdated;
+
+    public TextMeshProUGUI timeText;
 
     public static TimeManage instance;
 
@@ -40,6 +43,9 @@ public class TimeManage : MonoBehaviour
                 }
             }
         }
+        string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
+        string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
+        timeText.text = hourString + ":" + minString;
         UpdateLight();
     }
 
