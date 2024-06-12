@@ -19,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){  // press space to attack
             animator.SetBool("idle", false);
             isAttacking = true;
+
+            StopAllCoroutines(); // stop other coroutines 
             StartCoroutine(AttackCoroutine());
         }
     }

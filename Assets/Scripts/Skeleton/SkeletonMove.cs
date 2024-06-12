@@ -31,8 +31,6 @@ public class SkeletonMove : MonoBehaviour
             MoveTowardsPlayer();
         }
 
-
-
     }
 
     private void SetOrientation(Orientation newOrientation)
@@ -44,10 +42,6 @@ public class SkeletonMove : MonoBehaviour
             animator.SetBool("down", orientation == Orientation.DOWN);
             animator.SetBool("horizontal", orientation == Orientation.LEFT || orientation == Orientation.RIGHT);
             spriteRenderer.flipX = orientation == Orientation.LEFT;
-
-            // Start the walk coroutine when orientation changes
-            StopAllCoroutines();
-            StartCoroutine(WalkCoroutine());
         }
     }
 
@@ -64,13 +58,15 @@ public class SkeletonMove : MonoBehaviour
             // Move horizontally
             if (direction.x > 0)
             {
-                SetOrientation(Orientation.RIGHT);
                 transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+                SetOrientation(Orientation.RIGHT);
+
             }
             else
             {
-                SetOrientation(Orientation.LEFT);
+
                 transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+                SetOrientation(Orientation.LEFT);
             }
         }
         else
@@ -78,44 +74,46 @@ public class SkeletonMove : MonoBehaviour
             // Move vertically
             if (direction.y > 0)
             {
-                SetOrientation(Orientation.UP);
                 transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+                SetOrientation(Orientation.UP);
             }
             else
             {
-                SetOrientation(Orientation.DOWN);
+
                 transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+                SetOrientation(Orientation.DOWN);
             }
         }
+        Debug.Log(orientation);
     }
 
 
-    private IEnumerator WalkCoroutine()
-    {
-        string animationName;
+    // private IEnumerator WalkCoroutine()
+    // {
+    //     string animationName;
 
-        switch (orientation)
-        {
-            case Orientation.UP:
-                animationName = "SkeletonWalkUp";
-                break;
-            case Orientation.DOWN:
-                animationName = "SkeletonWalkDown";
-                break;
-            default:
-                animationName = "SkeletonWalkHorizontal";
-                break;
-        }
+    //     switch (orientation)
+    //     {
+    //         case Orientation.UP:
+    //             animationName = "SkeletonWalkUp";
+    //             break;
+    //         case Orientation.DOWN:
+    //             animationName = "SkeletonWalkDown";
+    //             break;
+    //         default:
+    //             animationName = "SkeletonWalkHorizontal";
+    //             break;
+    //     }
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-        // this ensures animation not reset when pressing
-        {
-            animator.SetTrigger("walk");
-            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-            animator.ResetTrigger("walk");
-        }
-    }
+    //     AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+    //     if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
+    //     // this ensures animation not reset when pressing
+    //     {
+    //         animator.SetTrigger("walk");
+    //         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+    //         animator.ResetTrigger("walk");
+    //     }
+    // }
 
     private IEnumerator AttackCoroutine()
     {
@@ -140,7 +138,6 @@ public class SkeletonMove : MonoBehaviour
         {
             animator.SetTrigger("attack");
             yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-            animator.ResetTrigger("attack");
         }
     }
 }
