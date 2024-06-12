@@ -9,7 +9,6 @@ public class SkeletonMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     public float moveSpeed;
-    private float moveXSpeed = 0, moveYSpeed = 0;
     public Transform player; // Reference to the player's transform
 
     void Start()
@@ -24,10 +23,11 @@ public class SkeletonMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position)<0.5f){
+        if (Vector3.Distance(player.transform.position, transform.position)<=1.5f){
             StartCoroutine(AttackCoroutine());
         }
         else{
+            animator.SetBool("walk", true);
             MoveTowardsPlayer();
         }
 
@@ -84,7 +84,6 @@ public class SkeletonMove : MonoBehaviour
                 SetOrientation(Orientation.DOWN);
             }
         }
-        Debug.Log(orientation);
     }
 
 
@@ -136,8 +135,10 @@ public class SkeletonMove : MonoBehaviour
         if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
         // this ensures animation not reset when pressing
         {
+            animator.SetBool("walk", false);
             animator.SetTrigger("attack");
             yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+            // animator.ResetTrigger("attack");
         }
     }
 }
