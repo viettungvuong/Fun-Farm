@@ -51,11 +51,11 @@ public class PlayerPlant : MonoBehaviour
         string animationName;
 
         switch (playerMove.orientation){
-            case PlayerOrientation.UP:{
+            case Orientation.UP:{
                     animationName = "PlayerPlantUp";
                     break;
             }
-            case PlayerOrientation.DOWN:{
+            case Orientation.DOWN:{
                     animationName = "PlayerPlantDown";
                     break;
             }
@@ -99,11 +99,11 @@ public class PlayerPlant : MonoBehaviour
         string animationName;
 
         switch (playerMove.orientation){
-            case PlayerOrientation.UP:{
+            case Orientation.UP:{
                     animationName = "PlayerWaterUp";
                     break;
             }
-            case PlayerOrientation.DOWN:{
+            case Orientation.DOWN:{
                     animationName = "PlayerWaterDown";
                     break;
             }

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum PlayerOrientation{
+public enum Orientation{
     UP,
     DOWN,
     LEFT,
@@ -30,7 +30,7 @@ public class PlayerMove : MonoBehaviour
     private float moveYSpeed = 0f;
     private Vector3 previousPos;
 
-    [HideInInspector] public PlayerOrientation orientation;
+    [HideInInspector] public Orientation orientation;
 
     private bool changingAnimation = false;
     private PlayerPlant playerPlant;
@@ -48,7 +48,7 @@ public class PlayerMove : MonoBehaviour
 
         previousPos = rb.position;
 
-        orientation = PlayerOrientation.DOWN;
+        orientation = Orientation.DOWN;
 
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
@@ -58,11 +58,11 @@ public class PlayerMove : MonoBehaviour
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
         bool holdArrowKey = false;
-        PlayerOrientation prevOrientation = orientation;
+        Orientation prevOrientation = orientation;
 
         if (Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKey(KeyCode.UpArrow)) // press up
         {
-            SetOrientation(PlayerOrientation.UP);
+            SetOrientation(Orientation.UP);
 
             if (Input.GetKey(KeyCode.UpArrow)) // hold up
             {
@@ -75,7 +75,7 @@ public class PlayerMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKey(KeyCode.DownArrow)) // down
         {
-            SetOrientation(PlayerOrientation.DOWN);
+            SetOrientation(Orientation.DOWN);
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 moveYSpeed = -moveSpeed;
@@ -88,7 +88,7 @@ public class PlayerMove : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow) 
         || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
         {
-            SetOrientation(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKey(KeyCode.RightArrow) ? PlayerOrientation.RIGHT : PlayerOrientation.LEFT);
+            SetOrientation(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKey(KeyCode.RightArrow) ? Orientation.RIGHT : Orientation.LEFT);
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
             {
                 holdArrowKey = true;
@@ -107,14 +107,14 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        if (holdArrowKey)
+        if (holdArrowKey) // holding arrow key => walking
         {
-            if (!changingAnimation){
-                if (prevOrientation != orientation)
+            if (!changingAnimation){ // not playing animation => idle
+                if (prevOrientation != orientation) // changing orientation when walking
                 {
                     StartOrientationChange(); // play animation to change orientation
                 }
-                else if (prevOrientation == orientation)
+                else if (prevOrientation == orientation)  // not changing orientation but still walking
                 {
                     // ensure animation to rotate player by arrow
                     animator.SetBool("idle", false);
@@ -165,14 +165,13 @@ public class PlayerMove : MonoBehaviour
         previousPos = rb.position;
     }
 
-    private void SetOrientation(PlayerOrientation newOrientation)
+    private void SetOrientation(Orientation newOrientation)
     {
         orientation = newOrientation;
-        animator.SetBool("up", orientation == PlayerOrientation.UP);
-        animator.SetBool("down", orientation == PlayerOrientation.DOWN);
-        animator.SetBool("horizontal", orientation == PlayerOrientation.LEFT || orientation == PlayerOrientation.RIGHT);
-        spriteRenderer.flipX = orientation == PlayerOrientation.LEFT;
-
+        animator.SetBool("up", orientation == Orientation.UP);
+        animator.SetBool("down", orientation == Orientation.DOWN);
+        animator.SetBool("horizontal", orientation == Orientation.LEFT || orientation == Orientation.RIGHT);
+        spriteRenderer.flipX = orientation == Orientation.LEFT;
     }
 
     private IEnumerator WalkCoroutine()
@@ -180,11 +179,11 @@ public class PlayerMove : MonoBehaviour
             string animationName;
 
             switch (orientation){
-                case PlayerOrientation.UP:{
+                case Orientation.UP:{
                         animationName = "PlayerWalkUp";
                         break;
                 }
-                case PlayerOrientation.DOWN:{
+                case Orientation.DOWN:{
                         animationName = "PlayerWalkDown";
                         break;
                 }
@@ -210,12 +209,12 @@ public class PlayerMove : MonoBehaviour
         string animationName;
         switch (orientation)
         {
-            case PlayerOrientation.UP:
+            case Orientation.UP:
             {               
                 animationName = "PlayerIdleUp";
                 break;
             }
-            case PlayerOrientation.DOWN:
+            case Orientation.DOWN:
             {               
                 animationName = "PlayerIdleDown";
                 break;

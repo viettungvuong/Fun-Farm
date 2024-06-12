@@ -25,15 +25,15 @@ public class PlayerAttack : MonoBehaviour
 
     public IEnumerator AttackCoroutine(){
         string animationName;
-        PlayerOrientation orientation = playerMove.orientation;
+        Orientation orientation = playerMove.orientation;
         switch (orientation)
         {
-            case PlayerOrientation.UP:
+            case Orientation.UP:
             {               
                 animationName = "PlayerAttackUp";
                 break;
             }
-            case PlayerOrientation.DOWN:
+            case Orientation.DOWN:
             {               
                 animationName = "PlayerAttackDown";
                 break;
