@@ -55,30 +55,32 @@ public class TimeManage : MonoBehaviour
 
     void UpdateLight()
     {
-        float maxIntensity = 2.0f;
-        float minIntensity = 1.0f;
+        float maxIntensityDay = 2.0f;
+        float maxIntensityNight = 0.85f;
+        float minIntensityDay = 1.0f;
+        float minIntensityNight = 0.1f;
         Color dayColor = Color.white;
         Color nightColor = new Color(0.1f, 0.1f, 0.35f); // dark blue
 
         if (IsDay())
         {
-            // Day time
-            globalLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, (currentHour - 6) / 12f);
+            // Day time (from 6 AM to 6 PM)
+            globalLight.intensity = Mathf.Lerp(minIntensityDay, maxIntensityDay, (currentHour - 6) / 12f);
             globalLight.color = dayColor;
         }
         else
         {
-            // Night time
-            if (currentHour > 18)
+            // evening
+            if (currentHour >= 18 && currentHour < 24) 
             {
-                globalLight.intensity = Mathf.Lerp(maxIntensity, minIntensity, (currentHour - 18) / 12f);
-                globalLight.color = nightColor;
+                globalLight.intensity = Mathf.Lerp(maxIntensityNight, minIntensityNight, (currentHour - 18) / 6f);
             }
-            else // midnight
+            else 
             {
-                globalLight.intensity = Mathf.Lerp(minIntensity, maxIntensity, (currentHour + 6) / 12f);
-                globalLight.color = nightColor;
+                globalLight.intensity = Mathf.Lerp(minIntensityNight, maxIntensityNight, currentHour / 6f);
             }
+            globalLight.color = nightColor;
         }
+
     }
 }

@@ -7134,7 +7134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe57f073be41e48929999f77ea331af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHour: 6
+  currentHour: 19
   currentMinute: 0
   updateIntervalSeconds: 30
   globalLight: {fileID: 619394801}
