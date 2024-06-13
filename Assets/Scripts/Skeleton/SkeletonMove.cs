@@ -17,6 +17,8 @@ public class SkeletonMove : MonoBehaviour
     private int numTorches;
 
     private GameObject currentTargetTorch;
+    public float cooldownTime = 1.0f; // cooldown when chasing player (when near)
+    private float nextMoveTime = 0f;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class SkeletonMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
         if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
         {
             HandleTorchSabotage();
@@ -56,7 +58,7 @@ public class SkeletonMove : MonoBehaviour
             float distanceToTorch = Vector3.Distance(currentTargetTorch.transform.position, transform.position);
             if (distanceToTorch <= 1.5f)
             {
-                StartCoroutine(AttackCoroutine(true));
+                StartCoroutine(AttackCoroutine());
                 torchSabotaged++;
                 Light2D torchLight = currentTargetTorch.GetComponent<Light2D>();
                 torchLight.intensity = 0.1f;
@@ -84,12 +86,16 @@ public class SkeletonMove : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
         if (distanceToPlayer <= 1.5f)
         {
-            StartCoroutine(AttackCoroutine(false));
+            StartCoroutine(AttackCoroutine());
+            nextMoveTime = Time.time + 1f / cooldownTime;
         }
         else
         {
-            animator.SetBool("walk", true);
-            MoveTowards(player.transform);
+            if (Time.time >= nextMoveTime){
+                animator.SetBool("walk", true);
+                MoveTowards(player.transform);
+            }
+
         }
     }
 
@@ -141,7 +147,7 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    public IEnumerator AttackCoroutine(bool torchSabotage = false)
+    public IEnumerator AttackCoroutine()
     {
         string animationName;
 

@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     Unit playerUnit;
     [HideInInspector] public bool isAttacking = false;
     private float nextAttackTime = 0f;
-    public float cooldownTime = 1.5f;
+    public float cooldownTime = 0.8f;
 
     void Start()
     {
