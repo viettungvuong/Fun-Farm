@@ -8,6 +8,7 @@ public class SkeletonMove : MonoBehaviour
     Orientation orientation;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    Unit unit;
 
     public float moveSpeed;
     public GameObject player;
@@ -24,6 +25,7 @@ public class SkeletonMove : MonoBehaviour
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        unit = GetComponent<Unit>();
 
         numTorches = torches.Length;
         if (numTorches > 0)
@@ -162,6 +164,19 @@ public class SkeletonMove : MonoBehaviour
             yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
 
             animator.ResetTrigger("attack");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.name=="Player"){ // hit player
+            Unit playerUnit = GetComponent<Unit>();
+            if (other.gameObject.GetComponent<PlayerAttack>().isAttacking==true){ // player is in attacking mode
+                unit.TakeDamage(playerUnit.damage);
+            }
+            else{
+                // inflict damage on player
+                playerUnit.TakeDamage(unit.damage);
+            }
         }
     }
 }

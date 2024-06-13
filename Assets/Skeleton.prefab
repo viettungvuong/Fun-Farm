@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -2276984850848315501}
   - component: {fileID: 4669661680063532631}
   - component: {fileID: -1384521772305477796}
+  - component: {fileID: -6016009313705187064}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   player: {fileID: 3124235161546919178, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+  torches: []
 --- !u!114 &-2276984850848315501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,3 +213,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8125, y: 1.25}
   m_EdgeRadius: 0
+--- !u!114 &-6016009313705187064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897796513909803230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255516e7c47b9487ca18207690857b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
+  healthSlider: {fileID: 0}
