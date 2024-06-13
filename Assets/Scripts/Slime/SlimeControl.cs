@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,16 +8,23 @@ public class SlimeControl : MonoBehaviour
 {
     private float moveSpeed;
     public Tilemap plantTilemap;
+    public Tile[] plantTiles;
 
     List<Vector3Int> plantPositions;
     private float targetTimeLimit = 10f; // Time limit to reach a plant in seconds
     private float timeSpent = 0f;
-    Vector3Int targetPlantPosition;
+    Vector3Int? targetPlantPosition;
 
     void Start()
     {
         plantPositions = new List<Vector3Int>();
-        targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
+        targetPlantPosition = null;
+        FindAllPlants();
+
+        if (plantPositions.Count>0){
+            targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
+        }
+
     }
 
     // Update is called once per frame
@@ -24,10 +32,15 @@ public class SlimeControl : MonoBehaviour
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
 
-        if (Vector3.Distance(transform.position, plantTilemap.CellToWorld(targetPlantPosition)) >= 0.001f)
+        if (targetPlantPosition==null){
+
+            return;
+        }
+
+        if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
         {
             var step = moveSpeed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld(targetPlantPosition), step);
+            transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
             timeSpent += Time.deltaTime;
 
             if (timeSpent >= targetTimeLimit)
@@ -56,10 +69,14 @@ public class SlimeControl : MonoBehaviour
                 Vector3Int cellPosition = new Vector3Int(x, y, 0);
                 TileBase tile = plantTilemap.GetTile(cellPosition);
                 
-                if (tile != null)
+                if (plantTiles.Contains(tile)==true)
                 {
                     plantPositions.Add(cellPosition); // this position has plant
                 }
+                // if (tile!=null)
+                // {
+                //     plantPositions.Add(cellPosition); // this position has plant
+                // }
             }
         }
     }

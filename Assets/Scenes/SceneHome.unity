@@ -10779,6 +10779,42 @@ PrefabInstance:
       propertyPath: plantTilemap
       value: 
       objectReference: {fileID: 1523404652}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4817aa64107c54b84be553d3a93c25a7, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 315fbf43694bd4d598c3b8d87beedf77, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9aeb3b27d5f39484c96149d290bc15f4, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: a5ee8cdb981f5418fb2d0cbbfb7a97eb, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e24200973ca04c62a3262e2b8714174, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 41bcf6e6a848242d696d2a6cc95dbd2c, type: 2}
+    - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: plantTiles.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c28c96f74d0d4be58628adc59fbdbb3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
