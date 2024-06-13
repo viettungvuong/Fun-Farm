@@ -7321,6 +7321,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1523404652}
+  plantTiles:
+  - {fileID: 11400000, guid: 9aeb3b27d5f39484c96149d290bc15f4, type: 2}
+  - {fileID: 11400000, guid: a5ee8cdb981f5418fb2d0cbbfb7a97eb, type: 2}
+  - {fileID: 11400000, guid: 4817aa64107c54b84be553d3a93c25a7, type: 2}
+  - {fileID: 11400000, guid: 315fbf43694bd4d598c3b8d87beedf77, type: 2}
+  - {fileID: 11400000, guid: 782dee474ae8f4057abc26b5813199fa, type: 2}
+  - {fileID: 11400000, guid: 2e24200973ca04c62a3262e2b8714174, type: 2}
+  - {fileID: 11400000, guid: 41bcf6e6a848242d696d2a6cc95dbd2c, type: 2}
+  - {fileID: 11400000, guid: 1c28c96f74d0d4be58628adc59fbdbb3, type: 2}
+  healthSliderPrefab: {fileID: 7194675671010064935, guid: a10e594d69f514c839b4dc3ec1f5f51c, type: 3}
 --- !u!114 &1635994930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10717,7 +10727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4369104834066813831, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.65
+      value: -17.49
       objectReference: {fileID: 0}
     - target: {fileID: 4369104834066813831, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11266,7 +11276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4814884023315234432, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.62
+      value: -6.41
       objectReference: {fileID: 0}
     - target: {fileID: 4814884023315234432, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_LocalPosition.z

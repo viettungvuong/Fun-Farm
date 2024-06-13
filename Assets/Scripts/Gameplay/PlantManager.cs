@@ -1,19 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class PlantManager : MonoBehaviour
 {
     [SerializeField] private Tilemap map;
-
+    public Tile[] plantTiles;
 
     private Dictionary<Vector3Int, Plant> plantPos; // position of plants
-    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime; // last time this plant was leveled and planted
+    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime; 
+    // last time this plant was leveled and watered
     public static PlantManager instance;
     private int maxStage = 4;
     private const int plantDamage = 50;
+    public Slider healthSliderPrefab;
 
 
     private void Awake()
@@ -81,6 +85,55 @@ public class PlantManager : MonoBehaviour
             lastLevelTime[update.Key] = update.Value;
         }
     }
+    public bool Planted(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        TileBase tile = map.GetTile(gridPosition);
+
+        return tile != null;
+    }
+
+    public bool Planted(Vector3Int cellPosition){
+
+        TileBase tile = map.GetTile(cellPosition);
+
+        return tile != null;
+    }
+
+    public DateTime? GetLastTimeWatered(Plant plant){
+        if (lastCheckFreshTime.ContainsKey(plant)==false){
+            return null;
+        }
+        else{
+            return lastCheckFreshTime[plant];
+        }
+    }
+
+    public List<Vector3Int> FindAllPlants()
+    {
+        BoundsInt bounds = map.cellBounds;
+        List<Vector3Int> positions = new List<Vector3Int>();
+
+        for (int x = bounds.xMin; x <= bounds.xMax; x++)
+        {
+            for (int y = bounds.yMin; y <= bounds.yMax; y++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                TileBase tile = map.GetTile(cellPosition);
+                
+                if (plantTiles.Contains(tile)==true)
+                {
+                    positions.Add(cellPosition); // this position has plant
+                }
+                // if (tile!=null)
+                // {
+                //     positions.Add(cellPosition); // this position has plant
+                // }
+            }
+        }
+
+        return positions;
+    }
 
     private void CheckDeterioration(int damage){
         DateTime now = DateTime.Now;
@@ -103,13 +156,8 @@ public class PlantManager : MonoBehaviour
 
             if (secondsDifference > plant.deteriorateTime)
             {
-                plant.health -= damage; // reduce health of plant
+                DamagePlant(plant, damage);
 
-                // if (plant.health<=0){
-
-                // }
-
-                ColorPlant(plant, Color.black);
                 updates[plant] = DateTime.Now; // collect the update
 
             }
@@ -119,6 +167,35 @@ public class PlantManager : MonoBehaviour
         foreach (var update in updates)
         {
             lastLevelTime[update.Key] = update.Value;
+        }
+    }
+
+    public void DamagePlant(Plant plant, int damage){
+        plant.health -= damage; // reduce health of plant
+        ColorPlant(plant, Color.black);
+
+        if (plant.health<=0){
+
+        }
+    }
+
+    public Plant GetPlantAt(Vector3 worldPosition){
+        if (!Planted(worldPosition)){
+            return null;
+        }
+
+        else{
+            return plantPos[map.WorldToCell(worldPosition)];
+        }
+    }
+
+    public Plant GetPlantAt(Vector3Int cellPosition){
+        if (!Planted(map.CellToWorld(cellPosition))){
+            return null;
+        }
+
+        else{
+            return plantPos[cellPosition];
         }
     }
 
@@ -142,6 +219,10 @@ public class PlantManager : MonoBehaviour
         plantPos.Add(gridPosition, plant);
         lastLevelTime.Add(plant, DateTime.Now);
         lastCheckFreshTime.Add(plant, DateTime.Now);
+
+        PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
+        plantHealthBar.Initialize(plant, map, healthSliderPrefab); // add another plant health bar
+
         return true; 
     }
 

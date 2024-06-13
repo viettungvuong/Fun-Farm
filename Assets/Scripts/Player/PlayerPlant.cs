@@ -77,13 +77,11 @@ public class PlayerPlant : MonoBehaviour
 
     public void WaterTree(Vector3 worldPosition){
         bool plantable = MapManager.instance.Plantable(worldPosition);
-        Debug.Log(plantable);
         if (!plantable){
 
             return;
         }
-        bool planted = MapManager.instance.Planted(worldPosition);
-        Debug.Log(planted);
+        bool planted = PlantManager.instance.Planted(worldPosition);
         if (!planted){
 
             return;

@@ -8,12 +8,13 @@ public class SlimeControl : MonoBehaviour
 {
     private float moveSpeed;
     public Tilemap plantTilemap;
-    public Tile[] plantTiles;
 
     List<Vector3Int> plantPositions;
     private float targetTimeLimit = 10f; // Time limit to reach a plant in seconds
     private float timeSpent = 0f;
     Vector3Int? targetPlantPosition;
+
+    private int damage = 10;
 
     void Start()
     {
@@ -28,7 +29,8 @@ public class SlimeControl : MonoBehaviour
 
         if (targetPlantPosition == null) {
             // double check whether new plant on the map
-            FindAllPlants();
+            plantPositions.AddRange(PlantManager.instance.FindAllPlants());
+
             if (plantPositions.Count>0){
                 targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
             }
@@ -58,28 +60,6 @@ public class SlimeControl : MonoBehaviour
         }
     }
 
-    private void FindAllPlants()
-    {
-        BoundsInt bounds = plantTilemap.cellBounds;
-
-        for (int x = bounds.xMin; x <= bounds.xMax; x++)
-        {
-            for (int y = bounds.yMin; y <= bounds.yMax; y++)
-            {
-                Vector3Int cellPosition = new Vector3Int(x, y, 0);
-                TileBase tile = plantTilemap.GetTile(cellPosition);
-                
-                if (plantTiles.Contains(tile)==true)
-                {
-                    plantPositions.Add(cellPosition); // this position has plant
-                }
-                // if (tile!=null)
-                // {
-                //     plantPositions.Add(cellPosition); // this position has plant
-                // }
-            }
-        }
-    }
 
     Vector3Int SetRandomTargetPosition()
     {
@@ -91,7 +71,10 @@ public class SlimeControl : MonoBehaviour
     // slime only damage to plant, not player
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Plant")){ // đụng plant
-
+            Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
+            if (plant!=null){
+                PlantManager.instance.DamagePlant(plant, damage);
+            }
         }
     }
 }
