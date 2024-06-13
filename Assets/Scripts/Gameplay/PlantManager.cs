@@ -151,8 +151,6 @@ public class PlantManager : MonoBehaviour
         if (gridPosition == null)
             return false;
 
-        Debug.Log(plantPos.ContainsKey(gridPosition));
-        Debug.Log(plantPos[gridPosition] == null);
         if (plantPos.ContainsKey(gridPosition)==false||plantPos[gridPosition]==null){
             return false; // no plant here to water
         }
