@@ -37,18 +37,9 @@ public class PlantManager : MonoBehaviour
     }
 
     private void ColorPlant(Plant plant, Color color){
-        TileBase tile = map.GetTile(plant.gridPosition);
-        
-        if (tile != null)
-        {
-            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-            
-            TilemapRenderer tilemapRenderer = map.GetComponent<TilemapRenderer>();
-            tilemapRenderer.GetPropertyBlock(materialPropertyBlock);
+        map.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
+        map.SetColor(plant.gridPosition, color);
 
-            // set black color for deterioration
-            materialPropertyBlock.SetColor("_Color", color);
-        }
     }
 
 
@@ -173,10 +164,6 @@ public class PlantManager : MonoBehaviour
     public void DamagePlant(Plant plant, int damage){
         plant.health -= damage; // reduce health of plant
         ColorPlant(plant, Color.black);
-
-        if (plant.health<=0){
-
-        }
     }
 
     public Plant GetPlantAt(Vector3 worldPosition){
