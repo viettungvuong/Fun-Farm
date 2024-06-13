@@ -19,12 +19,6 @@ public class SlimeControl : MonoBehaviour
     {
         plantPositions = new List<Vector3Int>();
         targetPlantPosition = null;
-        FindAllPlants();
-
-        if (plantPositions.Count>0){
-            targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
-        }
-
     }
 
     // Update is called once per frame
@@ -32,9 +26,15 @@ public class SlimeControl : MonoBehaviour
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
 
-        if (targetPlantPosition==null){
-
-            return;
+        if (targetPlantPosition == null) {
+            // double check whether new plant on the map
+            FindAllPlants();
+            if (plantPositions.Count>0){
+                targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
+            }
+            else{
+                return;
+            }
         }
 
         if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
