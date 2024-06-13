@@ -81,7 +81,7 @@ public class PlantManager : MonoBehaviour
 
         TileBase tile = map.GetTile(gridPosition);
 
-        return tile != null;
+        return plantTiles.Contains(tile);
     }
 
     public bool Planted(Vector3Int cellPosition){
@@ -164,6 +164,10 @@ public class PlantManager : MonoBehaviour
     public void DamagePlant(Plant plant, int damage){
         plant.health -= damage; // reduce health of plant
         ColorPlant(plant, Color.black);
+
+        if (plant.health<=0){
+            plantPos.Remove(plant.gridPosition); // remove
+        }
     }
 
     public Plant GetPlantAt(Vector3 worldPosition){

@@ -10787,7 +10787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8409269588054559371, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: plantTilemap
@@ -11264,7 +11264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4669661680063532631, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_CollisionDetection

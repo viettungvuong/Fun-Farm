@@ -51,19 +51,22 @@ public class PlantHealthBar : MonoBehaviour
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
         healthSlider.value = (float)timeDiff;
+        
 
-        float healthPercentage = (float)timeDiff / (float)plant.deteriorateTime;
-    
-        if (healthPercentage < 0.2f) {
+        float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
+        if (timePercentage==0f){
+            healthSlider.enabled = false; // plant die
+        }    
+        if (timePercentage < 0.2f) {
             // Health < 20%: green
             sliderImageFill.color = Color.green;
-        } else if (healthPercentage >= 0.2f && healthPercentage < 0.5f) {
+        } else if (timePercentage >= 0.2f && timePercentage < 0.5f) {
             // Health between 20% and 50%: yellow to green
-            sliderImageFill.color = Color.Lerp(Color.green, Color.yellow, (healthPercentage - 0.2f) / 0.3f);
-        } else if (healthPercentage >= 0.5f && healthPercentage < 0.8f) {
+            sliderImageFill.color = Color.Lerp(Color.green, Color.yellow, (timePercentage - 0.2f) / 0.3f);
+        } else if (timePercentage >= 0.5f && timePercentage < 0.8f) {
             // Health between 50% and 80%: orange to yellow
-            sliderImageFill.color = Color.Lerp(Color.yellow, Color.red, (healthPercentage - 0.5f) / 0.3f);
-        } else if (healthPercentage >= 0.8f) {
+            sliderImageFill.color = Color.Lerp(Color.yellow, Color.red, (timePercentage - 0.5f) / 0.3f);
+        } else if (timePercentage >= 0.8f) {
             // Health >= 80%: red
             sliderImageFill.color = Color.red;
         }
@@ -76,7 +79,7 @@ public class PlantHealthBar : MonoBehaviour
         if (plant == null || plantTilemap == null) return;
 
         Vector3Int gridPosition = plant.gridPosition;
-        Vector3 offset = new Vector2(0f, 0.5f);
+        Vector3 offset = new Vector2(0f, 1f);
         Vector3 worldPosition = plantTilemap.CellToWorld(gridPosition) + offset;
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
 
