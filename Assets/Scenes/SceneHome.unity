@@ -10763,9 +10763,17 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4802300289182788626, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8409269588054559371, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409269588054559371, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: plantTilemap
@@ -11095,6 +11103,14 @@ PrefabInstance:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 573766176366255923, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: attackRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 573766176366255923, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: enemyLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: m_Name
       value: Player
@@ -11151,6 +11167,10 @@ PrefabInstance:
       propertyPath: highlightTilemap
       value: 
       objectReference: {fileID: 1151183920}
+    - target: {fileID: 5647710133540907320, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6121841857472381701, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: coinText
       value: 
@@ -11187,6 +11207,14 @@ PrefabInstance:
     - target: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_Name
       value: Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4669661680063532631, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4814884023315234432, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_LocalPosition.x

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6299584313062156107}
   m_Layer: 0
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,4 +225,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
-  unit: {fileID: 0}
+  healthSlider: {fileID: 0}

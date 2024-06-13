@@ -169,14 +169,9 @@ public class SkeletonMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.name=="Player"){ // hit player
-            Unit playerUnit = GetComponent<Unit>();
-            if (other.gameObject.GetComponent<PlayerAttack>().isAttacking==true){ // player is in attacking mode
-                unit.TakeDamage(playerUnit.damage);
-            }
-            else{
-                // inflict damage on player
-                playerUnit.TakeDamage(unit.damage);
-            }
+            Unit playerUnit = other.gameObject.GetComponent<Unit>();
+            // inflict damage on player
+            playerUnit.TakeDamage(unit.damage);
         }
     }
 }

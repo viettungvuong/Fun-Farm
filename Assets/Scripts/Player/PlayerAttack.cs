@@ -6,22 +6,42 @@ public class PlayerAttack : MonoBehaviour
 {
     PlayerMove playerMove;
     Animator animator;
+    Unit playerUnit;
     [HideInInspector] public bool isAttacking = false;
+    private float nextAttackTime = 0f;
+    public float cooldownTime = 1.5f;
+
     void Start()
     {
         playerMove = GetComponent<PlayerMove>();
         animator = GetComponent<Animator>();
+        playerUnit = GetComponent<Unit>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)){  // press space to attack
+        if (Input.GetKeyDown(KeyCode.Space)&& Time.time >= nextAttackTime){  // press space to attack
+            nextAttackTime = Time.time + 1f / cooldownTime;
             animator.SetBool("idle", false);
             isAttacking = true;
 
             StopAllCoroutines(); // stop other coroutines 
             StartCoroutine(AttackCoroutine());
+
+            // Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayers);
+            // foreach (Collider enemy in hitEnemies)
+            // {
+            //     enemy.GetComponent<Unit>().TakeDamage(playerUnit.damage);
+            // }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Enemy")){
+            if (isAttacking){
+                other.gameObject.GetComponent<Unit>().TakeDamage(playerUnit.damage);
+            }
         }
     }
 
@@ -48,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         animator.Play(animationName);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
         animator.SetBool("idle", true);
         isAttacking = false;
     }
