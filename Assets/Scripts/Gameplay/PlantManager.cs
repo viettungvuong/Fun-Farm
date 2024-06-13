@@ -103,8 +103,6 @@ public class PlantManager : MonoBehaviour
 
             if (secondsDifference > plant.deteriorateTime)
             {
-                Debug.Log("Deteriorated");
-                lastCheckFreshTime[plant] = DateTime.Now; 
                 plant.health -= damage; // reduce health of plant
 
                 // if (plant.health<=0){
@@ -112,7 +110,15 @@ public class PlantManager : MonoBehaviour
                 // }
 
                 ColorPlant(plant, Color.black);
+                updates[plant] = DateTime.Now; // collect the update
+
             }
+        }
+
+        // change update to dictionary
+        foreach (var update in updates)
+        {
+            lastLevelTime[update.Key] = update.Value;
         }
     }
 
@@ -145,6 +151,8 @@ public class PlantManager : MonoBehaviour
         if (gridPosition == null)
             return false;
 
+        Debug.Log(plantPos.ContainsKey(gridPosition));
+        Debug.Log(plantPos[gridPosition] == null);
         if (plantPos.ContainsKey(gridPosition)==false||plantPos[gridPosition]==null){
             return false; // no plant here to water
         }

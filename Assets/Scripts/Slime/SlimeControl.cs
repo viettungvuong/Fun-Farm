@@ -24,7 +24,7 @@ public class SlimeControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.3f;
 
         if (targetPlantPosition == null) {
             // double check whether new plant on the map
@@ -89,4 +89,9 @@ public class SlimeControl : MonoBehaviour
     }
 
     // slime only damage to plant, not player
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Plant")){ // đụng plant
+
+        }
+    }
 }

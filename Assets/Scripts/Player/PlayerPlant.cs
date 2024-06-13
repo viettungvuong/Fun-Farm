@@ -19,9 +19,9 @@ public class PlayerPlant : MonoBehaviour
     }
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.P)) {
+        if (Input.GetKeyDown(KeyCode.W)) {
             WaterTree(rb.position);
-        } // press P to plant
+        } // press W to water
     }
 
     public void PlantTree(Vector3 worldPosition, Plant plant){
@@ -77,15 +77,20 @@ public class PlayerPlant : MonoBehaviour
 
     public void WaterTree(Vector3 worldPosition){
         bool plantable = MapManager.instance.Plantable(worldPosition);
+        Debug.Log(plantable);
         if (!plantable){
+
             return;
         }
         bool planted = MapManager.instance.Planted(worldPosition);
-        if (planted){
+        Debug.Log(planted);
+        if (!planted){
+
             return;
         }
 
-        PlantManager.instance.WaterPlant(worldPosition);
+        // PlantManager.instance.WaterPlant(worldPosition);
+        StartCoroutine(WaterTreeCoroutine(worldPosition));
     }
 
     private IEnumerator WaterTreeCoroutine(Vector3 worldPosition)

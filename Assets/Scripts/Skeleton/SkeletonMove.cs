@@ -38,7 +38,7 @@ public class SkeletonMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
         if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
         {
             HandleTorchSabotage();

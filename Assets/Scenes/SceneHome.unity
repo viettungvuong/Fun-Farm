@@ -4261,7 +4261,7 @@ GameObject:
   - component: {fileID: 1523404651}
   m_Layer: 0
   m_Name: Plant
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4321,7 +4321,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -10775,6 +10775,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8409269588054559371, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8776696748131475051, guid: 52a3bd56780334e84bd5ebbb7d7cac32, type: 3}
       propertyPath: plantTilemap
       value: 
@@ -11247,6 +11251,10 @@ PrefabInstance:
     - target: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4669661680063532631, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
       propertyPath: m_CollisionDetection
