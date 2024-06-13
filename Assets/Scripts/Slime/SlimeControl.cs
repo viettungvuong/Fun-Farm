@@ -5,37 +5,70 @@ using UnityEngine.Tilemaps;
 
 public class SlimeControl : MonoBehaviour
 {
-    public float speed;
+    private float moveSpeed;
     public Tilemap plantTilemap;
 
-    Unit unit;
+    List<Vector3Int> plantPositions;
+    private float targetTimeLimit = 10f; // Time limit to reach a plant in seconds
+    private float timeSpent = 0f;
+    Vector3Int targetPlantPosition;
 
     void Start()
     {
-        unit = GetComponent<Unit>();
+        plantPositions = new List<Vector3Int>();
+        targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 targetPosition = SetRandomTargetPosition(); // random position on the tilemap
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
 
-        if (Vector3.Distance(transform.position, targetPosition) >= 0.001f)
+        if (Vector3.Distance(transform.position, plantTilemap.CellToWorld(targetPlantPosition)) >= 0.001f)
         {
-            var step =  speed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+            var step = moveSpeed * Time.deltaTime; // calculate distance to move
+            transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld(targetPlantPosition), step);
+            timeSpent += Time.deltaTime;
+
+            if (timeSpent >= targetTimeLimit)
+            {
+                targetPlantPosition = SetRandomTargetPosition();
+                timeSpent = 0f; // Reset timer for the new target
+            }
+        }
+        else
+        {
+            // If we have reached the plant, eat it and find a new target
+            // EatPlant(targetPlantPosition);
+            targetPlantPosition = SetRandomTargetPosition();
+            timeSpent = 0f; // Reset timer for the new target
         }
     }
 
-    Vector3 SetRandomTargetPosition()
+    private void FindAllPlants()
     {
-        // get the bounds of the tilemap
         BoundsInt bounds = plantTilemap.cellBounds;
 
-        int randomY = Random.Range(bounds.yMin, bounds.yMax);
+        for (int x = bounds.xMin; x <= bounds.xMax; x++)
+        {
+            for (int y = bounds.yMin; y <= bounds.yMax; y++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                TileBase tile = plantTilemap.GetTile(cellPosition);
+                
+                if (tile != null)
+                {
+                    plantPositions.Add(cellPosition); // this position has plant
+                }
+            }
+        }
+    }
 
-        Vector3Int randomCellPosition = new Vector3Int(bounds.xMax, randomY);
-        return plantTilemap.CellToWorld(randomCellPosition);
+    Vector3Int SetRandomTargetPosition()
+    {
+        int random = Random.Range(0,plantPositions.Count);
+
+        return plantPositions[random];
     }
 
     // slime only damage to plant, not player

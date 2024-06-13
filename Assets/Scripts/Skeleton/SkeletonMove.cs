@@ -10,7 +10,7 @@ public class SkeletonMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Unit unit;
 
-    public float moveSpeed;
+    private float moveSpeed;
     public GameObject player;
     public GameObject[] torches;
     int torchSabotaged = 0;
@@ -32,11 +32,13 @@ public class SkeletonMove : MonoBehaviour
         {
             currentTargetTorch = torches[torchSabotaged];
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
         if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
         {
             HandleTorchSabotage();
