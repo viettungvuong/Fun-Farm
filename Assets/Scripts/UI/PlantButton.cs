@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class PlantButton : MonoBehaviour
 {
@@ -10,10 +12,13 @@ public class PlantButton : MonoBehaviour
     PlayerPlant playerPlant;
     Rigidbody2D rb;
     // public int price;
+    private Image image;
 
     void Start(){
         playerPlant = player.GetComponent<PlayerPlant>();
         rb = player.GetComponent<Rigidbody2D>();
+        image = transform.GetChild(0).GetComponent<Image>();
+        image.sprite = plant.tiles.Last().sprite;
     }
 
 
