@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4369104834066813831
 Transform:
   m_ObjectHideFlags: 0
@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3db16a1ae7344d3bb70dc607376b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
   plantTilemap: {fileID: 0}
 --- !u!61 &5143796025001038701
 BoxCollider2D:

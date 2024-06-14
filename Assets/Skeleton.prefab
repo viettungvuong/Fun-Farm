@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4814884023315234432
 Transform:
   m_ObjectHideFlags: 0
@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c84e0e8423f493f89eb4538298b1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   player: {fileID: 3124235161546919178, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
   torches: []
+  cooldownTime: 1
 --- !u!114 &-2276984850848315501
 MonoBehaviour:
   m_ObjectHideFlags: 0
