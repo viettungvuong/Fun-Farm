@@ -7,10 +7,10 @@ using UnityEngine.Tilemaps;
 public class SlimeControl : MonoBehaviour
 {
     private float moveSpeed;
-    public Tilemap plantTilemap;
+    private Tilemap plantTilemap;
 
     List<Vector3Int> plantPositions;
-    private float targetTimeLimit = 10f; // Time limit to reach a plant in seconds
+    private float targetTimeLimit = 20f; // Time limit to reach a plant in seconds
     private float timeSpent = 0f;
     Vector3Int? targetPlantPosition;
 
@@ -19,18 +19,23 @@ public class SlimeControl : MonoBehaviour
     {
         plantPositions = new List<Vector3Int>();
         targetPlantPosition = null;
+
+        plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.8f;
+
+        if (targetPlantPosition!=null&&PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition)==null){
+            targetPlantPosition = null;
+        }
 
         if (targetPlantPosition == null) {
             // double check whether new plant on the map
             plantPositions.AddRange(PlantManager.instance.FindAllPlants());
-
-            Debug.Log("Found plants: " + plantPositions.Count);
+            plantPositions = plantPositions.Distinct().ToList();
 
             if (plantPositions.Count>0){
                 targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
@@ -40,7 +45,9 @@ public class SlimeControl : MonoBehaviour
             }
         }
 
-        if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
+        Debug.Log(targetPlantPosition);
+
+        if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.0001f)
         {
             var step = moveSpeed * Time.deltaTime; // calculate distance to move
             transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
@@ -54,8 +61,10 @@ public class SlimeControl : MonoBehaviour
         }
         else
         {
+            Debug.Log("Damaged plant");
+
             // If we have reached the plant, eat it and find a new target
-            // EatPlant(targetPlantPosition);
+            PlantManager.instance.DamagePlant(PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition));
             targetPlantPosition = SetRandomTargetPosition();
             timeSpent = 0f; // Reset timer for the new target
         }

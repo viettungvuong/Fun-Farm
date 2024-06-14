@@ -53,7 +53,7 @@ public class PlantHealthBar : MonoBehaviour
 
         healthSlider.value = (float)timeDiff;
         float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
-        Debug.Log("Deterioration: "+timePercentage);
+
         if (timePercentage>=1f){
             healthSlider.gameObject.SetActive(false); // plant die
         }    
