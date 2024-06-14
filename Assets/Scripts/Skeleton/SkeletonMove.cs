@@ -84,16 +84,16 @@ public class SkeletonMove : MonoBehaviour
     private void HandlePlayerAttack()
     {
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (distanceToPlayer <= 1.5f)
+        if (distanceToPlayer <= 1.5f) // approaching player (near player)
         {
             StartCoroutine(AttackCoroutine());
-            nextMoveTime = Time.time + 1f / cooldownTime;
+            nextMoveTime = Time.time + 1f; // cooldownTime;
         }
         else
         {
             if (Time.time >= nextMoveTime){
                 animator.SetBool("walk", true);
-                MoveTowards(player.transform);
+                MoveTowards(player.transform); // move near player if more than cooldown time
             }
 
         }
