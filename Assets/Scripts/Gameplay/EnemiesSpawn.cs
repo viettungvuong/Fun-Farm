@@ -13,7 +13,7 @@ public class EnemiesSpawn : MonoBehaviour
     void Update(){
         if (TimeManage.instance.currentMinute==nextMinuteSpawn){
             if (TimeManage.instance.IsDay()){ // day time spawn slime
-                int slimes = Random.Range(1, 5);
+                int slimes = Random.Range(1, 4);
 
                 SpawnEnemy(slimes, "Slime");
 
