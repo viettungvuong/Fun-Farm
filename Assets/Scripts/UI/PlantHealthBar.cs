@@ -50,12 +50,12 @@ public class PlantHealthBar : MonoBehaviour
         if (plant == null) return;
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
-        healthSlider.value = (float)timeDiff;
-        
 
+        healthSlider.value = (float)timeDiff;
         float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
-        if (timePercentage==0f){
-            healthSlider.enabled = false; // plant die
+        Debug.Log("Deterioration: "+timePercentage);
+        if (timePercentage>=1f){
+            healthSlider.gameObject.SetActive(false); // plant die
         }    
         if (timePercentage < 0.2f) {
             // Health < 20%: green

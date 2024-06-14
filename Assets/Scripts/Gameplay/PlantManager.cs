@@ -9,14 +9,13 @@ using UnityEngine.UI;
 public class PlantManager : MonoBehaviour
 {
     [SerializeField] private Tilemap map;
-    public Tile[] plantTiles;
 
     private Dictionary<Vector3Int, Plant> plantPos; // position of plants
-    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime; 
+    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime;
+    private Dictionary<Plant, PlantHealthBar> plantHealthBars;
     // last time this plant was leveled and watered
     public static PlantManager instance;
     private int maxStage = 4;
-    private const int plantDamage = 50;
     public Slider healthSliderPrefab;
 
 
@@ -29,11 +28,12 @@ public class PlantManager : MonoBehaviour
         plantPos = new Dictionary<Vector3Int, Plant>();
         lastLevelTime = new Dictionary<Plant, DateTime>();
         lastCheckFreshTime = new Dictionary<Plant, DateTime>();
+        plantHealthBars = new Dictionary<Plant, PlantHealthBar>();
     }
 
     private void FixedUpdate() {
         CheckPlantLevel();
-        CheckDeterioration(plantDamage);
+        CheckDeterioration();
     }
 
     private void ColorPlant(Plant plant, Color color){
@@ -79,16 +79,11 @@ public class PlantManager : MonoBehaviour
     public bool Planted(Vector3 worldPosition){
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        TileBase tile = map.GetTile(gridPosition);
-
-        return plantTiles.Contains(tile);
+        return plantPos.ContainsKey(gridPosition);
     }
 
     public bool Planted(Vector3Int cellPosition){
-
-        TileBase tile = map.GetTile(cellPosition);
-
-        return tile != null;
+        return plantPos.ContainsKey(cellPosition);
     }
 
     public DateTime? GetLastTimeWatered(Plant plant){
@@ -109,10 +104,10 @@ public class PlantManager : MonoBehaviour
         {
             for (int y = bounds.yMin; y <= bounds.yMax; y++)
             {
-                Vector3Int cellPosition = new Vector3Int(x, y, 0);
-                TileBase tile = map.GetTile(cellPosition);
+                Vector3Int cellPosition = new Vector3Int(x, y);
+                // TileBase tile = map.GetTile(cellPosition);
                 
-                if (plantTiles.Contains(tile)==true)
+                if (plantPos.ContainsKey(cellPosition))
                 {
                     positions.Add(cellPosition); // this position has plant
                 }
@@ -126,11 +121,13 @@ public class PlantManager : MonoBehaviour
         return positions;
     }
 
-    private void CheckDeterioration(int damage){
+    private void CheckDeterioration(){
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
         var updates = new Dictionary<Plant, DateTime>();
+
+        List<Plant> plantsToRemove = new List<Plant>();
 
         foreach (var entry in lastCheckFreshTime)
         {
@@ -147,27 +144,27 @@ public class PlantManager : MonoBehaviour
 
             if (secondsDifference > plant.deteriorateTime)
             {
-                DamagePlant(plant, damage);
-
-                updates[plant] = DateTime.Now; // collect the update
-
+                DamagePlant(plant);
+                plantsToRemove.Add(plant);
             }
         }
 
-        // change update to dictionary
-        foreach (var update in updates)
+        foreach (Plant plant in plantsToRemove)
         {
-            lastLevelTime[update.Key] = update.Value;
+            lastCheckFreshTime.Remove(plant);
+            lastLevelTime.Remove(plant);
         }
+
+
     }
 
-    public void DamagePlant(Plant plant, int damage){
-        plant.health -= damage; // reduce health of plant
+    public void DamagePlant(Plant plant){
         ColorPlant(plant, Color.black);
 
-        if (plant.health<=0){
-            plantPos.Remove(plant.gridPosition); // remove
-        }
+        plantPos.Remove(plant.gridPosition); // remove plant
+
+        plantHealthBars[plant].gameObject.SetActive(false);
+        plantHealthBars.Remove(plant);
     }
 
     public Plant GetPlantAt(Vector3 worldPosition){
@@ -213,6 +210,7 @@ public class PlantManager : MonoBehaviour
 
         PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
         plantHealthBar.Initialize(plant, map, healthSliderPrefab); // add another plant health bar
+        plantHealthBars.Add(plant, plantHealthBar);
 
         return true; 
     }
@@ -235,7 +233,6 @@ public class PlantManager : MonoBehaviour
         else{
             lastCheckFreshTime[plant] = DateTime.Now;
         }
-        plant.health += plantDamage; 
         
         ColorPlant(plant, Color.white); // fresh plant again
 

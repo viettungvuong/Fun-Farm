@@ -14,7 +14,6 @@ public class SlimeControl : MonoBehaviour
     private float timeSpent = 0f;
     Vector3Int? targetPlantPosition;
 
-    private int damage = 10;
 
     void Start()
     {
@@ -25,11 +24,13 @@ public class SlimeControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.3f;
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
 
         if (targetPlantPosition == null) {
             // double check whether new plant on the map
             plantPositions.AddRange(PlantManager.instance.FindAllPlants());
+
+            Debug.Log("Found plants: " + plantPositions.Count);
 
             if (plantPositions.Count>0){
                 targetPlantPosition = SetRandomTargetPosition(); // random plant on the tilemap
@@ -73,7 +74,7 @@ public class SlimeControl : MonoBehaviour
         if (other.gameObject.CompareTag("Plant")){ // đụng plant
             Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
             if (plant!=null){
-                PlantManager.instance.DamagePlant(plant, damage);
+                PlantManager.instance.DamagePlant(plant);
             }
         }
     }

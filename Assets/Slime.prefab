@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3db16a1ae7344d3bb70dc607376b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantTilemap: {fileID: 0}
+  plantTilemap: {fileID: 6658509252343355269, guid: cac5e62321dc74d52b11f6e047ff03e6, type: 3}
 --- !u!61 &5143796025001038701
 BoxCollider2D:
   m_ObjectHideFlags: 0

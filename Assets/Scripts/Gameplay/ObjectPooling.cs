@@ -62,15 +62,13 @@ public class ObjectPooling : MonoBehaviour
     {
         if (!poolDictionary.ContainsKey(tag)) // If the pool does not contain this key
         {
-            Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
+            // Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
             return null;
         }
 
-        Debug.Log(poolDictionary[tag].Count);
-
         if (poolDictionary[tag].Count == 0) // If the pool is empty
         {
-            Debug.LogWarning("Pool with tag " + tag + " is empty.");
+            // Debug.LogWarning("Pool with tag " + tag + " is empty.");
             return null;
         }
 

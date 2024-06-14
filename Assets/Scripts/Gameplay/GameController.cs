@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
+
     public static float GetAnimationLength(Animator animator, string animationName)
     {
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
@@ -16,4 +18,5 @@ public class GameController : MonoBehaviour
         }
         return 0f;
     }
+
 }
