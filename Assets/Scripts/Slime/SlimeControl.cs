@@ -26,7 +26,7 @@ public class SlimeControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.8f;
+        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
 
         if (targetPlantPosition!=null&&PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition)==null){
             targetPlantPosition = null;
@@ -34,7 +34,8 @@ public class SlimeControl : MonoBehaviour
 
         if (targetPlantPosition == null) {
             // double check whether new plant on the map
-            plantPositions.AddRange(PlantManager.instance.FindAllPlants());
+            var plants = PlantManager.instance.FindAllPlants(notIncludeMax: true);
+            plantPositions.AddRange(plants);
             plantPositions = plantPositions.Distinct().ToList();
 
             if (plantPositions.Count>0){
@@ -61,9 +62,8 @@ public class SlimeControl : MonoBehaviour
         }
         else
         {
-            Debug.Log("Damaged plant");
 
-            // If we have reached the plant, eat it and find a new target
+            // If we have reached the plant, damage it and find a new target
             PlantManager.instance.DamagePlant(PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition));
             targetPlantPosition = SetRandomTargetPosition();
             timeSpent = 0f; // Reset timer for the new target
@@ -80,11 +80,11 @@ public class SlimeControl : MonoBehaviour
 
     // slime only damage to plant, not player
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Plant")){ // đụng plant
-            Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
-            if (plant!=null){
-                PlantManager.instance.DamagePlant(plant);
-            }
-        }
+        // if (other.gameObject.CompareTag("Plant")){ // đụng plant
+        //     Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
+        //     if (plant!=null){
+        //         PlantManager.instance.DamagePlant(plant);
+        //     }
+        // }
     }
 }

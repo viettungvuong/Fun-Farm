@@ -37,23 +37,6 @@ public class PlantManager : MonoBehaviour
     }
 
     private void ColorPlant(Plant plant, Color color){
-        if (plant == null)
-        {
-            Debug.LogWarning("ColorPlant called with a null plant reference.");
-            return;
-        }
-
-        if (map == null)
-        {
-            Debug.LogError("Tilemap is not set. Unable to color plant.");
-            return;
-        }
-
-        if (!map.HasTile(plant.gridPosition))
-        {
-            Debug.LogWarning($"No tile found at position {plant.gridPosition}. Unable to color plant.");
-            return;
-        }
 
         map.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
         map.SetColor(plant.gridPosition, color);
@@ -113,7 +96,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    public List<Vector3Int> FindAllPlants()
+    public List<Vector3Int> FindAllPlants(bool notIncludeMax=false)
     {
         BoundsInt bounds = map.cellBounds;
         List<Vector3Int> positions = new List<Vector3Int>();
@@ -127,12 +110,13 @@ public class PlantManager : MonoBehaviour
                 
                 if (plantPos.ContainsKey(cellPosition))
                 {
+                    if (notIncludeMax){
+                        if (GetPlantAt(cellPosition).currentStage==maxStage){
+                            continue; // not include plant at max stage
+                        }
+                    }
                     positions.Add(cellPosition); // this position has plant
                 }
-                // if (tile!=null)
-                // {
-                //     positions.Add(cellPosition); // this position has plant
-                // }
             }
         }
 
@@ -151,9 +135,9 @@ public class PlantManager : MonoBehaviour
         {
             Plant plant = entry.Key;
 
-            if (plant.health <= 0)
+            if (plant.health <= 0 || plant.currentStage == maxStage)
             {
-                continue; // die
+                continue; // die or max stage
             }
 
             DateTime lastTime = entry.Value;
