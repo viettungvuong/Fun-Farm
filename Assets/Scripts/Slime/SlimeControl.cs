@@ -46,7 +46,6 @@ public class SlimeControl : MonoBehaviour
             }
         }
 
-        Debug.Log(targetPlantPosition);
 
         if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.0001f)
         {
@@ -86,5 +85,14 @@ public class SlimeControl : MonoBehaviour
         //         PlantManager.instance.DamagePlant(plant);
         //     }
         // }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (ReferenceEquals(other.gameObject,plantTilemap.gameObject)){ // đụng plant
+            Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
+            if (plant!=null){
+                PlantManager.instance.DamagePlant(plant);
+            }
+        }
     }
 }
