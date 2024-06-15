@@ -10,11 +10,13 @@ public class PlayerDefend : MonoBehaviour
     private Tilemap groundDefenseTilemap;
     Rigidbody2D rb;
 
-    public FenceUnit fence;
+    public FenceUnit fenceHorizontal, fenceVertical;
 
     private Dictionary<Vector3Int, FenceUnit> fences;
     private int numberOfFences = 4;
     public TextMeshProUGUI fenceText;
+
+    private PlayerMove playerMove;
 
     private void Awake() {
         instance = this;
@@ -25,6 +27,7 @@ public class PlayerDefend : MonoBehaviour
         fences = new Dictionary<Vector3Int, FenceUnit>();
 
         groundDefenseTilemap = GameObject.Find("GroundDefense").GetComponent<Tilemap>();
+        playerMove = GetComponent<PlayerMove>();
     }
 
 private bool buildFenceFlag = false;
@@ -44,7 +47,13 @@ private bool buildFenceFlag = false;
         if (buildFenceFlag)
         {
             // build defense
-            BuildDefendFence(fence);
+            if (playerMove.orientation==Orientation.UP||playerMove.orientation==Orientation.DOWN){
+                BuildDefendFence(fenceHorizontal);
+            }
+            else{
+                BuildDefendFence(fenceVertical);
+            }
+
             buildFenceFlag = false; // Ensure it only builds once per key press
         }
     }

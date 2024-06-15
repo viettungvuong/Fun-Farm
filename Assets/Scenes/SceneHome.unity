@@ -14719,9 +14719,17 @@ PrefabInstance:
       propertyPath: fenceText
       value: 
       objectReference: {fileID: 20982660}
+    - target: {fileID: 5572432093568441648, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: fenceVertical
+      value: 
+      objectReference: {fileID: 11400000, guid: 33fa1b25d5dfb4ec298d8552e19ccfdb, type: 2}
+    - target: {fileID: 5572432093568441648, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: fenceHorizontal
+      value: 
+      objectReference: {fileID: 11400000, guid: ea2ddf1687e9b404980d681126e11742, type: 2}
     - target: {fileID: 5647710133540907320, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6121841857472381701, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: coinText

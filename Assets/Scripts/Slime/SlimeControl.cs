@@ -111,24 +111,24 @@ public class SlimeControl : MonoBehaviour
 
     const int damage = 50;
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Defense")){
-            // try to attack the fence or find alternative way (which one is faster to go)
-            // get fence at
-            // fence.health -= damage if fence.health > 0
-            // if fence.health == 0
-            // groundDefense.settile(null)
-            FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(transform.position);
-            if (fenceUnit!=null){
-                if (fenceUnit.health > 0){
-                    fenceUnit.health -= damage;
+    // private void OnCollisionEnter2D(Collision2D other) {
+    //     if (other.gameObject.CompareTag("Defense")){
+    //         // try to attack the fence or find alternative way (which one is faster to go)
+    //         // get fence at
+    //         // fence.health -= damage if fence.health > 0
+    //         // if fence.health == 0
+    //         // groundDefense.settile(null)
+    //         FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(transform.position);
+    //         if (fenceUnit!=null){
+    //             if (fenceUnit.health > 0){
+    //                 fenceUnit.health -= damage;
 
-                    if (fenceUnit.health == 0){
-                        PlayerDefend.instance.DestroyFence(transform.position); // destroy fence
-                    }
-                }
+    //                 if (fenceUnit.health == 0){
+    //                     PlayerDefend.instance.DestroyFence(transform.position); // destroy fence
+    //                 }
+    //             }
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 }
