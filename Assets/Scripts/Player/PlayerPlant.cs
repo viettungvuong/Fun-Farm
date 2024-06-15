@@ -11,11 +11,13 @@ public class PlayerPlant : MonoBehaviour
     PlayerMove playerMove;
     Animator animator;
     Rigidbody2D rb;
+    PlayerUnit playerUnit;
 
     void Start(){
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
+        playerUnit = GetComponent<PlayerUnit>();
     }
 
     void Update(){
@@ -29,6 +31,13 @@ public class PlayerPlant : MonoBehaviour
         if (!plantable){
             return;
         }
+
+        if (playerUnit.SufficientMoney(plant.buyMoney)==false){
+            return; // not enough money to buy
+        }
+
+        playerUnit.UseMoney(plant.buyMoney);
+
         StartCoroutine(PlantTreeCoroutine(worldPosition, plant)); // planting tree animation
         
 

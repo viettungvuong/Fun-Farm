@@ -17,4 +17,16 @@ public class PlayerUnit : Unit
     private void LateUpdate() {
         coinText.text = currentMoney.ToString();
     }
+
+    public bool SufficientMoney(int amount){
+        return currentMoney >= amount;
+    }
+
+    public void UseMoney(int amount){
+        currentMoney -= amount;
+    }
+
+    public void AddMoney(int amount){
+        currentMoney += amount;
+    }
 }

@@ -14,5 +14,7 @@ public class Plant : ScriptableObject
     [HideInInspector] public int health = 100;
 
     public int maxStage;
+    public int buyMoney;
+    public int harvestMoney;
     public double deteriorateTime;
 }

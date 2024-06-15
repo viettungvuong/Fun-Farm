@@ -25,4 +25,6 @@ MonoBehaviour:
   maxHealth: 100
   health: 100
   maxStage: 5
+  buyMoney: 100
+  harvestMoney: 100
   deteriorateTime: 99999
