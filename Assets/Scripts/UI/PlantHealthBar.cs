@@ -49,13 +49,18 @@ public class PlantHealthBar : MonoBehaviour
     private void LateUpdate() {
         if (plant == null) return;
 
+        if (plant.currentStage == plant.maxStage){
+            healthSlider.gameObject.SetActive(false);
+            return;
+        }
+
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
 
         healthSlider.value = (float)timeDiff;
         float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
 
-        if (timePercentage>=1f){
-            healthSlider.gameObject.SetActive(false); // plant die
+        if (timePercentage>=1f){ // die
+            healthSlider.gameObject.SetActive(false); 
         }    
         if (timePercentage < 0.2f) {
             // Health < 20%: green

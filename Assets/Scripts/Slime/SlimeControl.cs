@@ -34,9 +34,21 @@ public class SlimeControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (PlantManager.instance.DetectPlant(rb.position)){ // detect any plant
+            Plant plant = PlantManager.instance.GetPlantAt(rb.position);
+            PlantManager.instance.DamagePlant(plant);
+
+            targetPlantPosition = SetRandomTargetPosition();
+            timeSpent = 0f; // Reset timer for the new target
+
+            // Set the next move time to current time plus cooldown
+            nextMoveTime = Time.time + cooldownTime;
+        }
+
         if (Time.time >= nextMoveTime) // Only move if cooldown period has passed
         {
             moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 0.5f;
@@ -90,8 +102,6 @@ public class SlimeControl : MonoBehaviour
                     // Set the next move time to current time plus cooldown
                     nextMoveTime = Time.time + cooldownTime;
                 }
-
-            
             }
         }
     }
@@ -104,25 +114,6 @@ public class SlimeControl : MonoBehaviour
 
     // Slime only damages the plant, not the player
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (ReferenceEquals(other.gameObject, plantTilemap.gameObject))
-        {
-            // If colliding with a plant
-
-            Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
-            if (plant != null)
-            {
-                PlantManager.instance.DamagePlant(plant);
-
-                targetPlantPosition = SetRandomTargetPosition();
-                timeSpent = 0f; // Reset timer for the new target
-
-                // Set the next move time to current time plus cooldown
-                nextMoveTime = Time.time + cooldownTime;
-            }
-        }
-    }
 
     const int damage = 50;
 

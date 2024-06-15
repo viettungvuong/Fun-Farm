@@ -15,7 +15,7 @@ public class PlantManager : MonoBehaviour
     private Dictionary<Plant, PlantHealthBar> plantHealthBars;
     // last time this plant was leveled and watered
     public static PlantManager instance;
-    private int maxStage = 4;
+
     public Slider healthSliderPrefab;
 
 
@@ -37,20 +37,6 @@ public class PlantManager : MonoBehaviour
     }
 
     private void ColorPlant(Plant plant, Color color){
-        if (plant == null) {
-            Debug.LogError("ColorPlant called with null plant");
-            return;
-        }
-
-        if (map == null) {
-            Debug.LogError("ColorPlant called with null map");
-            return;
-        }
-
-        if (plant.gridPosition == null) {
-            Debug.LogError("ColorPlant called with null gridPosition");
-            return;
-        }
 
         map.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
         map.SetColor(plant.gridPosition, color);
@@ -68,7 +54,7 @@ public class PlantManager : MonoBehaviour
         {
             Plant plant = entry.Key;
 
-            if (plant.currentStage >= maxStage)
+            if (plant.currentStage >= plant.maxStage)
             {
                 continue; // max level so do nothing
             }
@@ -125,7 +111,8 @@ public class PlantManager : MonoBehaviour
                 if (plantPos.ContainsKey(cellPosition))
                 {
                     if (notIncludeMax){
-                        if (GetPlantAt(cellPosition).currentStage==maxStage){
+                        Plant plant = GetPlantAt(cellPosition);
+                        if (plant.currentStage==plant.maxStage){
                             continue; // not include plant at max stage
                         }
                     }
@@ -149,7 +136,7 @@ public class PlantManager : MonoBehaviour
         {
             Plant plant = entry.Key;
 
-            if (plant.health <= 0 || plant.currentStage == maxStage)
+            if (plant.health <= 0 || plant.currentStage == plant.maxStage)
             {
                 continue; // die or max stage
             }
@@ -170,16 +157,79 @@ public class PlantManager : MonoBehaviour
             lastCheckFreshTime.Remove(plant);
             lastLevelTime.Remove(plant);
         }
+    }
 
+    public bool DetectPlant(Vector3Int cellPosition){
+        TileBase tile = map.GetTile(cellPosition);
 
+        if (tile != null)
+        {
+            Plant plant = GetPlantAt(cellPosition);
+
+            return plant != null;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public bool DetectPlant(Vector3 worldlPosition){
+        Vector3Int cellPosition = map.WorldToCell(worldlPosition);
+        TileBase tile = map.GetTile(cellPosition);
+
+        if (tile != null)
+        {
+            Plant plant = GetPlantAt(cellPosition);
+
+            return plant != null;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public bool DetectPlantMaxStage(Vector3Int cellPosition){
+        TileBase tile = map.GetTile(cellPosition);
+
+        if (tile != null)
+        {
+            Plant plant = GetPlantAt(cellPosition);
+
+            return plant != null && plant.currentStage == plant.maxStage;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public bool DetectPlantMaxStage(Vector3 worldlPosition){
+        Vector3Int cellPosition = map.WorldToCell(worldlPosition);
+        TileBase tile = map.GetTile(cellPosition);
+
+        if (tile != null)
+        {
+            Plant plant = GetPlantAt(cellPosition);
+
+            return plant != null && plant.currentStage == plant.maxStage;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void RemovePlant(Plant plant, bool removeOnMap=false){
+        plantPos.Remove(plant.gridPosition); // remove plant
+
+        if (removeOnMap)
+            map.SetTile(plant.gridPosition, null);
     }
 
     public void DamagePlant(Plant plant){
 
         ColorPlant(plant, Color.black);
 
-        plantPos.Remove(plant.gridPosition); // remove plant
-        plantHealthBars[plant].healthSlider.gameObject.SetActive(false); // plant die
+        RemovePlant(plant);
+        plantHealthBars[plant].healthSlider.gameObject.SetActive(false); // plant die => disable health slider
         plantHealthBars[plant].gameObject.SetActive(false);
         plantHealthBars.Remove(plant);
     }

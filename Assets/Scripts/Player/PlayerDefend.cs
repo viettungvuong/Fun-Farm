@@ -13,10 +13,14 @@ public class PlayerDefend : MonoBehaviour
     public FenceUnit fenceHorizontal, fenceVertical;
 
     private Dictionary<Vector3Int, FenceUnit> fences;
-    private int numberOfFences = 4;
+
+    private const int maxNumberOfFences = 4;
+    private int numberOfFences = maxNumberOfFences;
     public TextMeshProUGUI fenceText;
 
     private PlayerMove playerMove;
+    public int intervalBetweenFenceRefills = 20;
+    private int nextMinuteRefill = 8;
 
     private void Awake() {
         instance = this;
@@ -30,10 +34,19 @@ public class PlayerDefend : MonoBehaviour
         playerMove = GetComponent<PlayerMove>();
     }
 
-private bool buildFenceFlag = false;
+    private bool buildFenceFlag = false;
 
     void Update()
     {
+        if (TimeManage.instance.currentMinute==nextMinuteRefill){
+            nextMinuteRefill+= intervalBetweenFenceRefills;
+            if (nextMinuteRefill>=60){
+                nextMinuteRefill -= 60;
+            }
+
+            numberOfFences = maxNumberOfFences; // refill number of fences
+
+        }
         if (Input.GetKeyDown(KeyCode.D))
         {
             buildFenceFlag = true;

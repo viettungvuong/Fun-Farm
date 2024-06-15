@@ -12,5 +12,7 @@ public class Plant : ScriptableObject
     [HideInInspector] public int currentStage=0;
     [HideInInspector] public int maxHealth = 100;
     [HideInInspector] public int health = 100;
+
+    public int maxStage;
     public double deteriorateTime;
 }

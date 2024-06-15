@@ -8,10 +8,9 @@ public class EnemiesSpawn : MonoBehaviour
     public Tilemap groundTilemap;
     public Transform player;
     public int intervalBetweenSpawns = 20;
-    private int nextMinuteSpawn = 5;
+    private int nextMinuteSpawn = 10;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
     void Update(){
-        Debug.Log(TimeManage.instance.currentMinute);
         if (TimeManage.instance.currentMinute==nextMinuteSpawn){
             if (TimeManage.instance.IsDay()){ // day time spawn slime
                 int slimes = Random.Range(1, 3);
@@ -27,7 +26,7 @@ public class EnemiesSpawn : MonoBehaviour
 
             nextMinuteSpawn += intervalBetweenSpawns;
             if (nextMinuteSpawn>=60){
-                nextMinuteSpawn = 0;
+                nextMinuteSpawn -= 60;
             }
 
         }

@@ -20,7 +20,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
   - {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
   gridPosition: {x: -5, y: -2, z: 0}
-  levelUpTime: 30
+  levelUpTime: 1
   currentStage: 2
+  maxHealth: 100
   health: 100
-  deteriorateTime: 10
+  maxStage: 5
+  deteriorateTime: 99999
