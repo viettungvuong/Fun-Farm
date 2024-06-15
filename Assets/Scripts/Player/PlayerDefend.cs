@@ -58,7 +58,7 @@ private bool buildFenceFlag = false;
         }
     }
 
-        public void BuildDefendFence(FenceUnit fence)
+    public void BuildDefendFence(FenceUnit fence)
     {
         if (numberOfFences <= 0)
         {
@@ -86,6 +86,8 @@ private bool buildFenceFlag = false;
 
         fences.Add(gridPosition, cloneFence);
         numberOfFences--; // minus one available fence
+
+        // rb.position += new Vector2(0.5f, 0.5f); // slightly move to avoid collide the fence => cannot move player
 
         // Start the coroutine to re-enable the collider after a delay
         if (tilemapCollider != null)
