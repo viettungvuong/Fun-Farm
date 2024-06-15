@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -714070134, guid: 59da8b986282a42fb99a119bbd385ad7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3db16a1ae7344d3bb70dc607376b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantTilemap: {fileID: 6658509252343355269, guid: cac5e62321dc74d52b11f6e047ff03e6, type: 3}
+  cooldownTime: 1
 --- !u!61 &5143796025001038701
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -177,13 +177,13 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8409269588054559371}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:

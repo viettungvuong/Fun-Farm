@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f8e8d7bcc1d43c098f63399fe8cc06, type: 3}
   m_Name: Fence
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: 126eaa92cdc034b8ca56bebe1dc1d858, type: 2}
+  tile: {fileID: 11400000, guid: 653d46d144a2e486da14f20af1f0915a, type: 2}
   health: 100

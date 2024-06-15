@@ -82,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -115750617, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -331,5 +331,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb5a1421011c4af6be902cb8dcd7e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDefenseTilemap: {fileID: 0}
   fence: {fileID: 11400000, guid: ea2ddf1687e9b404980d681126e11742, type: 2}
+  fenceText: {fileID: 0}
