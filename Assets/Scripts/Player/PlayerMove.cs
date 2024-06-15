@@ -56,7 +56,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position); // walking speed based on terrain
+        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position); // walking speed based on terrain
         bool holdArrowKey = false;
         Orientation prevOrientation = orientation;
 

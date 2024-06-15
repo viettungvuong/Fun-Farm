@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,6 +18,10 @@ public class SlimeControl : MonoBehaviour
     public float cooldownTime = 1.0f; // Cooldown after a slime moves
     private float nextMoveTime = 0f;  // To track the next allowed move time
 
+    Animator animator;
+
+    Rigidbody2D rb;
+
 
     void Start()
     {
@@ -24,6 +29,9 @@ public class SlimeControl : MonoBehaviour
         targetPlantPosition = null;
 
         plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -31,7 +39,7 @@ public class SlimeControl : MonoBehaviour
     {
         if (Time.time >= nextMoveTime) // Only move if cooldown period has passed
         {
-            moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position) * 0.5f;
+            moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 0.5f;
 
             if (targetPlantPosition != null && PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition) == null)
             {
@@ -87,15 +95,6 @@ public class SlimeControl : MonoBehaviour
     }
 
     // Slime only damages the plant, not the player
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        // if (other.gameObject.CompareTag("Plant")) { // If colliding with a plant
-        //     Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
-        //     if (plant != null) {
-        //         PlantManager.instance.DamagePlant(plant);
-        //     }
-        // }
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -106,6 +105,29 @@ public class SlimeControl : MonoBehaviour
             if (plant != null)
             {
                 PlantManager.instance.DamagePlant(plant);
+            }
+        }
+    }
+
+    const int damage = 50;
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Defense")){
+            // try to attack the fence or find alternative way (which one is faster to go)
+            // get fence at
+            // fence.health -= damage if fence.health > 0
+            // if fence.health == 0
+            // groundDefense.settile(null)
+            FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(transform.position);
+            if (fenceUnit!=null){
+                if (fenceUnit.health > 0){
+                    fenceUnit.health -= damage;
+
+                    if (fenceUnit.health == 0){
+                        PlayerDefend.instance.DestroyFence(transform.position); // destroy fence
+                    }
+                }
+
             }
         }
     }

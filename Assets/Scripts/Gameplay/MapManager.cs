@@ -12,6 +12,8 @@ public class MapManager : MonoBehaviour
     private Dictionary<TileBase, TileData> dataFromTiles;
     public static MapManager instance;
 
+    private const float defaultSpeed = 2f;
+
 
     private void Awake()
     {
@@ -36,6 +38,10 @@ public class MapManager : MonoBehaviour
         if (tile == null)
             return 1f;
 
+        if (dataFromTiles.ContainsKey(tile)){
+            return defaultSpeed;
+        }
+
         float walkingSpeed = dataFromTiles[tile].walkSpeed;
 
         return walkingSpeed;
@@ -54,11 +60,5 @@ public class MapManager : MonoBehaviour
         return plantable;       
     }
 
-    public bool Planted(Vector3 worldPosition){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        TileBase tile = map.GetTile(gridPosition);
-
-        return tile != null;
-    }
 }

@@ -181,5 +181,9 @@ public class SkeletonMove : MonoBehaviour
             // inflict damage on player
             playerUnit.TakeDamage(unit.damage);
         }
+        else if (other.gameObject.CompareTag("Defense")){
+            
+        }
     }
+
 }
