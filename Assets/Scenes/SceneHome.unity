@@ -8088,7 +8088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHour: 6
   currentMinute: 0
-  updateIntervalSeconds: 5
+  updateIntervalSeconds: 1.5
   globalLight: {fileID: 619394801}
   timeText: {fileID: 330589925}
 --- !u!114 &1635994932

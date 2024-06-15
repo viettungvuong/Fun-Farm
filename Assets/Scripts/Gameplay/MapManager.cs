@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
         if (tile == null)
             return 1f;
 
-        if (dataFromTiles.ContainsKey(tile)){
+        if (dataFromTiles.ContainsKey(tile)==false){
             return defaultSpeed;
         }
 

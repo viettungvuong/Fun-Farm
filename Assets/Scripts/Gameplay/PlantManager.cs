@@ -37,6 +37,20 @@ public class PlantManager : MonoBehaviour
     }
 
     private void ColorPlant(Plant plant, Color color){
+        if (plant == null) {
+            Debug.LogError("ColorPlant called with null plant");
+            return;
+        }
+
+        if (map == null) {
+            Debug.LogError("ColorPlant called with null map");
+            return;
+        }
+
+        if (plant.gridPosition == null) {
+            Debug.LogError("ColorPlant called with null gridPosition");
+            return;
+        }
 
         map.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
         map.SetColor(plant.gridPosition, color);

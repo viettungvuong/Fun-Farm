@@ -63,7 +63,7 @@ public class SlimeControl : MonoBehaviour
                 }
             }
 
-            if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.0001f)
+            if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
             {
                 var step = moveSpeed * Time.deltaTime; // Calculate distance to move
                 transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
@@ -78,12 +78,20 @@ public class SlimeControl : MonoBehaviour
             else
             {
                 // If we have reached the plant, damage it and find a new target
-                PlantManager.instance.DamagePlant(PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition));
-                targetPlantPosition = SetRandomTargetPosition();
-                timeSpent = 0f; // Reset timer for the new target
+                Plant plant = PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition);
 
-                // Set the next move time to current time plus cooldown
-                nextMoveTime = Time.time + cooldownTime;
+                if (plant != null)
+                {
+                    PlantManager.instance.DamagePlant(plant);
+
+                    targetPlantPosition = SetRandomTargetPosition();
+                    timeSpent = 0f; // Reset timer for the new target
+
+                    // Set the next move time to current time plus cooldown
+                    nextMoveTime = Time.time + cooldownTime;
+                }
+
+            
             }
         }
     }
@@ -101,10 +109,17 @@ public class SlimeControl : MonoBehaviour
         if (ReferenceEquals(other.gameObject, plantTilemap.gameObject))
         {
             // If colliding with a plant
+
             Plant plant = PlantManager.instance.GetPlantAt(other.gameObject.transform.position);
             if (plant != null)
             {
                 PlantManager.instance.DamagePlant(plant);
+
+                targetPlantPosition = SetRandomTargetPosition();
+                timeSpent = 0f; // Reset timer for the new target
+
+                // Set the next move time to current time plus cooldown
+                nextMoveTime = Time.time + cooldownTime;
             }
         }
     }
