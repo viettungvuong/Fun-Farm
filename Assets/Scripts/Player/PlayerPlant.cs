@@ -54,12 +54,44 @@ public class PlayerPlant : MonoBehaviour
             yield break;
         }
 
+        Orientation tileToPlayer()
+        {
+            // Calculate the direction vector from the tile to the player
+            Vector3 direction = (Vector3)rb.position - worldPosition;
+            
+            // Normalize the direction vector to get the direction in terms of unit vectors
+            direction.Normalize();
+
+            // Determine the orientation based on the direction vector
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                if (direction.x > 0)
+                {
+                    return Orientation.RIGHT;
+                }
+                else
+                {
+                    return Orientation.LEFT;
+                }
+            }
+            else
+            {
+                if (direction.y > 0)
+                {
+                    return Orientation.UP;
+                }
+                else
+                {
+                    return Orientation.DOWN;
+                }
+            }
+        }
 
 
         isPlanting = true;
         string animationName;
 
-        switch (playerMove.orientation){
+        switch (tileToPlayer()){
             case Orientation.UP:{
                     animationName = "PlayerPlantUp";
                     break;
