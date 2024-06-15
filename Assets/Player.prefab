@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5647710133540907320}
   - component: {fileID: 6121841857472381701}
   - component: {fileID: -3474386442701982307}
+  - component: {fileID: 5572432093568441648}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -230,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
+  cooldownTime: 1.5
 --- !u!60 &5647710133540907320
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -301,6 +303,7 @@ MonoBehaviour:
   damage: 20
   currentHealth: 0
   maxMoney: 1
+  coinText: {fileID: 0}
   currentMoney: 0
 --- !u!114 &-3474386442701982307
 MonoBehaviour:
@@ -315,4 +318,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
-  unit: {fileID: 0}
+  healthSlider: {fileID: 0}
+--- !u!114 &5572432093568441648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb5a1421011c4af6be902cb8dcd7e61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundDefenseTilemap: {fileID: 0}
+  fence: {fileID: 11400000, guid: ea2ddf1687e9b404980d681126e11742, type: 2}

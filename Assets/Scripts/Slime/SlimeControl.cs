@@ -63,12 +63,10 @@ public class SlimeControl : MonoBehaviour
                 }
             }
 
-            Vector3 targetWorldPosition = plantTilemap.CellToWorld((Vector3Int)targetPlantPosition);
-
-            if (Vector3.Distance(rb.position, targetWorldPosition) >= 0.0001f)
+            if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.0001f)
             {
                 var step = moveSpeed * Time.deltaTime; // Calculate distance to move
-                rb.MovePosition(Vector3.MoveTowards(rb.position, targetWorldPosition, step));
+                transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
                 timeSpent += Time.deltaTime;
 
                 if (timeSpent >= targetTimeLimit)
@@ -120,13 +118,13 @@ public class SlimeControl : MonoBehaviour
             // fence.health -= damage if fence.health > 0
             // if fence.health == 0
             // groundDefense.settile(null)
-            FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(rb.position);
+            FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(transform.position);
             if (fenceUnit!=null){
                 if (fenceUnit.health > 0){
                     fenceUnit.health -= damage;
 
                     if (fenceUnit.health == 0){
-                        PlayerDefend.instance.DestroyFence(rb.position); // destroy fence
+                        PlayerDefend.instance.DestroyFence(transform.position); // destroy fence
                     }
                 }
 

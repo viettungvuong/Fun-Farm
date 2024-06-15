@@ -6,8 +6,10 @@ using UnityEngine.Tilemaps;
 public class PlayerDefend : MonoBehaviour
 {
     public static PlayerDefend instance;
-    public Tilemap groundDefenseTilemap;
+    private Tilemap groundDefenseTilemap;
     Rigidbody2D rb;
+
+    public FenceUnit fence;
 
     private Dictionary<Vector3Int, FenceUnit> fences;
 
@@ -18,14 +20,31 @@ public class PlayerDefend : MonoBehaviour
     void Start(){
         rb = GetComponent<Rigidbody2D>();
         fences = new Dictionary<Vector3Int, FenceUnit>();
+
+        groundDefenseTilemap = GameObject.Find("GroundDefense").GetComponent<Tilemap>();
     }
 
-    public void BuildDefendFences(FenceUnit fence){
+    void Update(){
+        if (Input.GetKey(KeyCode.D)){
+            // build defence
+
+            BuildDefendFence(fence);
+        }
+    }
+
+    public void BuildDefendFence(FenceUnit fence){
         Vector3Int gridPosition = groundDefenseTilemap.WorldToCell(rb.position);
+
+        if (fences.ContainsKey(gridPosition)){
+            return;
+        }
 
         groundDefenseTilemap.SetTile(gridPosition, fence.tile);
 
-        fences.Add(gridPosition, fence);
+        FenceUnit cloneFence = Instantiate(fence);
+        cloneFence.health = 100;
+
+        fences.Add(gridPosition, cloneFence);
     }
 
     public FenceUnit GetDefenceAt(Vector3 worldPosition){
