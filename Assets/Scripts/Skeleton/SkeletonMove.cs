@@ -20,6 +20,8 @@ public class SkeletonMove : MonoBehaviour
     public float cooldownTime = 1.0f; // cooldown when chasing player (when near)
     private float nextMoveTime = 0f;
 
+    Rigidbody2D rb;
+
     void Start()
     {
         orientation = Orientation.RIGHT;
@@ -28,19 +30,19 @@ public class SkeletonMove : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         unit = GetComponent<Unit>();
+        rb = GetComponent<Rigidbody2D>();
 
         numTorches = torches.Length;
         if (numTorches > 0)
         {
             currentTargetTorch = torches[torchSabotaged];
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
+        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position);
         if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
         {
             HandleTorchSabotage();
@@ -55,7 +57,7 @@ public class SkeletonMove : MonoBehaviour
     {
         if (currentTargetTorch != null)
         {
-            float distanceToTorch = Vector3.Distance(currentTargetTorch.transform.position, transform.position);
+            float distanceToTorch = Vector3.Distance(currentTargetTorch.transform.position, rb.position);
             if (distanceToTorch <= 1.5f)
             {
                 StartCoroutine(AttackCoroutine());
@@ -83,7 +85,7 @@ public class SkeletonMove : MonoBehaviour
 
     private void HandlePlayerAttack()
     {
-        float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        float distanceToPlayer = Vector3.Distance(player.transform.position, rb.position);
         if (distanceToPlayer <= 1.5f) // approaching player (near player)
         {
             StartCoroutine(AttackCoroutine());
@@ -91,11 +93,11 @@ public class SkeletonMove : MonoBehaviour
         }
         else
         {
-            if (Time.time >= nextMoveTime){
+            if (Time.time >= nextMoveTime)
+            {
                 animator.SetBool("walk", true);
                 MoveTowards(player.transform); // move near player if more than cooldown time
             }
-
         }
     }
 
@@ -122,12 +124,12 @@ public class SkeletonMove : MonoBehaviour
             // Move horizontally
             if (direction.x > 0)
             {
-                transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+                rb.MovePosition(rb.position + Vector2.right * moveSpeed * Time.deltaTime);
                 SetOrientation(Orientation.RIGHT);
             }
             else
             {
-                transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+                rb.MovePosition(rb.position + Vector2.left * moveSpeed * Time.deltaTime);
                 SetOrientation(Orientation.LEFT);
             }
         }
@@ -136,12 +138,12 @@ public class SkeletonMove : MonoBehaviour
             // Move vertically
             if (direction.y > 0)
             {
-                transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+                rb.MovePosition(rb.position + Vector2.up * moveSpeed * Time.deltaTime);
                 SetOrientation(Orientation.UP);
             }
             else
             {
-                transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+                rb.MovePosition(rb.position + Vector2.down * moveSpeed * Time.deltaTime);
                 SetOrientation(Orientation.DOWN);
             }
         }
@@ -175,15 +177,17 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.name=="Player"){ // hit player
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.name == "Player")
+        { // hit player
             Unit playerUnit = other.gameObject.GetComponent<Unit>();
             // inflict damage on player
             playerUnit.TakeDamage(unit.damage);
         }
-        else if (other.gameObject.CompareTag("Defense")){
-            
+        else if (other.gameObject.CompareTag("Defense"))
+        {
+
         }
     }
-
 }
