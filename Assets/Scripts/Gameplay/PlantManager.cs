@@ -21,11 +21,7 @@ public class PlantManager : MonoBehaviour
 
     private void Awake()
     {
-                if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        instance = this;
     }
 
     void Start(){

@@ -21,6 +21,9 @@ public class PlayerPlant : MonoBehaviour
     }
 
     void Update(){
+        if (GameController.HomeScene()==false){
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.W)) {
             WaterTree(rb.position);
         } // press W to water

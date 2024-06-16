@@ -14,11 +14,14 @@ public class HealthBar : MonoBehaviour
 
     private float maxHealth;
 
+
     void Start()
     {
         Canvas canvas = FindObjectOfType<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
+
+        DontDestroyOnLoad(canvas);
 
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 

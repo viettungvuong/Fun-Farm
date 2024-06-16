@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
@@ -17,6 +18,10 @@ public class GameController : MonoBehaviour
             }
         }
         return 0f;
+    }
+
+    public static bool HomeScene(){
+        return SceneManager.GetActiveScene().name == "SceneHome";
     }
 
 }

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap map;
+    private Tilemap map;
 
     [SerializeField] private List<TileData> tileDatas;
 
@@ -14,7 +15,6 @@ public class MapManager : MonoBehaviour
 
     private const float defaultSpeed = 2f;
 
-
     private void Awake()
     {
         if (instance == null)
@@ -22,10 +22,39 @@ public class MapManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        // else
-        // {
-        //     Destroy(gameObject);
-        // }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        map = GameObject.Find("Ground").GetComponent<Tilemap>();
+
+        if (map == null)
+        {
+            Debug.LogWarning("Ground tilemap not found!");
+            return;
+        }
 
         dataFromTiles = new Dictionary<TileBase, TileData>();
 
@@ -38,7 +67,8 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public float GetWalkingSpeed(Vector3 worldPosition){
+    public float GetWalkingSpeed(Vector3 worldPosition)
+    {
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
         TileBase tile = map.GetTile(gridPosition);
@@ -46,7 +76,8 @@ public class MapManager : MonoBehaviour
         if (tile == null)
             return 1f;
 
-        if (dataFromTiles.ContainsKey(tile)==false){
+        if (dataFromTiles.ContainsKey(tile) == false)
+        {
             return defaultSpeed;
         }
 
@@ -55,7 +86,8 @@ public class MapManager : MonoBehaviour
         return walkingSpeed;
     }
 
-    public bool Plantable(Vector3 worldPosition){
+    public bool Plantable(Vector3 worldPosition)
+    {
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
         TileBase tile = map.GetTile(gridPosition);
@@ -65,8 +97,6 @@ public class MapManager : MonoBehaviour
 
         bool plantable = dataFromTiles[tile].plantable;
 
-        return plantable;       
+        return plantable;
     }
-
-
 }

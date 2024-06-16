@@ -23,11 +23,7 @@ public class PlayerDefend : MonoBehaviour
     private int nextMinuteRefill = 8;
 
     private void Awake() {
-                if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        instance = this;
     }
 
     void Start(){
@@ -42,6 +38,9 @@ public class PlayerDefend : MonoBehaviour
 
     void Update()
     {
+        if (GameController.HomeScene()==false){
+            return;
+        }
         if (TimeManage.instance.currentMinute==nextMinuteRefill){
             nextMinuteRefill+= intervalBetweenFenceRefills;
             if (nextMinuteRefill>=60){

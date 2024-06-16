@@ -9,11 +9,14 @@ public class PlayerUnit : Unit
     public TextMeshProUGUI coinText, waterText;
     [HideInInspector] public int currentMoney;
     [HideInInspector] public double waterPercentage=1f;
+    
     public override void Awake()
     {
         base.Awake();
         currentMoney = maxMoney;
         waterPercentage = 1f;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void LateUpdate() {

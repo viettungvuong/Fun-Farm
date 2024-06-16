@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class VillagePlayerSpawn : MonoBehaviour
 {
-    public GameObject player;    
+    private GameObject player;
+    Rigidbody2D playerRb;   
     PlayerMove playerMove;
     void Start(){
-        playerMove = player.GetComponent<PlayerMove>();
+        player = GameObject.FindGameObjectWithTag("Player");
 
+
+        playerMove = player.GetComponent<PlayerMove>();
+        playerRb = player.GetComponent<Rigidbody2D>();
+        player.transform.position = transform.position;
         playerMove.SetOrientation(Orientation.LEFT);
     }
 }

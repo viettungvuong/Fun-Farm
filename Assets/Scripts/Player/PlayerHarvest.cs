@@ -17,6 +17,9 @@ public class PlayerHarvest : MonoBehaviour
     }
 
     void FixedUpdate(){
+        if (GameController.HomeScene()==false){
+            return;
+        }
         if (PlantManager.instance.DetectPlantMaxStage(rb.position)){ // detect any plant
             Plant plant = PlantManager.instance.GetPlantAt(rb.position);
             

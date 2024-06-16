@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    public Tilemap groundTilemap;
+    private Tilemap groundTilemap;
     public Tilemap highlightTilemap; // for highlighting
     public Tile highlightTile;
     public GameObject panel;
@@ -40,6 +40,11 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeGroundTilemap();
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -54,6 +59,32 @@ public class PlayerMove : MonoBehaviour
 
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the groundTilemap when a new scene is loaded
+        InitializeGroundTilemap();
+    }
+
+    private void InitializeGroundTilemap()
+    {
+        groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+
+        if (groundTilemap == null)
+        {
+            Debug.LogWarning("Ground tilemap not found!");
+            return;
+        }
+
+        minBounds = groundTilemap.localBounds.min;
+        maxBounds = groundTilemap.localBounds.max;
     }
 
     void Update()
@@ -111,7 +142,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-
         if (holdArrowKey) // holding arrow key => walking
         {
             if (!changingAnimation)
@@ -130,10 +160,12 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if (SceneManager.GetActiveScene().name!="SceneHome"){
+            if (SceneManager.GetActiveScene().name != "SceneHome")
+            {
                 animator.SetBool("idle", true);
             }
-            else{
+            else
+            {
                 if (playerPlant.isPlanting == false && playerAttack.isAttacking == false)
                 { // not planting or attacking then start the idle animation
                     animator.SetBool("idle", true);
@@ -143,11 +175,7 @@ public class PlayerMove : MonoBehaviour
                     animator.SetBool("idle", false);
                 }
             }
-
-           
-
         }
-
     }
 
     private void FixedUpdate()
@@ -230,7 +258,6 @@ public class PlayerMove : MonoBehaviour
             yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
             animator.ResetTrigger("walk");
         }
-
     }
 
     private void StartOrientationChange()
