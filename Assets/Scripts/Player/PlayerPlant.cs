@@ -116,17 +116,25 @@ public class PlayerPlant : MonoBehaviour
         plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]); // set plant on tilemap
     }
 
+    const double waterUsage = 0.15;
+
     public void WaterTree(Vector3 worldPosition){
+
+
         bool plantable = MapManager.instance.Plantable(worldPosition);
         if (!plantable){
-
             return;
         }
         bool planted = PlantManager.instance.Planted(worldPosition);
         if (!planted){
-
             return;
         }
+
+        // check sufficient water
+        if (playerUnit.SufficientWater(waterUsage)==false){
+            return; // insufficient water
+        }
+
 
         // PlantManager.instance.WaterPlant(worldPosition);
         StartCoroutine(WaterTreeCoroutine(worldPosition));
@@ -139,8 +147,11 @@ public class PlayerPlant : MonoBehaviour
             yield break;
         }
 
+        playerUnit.UseWater(waterUsage);
+
         isPlanting = true;
         string animationName;
+        
 
         switch (playerMove.orientation){
             case Orientation.UP:{
@@ -160,7 +171,7 @@ public class PlayerPlant : MonoBehaviour
         animator.SetTrigger("water");
         // wait for animation to complete
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
-        animator.ResetTrigger("plant");
+        animator.ResetTrigger("water");
         animator.SetBool("idle", true);
 
         isPlanting = false;

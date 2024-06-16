@@ -14,7 +14,6 @@ public class EnemiesSpawn : MonoBehaviour
         if (TimeManage.instance.currentMinute==nextMinuteSpawn){
             if (TimeManage.instance.IsDay()){ // day time spawn slime
                 int slimes = Random.Range(1, 3);
-                Debug.Log(slimes);
 
                 SpawnEnemy(slimes, "Slime");
 
@@ -40,17 +39,30 @@ public class EnemiesSpawn : MonoBehaviour
         }
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
-        for (int i = 0; i < number; i++)
+        for (int i = 0; i < number; i++) // number of enemies spawn
         {
             // Find a random position within the tilemap bounds
-            Vector3Int randomCell = new Vector3Int(
-                Random.Range(groundBounds.xMin, groundBounds.xMax),
-                Random.Range(groundBounds.yMin, groundBounds.yMax),
-                0
-            );
+            Vector3 spawnPosition;
+            int attempts = 0; // fail-safe mechanism
 
-            // Convert cell position to world position
-            Vector3 spawnPosition = groundTilemap.CellToWorld(randomCell);
+            do
+            {
+                Vector3Int randomCell = new Vector3Int(
+                    Random.Range(groundBounds.xMin, groundBounds.xMax),
+                    Random.Range(groundBounds.yMin, groundBounds.yMax),
+                    0
+                );
+
+                // Convert cell position to world position
+                spawnPosition = groundTilemap.CellToWorld(randomCell);
+
+                attempts++;
+            } while (Physics2D.OverlapPoint(spawnPosition)&&attempts<200); // make sure the spawn position not on any collider
+
+            if (attempts>=200){
+                continue; // skip this enemy
+            }
+
 
             GameObject spawnedEnemy = ObjectPooling.SpawnFromPool(enemyTag, spawnPosition);
             spawnedEnemy.SetActive(true);

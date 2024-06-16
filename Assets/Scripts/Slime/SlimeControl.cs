@@ -42,7 +42,11 @@ public class SlimeControl : MonoBehaviour
             Plant plant = PlantManager.instance.GetPlantAt(rb.position);
             PlantManager.instance.DamagePlant(plant);
 
-            targetPlantPosition = SetRandomTargetPosition();
+            Vector3Int cellPosition = plantTilemap.WorldToCell(rb.position);
+            if (cellPosition == targetPlantPosition){
+                targetPlantPosition = SetRandomTargetPosition(); // reset target if reached
+            }
+
             timeSpent = 0f; // Reset timer for the new target
 
             // Set the next move time to current time plus cooldown
@@ -87,22 +91,22 @@ public class SlimeControl : MonoBehaviour
                     timeSpent = 0f; // Reset timer for the new target
                 }
             }
-            else
-            {
-                // If we have reached the plant, damage it and find a new target
-                Plant plant = PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition);
+            // else
+            // {
+            //     // If we have reached the plant, damage it and find a new target
+            //     Plant plant = PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition);
 
-                if (plant != null)
-                {
-                    PlantManager.instance.DamagePlant(plant);
+            //     if (plant != null)
+            //     {
+            //         PlantManager.instance.DamagePlant(plant);
 
-                    targetPlantPosition = SetRandomTargetPosition();
-                    timeSpent = 0f; // Reset timer for the new target
+            //         targetPlantPosition = SetRandomTargetPosition();
+            //         timeSpent = 0f; // Reset timer for the new target
 
-                    // Set the next move time to current time plus cooldown
-                    nextMoveTime = Time.time + cooldownTime;
-                }
-            }
+            //         // Set the next move time to current time plus cooldown
+            //         nextMoveTime = Time.time + cooldownTime;
+            //     }
+            // }
         }
     }
 
