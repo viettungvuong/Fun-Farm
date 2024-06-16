@@ -17,7 +17,15 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
 
         dataFromTiles = new Dictionary<TileBase, TileData>();
 

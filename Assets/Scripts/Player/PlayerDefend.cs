@@ -23,7 +23,11 @@ public class PlayerDefend : MonoBehaviour
     private int nextMinuteRefill = 8;
 
     private void Awake() {
-        instance = this;
+                if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     void Start(){

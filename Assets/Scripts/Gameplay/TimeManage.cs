@@ -22,7 +22,11 @@ public class TimeManage : MonoBehaviour
         lastUpdated = DateTime.Now;
         UpdateLight();
 
-        instance = this;
+                if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // Update is called once per frame
