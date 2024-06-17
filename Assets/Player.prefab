@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 5572432093568441648}
   - component: {fileID: 7213360196023523754}
   - component: {fileID: 4549481178296448086}
+  - component: {fileID: -9202891944508619798}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -362,3 +363,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644e7962220244b7895b27d0202e2b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marketPanel: {fileID: 0}
+--- !u!114 &-9202891944508619798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebae18613fae342bfbe97d96a9502bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeManage: {fileID: 0}
+  maxHealthDecreasePerDay: 50

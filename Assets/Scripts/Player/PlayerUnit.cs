@@ -46,4 +46,8 @@ public class PlayerUnit : Unit
     public void AddWater(double amount){
         waterPercentage = Math.Min(1.0, waterPercentage + amount);
     }
+
+    public void RecoverHealth(double healthRecovered){
+        currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
+    }
 }
