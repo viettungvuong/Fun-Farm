@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,9 +44,6 @@ public class PlayerUnit : Unit
         waterPercentage -= amount;
     }
     public void AddWater(double amount){
-        waterPercentage += amount;
-        if(waterPercentage > 1.0){
-            waterPercentage = 1.0;
-        }
+        waterPercentage = Math.Min(1.0, waterPercentage + amount);
     }
 }

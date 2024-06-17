@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -3474386442701982307}
   - component: {fileID: 5572432093568441648}
   - component: {fileID: 7213360196023523754}
+  - component: {fileID: 4549481178296448086}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1484f696bc441208d2af63567b38ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTilemap: {fileID: 0}
   highlightTilemap: {fileID: 0}
   highlightTile: {fileID: 11400000, guid: bf165adecac494d0d8adb210d85eb027, type: 2}
   panel: {fileID: 0}
@@ -305,7 +305,9 @@ MonoBehaviour:
   currentHealth: 0
   maxMoney: 1
   coinText: {fileID: 0}
+  waterText: {fileID: 0}
   currentMoney: 0
+  waterPercentage: 1
 --- !u!114 &-3474386442701982307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,5 +348,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: effb5cf1c004d490c974f4e67f5e3f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4549481178296448086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 644e7962220244b7895b27d0202e2b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

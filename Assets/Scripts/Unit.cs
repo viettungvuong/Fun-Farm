@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int maxHealth;
-    public int damage;
+    public double maxHealth;
+    public double damage;
 
-    [HideInInspector] public int currentHealth;
+    [HideInInspector] public double currentHealth;
 
     Animator animator;
 
@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int inflictedDamage)
+    public void TakeDamage(double inflictedDamage)
     {
         currentHealth -= inflictedDamage;
         if (currentHealth<=0){

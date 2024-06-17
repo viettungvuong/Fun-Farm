@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
 
     private Unit unit;
 
-    private float maxHealth;
+    private double maxHealth;
 
 
     void Start()
@@ -30,13 +30,13 @@ public class HealthBar : MonoBehaviour
 
         maxHealth = unit.maxHealth;
 
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = unit.currentHealth;
+        healthSlider.maxValue = (float)maxHealth;
+        healthSlider.value = (float)unit.currentHealth;
     }
 
 
     private void LateUpdate() {
-        healthSlider.value = unit.currentHealth;
+        healthSlider.value = (float)unit.currentHealth;
         float healthPercentage = (float)unit.currentHealth / (float)unit.maxHealth;
     
         if (healthPercentage >= 0.8f&&healthPercentage<=1f) {

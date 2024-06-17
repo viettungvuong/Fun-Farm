@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class EnemiesSpawn : MonoBehaviour
@@ -9,9 +10,15 @@ public class EnemiesSpawn : MonoBehaviour
     public Transform player;
     public int intervalBetweenSpawns = 20;
     private int nextMinuteSpawn = 10;
+    private bool timeToSpawn = false;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
     void Update(){
         if (TimeManage.instance.currentMinute==nextMinuteSpawn){
+            timeToSpawn = true;
+        }
+
+        if (timeToSpawn&&SceneManager.GetActiveScene().name=="SceneHome"){
+            // only spawn when at scene home
             if (TimeManage.instance.IsDay()){ // day time spawn slime
                 int slimes = Random.Range(1, 3);
 
@@ -22,13 +29,13 @@ public class EnemiesSpawn : MonoBehaviour
 
                 SpawnEnemy(skeletons, "Skeleton");
             }
-
+            timeToSpawn = false;
             nextMinuteSpawn += intervalBetweenSpawns;
             if (nextMinuteSpawn>=60){
                 nextMinuteSpawn -= 60;
             }
-
         }
+
     }
 
     private void SpawnEnemy(int number, string enemyTag)
