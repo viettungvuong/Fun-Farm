@@ -36,6 +36,12 @@ public class HealthBar : MonoBehaviour
 
 
     private void LateUpdate() {
+        if (GameController.HomeScene()){
+            healthSlider.gameObject.SetActive(true); // only show health bar in scene home
+        }
+        else{
+            healthSlider.gameObject.SetActive(false);
+        }
         healthSlider.value = (float)unit.currentHealth;
         float healthPercentage = (float)unit.currentHealth / (float)unit.maxHealth;
     

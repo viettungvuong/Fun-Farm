@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     public TimeManage timeManage;
     public float maxHealthDecreasePerDay = 50f; // Maximum health decrease over a day
     private float previousTimeOfDay;
+
+    public TextMeshProUGUI healthText;
 
     void Start()
     {
@@ -31,5 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
         playerUnit.currentHealth -= healthDecrease;
         previousTimeOfDay = currentTimeOfDay;
+
+        healthText.text = playerUnit.currentHealth.ToString();
     }
 }

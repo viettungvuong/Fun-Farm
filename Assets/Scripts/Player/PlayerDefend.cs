@@ -8,19 +8,21 @@ public class PlayerDefend : MonoBehaviour
 {
     public static PlayerDefend instance;
     private Tilemap groundDefenseTilemap;
-    Rigidbody2D rb;
+    public bool isTakingWood = false;
+    private Rigidbody2D rb;
 
     public FenceUnit fenceHorizontal, fenceVertical;
 
     private Dictionary<Vector3Int, FenceUnit> fences;
 
-    private const int maxNumberOfFences = 4;
-    private int numberOfFences = maxNumberOfFences;
+
     public TextMeshProUGUI fenceText;
 
     private PlayerMove playerMove;
-    public int intervalBetweenFenceRefills = 20;
-    private int nextMinuteRefill = 8;
+    private Animator animator;
+
+    private int woodTaken = 0;
+    private int numberOfFences = 0;
 
     private void Awake() {
         instance = this;
@@ -32,6 +34,7 @@ public class PlayerDefend : MonoBehaviour
 
         groundDefenseTilemap = GameObject.Find("GroundDefense").GetComponent<Tilemap>();
         playerMove = GetComponent<PlayerMove>();
+        animator = GetComponent<Animator>();
     }
 
     private bool buildFenceFlag = false;
@@ -39,17 +42,10 @@ public class PlayerDefend : MonoBehaviour
     void Update()
     {
         if (GameController.HomeScene()==false){
-            return;
+            return; // only in home scene
         }
-        if (TimeManage.instance.currentMinute==nextMinuteRefill){
-            nextMinuteRefill+= intervalBetweenFenceRefills;
-            if (nextMinuteRefill>=60){
-                nextMinuteRefill -= 60;
-            }
 
-            numberOfFences = maxNumberOfFences; // refill number of fences
 
-        }
         if (Input.GetKeyDown(KeyCode.D))
         {
             buildFenceFlag = true;
@@ -151,5 +147,85 @@ public class PlayerDefend : MonoBehaviour
         Vector3Int cellPosition = groundDefenseTilemap.WorldToCell(worldPosition);
         
         groundDefenseTilemap.SetTile(cellPosition, null);
+    }
+
+    private IEnumerator GetWoodCoroutine(GameObject wood)
+    {
+        Vector3 woodPosition = wood.transform.position;
+        Orientation woodToPlayer()
+        {
+            // Calculate the direction vector from the tile to the player
+            Vector3 direction = (Vector3)rb.position - woodPosition;
+            
+            // Normalize the direction vector to get the direction in terms of unit vectors
+            direction.Normalize();
+
+            // Determine the orientation based on the direction vector
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                if (direction.x > 0)
+                {
+                    return Orientation.RIGHT;
+                }
+                else
+                {
+                    return Orientation.LEFT;
+                }
+            }
+            else
+            {
+                if (direction.y > 0)
+                {
+                    return Orientation.UP;
+                }
+                else
+                {
+                    return Orientation.DOWN;
+                }
+            }
+        }
+
+
+        isTakingWood = true;
+        string animationName;
+
+        switch (woodToPlayer()){
+            case Orientation.UP:{
+                    animationName = "PlayerHarvestUp";
+                    break;
+            }
+            case Orientation.DOWN:{
+                    animationName = "PlayerHarvestDown";
+                    break;
+            }
+            default:{
+                    animationName = "PlayerHarvestHorizontal";
+                    break;
+            }
+        }
+        animator.SetBool("idle", false);
+        animator.Play(animationName);
+        // wait for animation to complete
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
+        animator.SetBool("idle", true);
+
+        isTakingWood = false;
+
+        woodTaken++;
+
+        if (woodTaken==3){
+            numberOfFences++;
+        }
+
+        wood.SetActive(false); // hide wood
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Wood")){ // take wood
+            // play harvest down animation
+            StopAllCoroutines();
+            StartCoroutine(GetWoodCoroutine(other.gameObject));
+            
+        }
     }
 }
