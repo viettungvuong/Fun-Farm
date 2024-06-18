@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class PlantManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap map;
+    private Tilemap plantMap;
 
     private Dictionary<Vector3Int, Plant> plantPos; // position of plants
     private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime;
@@ -21,15 +22,51 @@ public class PlantManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance==null){
+            instance = this;
+        }
+        else{
+            Destroy(this);
+        }
+
+
     }
 
-    void Start(){
+    private void Start() {
+
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+
         plantPos = new Dictionary<Vector3Int, Plant>();
         lastLevelTime = new Dictionary<Plant, DateTime>();
         lastCheckFreshTime = new Dictionary<Plant, DateTime>();
         plantHealthBars = new Dictionary<Plant, PlantHealthBar>();
+
     }
+
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        if (GameController.HomeScene()){
+            plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        }
+
+    }
+
 
     private void FixedUpdate() {
         CheckPlantLevel();
@@ -38,8 +75,8 @@ public class PlantManager : MonoBehaviour
 
     private void ColorPlant(Plant plant, Color color){
 
-        map.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
-        map.SetColor(plant.gridPosition, color);
+        plantMap.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
+        plantMap.SetColor(plant.gridPosition, color);
 
     }
 
@@ -66,7 +103,7 @@ public class PlantManager : MonoBehaviour
             if (secondsDifference > plant.levelUpTime)
             {
                 plant.currentStage++; // level up
-                map.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
+                plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                 updates[plant] = now; // collect the update
             }
         }
@@ -78,7 +115,7 @@ public class PlantManager : MonoBehaviour
         }
     }
     public bool Planted(Vector3 worldPosition){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+        Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
         return plantPos.ContainsKey(gridPosition);
     }
@@ -98,7 +135,7 @@ public class PlantManager : MonoBehaviour
 
     public List<Vector3Int> FindAllPlants(bool notIncludeMax=false)
     {
-        BoundsInt bounds = map.cellBounds;
+        BoundsInt bounds = plantMap.cellBounds;
         List<Vector3Int> positions = new List<Vector3Int>();
 
         for (int x = bounds.xMin; x <= bounds.xMax; x++)
@@ -160,7 +197,7 @@ public class PlantManager : MonoBehaviour
     }
 
     public bool DetectPlant(Vector3Int cellPosition){
-        TileBase tile = map.GetTile(cellPosition);
+        TileBase tile = plantMap.GetTile(cellPosition);
 
         if (tile != null)
         {
@@ -174,8 +211,8 @@ public class PlantManager : MonoBehaviour
     }
 
     public bool DetectPlant(Vector3 worldlPosition){
-        Vector3Int cellPosition = map.WorldToCell(worldlPosition);
-        TileBase tile = map.GetTile(cellPosition);
+        Vector3Int cellPosition = plantMap.WorldToCell(worldlPosition);
+        TileBase tile = plantMap.GetTile(cellPosition);
 
         if (tile != null)
         {
@@ -189,7 +226,7 @@ public class PlantManager : MonoBehaviour
     }
 
     public bool DetectPlantMaxStage(Vector3Int cellPosition){
-        TileBase tile = map.GetTile(cellPosition);
+        TileBase tile = plantMap.GetTile(cellPosition);
 
         if (tile != null)
         {
@@ -203,8 +240,8 @@ public class PlantManager : MonoBehaviour
     }
 
     public bool DetectPlantMaxStage(Vector3 worldlPosition){
-        Vector3Int cellPosition = map.WorldToCell(worldlPosition);
-        TileBase tile = map.GetTile(cellPosition);
+        Vector3Int cellPosition = plantMap.WorldToCell(worldlPosition);
+        TileBase tile = plantMap.GetTile(cellPosition);
 
         if (tile != null)
         {
@@ -221,7 +258,7 @@ public class PlantManager : MonoBehaviour
         plantPos.Remove(plant.gridPosition); // remove plant
 
         if (removeOnMap)
-            map.SetTile(plant.gridPosition, null);
+            plantMap.SetTile(plant.gridPosition, null);
     }
 
     public void DamagePlant(Plant plant){
@@ -240,12 +277,12 @@ public class PlantManager : MonoBehaviour
         }
 
         else{
-            return plantPos[map.WorldToCell(worldPosition)];
+            return plantPos[plantMap.WorldToCell(worldPosition)];
         }
     }
 
     public Plant GetPlantAt(Vector3Int cellPosition){
-        if (!Planted(map.CellToWorld(cellPosition))){
+        if (!Planted(plantMap.CellToWorld(cellPosition))){
             return null;
         }
 
@@ -255,7 +292,7 @@ public class PlantManager : MonoBehaviour
     }
 
     public int GetPlantLevel(Vector3 worldPosition){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+        Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
         if (gridPosition == null||plantPos.ContainsKey(gridPosition)==false)
             return -1;
@@ -264,7 +301,7 @@ public class PlantManager : MonoBehaviour
     }
 
     public bool AddPlant(Vector3 worldPosition, Plant plant){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+        Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
         if (gridPosition == null)
             return false;
@@ -276,14 +313,14 @@ public class PlantManager : MonoBehaviour
         lastCheckFreshTime.Add(plant, DateTime.Now);
 
         PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
-        plantHealthBar.Initialize(plant, map, healthSliderPrefab); // add another plant health bar
+        plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
         plantHealthBars.Add(plant, plantHealthBar);
 
         return true; 
     }
 
     public bool WaterPlant(Vector3 worldPosition){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+        Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
         if (gridPosition == null)
             return false;

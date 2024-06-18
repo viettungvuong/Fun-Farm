@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class WoodGenerate : MonoBehaviour
 {
-    public Tilemap groundTilemap;
+    private Tilemap groundTilemap;
     public int woodNumber;
     public int intervalBetweenFenceRefills = 5;
     private int nextMinuteRefill = 0;
-    void Start()
+
+    private void Start()
     {
-        // SpawnWood(woodNumber);
+
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
     }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+    }
+
 
     // Update is called once per frame
     void Update()

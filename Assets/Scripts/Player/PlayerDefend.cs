@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class PlayerDefend : MonoBehaviour
@@ -25,16 +26,48 @@ public class PlayerDefend : MonoBehaviour
     private int numberOfFences = 0;
 
     private void Awake() {
-        instance = this;
+        if (instance==null){
+            instance = this;
+        }
+        else{
+            Destroy(this);
+        }
+
+    }
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        if (GameController.HomeScene()){
+            groundDefenseTilemap = GameObject.Find("GroundDefense").GetComponent<Tilemap>();
+        }
+
+    }
+
+
     void Start(){
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+
         rb = GetComponent<Rigidbody2D>();
         fences = new Dictionary<Vector3Int, FenceUnit>();
 
-        groundDefenseTilemap = GameObject.Find("GroundDefense").GetComponent<Tilemap>();
+        
         playerMove = GetComponent<PlayerMove>();
         animator = GetComponent<Animator>();
+        // Subscribe to the sceneLoaded event
+
     }
 
     private bool buildFenceFlag = false;
@@ -213,7 +246,7 @@ public class PlayerDefend : MonoBehaviour
 
         woodTaken++;
 
-        if (woodTaken==3){
+        if (woodTaken%3==0){
             numberOfFences++;
         }
 

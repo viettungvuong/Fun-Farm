@@ -17,17 +17,20 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
-            return;
         }
 
+
+    }
+
+    private void Start() {
         // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -49,12 +52,6 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         map = GameObject.Find("Ground").GetComponent<Tilemap>();
-
-        if (map == null)
-        {
-            Debug.LogWarning("Ground tilemap not found!");
-            return;
-        }
 
         dataFromTiles = new Dictionary<TileBase, TileData>();
 

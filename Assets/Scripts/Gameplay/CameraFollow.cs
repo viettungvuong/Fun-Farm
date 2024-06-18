@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     public Tilemap tilemap;
 
     public float smoothSpeed = 0.125f;  
@@ -21,6 +21,7 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         mainCamera = GetComponent<Camera>();
 
         BoundsInt bounds = tilemap.cellBounds;

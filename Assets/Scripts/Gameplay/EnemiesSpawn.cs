@@ -6,12 +6,38 @@ using UnityEngine.Tilemaps;
 
 public class EnemiesSpawn : MonoBehaviour
 {
-    public Tilemap groundTilemap;
+    private Tilemap groundTilemap;
     public Transform player;
-    public int intervalBetweenSpawns = 20;
-    private int nextMinuteSpawn = 10;
+    public int intervalBetweenSpawns;
+    private int nextMinuteSpawn = 25;
     private bool timeToSpawn = false;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
+    private void Start()
+    {
+
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+    }
+
     void Update(){
         if (TimeManage.instance.currentMinute==nextMinuteSpawn){
             timeToSpawn = true;

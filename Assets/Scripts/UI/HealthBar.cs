@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
@@ -13,16 +14,45 @@ public class HealthBar : MonoBehaviour
     private Unit unit;
 
     private double maxHealth;
+    private Canvas canvas;
 
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeCanvas();
+    }
+
+    private void InitializeCanvas()
+    {
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        if (canvases.Length>=2){
+            foreach (Canvas cv in canvases){
+                if (cv.gameObject.scene.name!="DontDestroyOnLoad"){
+                    cv.gameObject.SetActive(false);
+                    Debug.Log("canvas disabled");
+                }
+            }
+        }
+
+        canvas = canvases[0];
+        DontDestroyOnLoad(canvas);
+    }
 
     void Start()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeCanvas();
+
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
-
-        DontDestroyOnLoad(canvas);
-
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 
 

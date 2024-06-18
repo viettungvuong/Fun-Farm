@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class TimeManage : MonoBehaviour
 {
     public int currentHour = 6, currentMinute = 0;
     public float updateIntervalSeconds;
-    public Light2D globalLight;
+    private Light2D globalLight;
 
     private DateTime lastUpdated;
 
@@ -17,14 +18,42 @@ public class TimeManage : MonoBehaviour
 
     public static TimeManage instance;
 
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        globalLight = GameObject.Find("Global Light 2D").GetComponent<Light2D>();
+    }
+
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }  
+    }
+
+    private void Start() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        InitializeMap();
+
         lastUpdated = DateTime.Now;
         UpdateLight();
-
-        instance = this;
-
-        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame

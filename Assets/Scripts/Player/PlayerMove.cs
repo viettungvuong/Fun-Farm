@@ -48,7 +48,7 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        moveSpeed = MapManager.instance.GetWalkingSpeed(transform.position);
+
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;
@@ -59,6 +59,7 @@ public class PlayerMove : MonoBehaviour
 
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
+
     }
 
     private void OnDestroy()
@@ -76,12 +77,6 @@ public class PlayerMove : MonoBehaviour
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
-
-        if (groundTilemap == null)
-        {
-            Debug.LogWarning("Ground tilemap not found!");
-            return;
-        }
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;

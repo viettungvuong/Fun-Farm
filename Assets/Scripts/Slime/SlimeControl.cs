@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class SlimeControl : MonoBehaviour
@@ -22,12 +23,34 @@ public class SlimeControl : MonoBehaviour
     Rigidbody2D rb;
 
 
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the map when a new scene is loaded
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+    }
+
+
     void Start()
     {
+
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+
         plantPositions = new List<Vector3Int>();
         targetPlantPosition = null;
-
-        plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();

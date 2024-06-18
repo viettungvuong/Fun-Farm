@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerUnit : Unit
 {
     public int maxMoney;
+    public static PlayerUnit instance;
     public TextMeshProUGUI coinText, waterText;
     [HideInInspector] public int currentMoney;
     [HideInInspector] public double waterPercentage=1f;
@@ -18,6 +20,14 @@ public class PlayerUnit : Unit
         waterPercentage = 1f;
 
         DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void LateUpdate() {
