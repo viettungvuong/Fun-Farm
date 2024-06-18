@@ -10,7 +10,7 @@ public class EnemiesSpawn : MonoBehaviour
     private Tilemap groundTilemap;
     public Transform player;
     public int intervalBetweenSpawns;
-    private int nextMinuteSpawn = 0;
+    private int nextMinuteSpawn = 20;
     private bool timeToSpawn = false;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
 

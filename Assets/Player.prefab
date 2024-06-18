@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightTilemap: {fileID: 0}
   highlightTile: {fileID: 11400000, guid: bf165adecac494d0d8adb210d85eb027, type: 2}
-  panel: {fileID: 0}
+  plantPanel: {fileID: 3779829567700772050, guid: cd7d35df96fb146a9bc578898bc4765c, type: 3}
   orientation: 0
 --- !u!50 &436781378712855968
 Rigidbody2D:
@@ -335,10 +335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb5a1421011c4af6be902cb8dcd7e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTakingWood: 0
   fenceHorizontal: {fileID: 0}
   fenceVertical: {fileID: 0}
   fenceText: {fileID: 0}
-  intervalBetweenFenceRefills: 20
 --- !u!114 &7213360196023523754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,3 +378,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManage: {fileID: 0}
   maxHealthDecreasePerDay: 50
+  healthText: {fileID: 0}

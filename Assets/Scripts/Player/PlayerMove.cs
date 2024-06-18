@@ -20,10 +20,9 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    private Tilemap groundTilemap;
-    public Tilemap highlightTilemap; // for highlighting
+    private Tilemap groundTilemap, highlightTilemap;
     public Tile highlightTile;
-    public GameObject panel;
+    private GameObject plantPanel;
 
     private Vector3 minBounds;
     private Vector3 maxBounds;
@@ -60,6 +59,8 @@ public class PlayerMove : MonoBehaviour
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
 
+        plantPanel = GameObject.Find("PlantPanel");
+
     }
 
     private void OnDestroy()
@@ -77,6 +78,11 @@ public class PlayerMove : MonoBehaviour
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+
+        if (GameController.HomeScene()){
+            highlightTilemap = GameObject.Find("Highlight").GetComponent<Tilemap>();
+        }
+
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;
@@ -189,23 +195,24 @@ public class PlayerMove : MonoBehaviour
         Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position);
 
         // Only proceed if highlightTilemap is assigned
-        if (highlightTilemap != null)
+        if (GameController.HomeScene()&&highlightTilemap != null)
         {
             highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
-
-            if (MapManager.instance.Plantable(rb.position)) // plantable position
+            
+            if (GameController.HomeScene()&&MapManager.instance.Plantable(rb.position)) // plantable position
             {
+
                 // Only highlight if highlightTile is assigned
                 if (highlightTile != null)
                 {
                     highlightTilemap.SetTile(cellPosition, highlightTile);
                 }
-                panel.SetActive(true);
+                plantPanel.SetActive(true);
             }
             else
             {
                 highlightTilemap.SetTile(cellPosition, null);
-                panel.SetActive(false); // hide planting panel when the position is not plantable
+                plantPanel.SetActive(false);// hide planting panel when the position is not plantable
             }
             highlightTilemap.RefreshAllTiles();
         }

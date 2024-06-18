@@ -16,6 +16,8 @@ public class PlantHealthBar : MonoBehaviour
     private Tilemap plantTilemap;
 
     
+
+    
     public void Initialize(Plant plant, Tilemap plantTilemap, Slider healthSliderPrefab)
     {
         this.plant = plant;
@@ -27,7 +29,6 @@ public class PlantHealthBar : MonoBehaviour
     {
         if (plant == null || plantTilemap == null || healthSliderPrefab == null)
         {
-            Debug.LogError("PlantHealthBar: Initialize method not called before Start");
             return;
         }
 
@@ -49,10 +50,11 @@ public class PlantHealthBar : MonoBehaviour
     private void LateUpdate() {
         if (plant == null) return;
 
-        if (plant.currentStage == plant.maxStage){
+        if (GameController.HomeScene()==false||plant.currentStage == plant.maxStage){
             healthSlider.gameObject.SetActive(false);
             return;
         }
+
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
 

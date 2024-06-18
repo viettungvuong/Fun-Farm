@@ -33,16 +33,17 @@ public class PlantManager : MonoBehaviour
     }
 
     private void Start() {
+        plantPos = new Dictionary<Vector3Int, Plant>();
+        lastLevelTime = new Dictionary<Plant, DateTime>();
+        lastCheckFreshTime = new Dictionary<Plant, DateTime>();
+        plantHealthBars = new Dictionary<Plant, PlantHealthBar>();
 
         // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
 
-        plantPos = new Dictionary<Vector3Int, Plant>();
-        lastLevelTime = new Dictionary<Plant, DateTime>();
-        lastCheckFreshTime = new Dictionary<Plant, DateTime>();
-        plantHealthBars = new Dictionary<Plant, PlantHealthBar>();
+
 
     }
 
@@ -63,6 +64,20 @@ public class PlantManager : MonoBehaviour
     {
         if (GameController.HomeScene()){
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+
+            foreach (var entry in plantPos)
+            {
+                Vector3Int position = entry.Key;
+                Plant plant = entry.Value;
+
+                // reput plant 
+                plantMap.SetTile(position,plant.tiles[plant.currentStage]);
+
+                // reinitialize plant health bar
+                PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
+                plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
+                plantHealthBars.Add(plant, plantHealthBar);
+            }
         }
 
     }
