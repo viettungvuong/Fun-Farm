@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,16 +10,19 @@ public class EnemiesSpawn : MonoBehaviour
     private Tilemap groundTilemap;
     public Transform player;
     public int intervalBetweenSpawns;
-    private int nextMinuteSpawn = 25;
+    private int nextMinuteSpawn = 0;
     private bool timeToSpawn = false;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
+
+    
     private void Start()
     {
-
         // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
+
+
     }
 
     private void OnDestroy()
@@ -43,15 +47,14 @@ public class EnemiesSpawn : MonoBehaviour
             timeToSpawn = true;
         }
 
-        if (timeToSpawn&&SceneManager.GetActiveScene().name=="SceneHome"){
-            // only spawn when at scene home
+        if (timeToSpawn){
             if (TimeManage.instance.IsDay()){ // day time spawn slime
-                int slimes = Random.Range(1, 3);
+                int slimes = UnityEngine.Random.Range(1, 3);
 
                 SpawnEnemy(slimes, "Slime");
 
             } else{
-                int skeletons = Random.Range(1, 3);
+                int skeletons = UnityEngine.Random.Range(1, 3);
 
                 SpawnEnemy(skeletons, "Skeleton");
             }
@@ -81,8 +84,8 @@ public class EnemiesSpawn : MonoBehaviour
             do
             {
                 Vector3Int randomCell = new Vector3Int(
-                    Random.Range(groundBounds.xMin, groundBounds.xMax),
-                    Random.Range(groundBounds.yMin, groundBounds.yMax),
+                    UnityEngine.Random.Range(groundBounds.xMin, groundBounds.xMax),
+                    UnityEngine.Random.Range(groundBounds.yMin, groundBounds.yMax),
                     0
                 );
 
@@ -105,6 +108,7 @@ public class EnemiesSpawn : MonoBehaviour
             {
                 spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
             }
+
         }
     }
 }

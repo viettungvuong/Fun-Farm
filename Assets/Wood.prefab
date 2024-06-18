@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2622746296778961207}
   - component: {fileID: 7557514373518698306}
   - component: {fileID: 2254758839224471531}
+  - component: {fileID: 4488856775282267063}
   m_Layer: 0
   m_Name: Wood
   m_TagString: Wood
@@ -136,3 +137,15 @@ PolygonCollider2D:
       - {x: 0.78125, y: -0.28125}
       - {x: 0.78125, y: 0.34375}
   m_UseDelaunayMesh: 0
+--- !u!114 &4488856775282267063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569222220031056869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab1f92660b1c4c318644544da3cf0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

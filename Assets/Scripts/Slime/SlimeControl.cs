@@ -43,11 +43,12 @@ public class SlimeControl : MonoBehaviour
 
     void Start()
     {
-
         // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
+
+        DontDestroyOnLoad(gameObject);
 
         plantPositions = new List<Vector3Int>();
         targetPlantPosition = null;
@@ -56,10 +57,23 @@ public class SlimeControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Update() {
+        if (GameController.HomeScene()){
+            gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else{
+            gameObject.transform.localScale = new Vector3(0, 0, 0); // hide
+        }
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (GameController.HomeScene()==false){
+            return; // only work in home scene
+        }
+
         if (PlantManager.instance.DetectPlant(rb.position)){ // detect any plant
             Plant plant = PlantManager.instance.GetPlantAt(rb.position);
             PlantManager.instance.DamagePlant(plant);
@@ -129,6 +143,7 @@ public class SlimeControl : MonoBehaviour
             //         nextMoveTime = Time.time + cooldownTime;
             //     }
             // }
+
         }
     }
 
