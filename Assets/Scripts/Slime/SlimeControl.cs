@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -25,13 +26,13 @@ public class SlimeControl : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+ 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-initialize the map when a new scene is loaded
+ 
         InitializeMap();
     }
 
@@ -43,7 +44,7 @@ public class SlimeControl : MonoBehaviour
 
     void Start()
     {
-        // Subscribe to the sceneLoaded event
+ 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -96,7 +97,7 @@ public class SlimeControl : MonoBehaviour
             if (targetPlantPosition != null && PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition) == null)
             {
                 targetPlantPosition = null;
-            }
+            } // the target plant is no longer there
 
             if (targetPlantPosition == null)
             {
@@ -111,12 +112,12 @@ public class SlimeControl : MonoBehaviour
                 }
                 else
                 {
-                    return;
+                    return; // stop because no target plant
                 }
             }
 
             if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
-            {
+            { // move towards target plant
                 var step = moveSpeed * Time.deltaTime; // Calculate distance to move
                 transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
                 timeSpent += Time.deltaTime;
@@ -127,22 +128,6 @@ public class SlimeControl : MonoBehaviour
                     timeSpent = 0f; // Reset timer for the new target
                 }
             }
-            // else
-            // {
-            //     // If we have reached the plant, damage it and find a new target
-            //     Plant plant = PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition);
-
-            //     if (plant != null)
-            //     {
-            //         PlantManager.instance.DamagePlant(plant);
-
-            //         targetPlantPosition = SetRandomTargetPosition();
-            //         timeSpent = 0f; // Reset timer for the new target
-
-            //         // Set the next move time to current time plus cooldown
-            //         nextMoveTime = Time.time + cooldownTime;
-            //     }
-            // }
 
         }
     }
@@ -156,26 +141,16 @@ public class SlimeControl : MonoBehaviour
     // Slime only damages the plant, not the player
 
 
-    const int damage = 50;
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Wood")){
+            Vector2 displacement = other.contacts[0].normal * 0.1f;
+            while (other.collider.bounds.Intersects(GetComponent<Collider2D>().bounds)) {
+                transform.position += (Vector3)displacement;
+            }
 
-    // private void OnCollisionEnter2D(Collision2D other) {
-    //     if (other.gameObject.CompareTag("Defense")){
-    //         // try to attack the fence or find alternative way (which one is faster to go)
-    //         // get fence at
-    //         // fence.health -= damage if fence.health > 0
-    //         // if fence.health == 0
-    //         // groundDefense.settile(null)
-    //         FenceUnit fenceUnit = PlayerDefend.instance.GetDefenceAt(transform.position);
-    //         if (fenceUnit!=null){
-    //             if (fenceUnit.health > 0){
-    //                 fenceUnit.health -= damage;
+            // move by displacement vector to move out of the wood
+        }
+    }
 
-    //                 if (fenceUnit.health == 0){
-    //                     PlayerDefend.instance.DestroyFence(transform.position); // destroy fence
-    //                 }
-    //             }
 
-    //         }
-    //     }
-    // }
 }

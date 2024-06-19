@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        // Subscribe to the sceneLoaded event
+ 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeGroundTilemap();
@@ -65,7 +65,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+ 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 

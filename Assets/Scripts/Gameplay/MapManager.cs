@@ -31,7 +31,7 @@ public class MapManager : MonoBehaviour
     }
 
     private void Start() {
-        // Subscribe to the sceneLoaded event
+ 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -39,13 +39,13 @@ public class MapManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+ 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-initialize the map when a new scene is loaded
+ 
         InitializeMap();
     }
 

@@ -36,13 +36,13 @@ public class PlayerDefend : MonoBehaviour
     }
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+ 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-initialize the map when a new scene is loaded
+ 
         InitializeMap();
     }
 
@@ -66,7 +66,7 @@ public class PlayerDefend : MonoBehaviour
         
         playerMove = GetComponent<PlayerMove>();
         animator = GetComponent<Animator>();
-        // Subscribe to the sceneLoaded event
+ 
 
     }
 

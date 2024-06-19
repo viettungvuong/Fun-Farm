@@ -14,7 +14,7 @@ public class WoodGenerate : MonoBehaviour
     private void Start()
     {
 
-        // Subscribe to the sceneLoaded event
+ 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -22,13 +22,13 @@ public class WoodGenerate : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+ 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-initialize the map when a new scene is loaded
+ 
         InitializeMap();
     }
 
@@ -52,39 +52,41 @@ public class WoodGenerate : MonoBehaviour
     }
 
     private void SpawnWood(int number)
+{
+    string tag = "Wood";
+
+    BoundsInt groundBounds = groundTilemap.cellBounds;
+    int offset = 2;
+    
+    for (int i = 0; i < number; i++)
     {
-        string tag = "Wood";
+        Vector3 spawnPosition;
+        int attempts = 0;
 
-        BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 2;
-        for (int i = 0; i < number; i++) // number of enemies spawn
+        do
         {
-            // Find a random position within the tilemap bounds
-            Vector3 spawnPosition;
-            int attempts = 0; // fail-safe mechanism
+            Vector3Int randomCell = new Vector3Int(
+                Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
+                Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                0
+            );
 
-            do
-            {
-                Vector3Int randomCell = new Vector3Int(
-                    Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
-                    Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
-                    0
-                );
-
-                // Convert cell position to world position
-                spawnPosition = groundTilemap.CellToWorld(randomCell);
-
-                attempts++;
-            } while (Physics2D.OverlapPoint(spawnPosition)&&attempts<200); // make sure the spawn position not on any collider
-
-            if (attempts>=200){
-                continue; // skip this enemy
-            }
+            spawnPosition = groundTilemap.CellToWorld(randomCell);
 
 
-            GameObject spawnedWood = ObjectPooling.SpawnFromPool(tag, spawnPosition);
-            spawnedWood.SetActive(true);
+            attempts++;
+            
+        } while ((MapManager.instance.Plantable(spawnPosition)||PlantManager.instance.Planted(spawnPosition)
+        ||Physics2D.OverlapPoint(spawnPosition)) && attempts < 200);
 
+        if (attempts >= 200)
+        {
+            continue;
         }
+
+        GameObject spawnedWood = ObjectPooling.SpawnFromPool(tag, spawnPosition);
+        spawnedWood.SetActive(true);
     }
+}
+
 }

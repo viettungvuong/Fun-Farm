@@ -10,14 +10,13 @@ public class EnemiesSpawn : MonoBehaviour
     private Tilemap groundTilemap;
     public Transform player;
     public int intervalBetweenSpawns;
-    private int nextMinuteSpawn = 20;
+    private int nextMinuteSpawn = 5;
     private bool timeToSpawn = false;
     // every 20 minute passes by then randomly whether should it spawn new slimes and new skeletons
 
     
     private void Start()
     {
-        // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -27,13 +26,11 @@ public class EnemiesSpawn : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe from the sceneLoaded event to prevent memory leaks
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Re-initialize the map when a new scene is loaded
         InitializeMap();
     }
 
