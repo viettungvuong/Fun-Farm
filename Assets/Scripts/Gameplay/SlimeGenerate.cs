@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class SlimeGenerate : MonoBehaviour
 {
     private Tilemap groundTilemap;
-    // public GameObject player;
+    public GameObject player;
     public int slimeNumber;
     public int intervalBetweenSpawns = 40;
     private int nextMinuteRefill = 5;
@@ -87,10 +87,10 @@ public class SlimeGenerate : MonoBehaviour
             GameObject spawnedEnemy = ObjectPooling.SpawnFromPool(tag, spawnPosition);
             spawnedEnemy.SetActive(true);
 
-            // if (spawnPosition.x > player.transform.position.x)
-            // {
-            //     spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
-            // }
+            if (spawnPosition.x > player.transform.position.x)
+            {
+                spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
+            }
         }
     }
 }

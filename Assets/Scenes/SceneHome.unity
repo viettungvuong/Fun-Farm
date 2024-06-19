@@ -2781,6 +2781,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &732015760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+  m_PrefabInstance: {fileID: 3739248931978354437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &970278685
 GameObject:
   m_ObjectHideFlags: 0
@@ -6755,6 +6760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e3b292e723944d4926552a70c872a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 732015760}
   slimeNumber: 5
   intervalBetweenSpawns: 40
 --- !u!114 &1635994934
@@ -6769,6 +6775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221627f4bb1004f209e852b0feaf8bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 732015760}
   skeletonNumber: 3
   intervalBetweenSpawns: 40
 --- !u!224 &1728328442 stripped
