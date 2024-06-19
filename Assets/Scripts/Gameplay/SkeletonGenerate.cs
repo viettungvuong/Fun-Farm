@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class WoodGenerate : MonoBehaviour
+public class SkeletonGenerate : MonoBehaviour
 {
     private Tilemap groundTilemap;
-    public int woodNumber;
-    public int intervalBetweenFenceRefills = 30;
+    // public GameObject player;
+    public int skeletonNumber;
+    public int intervalBetweenSpawns = 40;
     private int nextMinuteRefill = 0;
 
     private void Start()
@@ -40,22 +41,22 @@ public class WoodGenerate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (TimeManage.instance.currentMinute==nextMinuteRefill){
-            nextMinuteRefill+= intervalBetweenFenceRefills;
+        if (TimeManage.instance.currentMinute==nextMinuteRefill&&TimeManage.instance.IsDay()==false){
+            nextMinuteRefill+= intervalBetweenSpawns;
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;
             }
 
-            SpawnWood(woodNumber); // spawn wood every 5 mins
+            SpawnSkeleton(skeletonNumber); // spawn wood every 5 mins
         }
     }
 
-    private void SpawnWood(int number)
+    private void SpawnSkeleton(int number)
     {
-        string tag = "Wood";
+        string tag = "Skeleton";
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 2;
+        int offset = 0;
         
         for (int i = 0; i < number; i++)
         {
@@ -83,9 +84,13 @@ public class WoodGenerate : MonoBehaviour
                 continue;
             }
 
-            GameObject spawnedWood = ObjectPooling.SpawnFromPool(tag, spawnPosition);
-            spawnedWood.SetActive(true);
+            GameObject spawnedEnemy = ObjectPooling.SpawnFromPool(tag, spawnPosition);
+            spawnedEnemy.SetActive(true);
+
+            // if (spawnPosition.x > player.transform.position.x)
+            // {
+            //     spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
+            // }
         }
     }
-
 }
