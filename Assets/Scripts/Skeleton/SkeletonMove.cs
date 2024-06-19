@@ -62,7 +62,7 @@ public class SkeletonMove : MonoBehaviour
             {
                 StartCoroutine(AttackCoroutine());
                 torchSabotaged++;
-                Light2D torchLight = currentTargetTorch.GetComponent<Light2D>();
+                Light2D torchLight = currentTargetTorch.transform.GetChild(0).GetComponent<Light2D>();
                 torchLight.intensity = 0.1f;
                 Torch torch = currentTargetTorch.GetComponent<Torch>();
                 torch.sabotaged = true;
