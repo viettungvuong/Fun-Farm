@@ -24,4 +24,5 @@ public class GameController : MonoBehaviour
         return SceneManager.GetActiveScene().name == "SceneHome";
     }
 
+
 }

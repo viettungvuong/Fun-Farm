@@ -45,10 +45,32 @@ public class FoodButton : MonoBehaviour
     }
 
     public void ChooseFood(){
+        IEnumerator ShakeButton() {
+            float duration = 0.1f;
+            float magnitude = 5f;
+            Vector3 originalPosition = transform.localPosition;
+
+            float elapsed = 0f;
+            while (elapsed < duration) {
+                float x = originalPosition.x + UnityEngine.Random.Range(-1f, 1f) * magnitude;
+                float y = originalPosition.y + UnityEngine.Random.Range(-1f, 1f) * magnitude;
+
+                transform.localPosition = new Vector3(x, y, originalPosition.z);
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localPosition = originalPosition;
+        }
+
         if (player.SufficientMoney(food.price)){
             player.UseMoney(food.price);
 
             player.RecoverHealth(food.healthRecovered);
+        }
+        else{
+            StartCoroutine(ShakeButton());
         }
     }
 

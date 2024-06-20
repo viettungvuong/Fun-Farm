@@ -55,6 +55,30 @@ public class PlantButton : MonoBehaviour
 
 
     public void ChoosePlant(){
+        IEnumerator ShakeButton() {
+            float duration = 0.1f;
+            float magnitude = 5f;
+            Vector3 originalPosition = transform.localPosition;
+
+            float elapsed = 0f;
+            while (elapsed < duration) {
+                float x = originalPosition.x + Random.Range(-1f, 1f) * magnitude;
+                float y = originalPosition.y + Random.Range(-1f, 1f) * magnitude;
+
+                transform.localPosition = new Vector3(x, y, originalPosition.z);
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localPosition = originalPosition;
+        }
+        
+        if (!playerUnit.SufficientMoney(plant.buyMoney)) {
+            // shake button
+            StartCoroutine(ShakeButton());
+            return;
+        }
         var newPlant = Instantiate(plant); // create new copy of scriptable object
         newPlant.currentStage = 0;
         newPlant.health = 100;
