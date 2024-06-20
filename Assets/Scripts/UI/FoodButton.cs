@@ -8,12 +8,16 @@ using UnityEngine.UI;
 public class FoodButton : MonoBehaviour
 {
     public FoodData food;
-    private Image image;
+    private Image image, background, priceBg, healthRecoveredBg;
     private TextMeshProUGUI priceText, healthRecoveredText;
     private PlayerUnit player;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerUnit>();
+
+        background = GetComponent<Image>();
+        priceBg = transform.GetChild(0).GetComponent<Image>();
+        healthRecoveredBg = transform.GetChild(2).GetComponent<Image>();
 
         image = transform.GetChild(1).GetComponent<Image>();
         image.sprite = food.sprite;
@@ -23,6 +27,21 @@ public class FoodButton : MonoBehaviour
 
         healthRecoveredText = transform.GetChild(2).GetChild(1).GetComponent<TextMeshProUGUI>();
         healthRecoveredText.text = food.healthRecovered.ToString();
+    }
+
+    private void LateUpdate() {
+        if (!player.SufficientMoney(food.price)) {
+            background.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
+            Color colorBg = new Color(144f / 255f, 144f / 255f, 144f / 255f);
+            priceBg.color = colorBg;
+            healthRecoveredBg.color = colorBg;
+        }
+        else {
+            background.color = new Color(176f / 255f, 166f / 255f, 97f / 255f); 
+            Color colorBg = new Color(236f / 255f, 166f / 255f, 102f / 90f);
+            priceBg.color = colorBg;
+            healthRecoveredBg.color = colorBg;
+        }
     }
 
     public void ChooseFood(){
