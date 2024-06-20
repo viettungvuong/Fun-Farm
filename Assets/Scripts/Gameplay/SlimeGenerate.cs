@@ -8,6 +8,8 @@ public class SlimeGenerate : MonoBehaviour
 {
     private Tilemap groundTilemap;
     public GameObject player;
+
+    public LayerMask enemyLayer, playerLayer;
     public int slimeNumber;
     public int intervalBetweenSpawns = 40;
     private int nextMinuteRefill = 5;
@@ -77,7 +79,8 @@ public class SlimeGenerate : MonoBehaviour
                 attempts++;
                 
             } while ((MapManager.instance.Plantable(spawnPosition)||PlantManager.instance.Planted(spawnPosition)
-            ||Physics2D.OverlapPoint(spawnPosition)) && attempts < 200);
+            ||Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
+            ||Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)) && attempts < 200);
 
             if (attempts >= 200)
             {

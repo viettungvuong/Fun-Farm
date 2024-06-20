@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4669661680063532631}
   - component: {fileID: -1384521772305477796}
   - component: {fileID: -6016009313705187064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 2078448616, guid: 931b22762be4349a18098f341035f9fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,10 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c84e0e8423f493f89eb4538298b1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
-  torches:
-  - {fileID: 1505818963146932811, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
-  cooldownTime: 1
+  attackCooldown: 1
 --- !u!114 &-2276984850848315501
 MonoBehaviour:
   m_ObjectHideFlags: 0

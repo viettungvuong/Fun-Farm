@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     Unit playerUnit;
     [HideInInspector] public bool isAttacking = false;
     private float nextAttackTime = 0f;
-    public float cooldownTime = 0.8f;
+    public float cooldownTime = 0.5f;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&& Time.time >= nextAttackTime){  // press space to attack
             nextAttackTime = Time.time + 1f / cooldownTime;
-            animator.SetBool("idle", false);
+
             isAttacking = true;
 
             StopAllCoroutines(); // stop other coroutines 
@@ -70,8 +70,9 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
+        animator.SetBool("idle", false);
         animator.Play(animationName);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         animator.SetBool("idle", true);
         isAttacking = false;
     }

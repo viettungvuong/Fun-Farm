@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SkeletonMove : MonoBehaviour
 {
-
     Orientation orientation;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -12,10 +11,10 @@ public class SkeletonMove : MonoBehaviour
     Rigidbody2D rb;
 
     private float moveSpeed;
-    public GameObject player;
-    public GameObject[] torches;
-    public float cooldownTime = 1.0f; // Cooldown when chasing player (when near)
-    private float nextMoveTime = 0f;
+    private GameObject player;
+    private Vector3 playerPos;
+    private Vector3 skeletonPos;
+
 
     private List<Node> path;
     private int currentPathIndex;
@@ -30,16 +29,23 @@ public class SkeletonMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         mapPath = MapPath.instance;
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        skeletonPos = rb.position; // Use rb.position instead of transform.position
     }
 
     void Update()
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 1.5f;
+        Vector3 currentPlayerPos = player.GetComponent<Rigidbody2D>().position;
 
-        if (Time.time >= nextMoveTime)
+        if (playerPos == null || Vector3.Distance(currentPlayerPos, playerPos) > 0.01f)
         {
+            playerPos = currentPlayerPos;
+
+            // re-navigate
             FindPathToPlayer();
-            nextMoveTime = Time.time + cooldownTime;
         }
 
         MoveAlongPath();
@@ -47,8 +53,7 @@ public class SkeletonMove : MonoBehaviour
 
     private void FindPathToPlayer()
     {
-        
-        path = AStarPathfinding(rb.position, player.transform.position);
+        path = AStarPathfinding(rb.position, playerPos);
 
         if (path != null && path.Count > 0)
         {
@@ -60,44 +65,65 @@ public class SkeletonMove : MonoBehaviour
     {
         if (path == null || currentPathIndex >= path.Count)
             return;
-            
-        Vector3 targetPosition = path[currentPathIndex].Position + new Vector3(0.5f, 0.5f, 0); // Center of the tile
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
-        Debug.Log("Moving");
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        Vector3 targetPosition;
+
+        // reached goal then move toward nearer to the player
+        if (currentPathIndex == path.Count - 1)
         {
-            currentPathIndex++;
-        }
+            targetPosition = playerPos;
 
-        UpdateOrientation(direction);
-    }
-
-    private void UpdateOrientation(Vector3 direction)
-    {
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            if (direction.x > 0 && orientation != Orientation.RIGHT)
+            if (Vector3.Distance(rb.position, playerPos) <= 0.5f)
             {
-                SetOrientation(Orientation.RIGHT);
+                return;
             }
-            else if (direction.x < 0 && orientation != Orientation.LEFT)
-            {
-                SetOrientation(Orientation.LEFT);
+            else{
+                rb.MovePosition(Vector3.MoveTowards(rb.position, playerPos, 0.5f));
             }
         }
         else
         {
-            if (direction.y > 0 && orientation != Orientation.UP)
+            targetPosition = path[currentPathIndex].Position + new Vector3(0.5f, 0.5f, 0);
+            if (Vector3.Distance(rb.position, targetPosition) < 0.1f)
+            {
+                currentPathIndex++;
+            }
+        }
+
+        Vector3 direction = (targetPosition - (Vector3)rb.position).normalized;
+        rb.MovePosition((Vector3)rb.position + direction * moveSpeed * Time.deltaTime);
+
+        UpdateOrientation();
+        skeletonPos = rb.position; // Use rb.position instead of transform.position
+    }
+
+    private void UpdateOrientation()
+    {
+        Vector3 diff = (Vector3)rb.position - skeletonPos; // compare current pos with previous pos
+        if (Mathf.Abs(diff.y) >= Mathf.Abs(diff.x))
+        {
+            if (diff.y > 0 && orientation != Orientation.UP)
             {
                 SetOrientation(Orientation.UP);
             }
-            else if (direction.y < 0 && orientation != Orientation.DOWN)
+            else if (diff.y < 0 && orientation != Orientation.DOWN)
             {
                 SetOrientation(Orientation.DOWN);
             }
+
         }
+        else
+        {
+            if (diff.x > 0 && orientation != Orientation.RIGHT)
+            {
+                SetOrientation(Orientation.RIGHT);
+            }
+            else if (diff.x < 0 && orientation != Orientation.LEFT)
+            {
+                SetOrientation(Orientation.LEFT);
+            }
+        }
+        Debug.Log(orientation);
     }
 
     private void SetOrientation(Orientation newOrientation)
@@ -112,17 +138,39 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    // private void HandlePlayerAttack()
-    // {
-    //     float distanceToPlayer = Vector3.Distance(player.transform.position, rb.position);
-    //     if (distanceToPlayer <= 1.5f) // approaching player (near player)
-    //     {
-    //         StartCoroutine(AttackCoroutine());
-    //         nextMoveTime = Time.time + 1f; // cooldownTime;
+    private bool isAttacking = false;
+    private float nextAttackTime = 0f; 
+    public float attackCooldown = 1f; 
 
-    //         playerUnit.TakeDamage(unit.damage);
-    //     }
-    // }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!isAttacking && other.gameObject.name == "Player" && Time.time >= nextAttackTime)
+        {
+            isAttacking = true;
+
+            StartCoroutine(AttackCoroutine());
+            StartCoroutine(AttackCooldown());
+
+            Unit playerUnit = other.gameObject.GetComponent<Unit>();
+            playerUnit.TakeDamage(unit.damage);
+        }
+    }
+
+    private IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
+        nextAttackTime = Time.time + attackCooldown;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Player")
+        { // stop attack
+            isAttacking = false;
+            StopCoroutine(AttackCoroutine());
+        }
+    }
 
     public IEnumerator AttackCoroutine()
     {
@@ -146,88 +194,17 @@ public class SkeletonMove : MonoBehaviour
         {
             animator.SetBool("walk", false);
             animator.SetTrigger("attack");
-            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
 
             animator.ResetTrigger("attack");
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Player")
-        { // Hit player
-            Unit playerUnit = other.gameObject.GetComponent<Unit>();
-            playerUnit.TakeDamage(unit.damage);
-
-            StartCoroutine(AttackCoroutine());
-            nextMoveTime = Time.time + 1f; // cooldownTime;
+            animator.SetBool("walk", true);
         }
     }
 
     private List<Node> AStarPathfinding(Vector3 start, Vector3 goal)
     {
         Node startNode = mapPath.GetNode(start);
-
         Node goalNode = mapPath.GetNode(goal);
-        if (startNode == null || goalNode == null || !startNode.IsWalkable || !goalNode.IsWalkable)
-        {
-            return null;
-        }
-
-        List<Node> openList = new List<Node>();
-        HashSet<Node> closedList = new HashSet<Node>();
-        openList.Add(startNode);
-
-        while (openList.Count > 0)
-        {
-            Node currentNode = openList[0];
-            for (int i = 1; i < openList.Count; i++)
-            {
-                if (openList[i].FCost < currentNode.FCost || (openList[i].FCost == currentNode.FCost && openList[i].HCost < currentNode.HCost))
-                {
-                    currentNode = openList[i];
-                }
-            }
-
-            openList.Remove(currentNode);
-            closedList.Add(currentNode);
-
-            if (currentNode == goalNode)
-            {
-                return RetracePath(startNode, goalNode);
-            }
-
-            foreach (Node neighbor in GetNeighbors(currentNode))
-            {
-                if (!neighbor.IsWalkable || closedList.Contains(neighbor))
-                {
-                    continue;
-                }
-
-                float newGCost = currentNode.GCost + GetDistance(currentNode, neighbor);
-                if (newGCost < neighbor.GCost || !openList.Contains(neighbor))
-                {
-                    neighbor.GCost = newGCost;
-                    neighbor.HCost = GetDistance(neighbor, goalNode);
-                    neighbor.Parent = currentNode;
-
-                    if (!openList.Contains(neighbor))
-                    {
-                        openList.Add(neighbor);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-
-    private List<Node> AStarPathfinding(Vector3Int start, Vector3Int goal)
-    {
-        Node startNode = mapPath.GetNode(start);
-
-        Node goalNode = mapPath.GetNode(goal);
-
         if (startNode == null || goalNode == null || !startNode.IsWalkable || !goalNode.IsWalkable)
         {
             return null;

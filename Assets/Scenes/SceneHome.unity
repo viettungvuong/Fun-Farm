@@ -6135,7 +6135,7 @@ GameObject:
   - component: {fileID: 1177461303}
   - component: {fileID: 1177461305}
   - component: {fileID: 1177461306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6762,6 +6762,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 732015760}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
   slimeNumber: 5
   intervalBetweenSpawns: 40
 --- !u!114 &1635994934
@@ -6777,7 +6783,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 732015760}
-  skeletonNumber: 4
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  skeletonNumber: 2
   intervalBetweenSpawns: 40
 --- !u!114 &1635994935
 MonoBehaviour:
@@ -13189,6 +13201,10 @@ PrefabInstance:
     - target: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: m_StaticEditorFlags

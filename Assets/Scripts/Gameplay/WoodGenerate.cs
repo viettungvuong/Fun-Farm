@@ -76,7 +76,7 @@ public class WoodGenerate : MonoBehaviour
                 attempts++;
                 
             } while ((MapManager.instance.Plantable(spawnPosition)||PlantManager.instance.Planted(spawnPosition)
-            ||Physics2D.OverlapPoint(spawnPosition)) && attempts < 200);
+            ||Physics2D.OverlapCircle(spawnPosition, 3f)) && attempts < 200);
 
             if (attempts >= 200)
             {

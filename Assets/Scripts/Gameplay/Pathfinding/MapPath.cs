@@ -55,12 +55,9 @@ public class MapPath : MonoBehaviour
             for (int y = bounds.yMin; y <= bounds.yMax; y++)
             {
                 Vector3Int position = new Vector3Int(x, y, 0);
-                Vector3 worldPosition = groundTilemap.CellToWorld(position) + groundTilemap.tileAnchor;
+                Vector3 worldPosition = groundTilemap.CellToWorld(position);
 
-                bool isWalkable = !Physics2D.OverlapCircle(worldPosition, 0.1f, obstacleLayer);
-                if (isWalkable==false){
-                    Debug.Log(worldPosition+" unwalkable");
-                }
+                bool isWalkable = !Physics2D.OverlapCircle(worldPosition, 1f, obstacleLayer);
                 grid[position] = new Node(position, isWalkable);
             }
         }

@@ -9,7 +9,7 @@ public class PlayerDefend : MonoBehaviour
 {
     public static PlayerDefend instance;
     private Tilemap groundDefenseTilemap;
-    public bool isTakingWood = false;
+    [HideInInspector] public bool isTakingWood = false;
     private Rigidbody2D rb;
 
     public FenceUnit fenceHorizontal, fenceVertical;
