@@ -6645,6 +6645,7 @@ GameObject:
   - component: {fileID: 1635994932}
   - component: {fileID: 1635994933}
   - component: {fileID: 1635994934}
+  - component: {fileID: 1635994935}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -6730,7 +6731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe57f073be41e48929999f77ea331af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHour: 6
+  currentHour: 19
   currentMinute: 0
   updateIntervalSeconds: 1.5
   timeText: {fileID: 330589925}
@@ -6776,8 +6777,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 732015760}
-  skeletonNumber: 3
+  skeletonNumber: 4
   intervalBetweenSpawns: 40
+--- !u!114 &1635994935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635994926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5552f00080d5a4ae8960d2534e2e7e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}

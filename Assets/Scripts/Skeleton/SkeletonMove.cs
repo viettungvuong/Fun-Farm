@@ -1,102 +1,101 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class SkeletonMove : MonoBehaviour
 {
+
     Orientation orientation;
     Animator animator;
     SpriteRenderer spriteRenderer;
     Unit unit;
+    Rigidbody2D rb;
 
     private float moveSpeed;
     public GameObject player;
     public GameObject[] torches;
-    int torchSabotaged = 0;
-    private int numTorches;
-
-    private GameObject currentTargetTorch;
-    public float cooldownTime = 1.0f; // cooldown when chasing player (when near)
+    public float cooldownTime = 1.0f; // Cooldown when chasing player (when near)
     private float nextMoveTime = 0f;
 
-    Rigidbody2D rb;
+    private List<Node> path;
+    private int currentPathIndex;
+    private MapPath mapPath;
 
     void Start()
     {
         orientation = Orientation.RIGHT;
-        SetOrientation(orientation);
-
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         unit = GetComponent<Unit>();
         rb = GetComponent<Rigidbody2D>();
 
-        numTorches = torches.Length;
-        if (numTorches > 0)
-        {
-            currentTargetTorch = torches[torchSabotaged];
-        }
+        mapPath = MapPath.instance;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position);
-        if (TimeManage.instance.IsDay() == false && torchSabotaged < numTorches)
+        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 1.5f;
+
+        if (Time.time >= nextMoveTime)
         {
-            HandleTorchSabotage();
+            FindPathToPlayer();
+            nextMoveTime = Time.time + cooldownTime;
         }
-        else
+
+        MoveAlongPath();
+    }
+
+    private void FindPathToPlayer()
+    {
+        
+        path = AStarPathfinding(rb.position, player.transform.position);
+
+        if (path != null && path.Count > 0)
         {
-            HandlePlayerAttack();
+            currentPathIndex = 0;
         }
     }
 
-    private void HandleTorchSabotage()
+    private void MoveAlongPath()
     {
-        if (currentTargetTorch != null)
+        if (path == null || currentPathIndex >= path.Count)
+            return;
+            
+        Vector3 targetPosition = path[currentPathIndex].Position + new Vector3(0.5f, 0.5f, 0); // Center of the tile
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
+        Debug.Log("Moving");
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
         {
-            float distanceToTorch = Vector3.Distance(currentTargetTorch.transform.position, rb.position);
-            if (distanceToTorch <= 1.5f)
-            {
-                StartCoroutine(AttackCoroutine());
-                torchSabotaged++;
-                Light2D torchLight = currentTargetTorch.transform.GetChild(0).GetComponent<Light2D>();
-                torchLight.intensity = 0.1f;
-                Torch torch = currentTargetTorch.GetComponent<Torch>();
-                torch.sabotaged = true;
-                if (torchSabotaged < numTorches)
-                {
-                    currentTargetTorch = torches[torchSabotaged];
-                }
-                else
-                {
-                    currentTargetTorch = null;
-                }
-            }
-            else
-            {
-                animator.SetBool("walk", true);
-                MoveTowards(currentTargetTorch.transform);
-            }
+            currentPathIndex++;
         }
+
+        UpdateOrientation(direction);
     }
 
-    private void HandlePlayerAttack()
+    private void UpdateOrientation(Vector3 direction)
     {
-        float distanceToPlayer = Vector3.Distance(player.transform.position, rb.position);
-        if (distanceToPlayer <= 1.5f) // approaching player (near player)
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            StartCoroutine(AttackCoroutine());
-            nextMoveTime = Time.time + 1f; // cooldownTime;
+            if (direction.x > 0 && orientation != Orientation.RIGHT)
+            {
+                SetOrientation(Orientation.RIGHT);
+            }
+            else if (direction.x < 0 && orientation != Orientation.LEFT)
+            {
+                SetOrientation(Orientation.LEFT);
+            }
         }
         else
         {
-            if (Time.time >= nextMoveTime)
+            if (direction.y > 0 && orientation != Orientation.UP)
             {
-                animator.SetBool("walk", true);
-                MoveTowards(player.transform); // move near player if more than cooldown time
+                SetOrientation(Orientation.UP);
+            }
+            else if (direction.y < 0 && orientation != Orientation.DOWN)
+            {
+                SetOrientation(Orientation.DOWN);
             }
         }
     }
@@ -113,41 +112,17 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    private void MoveTowards(Transform targetTransform)
-    {
-        // ensures that skeleton only moves in 4 direction: up, down, right, left
-        Vector3 direction = targetTransform.position - transform.position;
+    // private void HandlePlayerAttack()
+    // {
+    //     float distanceToPlayer = Vector3.Distance(player.transform.position, rb.position);
+    //     if (distanceToPlayer <= 1.5f) // approaching player (near player)
+    //     {
+    //         StartCoroutine(AttackCoroutine());
+    //         nextMoveTime = Time.time + 1f; // cooldownTime;
 
-        // axis of movement
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            // Move horizontally
-            if (direction.x > 0)
-            {
-                rb.MovePosition(rb.position + Vector2.right * moveSpeed * Time.deltaTime);
-                SetOrientation(Orientation.RIGHT);
-            }
-            else
-            {
-                rb.MovePosition(rb.position + Vector2.left * moveSpeed * Time.deltaTime);
-                SetOrientation(Orientation.LEFT);
-            }
-        }
-        else
-        {
-            // Move vertically
-            if (direction.y > 0)
-            {
-                rb.MovePosition(rb.position + Vector2.up * moveSpeed * Time.deltaTime);
-                SetOrientation(Orientation.UP);
-            }
-            else
-            {
-                rb.MovePosition(rb.position + Vector2.down * moveSpeed * Time.deltaTime);
-                SetOrientation(Orientation.DOWN);
-            }
-        }
-    }
+    //         playerUnit.TakeDamage(unit.damage);
+    //     }
+    // }
 
     public IEnumerator AttackCoroutine()
     {
@@ -177,26 +152,174 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         if (other.gameObject.name == "Player")
-        { // hit player
+        { // Hit player
             Unit playerUnit = other.gameObject.GetComponent<Unit>();
-            // inflict damage on player
             playerUnit.TakeDamage(unit.damage);
+
+            StartCoroutine(AttackCoroutine());
+            nextMoveTime = Time.time + 1f; // cooldownTime;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private List<Node> AStarPathfinding(Vector3 start, Vector3 goal)
     {
-        // if (other.gameObject.name == "Player")
-        // { // hit player
-        //     Unit playerUnit = other.gameObject.GetComponent<Unit>();
-        //     // inflict damage on player
-        //     playerUnit.TakeDamage(unit.damage);
-        // }
-        if (other.gameObject.CompareTag("Defense"))
-        {
+        Node startNode = mapPath.GetNode(start);
 
+        Node goalNode = mapPath.GetNode(goal);
+        if (startNode == null || goalNode == null || !startNode.IsWalkable || !goalNode.IsWalkable)
+        {
+            return null;
         }
+
+        List<Node> openList = new List<Node>();
+        HashSet<Node> closedList = new HashSet<Node>();
+        openList.Add(startNode);
+
+        while (openList.Count > 0)
+        {
+            Node currentNode = openList[0];
+            for (int i = 1; i < openList.Count; i++)
+            {
+                if (openList[i].FCost < currentNode.FCost || (openList[i].FCost == currentNode.FCost && openList[i].HCost < currentNode.HCost))
+                {
+                    currentNode = openList[i];
+                }
+            }
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            if (currentNode == goalNode)
+            {
+                return RetracePath(startNode, goalNode);
+            }
+
+            foreach (Node neighbor in GetNeighbors(currentNode))
+            {
+                if (!neighbor.IsWalkable || closedList.Contains(neighbor))
+                {
+                    continue;
+                }
+
+                float newGCost = currentNode.GCost + GetDistance(currentNode, neighbor);
+                if (newGCost < neighbor.GCost || !openList.Contains(neighbor))
+                {
+                    neighbor.GCost = newGCost;
+                    neighbor.HCost = GetDistance(neighbor, goalNode);
+                    neighbor.Parent = currentNode;
+
+                    if (!openList.Contains(neighbor))
+                    {
+                        openList.Add(neighbor);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
+    private List<Node> AStarPathfinding(Vector3Int start, Vector3Int goal)
+    {
+        Node startNode = mapPath.GetNode(start);
+
+        Node goalNode = mapPath.GetNode(goal);
+
+        if (startNode == null || goalNode == null || !startNode.IsWalkable || !goalNode.IsWalkable)
+        {
+            return null;
+        }
+
+        List<Node> openList = new List<Node>();
+        HashSet<Node> closedList = new HashSet<Node>();
+        openList.Add(startNode);
+
+        while (openList.Count > 0)
+        {
+            Node currentNode = openList[0];
+            for (int i = 1; i < openList.Count; i++)
+            {
+                if (openList[i].FCost < currentNode.FCost || (openList[i].FCost == currentNode.FCost && openList[i].HCost < currentNode.HCost))
+                {
+                    currentNode = openList[i];
+                }
+            }
+
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+
+            if (currentNode == goalNode)
+            {
+                return RetracePath(startNode, goalNode);
+            }
+
+            foreach (Node neighbor in GetNeighbors(currentNode))
+            {
+                if (!neighbor.IsWalkable || closedList.Contains(neighbor))
+                {
+                    continue;
+                }
+
+                float newGCost = currentNode.GCost + GetDistance(currentNode, neighbor);
+                if (newGCost < neighbor.GCost || !openList.Contains(neighbor))
+                {
+                    neighbor.GCost = newGCost;
+                    neighbor.HCost = GetDistance(neighbor, goalNode);
+                    neighbor.Parent = currentNode;
+
+                    if (!openList.Contains(neighbor))
+                    {
+                        openList.Add(neighbor);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private List<Node> GetNeighbors(Node node)
+    {
+        List<Node> neighbors = new List<Node>();
+        Vector3Int[] directions = {
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(0, 1, 0),
+            new Vector3Int(0, -1, 0)
+        };
+
+        foreach (Vector3Int direction in directions)
+        {
+            Node neighbor = mapPath.GetNode(node.Position + direction);
+            if (neighbor != null)
+            {
+                neighbors.Add(neighbor);
+            }
+        }
+        return neighbors;
+    }
+
+    private float GetDistance(Node a, Node b)
+    {
+        int dstX = Mathf.Abs(a.Position.x - b.Position.x);
+        int dstY = Mathf.Abs(a.Position.y - b.Position.y);
+        return dstX + dstY;
+    }
+
+    private List<Node> RetracePath(Node startNode, Node endNode)
+    {
+        List<Node> path = new List<Node>();
+        Node currentNode = endNode;
+
+        while (currentNode != startNode)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.Parent;
+        }
+
+        path.Reverse();
+        return path;
     }
 }

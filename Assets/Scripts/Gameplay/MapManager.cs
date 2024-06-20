@@ -26,14 +26,10 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
     }
 
     private void Start() {
- 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
         InitializeMap();
     }
 
@@ -89,7 +85,7 @@ public class MapManager : MonoBehaviour
 
         TileBase tile = map.GetTile(gridPosition);
 
-        if (tile == null)
+        if (tile == null || dataFromTiles.ContainsKey(tile)==false)
             return false;
 
         bool plantable = dataFromTiles[tile].plantable;

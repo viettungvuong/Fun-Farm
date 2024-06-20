@@ -56,7 +56,7 @@ public class SkeletonGenerate : MonoBehaviour
         string tag = "Skeleton";
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 0;
+        int offset = 2;
         
         for (int i = 0; i < number; i++)
         {

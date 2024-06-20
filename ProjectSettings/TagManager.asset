@@ -9,11 +9,12 @@ TagManager:
   - Plant
   - Defense
   - Wood
+  - Tree
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Enemies
+  - Obstacle
   - Water
   - UI
   - 

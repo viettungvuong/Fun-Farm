@@ -56,7 +56,7 @@ public class SlimeGenerate : MonoBehaviour
         string tag = "Slime";
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 0;
+        int offset = 2;
         
         for (int i = 0; i < number; i++)
         {
