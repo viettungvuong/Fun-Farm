@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50054d8bd48fc473c8e4adf53b05bbd2, type: 3}
+  m_Name: FlowerRed
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 4817aa64107c54b84be553d3a93c25a7, type: 2}
+  - {fileID: 11400000, guid: 315fbf43694bd4d598c3b8d87beedf77, type: 2}
+  - {fileID: 11400000, guid: 9f21e12324635444fb316c24124d7705, type: 2}
+  - {fileID: 11400000, guid: d04d99649e8494000b6887d4d3e7973a, type: 2}
+  - {fileID: 11400000, guid: 9a542ac137446441bbbafbd2e1f4b5f5, type: 2}
+  gridPosition: {x: -5, y: -2, z: 0}
+  levelUpTime: 20
+  currentStage: 2
+  maxHealth: 100
+  health: 100
+  maxStage: 4
+  buyMoney: 70
+  harvestMoney: 100
+  deteriorateTime: 15

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50054d8bd48fc473c8e4adf53b05bbd2, type: 3}
+  m_Name: YellowFruit
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 4817aa64107c54b84be553d3a93c25a7, type: 2}
+  - {fileID: 11400000, guid: 315fbf43694bd4d598c3b8d87beedf77, type: 2}
+  - {fileID: 11400000, guid: 41bcf6e6a848242d696d2a6cc95dbd2c, type: 2}
+  - {fileID: 11400000, guid: 1c28c96f74d0d4be58628adc59fbdbb3, type: 2}
+  - {fileID: 11400000, guid: 2fbb79305e98e4b0a919af1bad0b30cc, type: 2}
+  gridPosition: {x: -5, y: -2, z: 0}
+  levelUpTime: 55
+  currentStage: 2
+  maxHealth: 100
+  health: 100
+  maxStage: 4
+  buyMoney: 120
+  harvestMoney: 180
+  deteriorateTime: 30
