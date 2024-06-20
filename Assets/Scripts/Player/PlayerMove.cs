@@ -11,7 +11,8 @@ public enum Orientation
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    None
 }
 
 public class PlayerMove : MonoBehaviour

@@ -22,7 +22,6 @@ public class SkeletonMove : MonoBehaviour
 
     void Start()
     {
-        orientation = Orientation.RIGHT;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         unit = GetComponent<Unit>();
@@ -33,6 +32,7 @@ public class SkeletonMove : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         skeletonPos = rb.position; // Use rb.position instead of transform.position
+        orientation = Orientation.None;
     }
 
     void Update()
@@ -123,12 +123,12 @@ public class SkeletonMove : MonoBehaviour
                 SetOrientation(Orientation.LEFT);
             }
         }
-        Debug.Log(orientation);
+
     }
 
     private void SetOrientation(Orientation newOrientation)
     {
-        if (orientation != newOrientation)
+        if (orientation == Orientation.None || orientation != newOrientation)
         {
             orientation = newOrientation;
             animator.SetBool("up", orientation == Orientation.UP);

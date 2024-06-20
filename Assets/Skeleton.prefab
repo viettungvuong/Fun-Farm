@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4669661680063532631}
   - component: {fileID: -1384521772305477796}
   - component: {fileID: -6016009313705187064}
+  - component: {fileID: 8795910508666202500}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Enemy
@@ -151,7 +152,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -198,7 +199,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.36819747}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -209,7 +210,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8125, y: 1.25}
+  m_Size: {x: 0.8125, y: 0.51360506}
   m_EdgeRadius: 0
 --- !u!114 &-6016009313705187064
 MonoBehaviour:
@@ -225,3 +226,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
   healthSlider: {fileID: 0}
+--- !u!60 &8795910508666202500
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897796513909803230}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8125, y: 1.25}
+    newSize: {x: 0.8125, y: 1.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.40625, y: 0.625}
+      - {x: -0.511096, y: -0.029178381}
+      - {x: -0.40625, y: -0.4375}
+      - {x: -0.28125, y: -0.625}
+      - {x: 0.21875, y: -0.625}
+      - {x: 0.40625, y: -0.5}
+      - {x: 0.49876118, y: -0.06618291}
+      - {x: 0.40625, y: 0.625}
+  m_UseDelaunayMesh: 0

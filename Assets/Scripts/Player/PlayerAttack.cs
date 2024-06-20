@@ -40,13 +40,21 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Enemy")){
             if (isAttacking){
                 other.gameObject.GetComponent<Unit>().TakeDamage(playerUnit.damage);
             }
         }
     }
+
+    // private void OnTriggerStay2D(Collider2D other) {
+    //     if (other.gameObject.CompareTag("Enemy")){
+    //         if (isAttacking){
+    //             other.gameObject.GetComponent<Unit>().TakeDamage(playerUnit.damage);
+    //         }
+    //     }
+    // }
 
     public IEnumerator AttackCoroutine(){
         string animationName;

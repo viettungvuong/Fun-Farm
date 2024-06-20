@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4802300289182788626}
   - component: {fileID: -6979375923345555564}
   - component: {fileID: 6299584313062156107}
+  - component: {fileID: 7051225686296782889}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Enemy
@@ -181,7 +182,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -225,3 +226,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
   healthSlider: {fileID: 0}
+--- !u!60 &7051225686296782889
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409269588054559371}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.25, y: 0.8125}
+    newSize: {x: 1.25, y: 0.8125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.72496605, y: 0.051640034}
+      - {x: -0.7187185, y: -0.28122902}
+      - {x: -0.56248, y: -0.4624815}
+      - {x: 0.687479, y: -0.42499352}
+      - {x: 0.7062235, y: 0.09375}
+      - {x: 0.624979, y: 0.28125}
+      - {x: 0.5, y: 0.40625}
+      - {x: -0.625, y: 0.40625}
+  m_UseDelaunayMesh: 0
