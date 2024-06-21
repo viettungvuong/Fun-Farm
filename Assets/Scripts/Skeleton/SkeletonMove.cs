@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SkeletonMove : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class SkeletonMove : MonoBehaviour
     private Vector3 playerPos;
     private Vector3 skeletonPos;
 
-
     private List<Node> path;
     private int currentPathIndex;
     private MapPath mapPath;
+    private Tilemap ground;
+
+    private Vector3 lastPosition;
+    private float stuckTime;
 
     void Start()
     {
@@ -33,6 +37,11 @@ public class SkeletonMove : MonoBehaviour
 
         skeletonPos = rb.position; // Use rb.position instead of transform.position
         orientation = Orientation.None;
+
+        ground = GameObject.Find("Ground").GetComponent<Tilemap>();
+
+        lastPosition = rb.position;
+        stuckTime = 0f;
     }
 
     void Update()
@@ -53,6 +62,8 @@ public class SkeletonMove : MonoBehaviour
         if (TimeManage.instance.IsDay()){
             DieWhenDay();
         }
+
+        CheckIfStuck();
     }
 
     private void DieWhenDay(){
@@ -91,7 +102,7 @@ public class SkeletonMove : MonoBehaviour
         }
         else
         {
-            targetPosition = path[currentPathIndex].Position + new Vector3(0.5f, 0.5f, 0);
+            targetPosition = ground.CellToWorld(path[currentPathIndex].Position) + new Vector3(0.5f, 0.5f, 0);
             if (Vector3.Distance(rb.position, targetPosition) < 0.1f)
             {
                 currentPathIndex++;
@@ -306,5 +317,37 @@ public class SkeletonMove : MonoBehaviour
 
         path.Reverse();
         return path;
+    }
+
+    private void CheckIfStuck()
+    {
+        if (Vector3.Distance(rb.position, lastPosition) < 0.01f)
+        {
+            stuckTime += Time.deltaTime;
+            if (stuckTime >= 5f)
+            {
+                MoveToRandomNeighbor();
+                stuckTime = 0f; // Reset the stuck time after moving
+            }
+        }
+        else
+        {
+            stuckTime = 0f;
+        }
+
+        lastPosition = rb.position;
+    }
+
+    private void MoveToRandomNeighbor()
+    {
+        Node currentNode = mapPath.GetNode(rb.position);
+        List<Node> neighbors = GetNeighbors(currentNode);
+
+        if (neighbors.Count > 0)
+        {
+            Node randomNeighbor = neighbors[Random.Range(0, neighbors.Count)];
+            Vector3 direction = (ground.CellToWorld(randomNeighbor.Position) - (Vector3)rb.position).normalized;
+            rb.MovePosition((Vector3)rb.position + direction * moveSpeed * Time.deltaTime);
+        }
     }
 }
