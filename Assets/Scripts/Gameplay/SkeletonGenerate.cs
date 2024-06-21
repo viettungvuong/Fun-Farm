@@ -11,12 +11,15 @@ public class SkeletonGenerate : MonoBehaviour
 
     public LayerMask enemyLayer, playerLayer, obstacleLayer;
     public int skeletonNumber;
-    public int intervalBetweenSpawns = 40;
-    private int nextMinuteRefill = 0;
+    public int intervalBetweenSpawns = 60;
+    private int nextMinuteRefill = 10;
 
     private void Start()
     {
-
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -43,6 +46,7 @@ public class SkeletonGenerate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (GameController.HomeScene()==false){
             nextMinuteRefill += 1;
             if (nextMinuteRefill>=60){

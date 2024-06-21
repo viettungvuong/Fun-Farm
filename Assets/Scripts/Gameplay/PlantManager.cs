@@ -98,6 +98,7 @@ public class PlantManager : MonoBehaviour
 
 
     private void CheckPlantLevel(){
+
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
@@ -177,6 +178,9 @@ public class PlantManager : MonoBehaviour
     }
 
     private void CheckDeterioration(){
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            return;
+        }
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
@@ -277,7 +281,6 @@ public class PlantManager : MonoBehaviour
     }
 
     public void DamagePlant(Plant plant){
-
         ColorPlant(plant, Color.black);
 
         RemovePlant(plant);

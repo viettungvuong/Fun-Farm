@@ -8,12 +8,15 @@ public class WoodGenerate : MonoBehaviour
 {
     private Tilemap groundTilemap;
     public int woodNumber;
-    public int intervalBetweenFenceRefills = 30;
+    public int intervalBetweenFenceRefills = 60;
     private int nextMinuteRefill = 0;
 
     private void Start()
     {
-
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();

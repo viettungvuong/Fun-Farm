@@ -56,6 +56,10 @@ public class PlayerDefend : MonoBehaviour
 
 
     void Start(){
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();

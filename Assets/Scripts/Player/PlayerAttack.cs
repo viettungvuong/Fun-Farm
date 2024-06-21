@@ -13,6 +13,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         playerMove = GetComponent<PlayerMove>();
         animator = GetComponent<Animator>();
         playerUnit = GetComponent<Unit>();

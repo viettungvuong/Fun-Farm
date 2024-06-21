@@ -1,4 +1,4 @@
-enum PlayerMode{
+public enum PlayerMode{
     SURVIVAL,
     CREATIVE
 }

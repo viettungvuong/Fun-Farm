@@ -11,12 +11,15 @@ public class SlimeGenerate : MonoBehaviour
 
     public LayerMask enemyLayer, playerLayer, obstacleLayer;
     public int slimeNumber;
-    public int intervalBetweenSpawns = 40;
+    public int intervalBetweenSpawns = 80;
     private int nextMinuteRefill = 15;
 
     private void Start()
     {
-
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();

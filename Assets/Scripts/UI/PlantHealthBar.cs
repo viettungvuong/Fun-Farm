@@ -48,9 +48,10 @@ public class PlantHealthBar : MonoBehaviour
 
 
     private void LateUpdate() {
+
         if (plant == null) return;
 
-        if (GameController.HomeScene()==false||plant.currentStage == plant.maxStage){
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE||GameController.HomeScene()==false||plant.currentStage == plant.maxStage){
             healthSlider.gameObject.SetActive(false);
             return;
         }

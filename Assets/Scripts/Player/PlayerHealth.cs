@@ -17,6 +17,14 @@ public class PlayerHealth : MonoBehaviour
     {
         playerUnit = GetComponent<PlayerUnit>();
         previousTimeOfDay = timeManage.currentHour; // start of the game
+
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            healthText.gameObject.SetActive(false);
+
+            enabled = false;
+
+            return;
+        }
     }
 
     void Update()

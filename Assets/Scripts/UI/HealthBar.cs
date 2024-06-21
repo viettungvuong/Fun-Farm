@@ -46,7 +46,11 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            gameObject.SetActive(false);
+            enabled = false;
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeCanvas();

@@ -12,6 +12,7 @@ public class PlayerUnit : Unit
     public static PlayerUnit instance;
     public TextMeshProUGUI coinText;
     [HideInInspector] public int currentMoney;
+    public static PlayerMode playerMode;
 
     Animator animator;
     
@@ -31,6 +32,8 @@ public class PlayerUnit : Unit
         }
 
         animator = GetComponent<Animator>();
+
+        playerMode = PlayerMode.SURVIVAL; // default is survival
     }
 
     private void LateUpdate() {
