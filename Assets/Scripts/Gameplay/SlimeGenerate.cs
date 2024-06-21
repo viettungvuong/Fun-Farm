@@ -43,7 +43,7 @@ public class SlimeGenerate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameController.HomeScene()==false){
+        if (GameController.HomeScene()==false||PlantManager.instance.GetNumberOfPlants()==0){
             nextMinuteRefill += 1;
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;

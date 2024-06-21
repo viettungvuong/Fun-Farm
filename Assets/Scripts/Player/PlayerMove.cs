@@ -178,20 +178,26 @@ public class PlayerMove : MonoBehaviour
                 }
             }
         }
+
+        if (TimeManage.instance.IsDay()==false&&GameController.HomeScene()==false){ // go home when the night comes
+                // thêm panel để thông báo
+            VillagePlayerSpawn.GoBackHome(transform);
+            SceneManager.LoadScene("SceneHome"); 
+
+        }
     }
 
     private void FixedUpdate()
     {
         Vector2 newPosition = rb.position + new Vector2(moveXSpeed, moveYSpeed) * Time.fixedDeltaTime;
 
-        // move within groundTilemap bound
         newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
         newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
 
         rb.MovePosition(newPosition);
 
         moveXSpeed = 0f;
-        moveYSpeed = 0f; // reset speed
+        moveYSpeed = 0f;
 
         Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position);
 
@@ -286,7 +292,7 @@ public class PlayerMove : MonoBehaviour
         }
         changingAnimation = true;
         animator.SetBool("idle", true);
-        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName) + 0.25f);
+        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName));
     }
 
     private void EndOrientationChange()

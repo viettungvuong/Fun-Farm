@@ -357,4 +357,8 @@ public class PlantManager : MonoBehaviour
 
         return true;
     }
+
+    public int GetNumberOfPlants(){
+        return plantPos.Keys.ToList().Count;
+    }
 }

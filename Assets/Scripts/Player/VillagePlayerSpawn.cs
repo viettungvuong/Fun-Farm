@@ -25,13 +25,13 @@ public class VillagePlayerSpawn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")&&playerEntered==true){
-            GoBackHome();
+            GoBackHome(player.transform);
             SceneManager.LoadScene("SceneHome"); // go back home
             // player.SetActive(false);
         }
     }
 
-    void GoBackHome(){
-        player.transform.position = new Vector3(-16.56f, -4.33f);
+    public static void GoBackHome(Transform transform){
+        transform.position = new Vector3(-16.56f, -4.33f);
     }
 }

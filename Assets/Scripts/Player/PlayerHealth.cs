@@ -35,6 +35,6 @@ public class PlayerHealth : MonoBehaviour
         playerUnit.currentHealth -= healthDecrease;
         previousTimeOfDay = currentTimeOfDay;
 
-        healthText.text = playerUnit.currentHealth.ToString();
+        healthText.text = playerUnit.currentHealth.ToString("F1"); // round to 1 decimal point
     }
 }
