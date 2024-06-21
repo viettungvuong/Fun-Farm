@@ -12,7 +12,7 @@ public class SlimeGenerate : MonoBehaviour
     public LayerMask enemyLayer, playerLayer, obstacleLayer;
     public int slimeNumber;
     public int intervalBetweenSpawns = 40;
-    private int nextMinuteRefill = 5;
+    private int nextMinuteRefill = 15;
 
     private void Start()
     {

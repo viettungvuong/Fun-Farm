@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+[Serializable]
 public class PlantManager : MonoBehaviour
 {
     private Tilemap plantMap;

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
+[Serializable]
 public class TimeManage : MonoBehaviour
 {
     public int currentHour = 6, currentMinute = 0, currentDay = 1;

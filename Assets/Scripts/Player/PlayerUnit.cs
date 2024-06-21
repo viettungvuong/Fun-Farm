@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class PlayerUnit : Unit
 {
     public int maxMoney;
@@ -38,7 +39,7 @@ public class PlayerUnit : Unit
         waterText.text = (waterPercentage * 100).ToString() + "%";
 
         if (currentHealth<=0){
-            Die();
+            Die(); // run die animation
         }
     }
 
@@ -70,6 +71,7 @@ public class PlayerUnit : Unit
 
     void Die(){
         // show die menu
+        // code die menu here
     }
 
 

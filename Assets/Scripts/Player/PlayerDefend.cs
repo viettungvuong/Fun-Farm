@@ -17,7 +17,7 @@ public class PlayerDefend : MonoBehaviour
     private Dictionary<Vector3Int, FenceUnit> fences;
 
 
-    public TextMeshProUGUI fenceText;
+    public TextMeshProUGUI woodTakenText, fenceText;
 
     private PlayerMove playerMove;
     private Animator animator;
@@ -147,10 +147,6 @@ public class PlayerDefend : MonoBehaviour
         collider.enabled = true;
     }
 
-    private void LateUpdate() {
-        fenceText.text = numberOfFences.ToString();
-    }
-
 
     public FenceUnit GetDefenceAt(Vector3 worldPosition){
         Vector3Int cellPosition = groundDefenseTilemap.WorldToCell(worldPosition);
@@ -187,25 +183,11 @@ public class PlayerDefend : MonoBehaviour
         Vector3 woodPosition = wood.transform.position;
         Orientation woodToPlayer()
         {
-            // Calculate the direction vector from the tile to the player
-            Vector3 direction = (Vector3)rb.position - woodPosition;
-            
-            // Normalize the direction vector to get the direction in terms of unit vectors
+            Vector3 direction = woodPosition - (Vector3)rb.position;
             direction.Normalize();
 
             // Determine the orientation based on the direction vector
-            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-            {
-                if (direction.x > 0)
-                {
-                    return Orientation.RIGHT;
-                }
-                else
-                {
-                    return Orientation.LEFT;
-                }
-            }
-            else
+            if (Mathf.Abs(direction.y) >= Mathf.Abs(direction.x))
             {
                 if (direction.y > 0)
                 {
@@ -214,6 +196,17 @@ public class PlayerDefend : MonoBehaviour
                 else
                 {
                     return Orientation.DOWN;
+                }
+            }
+            else
+            {
+                if (direction.x > 0)
+                {
+                    return Orientation.RIGHT;
+                }
+                else
+                {
+                    return Orientation.LEFT;
                 }
             }
         }
@@ -246,11 +239,13 @@ public class PlayerDefend : MonoBehaviour
 
         woodTaken++;
 
-        if (woodTaken%3==0){
+        if (woodTaken==3){
             numberOfFences++;
+            woodTaken = 0;
+            fenceText.text = numberOfFences.ToString();
         }
-
-        wood.SetActive(false); // hide wood
+        woodTakenText.text = woodTaken.ToString() + "/3";
+        wood.SetActive(false); // hide wood after being harvested
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
