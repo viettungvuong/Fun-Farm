@@ -12,6 +12,7 @@ public class PlayerUnit : Unit
     public TextMeshProUGUI coinText, waterText;
     [HideInInspector] public int currentMoney;
     [HideInInspector] public double waterPercentage=1f;
+    Animator animator;
     
     public override void Awake()
     {
@@ -28,11 +29,17 @@ public class PlayerUnit : Unit
         {
             Destroy(gameObject);
         }
+
+        animator = GetComponent<Animator>();
     }
 
     private void LateUpdate() {
         coinText.text = currentMoney.ToString();
         waterText.text = (waterPercentage * 100).ToString() + "%";
+
+        if (currentHealth<=0){
+            Die();
+        }
     }
 
     public bool SufficientMoney(int amount){
@@ -60,4 +67,10 @@ public class PlayerUnit : Unit
     public void RecoverHealth(double healthRecovered){
         currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
     }
+
+    void Die(){
+        // show die menu
+    }
+
+
 }

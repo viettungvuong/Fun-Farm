@@ -8,13 +8,13 @@ using UnityEngine.SceneManagement;
 
 public class TimeManage : MonoBehaviour
 {
-    public int currentHour = 6, currentMinute = 0;
+    public int currentHour = 6, currentMinute = 0, currentDay = 1;
     public float updateIntervalSeconds;
     private Light2D globalLight;
 
     private DateTime lastUpdated;
 
-    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI timeText, dayText;
 
     public static TimeManage instance;
 
@@ -64,20 +64,24 @@ public class TimeManage : MonoBehaviour
         {
             lastUpdated = DateTime.Now;
             currentMinute += 1;
+            string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
             if (currentMinute >= 60)
             {
                 currentMinute = 0;
                 currentHour += 1;
                 if (currentHour >= 24)
                 {
-                    currentHour = 0;
+                    currentHour = 0; // new day
+                    currentDay++;
+                    dayText.text = "Day " + currentDay.ToString();
                 }
             }
+            string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
+            timeText.text = hourString + ":" + minString;
+            UpdateLight();
         }
-        string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
-        string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
-        timeText.text = hourString + ":" + minString;
-        UpdateLight();
+
+
     }
 
     public bool IsDay(){

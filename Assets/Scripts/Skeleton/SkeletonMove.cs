@@ -49,6 +49,14 @@ public class SkeletonMove : MonoBehaviour
         }
 
         MoveAlongPath();
+
+        if (TimeManage.instance.IsDay()){
+            DieWhenDay();
+        }
+    }
+
+    private void DieWhenDay(){
+        unit.Die(); // when day, a skeleton automatically dies
     }
 
     private void FindPathToPlayer()

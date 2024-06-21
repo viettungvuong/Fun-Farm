@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void Die(){
+    public void Die(){
         StartCoroutine(DieCoroutine());
     }
 
