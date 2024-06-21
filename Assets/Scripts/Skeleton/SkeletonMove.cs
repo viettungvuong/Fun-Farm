@@ -348,6 +348,9 @@ public class SkeletonMove : MonoBehaviour
             Node randomNeighbor = neighbors[Random.Range(0, neighbors.Count)];
             Vector3 direction = (ground.CellToWorld(randomNeighbor.Position) - (Vector3)rb.position).normalized;
             rb.MovePosition((Vector3)rb.position + direction * moveSpeed * Time.deltaTime);
+
+            UpdateOrientation();
+            skeletonPos = rb.position; 
         }
     }
 }

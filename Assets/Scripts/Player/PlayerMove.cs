@@ -31,6 +31,7 @@ public class PlayerMove : MonoBehaviour
     private float moveXSpeed = 0f;
     private float moveYSpeed = 0f;
     private Vector3 previousPos;
+    public SpriteRenderer arrowSprite;
 
     [HideInInspector] public Orientation orientation;
 
@@ -237,6 +238,28 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("down", orientation == Orientation.DOWN);
         animator.SetBool("horizontal", orientation == Orientation.LEFT || orientation == Orientation.RIGHT);
         spriteRenderer.flipX = orientation == Orientation.LEFT;
+
+        if (orientation == Orientation.UP)
+        {
+            arrowSprite.flipY = true;
+            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (orientation == Orientation.DOWN)
+        {
+            arrowSprite.flipY = false;
+            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (orientation == Orientation.LEFT)
+        {
+            arrowSprite.flipY = false;
+            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else if (orientation == Orientation.RIGHT)
+        {
+            arrowSprite.flipY = false;
+            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
     }
 
     private IEnumerator WalkCoroutine()
