@@ -178,9 +178,6 @@ public class PlantManager : MonoBehaviour
     }
 
     private void CheckDeterioration(){
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
-            return;
-        }
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
