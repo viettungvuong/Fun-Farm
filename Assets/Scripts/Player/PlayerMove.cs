@@ -156,6 +156,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     // ensure animation to rotate player by arrow
                     animator.SetBool("idle", false);
+                    StopAllCoroutines();
                     StartCoroutine(WalkCoroutine());
                 }
             }
@@ -171,6 +172,8 @@ public class PlayerMove : MonoBehaviour
                 if (playerPlant.isPlanting == false && playerAttack.isAttacking == false)
                 { // not planting or attacking then start the idle animation
                     animator.SetBool("idle", true);
+                    // StopAllCoroutines();
+                    // StartCoroutine(IdleCoroutine());
                 }
                 else
                 {
@@ -260,13 +263,9 @@ public class PlayerMove : MonoBehaviour
         }
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-        // this ensures animation not reset when pressing
-        {
-            animator.SetTrigger("walk");
-            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-            animator.ResetTrigger("walk");
-        }
+        animator.SetTrigger("walk");
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+        animator.ResetTrigger("walk");
     }
 
     private void StartOrientationChange()
@@ -293,6 +292,33 @@ public class PlayerMove : MonoBehaviour
         changingAnimation = true;
         animator.SetBool("idle", true);
         Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName));
+    }
+
+    private IEnumerator IdleCoroutine()
+    {
+        string animationName;
+        switch (orientation)
+        {
+            case Orientation.UP:
+                {
+                    animationName = "PlayerIdleUp";
+                    break;
+                }
+            case Orientation.DOWN:
+                {
+                    animationName = "PlayerIdleDown";
+                    break;
+                }
+            default:
+                {
+                    animationName = "PlayerIdleHorizontal";
+                    break;
+                }
+        }
+        changingAnimation = true;
+        animator.SetBool("idle", true);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+        animator.SetBool("idle", false);
     }
 
     private void EndOrientationChange()
