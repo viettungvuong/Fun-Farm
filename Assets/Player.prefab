@@ -85,7 +85,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -115750617, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -232,6 +232,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAttacking: 0
   cooldownTime: 1.5
+  attackRange: 1
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!60 &5647710133540907320
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -312,9 +316,7 @@ MonoBehaviour:
   currentHealth: 0
   maxMoney: 1
   coinText: {fileID: 0}
-  waterText: {fileID: 0}
   currentMoney: 0
-  waterPercentage: 1
 --- !u!114 &-3474386442701982307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +346,7 @@ MonoBehaviour:
   isTakingWood: 0
   fenceHorizontal: {fileID: 0}
   fenceVertical: {fileID: 0}
+  woodTakenText: {fileID: 0}
   fenceText: {fileID: 0}
 --- !u!114 &7213360196023523754
 MonoBehaviour:

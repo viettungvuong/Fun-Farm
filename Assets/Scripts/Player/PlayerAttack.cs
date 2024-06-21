@@ -10,10 +10,13 @@ public class PlayerAttack : MonoBehaviour
     [HideInInspector] public bool isAttacking = false;
     private float nextAttackTime = 0f;
     public float cooldownTime = 0.5f;
+    public float attackRange = 1.0f; 
+    public LayerMask enemyLayers; 
 
     void Start()
     {
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+        if (PlayerUnit.playerMode == PlayerMode.CREATIVE)
+        {
             enabled = false;
             return;
         }
@@ -22,68 +25,72 @@ public class PlayerAttack : MonoBehaviour
         playerUnit = GetComponent<Unit>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameController.HomeScene()==false){
+        if (GameController.HomeScene() == false)
+        {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space)&& Time.time >= nextAttackTime){  // press space to attack
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextAttackTime)
+        {
             nextAttackTime = Time.time + 1f / cooldownTime;
 
             isAttacking = true;
 
             StopAllCoroutines(); // stop other coroutines 
             StartCoroutine(AttackCoroutine());
-
-            // Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayers);
-            // foreach (Collider enemy in hitEnemies)
-            // {
-            //     enemy.GetComponent<Unit>().TakeDamage(playerUnit.damage);
-            // }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Enemy")){
-            if (isAttacking){
-                other.gameObject.GetComponent<Unit>().TakeDamage(playerUnit.damage);
+    private void PerformRaycastAttack(Vector2 direction)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, attackRange, enemyLayers);
+        if (hit.collider != null)
+        {
+            Unit enemyUnit = hit.collider.GetComponent<Unit>();
+            if (enemyUnit != null)
+            {
+                enemyUnit.TakeDamage(playerUnit.damage);
             }
         }
     }
 
-    // private void OnTriggerStay2D(Collider2D other) {
-    //     if (other.gameObject.CompareTag("Enemy")){
-    //         if (isAttacking){
-    //             other.gameObject.GetComponent<Unit>().TakeDamage(playerUnit.damage);
-    //         }
-    //     }
-    // }
-
-    public IEnumerator AttackCoroutine(){
+    public IEnumerator AttackCoroutine()
+    {
         string animationName;
         Orientation orientation = playerMove.orientation;
+        Vector2 attackDirection;
+
         switch (orientation)
         {
             case Orientation.UP:
-            {               
                 animationName = "PlayerAttackUp";
+                attackDirection = Vector2.up;
                 break;
-            }
             case Orientation.DOWN:
-            {               
                 animationName = "PlayerAttackDown";
+                attackDirection = Vector2.down;
                 break;
-            }
-            default:
-            {               
+            case Orientation.LEFT:
                 animationName = "PlayerAttackHorizontal";
+                attackDirection = Vector2.left;
                 break;
-            }
+            case Orientation.RIGHT:
+                animationName = "PlayerAttackHorizontal";
+                attackDirection = Vector2.right;
+                break;
+            default:
+                animationName = "PlayerAttackHorizontal";
+                attackDirection = Vector2.right;
+                break;
         }
 
         animator.SetBool("idle", false);
         animator.Play(animationName);
+
+        // Perform the raycast attack in the determined direction
+        PerformRaycastAttack(attackDirection);
+
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         animator.SetBool("idle", true);
         isAttacking = false;
