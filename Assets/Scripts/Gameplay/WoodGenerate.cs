@@ -40,6 +40,13 @@ public class WoodGenerate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.HomeScene()==false){
+            nextMinuteRefill += 1;
+            if (nextMinuteRefill>=60){
+                nextMinuteRefill -= 60;
+            }
+            return;
+        }
         if (TimeManage.instance.currentMinute==nextMinuteRefill){
             nextMinuteRefill+= intervalBetweenFenceRefills;
             if (nextMinuteRefill>=60){

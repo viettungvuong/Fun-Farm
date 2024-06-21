@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 1803726951619234712}
   - component: {fileID: 6477940726789584872}
   - component: {fileID: 2307206408998177618}
-  - component: {fileID: 6087995917587086872}
   m_Layer: 5
   m_Name: HealthRecovered
   m_TagString: Untagged
@@ -210,19 +209,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6087995917587086872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309960366627395220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab85eeb0dac5948748865a17fd433b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plant: {fileID: 0}
 --- !u!1 &1810223074229765515
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +355,6 @@ GameObject:
   - component: {fileID: 4719689544776271078}
   - component: {fileID: 5047966973141218233}
   - component: {fileID: 4835179627379841585}
-  - component: {fileID: 8850654226866377336}
   m_Layer: 5
   m_Name: Price
   m_TagString: Untagged
@@ -492,19 +477,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8850654226866377336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3706778788633140144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab85eeb0dac5948748865a17fd433b33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plant: {fileID: 0}
 --- !u!1 &4077323135127322012
 GameObject:
   m_ObjectHideFlags: 0

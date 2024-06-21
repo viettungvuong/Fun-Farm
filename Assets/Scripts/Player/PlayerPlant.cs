@@ -133,11 +133,6 @@ public class PlayerPlant : MonoBehaviour
             return;
         }
 
-        // check sufficient water
-        if (playerUnit.SufficientWater(waterUsage)==false){
-            return; // insufficient water
-        }
-
 
         // PlantManager.instance.WaterPlant(worldPosition);
         StartCoroutine(WaterTreeCoroutine(worldPosition));
@@ -149,8 +144,6 @@ public class PlayerPlant : MonoBehaviour
         if (water==false){ // failed to water
             yield break;
         }
-
-        playerUnit.UseWater(waterUsage);
 
         isPlanting = true;
         string animationName;
