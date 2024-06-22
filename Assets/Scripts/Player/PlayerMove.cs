@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -13,6 +14,12 @@ public enum Orientation
     LEFT,
     RIGHT,
     None
+}
+
+[Serializable]
+public struct FootprintTile {
+    public TileBase original;
+    public TileBase footprint;
 }
 
 public class PlayerMove : MonoBehaviour
@@ -39,6 +46,8 @@ public class PlayerMove : MonoBehaviour
     private PlayerPlant playerPlant;
     private PlayerAttack playerAttack;
 
+    public List<FootprintTile> footprints;
+    private Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>> footprintQueue; // save tiles player has been previously
     void Start()
     {
  
@@ -50,6 +59,7 @@ public class PlayerMove : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
+        footprintQueue = new Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>>();
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;
@@ -189,6 +199,11 @@ public class PlayerMove : MonoBehaviour
             SceneManager.LoadScene("SceneHome"); 
 
         }
+
+        if (GameController.HomeScene()){
+            CheckFootprint();
+        }
+    
     }
 
     private void FixedUpdate()
@@ -205,7 +220,7 @@ public class PlayerMove : MonoBehaviour
 
         Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position);
 
-        // Only proceed if highlightTilemap is assigned
+
         if (GameController.HomeScene()&&highlightTilemap != null)
         {
             highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
@@ -229,6 +244,50 @@ public class PlayerMove : MonoBehaviour
         }
 
         previousPos = rb.position;
+
+        AddFootprint(previousPos); // add footprint
+    }
+
+    private void AddFootprint(Vector3 pos){
+        Vector3Int cellPosition = groundTilemap.WorldToCell(pos);
+
+        TileBase footprintTile=null;
+        TileBase tile = groundTilemap.GetTile(cellPosition);
+        foreach (FootprintTile ft in footprints){
+            if (ft.original==tile){
+                footprintTile = ft.footprint;
+            }
+        }
+        if (footprintTile==null){
+            return;
+        }
+        groundTilemap.SetTile(cellPosition, footprintTile);
+
+        // add to queue to manage time
+        footprintQueue.Enqueue(new Pair<Pair<TileBase, Vector3Int>, DateTime>(new Pair<TileBase, Vector3Int>(tile, cellPosition), DateTime.Now));
+    }
+
+    private void CheckFootprint(){
+        // footprint disappear after 1 min
+        TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
+
+        while (footprintQueue.Count > 0)
+        {
+            Pair<Pair<TileBase, Vector3Int>, DateTime> footprint = footprintQueue.Peek();
+            if (DateTime.Now - footprint.Second > footprintLifetime)
+            {
+                // remove the footprint from the tilemap
+                Vector3Int position = footprint.First.Second;
+                TileBase originalTile = footprint.First.First;
+                groundTilemap.SetTile(position, originalTile);
+                footprintQueue.Dequeue();
+            }
+            else
+            {
+                break;
+            }
+        }
+
     }
 
     public void SetOrientation(Orientation newOrientation)

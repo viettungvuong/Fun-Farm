@@ -8054,7 +8054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe57f073be41e48929999f77ea331af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHour: 19
+  currentHour: 6
   currentMinute: 0
   currentDay: 1
   updateIntervalSeconds: 1.5
@@ -14834,6 +14834,42 @@ PrefabInstance:
       propertyPath: highlightTilemap
       value: 
       objectReference: {fileID: 1151183920}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[0].original
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f3ee5859546a44bdb51576448ad58a7, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[1].original
+      value: 
+      objectReference: {fileID: 11400000, guid: 250ecfb6b7b6f442d9b76c5d8c589ecc, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[2].original
+      value: 
+      objectReference: {fileID: 11400000, guid: 70b308c6a5ecb423d8c02758121c672c, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[3].original
+      value: 
+      objectReference: {fileID: 11400000, guid: 40fba58384333434e858ee422119655f, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[0].footprint
+      value: 
+      objectReference: {fileID: 11400000, guid: afb6126eac8174624b370849987e52b9, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[1].footprint
+      value: 
+      objectReference: {fileID: 11400000, guid: afb6126eac8174624b370849987e52b9, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[2].footprint
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e18499dc51f74d7fb83bc61b4d2392b, type: 2}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: footprints.Array.data[3].footprint
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e18499dc51f74d7fb83bc61b4d2392b, type: 2}
     - target: {fileID: 4549481178296448086, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: marketPanel
       value: 
