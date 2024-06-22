@@ -36,6 +36,7 @@ public class GameSaving : MonoBehaviour
         }
 
         string playerFile = Application.persistentDataPath + "/player.data";
+        Debug.Log(SavePlayer());
         File.WriteAllText(playerFile, SavePlayer());
 
         string timeFile = Application.persistentDataPath + "/time.data";
@@ -49,7 +50,8 @@ public class GameSaving : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")){
-            SaveGame();
+            if (SkeletonGenerate.skeletons<=0&&SlimeGenerate.slimes<=0)
+                SaveGame(); // only save when all enemies have been killed
         }
     }
 }

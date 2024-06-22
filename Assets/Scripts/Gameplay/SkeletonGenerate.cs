@@ -14,6 +14,8 @@ public class SkeletonGenerate : MonoBehaviour
     public int intervalBetweenSpawns = 60;
     private int nextMinuteRefill = 10;
 
+    public static int skeletons = 0;
+
     private void Start()
     {
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
@@ -60,7 +62,8 @@ public class SkeletonGenerate : MonoBehaviour
                 nextMinuteRefill -= 60;
             }
 
-            SpawnSkeleton(skeletonNumber); // spawn wood every 5 mins
+            SpawnSkeleton(skeletonNumber);
+            skeletons += skeletonNumber;
         }
     }
 

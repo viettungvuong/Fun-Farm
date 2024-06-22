@@ -14,6 +14,8 @@ public class SlimeGenerate : MonoBehaviour
     public int intervalBetweenSpawns = 80;
     private int nextMinuteRefill = 15;
 
+    public static int slimes = 0;
+
     private void Start()
     {
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
@@ -59,7 +61,8 @@ public class SlimeGenerate : MonoBehaviour
                 nextMinuteRefill -= 60;
             }
 
-            SpawnSkeleton(slimeNumber); // spawn wood every 5 mins
+            SpawnSkeleton(slimeNumber);
+            slimes += slimeNumber;
         }
     }
 

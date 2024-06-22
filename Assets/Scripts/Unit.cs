@@ -28,6 +28,12 @@ public class Unit : MonoBehaviour
     }
 
     public void Die(){
+        if (gameObject.name.Contains("Slime")){
+            SlimeGenerate.slimes--;
+        }
+        else if (gameObject.name.Contains("Skeleton")){
+            SkeletonGenerate.skeletons--;
+        }
         StartCoroutine(DieCoroutine());
     }
 
