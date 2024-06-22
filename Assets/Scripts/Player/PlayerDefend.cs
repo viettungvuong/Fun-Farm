@@ -24,6 +24,8 @@ public class PlayerDefend : MonoBehaviour
 
     private int woodTaken = 0;
     private int numberOfFences = 0;
+    public int intervalBetweenRefill = 45;
+    private int nextMinuteRefill = 5;
 
     private void Awake() {
         if (instance==null){
@@ -78,6 +80,14 @@ public class PlayerDefend : MonoBehaviour
 
     void Update()
     {
+        if (TimeManage.instance.currentMinute==nextMinuteRefill){
+            nextMinuteRefill+= intervalBetweenRefill;
+            if (nextMinuteRefill>=60){
+                nextMinuteRefill -= 60;
+            }
+
+            numberOfFences += 2;
+        }
         if (GameController.HomeScene()==false){
             return; // only in home scene
         }

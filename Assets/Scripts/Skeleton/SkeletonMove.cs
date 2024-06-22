@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
+
+enum SkeletonStatus{
+    TorchSabotage,
+    PlayerAttack
+}
 
 public class SkeletonMove : MonoBehaviour
 {
+    static Dictionary<SkeletonStatus, HashSet<SkeletonMove>> skeletonMoves = new Dictionary<SkeletonStatus, HashSet<SkeletonMove>>();
+    SkeletonStatus status;
     Orientation orientation;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -14,6 +23,7 @@ public class SkeletonMove : MonoBehaviour
     private float moveSpeed;
     private GameObject player;
     private Vector3 playerPos;
+
     private Vector3 skeletonPos;
 
     private List<Node> path;
@@ -24,12 +34,30 @@ public class SkeletonMove : MonoBehaviour
     private Vector3 lastPosition;
     private float stuckTime;
 
+    private List<Transform> torches;
+    int currentTorch = 0;
+
+    private void Awake() {
+        if (skeletonMoves.ContainsKey(SkeletonStatus.TorchSabotage)==false){
+            skeletonMoves.Add(SkeletonStatus.TorchSabotage, new HashSet<SkeletonMove>());
+        }
+        if (skeletonMoves.ContainsKey(SkeletonStatus.PlayerAttack)==false){
+            skeletonMoves.Add(SkeletonStatus.PlayerAttack, new HashSet<SkeletonMove>());
+        }
+    }
+
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         unit = GetComponent<Unit>();
         rb = GetComponent<Rigidbody2D>();
+
+        torches = new List<Transform>();
+        var torchObjects =  GameObject.FindGameObjectsWithTag("Torch").ToList();
+        foreach (var torch in torchObjects){
+            torches.Add(torch.transform);
+        }
 
         mapPath = MapPath.instance;
 
@@ -42,22 +70,39 @@ public class SkeletonMove : MonoBehaviour
 
         lastPosition = rb.position;
         stuckTime = 0f;
+
+        DecideTorchSabotage();
     }
 
     void Update()
     {
         moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 1.5f;
-        Vector3 currentPlayerPos = player.GetComponent<Rigidbody2D>().position;
+        Vector3 target;
 
-        if (playerPos == null || Vector3.Distance(currentPlayerPos, playerPos) > 0.01f)
-        {
-            playerPos = currentPlayerPos;
+        if (status==SkeletonStatus.PlayerAttack){
+            Vector3 currentPlayerPos = player.GetComponent<Rigidbody2D>().position;
 
-            // re-navigate
-            FindPathToPlayer();
+            if (playerPos == null || Vector3.Distance(currentPlayerPos, playerPos) > 0.01f) // if player has moved
+            {
+                playerPos = currentPlayerPos;
+
+                // navigate to player
+                FindPathTo(playerPos);
+            }
+
+            target = playerPos; // set target
+        }
+        else{
+            if (path == null) // no path to torch found
+            {
+                // navigate to player
+                FindPathTo(torches[currentTorch].position);
+            }
+
+            target = torches[currentTorch].position;
         }
 
-        MoveAlongPath();
+        MoveAlongPath(target);
 
         if (TimeManage.instance.IsDay()){
             DieWhenDay();
@@ -70,9 +115,9 @@ public class SkeletonMove : MonoBehaviour
         unit.Die(); // when day, a skeleton automatically dies
     }
 
-    private void FindPathToPlayer()
+    private void FindPathTo(Vector3 pos)
     {
-        path = AStarPathfinding(rb.position, playerPos);
+        path = AStarPathfinding(rb.position, pos);
 
         if (path != null && path.Count > 0)
         {
@@ -80,24 +125,25 @@ public class SkeletonMove : MonoBehaviour
         }
     }
 
-    private void MoveAlongPath()
+    private void MoveAlongPath(Vector3 target)
     {
         if (path == null || currentPathIndex >= path.Count)
             return;
 
         Vector3 targetPosition;
 
-        // reached goal then move toward nearer to the player
+        // reached goal then move toward nearer to the target
         if (currentPathIndex == path.Count - 1)
         {
-            targetPosition = playerPos;
+            targetPosition = target;
 
-            if (Vector3.Distance(rb.position, playerPos) <= 0.5f)
-            {
+            if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 0.5f)
+            {                         
+                SabotageTorch(); // Attack the torch when close
                 return;
             }
             else{
-                rb.MovePosition(Vector3.MoveTowards(rb.position, playerPos, 0.5f));
+                rb.MovePosition(Vector3.MoveTowards(rb.position, target, 0.5f));
             }
         }
         else
@@ -163,7 +209,7 @@ public class SkeletonMove : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!isAttacking && other.gameObject.name == "Player" && Time.time >= nextAttackTime)
+        if (status == SkeletonStatus.PlayerAttack && !isAttacking && other.gameObject.name == "Player" && Time.time >= nextAttackTime)
         {
             isAttacking = true;
 
@@ -184,7 +230,7 @@ public class SkeletonMove : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.name == "Player")
+        if (status == SkeletonStatus.PlayerAttack && other.gameObject.name == "Player")
         { // stop attack
             isAttacking = false;
             StopCoroutine(AttackCoroutine());
@@ -321,13 +367,13 @@ public class SkeletonMove : MonoBehaviour
 
     private void CheckIfStuck()
     {
-        if (Vector3.Distance(rb.position, lastPosition) < 0.01f)
+        if (Vector3.Distance(rb.position, lastPosition) < 0.05f)
         {
             stuckTime += Time.deltaTime;
             if (stuckTime >= 5f)
             {
                 MoveToRandomNeighbor();
-                stuckTime = 0f; // Reset the stuck time after moving
+                stuckTime = 0f; 
             }
         }
         else
@@ -351,6 +397,39 @@ public class SkeletonMove : MonoBehaviour
 
             UpdateOrientation();
             skeletonPos = rb.position; 
+        }
+    }
+
+    private void SabotageTorch()
+    {
+        // torch position
+        Transform torchTransform = torches[currentTorch];
+        Light2D torchLight = torchTransform.GetChild(0).GetComponent<Light2D>();
+
+        if (torchLight != null)
+        {
+            torchLight.intensity = 0.1f; // Reduce the light intensity to 0.1
+        }
+
+        // move to next torch     
+        currentTorch++;
+        if (currentTorch>=torches.Count){
+            skeletonMoves[SkeletonStatus.TorchSabotage].Remove(this);
+            skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
+            status = SkeletonStatus.PlayerAttack; // switch to attack player
+        }
+        path = null; // reset path
+    }
+
+    void DecideTorchSabotage(){
+        if (skeletonMoves[SkeletonStatus.TorchSabotage].Count==0){
+            // decide this will be torch sabotage
+            skeletonMoves[SkeletonStatus.TorchSabotage].Add(this);
+            status = SkeletonStatus.TorchSabotage;
+        }
+        else{
+            skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
+            status = SkeletonStatus.PlayerAttack;
         }
     }
 }

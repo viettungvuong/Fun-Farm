@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50054d8bd48fc473c8e4adf53b05bbd2, type: 3}
+  m_Name: FlowerYellow 1
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 782dee474ae8f4057abc26b5813199fa, type: 2}
+  - {fileID: 11400000, guid: 2e24200973ca04c62a3262e2b8714174, type: 2}
+  - {fileID: 11400000, guid: c3d6761966b1f40278cb7fbdee3d71d6, type: 2}
+  - {fileID: 11400000, guid: 36c20f430fd544fb68fcef12614fa7d7, type: 2}
+  - {fileID: 11400000, guid: 9727f4e2270f94f968d9a4662b924bf5, type: 2}
+  gridPosition: {x: -5, y: -2, z: 0}
+  levelUpTime: 20
+  currentStage: 2
+  maxHealth: 100
+  health: 100
+  maxStage: 4
+  buyMoney: 70
+  harvestMoney: 100
+  deteriorateTime: 12
