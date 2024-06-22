@@ -99,7 +99,7 @@ public class SkeletonMove : MonoBehaviour
                 FindPathTo(torches[currentTorch].position);
             }
 
-            target = torches[currentTorch].position;
+            target = torches[currentTorch].position - new Vector3(0f,0.6f);
         }
 
         MoveAlongPath(target);

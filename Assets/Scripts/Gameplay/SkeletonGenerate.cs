@@ -16,9 +16,12 @@ public class SkeletonGenerate : MonoBehaviour
 
     public static int skeletons = 0;
 
+    static bool hasSpawned = false;
+
     private void Start()
     {
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+        if (PlayerUnit.playerMode == PlayerMode.CREATIVE)
+        {
             enabled = false;
             return;
         }
@@ -29,13 +32,13 @@ public class SkeletonGenerate : MonoBehaviour
 
     private void OnDestroy()
     {
- 
+
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
- 
+
         InitializeMap();
     }
 
@@ -49,21 +52,33 @@ public class SkeletonGenerate : MonoBehaviour
     void Update()
     {
 
-        if (GameController.HomeScene()==false){
+        if (GameController.HomeScene() == false)
+        {
             nextMinuteRefill += 1;
-            if (nextMinuteRefill>=60){
+            if (nextMinuteRefill >= 60)
+            {
                 nextMinuteRefill -= 60;
             }
             return;
         }
-        if (TimeManage.instance.currentMinute==nextMinuteRefill&&TimeManage.instance.IsDay()==false){
-            nextMinuteRefill+= intervalBetweenSpawns;
-            if (nextMinuteRefill>=60){
+        if (TimeManage.instance.currentMinute == nextMinuteRefill && TimeManage.instance.IsDay() == false && !hasSpawned)
+        {
+            hasSpawned = true;
+            nextMinuteRefill += intervalBetweenSpawns;
+            if (nextMinuteRefill >= 60)
+            {
                 nextMinuteRefill -= 60;
             }
 
+            Debug.Log("spawnign skeletons");
+
             SpawnSkeleton(skeletonNumber);
             skeletons += skeletonNumber;
+        }
+
+        if (TimeManage.instance.currentMinute != nextMinuteRefill)
+        {
+            hasSpawned = false;
         }
     }
 
@@ -73,7 +88,7 @@ public class SkeletonGenerate : MonoBehaviour
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
         int offset = 2;
-        
+
         for (int i = 0; i < number; i++)
         {
             Vector3 spawnPosition;
@@ -81,21 +96,52 @@ public class SkeletonGenerate : MonoBehaviour
 
             do
             {
-                Vector3Int randomCell = new Vector3Int(
-                    Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
-                    Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
-                    0
-                );
+                Vector3Int randomCell;
+                int edge = Random.Range(0, 4); // 0: top, 1: bottom, 2: left, 3: right
+
+                switch (edge)
+                {
+                    case 0: // top
+                        randomCell = new Vector3Int(
+                            Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
+                            groundBounds.yMax - offset,
+                            0
+                        );
+                        break;
+                    case 1: // bottom
+                        randomCell = new Vector3Int(
+                            Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
+                            groundBounds.yMin + offset,
+                            0
+                        );
+                        break;
+                    case 2: // left
+                        randomCell = new Vector3Int(
+                            groundBounds.xMin + offset,
+                            Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                            0
+                        );
+                        break;
+                    case 3: // right
+                        randomCell = new Vector3Int(
+                            groundBounds.xMax - offset,
+                            Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                            0
+                        );
+                        break;
+                    default:
+                        randomCell = new Vector3Int();
+                        break;
+                }
 
                 spawnPosition = groundTilemap.CellToWorld(randomCell);
 
-
                 attempts++;
-                
-            } while ((MapManager.instance.Plantable(spawnPosition)||PlantManager.instance.Planted(spawnPosition)
-            ||Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
-            ||Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)
-            ||Physics2D.OverlapCircle(spawnPosition, 2f, obstacleLayer)) && attempts < 200);
+
+            } while ((MapManager.instance.Plantable(spawnPosition) || PlantManager.instance.Planted(spawnPosition)
+                || Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
+                || Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)
+                || Physics2D.OverlapCircle(spawnPosition, 1f, obstacleLayer)) && attempts < 200);
 
             if (attempts >= 200)
             {

@@ -16,6 +16,8 @@ public class SlimeGenerate : MonoBehaviour
 
     public static int slimes = 0;
 
+    static bool hasSpawned = false;
+
     private void Start()
     {
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
@@ -55,7 +57,8 @@ public class SlimeGenerate : MonoBehaviour
             }
             return;
         }
-        if (TimeManage.instance.currentMinute==nextMinuteRefill&&TimeManage.instance.IsDay()==true){
+        if (TimeManage.instance.currentMinute==nextMinuteRefill&&TimeManage.instance.IsDay()==true&&!hasSpawned){
+            hasSpawned = true;
             nextMinuteRefill+= intervalBetweenSpawns;
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;
@@ -64,50 +67,87 @@ public class SlimeGenerate : MonoBehaviour
             SpawnSkeleton(slimeNumber);
             slimes += slimeNumber;
         }
+
+        if (TimeManage.instance.currentMinute != nextMinuteRefill)
+        {
+            hasSpawned = false;
+        }
     }
 
     private void SpawnSkeleton(int number)
+{
+    string tag = "Slime";  // Ensure the tag matches your pool
+
+    BoundsInt groundBounds = groundTilemap.cellBounds;
+    int offset = 2;
+
+    for (int i = 0; i < number; i++)
     {
-        string tag = "Slime";
+        Vector3 spawnPosition;
+        int attempts = 0;
 
-        BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 2;
-        
-        for (int i = 0; i < number; i++)
+        do
         {
-            Vector3 spawnPosition;
-            int attempts = 0;
+            Vector3Int randomCell;
+            int edge = Random.Range(0, 4); // 0: top, 1: bottom, 2: left, 3: right
 
-            do
+            switch (edge)
             {
-                Vector3Int randomCell = new Vector3Int(
-                    Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
-                    Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
-                    0
-                );
-
-                spawnPosition = groundTilemap.CellToWorld(randomCell);
-
-
-                attempts++;
-                
-            } while ((MapManager.instance.Plantable(spawnPosition)||PlantManager.instance.Planted(spawnPosition)
-            ||Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
-            ||Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)
-            ||Physics2D.OverlapCircle(spawnPosition, 2f, obstacleLayer)) && attempts < 200);
-
-            if (attempts >= 200)
-            {
-                continue;
+                case 0: // Top edge
+                    randomCell = new Vector3Int(
+                        Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
+                        groundBounds.yMax - offset,
+                        0
+                    );
+                    break;
+                case 1: // Bottom edge
+                    randomCell = new Vector3Int(
+                        Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
+                        groundBounds.yMin + offset,
+                        0
+                    );
+                    break;
+                case 2: // Left edge
+                    randomCell = new Vector3Int(
+                        groundBounds.xMin + offset,
+                        Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                        0
+                    );
+                    break;
+                case 3: // Right edge
+                    randomCell = new Vector3Int(
+                        groundBounds.xMax - offset,
+                        Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                        0
+                    );
+                    break;
+                default:
+                    randomCell = new Vector3Int(); // Default case, should not be hit
+                    break;
             }
 
-            GameObject spawnedEnemy = ObjectPooling.SpawnFromPool(tag, spawnPosition);
-            spawnedEnemy.SetActive(true);
+            spawnPosition = groundTilemap.CellToWorld(randomCell);
 
-            if (spawnPosition.x > player.transform.position.x)
-            {
-                spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
-            }
+            attempts++;
+
+        } while ((MapManager.instance.Plantable(spawnPosition) || PlantManager.instance.Planted(spawnPosition)
+            || Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
+            || Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)
+            || Physics2D.OverlapCircle(spawnPosition, 1f, obstacleLayer)) && attempts < 200);
+
+        if (attempts >= 200)
+        {
+            continue;
+        }
+
+        GameObject spawnedEnemy = ObjectPooling.SpawnFromPool(tag, spawnPosition);
+        spawnedEnemy.SetActive(true);
+
+        if (spawnPosition.x > player.transform.position.x)
+        {
+            spawnedEnemy.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
+}
+
 }

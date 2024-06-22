@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: -13.6}
+  m_AnchoredPosition: {x: 0.00012207031, y: -13.6}
   m_SizeDelta: {x: 53.185394, y: 48.266}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &7457275
@@ -586,11 +586,11 @@ RectTransform:
   - {fileID: 7457274}
   m_Father: {fileID: 391512924}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 701.06323, y: -0.27001953}
-  m_SizeDelta: {x: 184.0399, y: 100}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -58.89685, y: -0.27001953}
+  m_SizeDelta: {x: 184.03992, y: 100}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &154388118
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,11 +829,11 @@ RectTransform:
   - {fileID: 346042608}
   m_Father: {fileID: 391512924}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 542, y: -3}
-  m_SizeDelta: {x: 69.3993, y: 100}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -361, y: -3}
+  m_SizeDelta: {x: 69.39929, y: 100}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!4 &245729047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 62262185290890790, guid: 7e743986a44834551b41ebd71a845f3a, type: 3}
@@ -1087,7 +1087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.522614, y: -10.3667}
+  m_AnchoredPosition: {x: -14.522644, y: -10.3667}
   m_SizeDelta: {x: 33.6554, y: 38.8126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &346042609
@@ -1268,8 +1268,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 474.9945, y: -72.69739}
-  m_SizeDelta: {x: 943.7195, y: 85.4049}
+  m_AnchoredPosition: {x: 541.06274, y: -72.69739}
+  m_SizeDelta: {x: 1075.856, y: 85.4049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &391512925
 MonoBehaviour:
@@ -8261,11 +8261,11 @@ RectTransform:
   - {fileID: 321829228}
   m_Father: {fileID: 391512924}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 389, y: -1}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -549, y: -1}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!1001 &1877901512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8320,7 +8320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505818963146932811, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1505818963146932811, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_TagString
@@ -8328,7 +8328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6867022720111455463, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15003,7 +15003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505818963146932811, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1505818963146932811, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_TagString
@@ -15011,7 +15011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6867022720111455463, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8654784986864341607, guid: 283f3a22a26d24ef6ad8b48c44b52cca, type: 3}
       propertyPath: m_PointLightOuterRadius
