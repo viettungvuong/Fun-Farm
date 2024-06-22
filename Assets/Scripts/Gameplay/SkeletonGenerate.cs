@@ -12,7 +12,7 @@ public class SkeletonGenerate : MonoBehaviour
     public LayerMask enemyLayer, playerLayer, obstacleLayer;
     public int skeletonNumber;
     public int intervalBetweenSpawns = 60;
-    private int nextMinuteRefill = 10;
+    private int nextMinuteRefill = 0;
 
     public static int skeletons = 0;
 
@@ -69,8 +69,6 @@ public class SkeletonGenerate : MonoBehaviour
             {
                 nextMinuteRefill -= 60;
             }
-
-            Debug.Log("spawnign skeletons");
 
             SpawnSkeleton(skeletonNumber);
             skeletons += skeletonNumber;

@@ -99,7 +99,7 @@ public class SkeletonMove : MonoBehaviour
                 FindPathTo(torches[currentTorch].position);
             }
 
-            target = torches[currentTorch].position - new Vector3(0f,0.6f);
+            target = torches[currentTorch].position;
         }
 
         MoveAlongPath(target);
@@ -130,6 +130,7 @@ public class SkeletonMove : MonoBehaviour
         if (path == null || currentPathIndex >= path.Count)
             return;
 
+
         Vector3 targetPosition;
 
         // reached goal then move toward nearer to the target
@@ -137,7 +138,7 @@ public class SkeletonMove : MonoBehaviour
         {
             targetPosition = target;
 
-            if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 0.5f)
+            if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 0.6f)
             {                         
                 SabotageTorch(); // Attack the torch when close
                 return;
@@ -212,7 +213,7 @@ public class SkeletonMove : MonoBehaviour
         if (status == SkeletonStatus.PlayerAttack && !isAttacking && other.gameObject.name == "Player" && Time.time >= nextAttackTime)
         {
             isAttacking = true;
-
+            StopAllCoroutines();
             StartCoroutine(AttackCoroutine());
             StartCoroutine(AttackCooldown());
 
@@ -270,9 +271,16 @@ public class SkeletonMove : MonoBehaviour
     {
         Node startNode = mapPath.GetNode(start);
         Node goalNode = mapPath.GetNode(goal);
-        if (startNode == null || goalNode == null || !startNode.IsWalkable || !goalNode.IsWalkable)
+        if (startNode == null || goalNode == null || !startNode.IsWalkable)
         {
             return null;
+        }
+
+        float minus = 0.1f;
+        float it = 1;
+        while (!goalNode.IsWalkable){
+            goalNode = mapPath.GetNode(new Vector3(goal.x, goal.y - minus*it, goal.z));
+            it++;
         }
 
         List<Node> openList = new List<Node>();
@@ -367,7 +375,7 @@ public class SkeletonMove : MonoBehaviour
 
     private void CheckIfStuck()
     {
-        if (Vector3.Distance(rb.position, lastPosition) < 0.05f)
+        if (Vector3.Distance(rb.position, lastPosition) < 0.1f)
         {
             stuckTime += Time.deltaTime;
             if (stuckTime >= 5f)
@@ -405,10 +413,11 @@ public class SkeletonMove : MonoBehaviour
         // torch position
         Transform torchTransform = torches[currentTorch];
         Light2D torchLight = torchTransform.GetChild(0).GetComponent<Light2D>();
-
+        StopAllCoroutines();
+        StartCoroutine(AttackCoroutine());
         if (torchLight != null)
         {
-            torchLight.intensity = 0.1f; // Reduce the light intensity to 0.1
+            torchLight.intensity = 0.1f; 
         }
 
         // move to next torch     
