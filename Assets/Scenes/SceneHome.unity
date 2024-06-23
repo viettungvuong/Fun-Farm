@@ -8246,6 +8246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dfca7a25e6d44959ac7065be382ebb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializedPlantPos:
+    entries: []
+  serializedLastLevelTime:
+    entries: []
+  serializedLastCheckFreshTime:
+    entries: []
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}

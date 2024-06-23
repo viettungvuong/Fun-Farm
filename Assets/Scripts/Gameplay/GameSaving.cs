@@ -51,6 +51,7 @@ public class GameSaving : MonoBehaviour
         File.WriteAllText(timeFile, SaveTime());
 
         string plantFile = Application.persistentDataPath + "/plant.data";
+        Debug.Log(SavePlants());
         File.WriteAllText(plantFile, SavePlants());
     }
 

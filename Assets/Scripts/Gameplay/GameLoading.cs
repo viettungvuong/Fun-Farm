@@ -23,7 +23,8 @@ public class GameLoading : MonoBehaviour
     void FetchPlants(string json)
     {
         JsonUtility.FromJsonOverwrite(json, PlantPos.instance);
-        PlantPos.instance.LoadToTilemap();
+        PlantPos.instance.Deserialize();
+        PlantManager.instance.Load(); // load information about plant
     }
 
     void Start()

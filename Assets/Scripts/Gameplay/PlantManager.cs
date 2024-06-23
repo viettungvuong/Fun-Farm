@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-[Serializable]
 public class PlantManager : MonoBehaviour
 {
     private Tilemap plantMap;
@@ -21,6 +21,8 @@ public class PlantManager : MonoBehaviour
 
     public Slider healthSliderPrefab;
 
+    public static bool firstOpen = true;
+
 
     private void Awake()
     {
@@ -30,21 +32,19 @@ public class PlantManager : MonoBehaviour
         else{
             Destroy(this);
         }
-
-
-    }
-
-    private void Start() {
         plantPos = new Dictionary<Vector3Int, PlantedPlant>();
         lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
         lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
         plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
 
+    }
+
+    private void Start() {
  
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
-
+        firstOpen = false;
     }
 
 
@@ -60,24 +60,61 @@ public class PlantManager : MonoBehaviour
         InitializeMap();
     }
 
+
+    public void Load(){
+        PlantPos plantPos = PlantPos.instance;
+
+        this.plantPos = new Dictionary<Vector3Int, PlantedPlant>();
+        this.lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
+        this.lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
+        this.plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
+
+        
+        this.plantPos.AddRange(plantPos.SerializedPlantPos.ToDictionary());
+        this.lastLevelTime.AddRange(plantPos.SerializedLastLevelTime.ToDictionary());
+        this.lastCheckFreshTime.AddRange(plantPos.SerializedLastCheckFreshTime.ToDictionary());
+
+
+        foreach (var entry in this.plantPos){
+            Vector3Int cellPosition = entry.Key;
+            PlantedPlant plant = entry.Value;
+
+            plant.LoadTilesFromPaths(); // reload tiles from tile paths (because tiles are not directly serializable)
+            plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+            plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
+
+            PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
+            plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add healthbar to plant
+            plantHealthBars.Add(plant, plantHealthBar);
+        }
+
+        // plantPos.LoadToTilemap(); // redraw tilemap
+
+    }
+
+
     private void InitializeMap()
     {
         if (GameController.HomeScene()){
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
 
-            foreach (var entry in plantPos)
-            {
-                Vector3Int position = entry.Key;
-                PlantedPlant plant = entry.Value;
+            if (firstOpen==false){ // first open then don't load these
+                foreach (var entry in plantPos)
+                {
+                    Vector3Int position = entry.Key;
+                    PlantedPlant plant = entry.Value;
 
-                // reput plant 
-                plantMap.SetTile(position,plant.tiles[plant.currentStage]);
+                    // reput plant 
+                    plantMap.SetTile(position,plant.tiles[plant.currentStage]);
 
-                // reinitialize plant health bar
-                PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
-                plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
-                plantHealthBars.Add(plant, plantHealthBar);
+                    // reinitialize plant health bar
+                    PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
+                    plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
+                    plantHealthBars.Add(plant, plantHealthBar);
+                }
             }
+
+            
         }
 
     }
@@ -96,8 +133,8 @@ public class PlantManager : MonoBehaviour
     }
 
 
-    private void CheckPlantLevel(){
-
+    private void CheckPlantLevel()
+    {
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
@@ -107,20 +144,38 @@ public class PlantManager : MonoBehaviour
         {
             PlantedPlant plant = entry.Key;
 
-            if (plant.currentStage >= plant.maxStage)
+            try
             {
-                continue; // max level so do nothing
+                if (plant.currentStage >= plant.maxStage)
+                {
+                    continue; // max level so do nothing
+                }
+
+                DateTime lastTime = entry.Value;
+
+                double secondsDifference = (now - lastTime).TotalSeconds;
+
+                if (secondsDifference > plant.levelUpTime)
+                {
+                    // Attempt to increment currentStage
+                    plant.currentStage++;
+
+                    // Check if currentStage is within bounds
+                    if (plant.currentStage < plant.tiles.Count)
+                    {
+                        plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
+                        PlantPos.instance.LevelPlant(plant, now);
+                        updates[plant] = now; // collect the update
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Plant currentStage ({plant.currentStage}) exceeded tile count ({plant.tiles.Count}) for plant at {plant.gridPosition}");
+                    }
+                }
             }
-
-            DateTime lastTime = entry.Value;
-
-            double secondsDifference = (now - lastTime).TotalSeconds;
-
-            if (secondsDifference > plant.levelUpTime)
+            catch (Exception e)
             {
-                plant.currentStage++; // level up
-                plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
-                updates[plant] = now; // collect the update
+                Debug.LogError($"Error updating plant level: {e.Message}");
             }
         }
 
@@ -129,6 +184,7 @@ public class PlantManager : MonoBehaviour
             lastLevelTime[update.Key] = update.Value;
         }
     }
+
     public bool Planted(Vector3 worldPosition){
         Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
@@ -201,6 +257,7 @@ public class PlantManager : MonoBehaviour
             {
                 DamagePlant(plant);
                 plantsToRemove.Add(plant);
+                PlantPos.instance.RemovePlant(plant, plant.gridPosition);
             }
         }
 
@@ -271,21 +328,43 @@ public class PlantManager : MonoBehaviour
 
     public void RemovePlant(PlantedPlant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
+        lastCheckFreshTime.Remove(plant);
+        lastLevelTime.Remove(plant);
 
         if (removeOnMap){
             plantMap.SetTile(plant.gridPosition, null);
-            PlantPos.instance.RemovePlant(plant.gridPosition);
+            PlantPos.instance.RemovePlant(plant, plant.gridPosition);
         }
 
     }
 
-    public void DamagePlant(PlantedPlant plant){
-        ColorPlant(plant, Color.black);
+    public void DamagePlant(PlantedPlant plant)
+    {
+        try
+        {
+            ColorPlant(plant, Color.black);
 
-        RemovePlant(plant);
-        plantHealthBars[plant].healthSlider.gameObject.SetActive(false); // plant die => disable health slider
-        plantHealthBars[plant].gameObject.SetActive(false);
-        plantHealthBars.Remove(plant);
+            RemovePlant(plant);
+
+            if (plantHealthBars.ContainsKey(plant))
+            {
+                var healthBar = plantHealthBars[plant];
+                if (healthBar != null)
+                {
+                    healthBar.healthSlider.gameObject.SetActive(false); // plant dies => disable health slider
+                    healthBar.gameObject.SetActive(false);
+                }
+                plantHealthBars.Remove(plant);
+            }
+            else
+            {
+                Debug.LogWarning("Plant health bar not found in dictionary for plant: " + plant.gridPosition);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error damaging plant: {e.Message}");
+        }
     }
 
     public PlantedPlant GetPlantAt(Vector3 worldPosition){
@@ -320,16 +399,17 @@ public class PlantManager : MonoBehaviour
     public bool AddPlant(Vector3 worldPosition, PlantedPlant plant){
         Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
-        if (gridPosition == null)
+        if (gridPosition == null||Planted(worldPosition))
             return false;
 
-        // check whether another plant is here later
-
+        DateTime now = DateTime.Now;
         plantPos.Add(gridPosition, plant);
-        lastLevelTime.Add(plant, DateTime.Now);
-        lastCheckFreshTime.Add(plant, DateTime.Now);
+        lastLevelTime.Add(plant, now);
+        lastCheckFreshTime.Add(plant, now);
 
         PlantPos.instance.AddPlant(gridPosition, plant); // add to serializable matrix
+        PlantPos.instance.LevelPlant(plant, now);
+        PlantPos.instance.HealthPlant(plant, now);
 
         PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
         plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
@@ -349,13 +429,14 @@ public class PlantManager : MonoBehaviour
         }
 
         PlantedPlant plant = plantPos[gridPosition]; // get plant at position
-
+        DateTime now = DateTime.Now;
         if (lastCheckFreshTime.ContainsKey(plant)==false){
-            lastCheckFreshTime.Add(plant, DateTime.Now);
+            lastCheckFreshTime.Add(plant, now);
         }
         else{
-            lastCheckFreshTime[plant] = DateTime.Now;
+            lastCheckFreshTime[plant] = now;
         }
+        PlantPos.instance.HealthPlant(plant, now);
         
         ColorPlant(plant, Color.white); // fresh plant again
 

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class SerializableDictionaryEntry
+public class SerializableDictionary<TKey, TValue>
 {
-    public Vector3Int key;
-    public Plant value;
-
-    public SerializableDictionaryEntry(Vector3Int key, Plant value)
+    [Serializable]
+    public class SerializableDictionaryEntry
     {
-        this.key = key;
-        this.value = value;
-    }
-}
+        public TKey key;
+        public TValue value;
 
-[Serializable]
-public class SerializableDictionary
-{
+        public SerializableDictionaryEntry(TKey key, TValue value)
+        {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
     public List<SerializableDictionaryEntry> entries = new List<SerializableDictionaryEntry>();
 
-    public void FromDictionary(Dictionary<Vector3Int, Plant> dictionary)
+    public void FromDictionary(Dictionary<TKey, TValue> dictionary)
     {
         entries.Clear();
         foreach (var kvp in dictionary)
@@ -29,9 +29,9 @@ public class SerializableDictionary
         }
     }
 
-    public Dictionary<Vector3Int, Plant> ToDictionary()
+    public Dictionary<TKey, TValue> ToDictionary()
     {
-        Dictionary<Vector3Int, Plant> dictionary = new Dictionary<Vector3Int, Plant>();
+        Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
         foreach (var entry in entries)
         {
             dictionary[entry.key] = entry.value;

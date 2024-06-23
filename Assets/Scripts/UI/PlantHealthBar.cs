@@ -40,8 +40,26 @@ public class PlantHealthBar : MonoBehaviour
 
         // the bar shows time left until the tree is deteriorated
         healthSlider.maxValue = (float)plant.deteriorateTime;
-        double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
-        healthSlider.value = (float)timeDiff;
+        try
+        {
+            var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
+            if (lastTimeWatered != null && lastTimeWatered is DateTime lastWateredTime)
+            {
+                double timeDiff = (DateTime.Now - lastWateredTime).TotalSeconds;
+                healthSlider.value = (float)timeDiff;
+            }
+            else
+            {
+                Debug.LogWarning("Last time watered is null or not a DateTime.");
+                healthSlider.gameObject.SetActive(false);
+                Destroy(this);
+                return;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error calculating time difference: " + e.Message);
+        }
 
 
     }
@@ -55,7 +73,6 @@ public class PlantHealthBar : MonoBehaviour
             healthSlider.gameObject.SetActive(false);
             return;
         }
-
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
 

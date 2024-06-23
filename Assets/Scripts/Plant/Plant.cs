@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -19,9 +20,17 @@ public class Plant : ScriptableObject
 [Serializable]
 public class PlantedPlant
 {
+    public PlantedPlant() {
+        tilePaths = new List<string>();
+        tiles = new List<Tile>();
+    }
+
     public PlantedPlant(Plant plant, Vector3Int gridPosition)
     {
-        tiles = plant.tiles;
+        tilePaths = new List<string>();
+
+        tiles = plant.tiles.ToList();
+        SaveTilePaths();
 
         this.gridPosition = gridPosition;
 
@@ -37,8 +46,28 @@ public class PlantedPlant
         deteriorateTime = plant.deteriorateTime;
     }
 
+    public void SaveTilePaths()
+    {
+        tilePaths.Clear();
+        foreach (var tile in tiles)
+        {
+            tilePaths.Add(AssetDatabase.GetAssetPath(tile));
+        }
+    }
 
-    public Tile[] tiles;
+    public void LoadTilesFromPaths()
+    {
+        tiles.Clear();
+        foreach (var path in tilePaths)
+        {
+            var tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
+            tiles.Add(tile);
+        }
+    }
+
+
+    [NonSerialized] public List<Tile> tiles;
+    [SerializeField] private List<string> tilePaths; // tiles are un-serializable so we have to store path
     public Vector3Int gridPosition;
     public double levelUpTime;
     public int currentStage=0;
@@ -48,4 +77,30 @@ public class PlantedPlant
     public int buyMoney;
     public int harvestMoney;
     public double deteriorateTime;
+
+    public override int GetHashCode()
+    {
+        int hash = 17;
+
+        hash = hash * 31 + gridPosition.GetHashCode();
+        hash = hash * 31 + currentStage;
+
+        foreach (var path in tilePaths)
+        {
+            hash = hash * 31 + (path != null ? path.GetHashCode() : 0);
+        }
+
+        return hash;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+            return false;
+
+        PlantedPlant other = (PlantedPlant)obj;
+
+        return gridPosition.Equals(other.gridPosition) &&
+               currentStage == other.currentStage;
+    }
 }
