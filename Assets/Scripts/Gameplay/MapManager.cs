@@ -26,12 +26,10 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start() {
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitializeMap();
     }
+
 
     private void OnDestroy()
     {

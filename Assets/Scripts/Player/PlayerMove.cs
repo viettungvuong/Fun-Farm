@@ -48,7 +48,7 @@ public class PlayerMove : MonoBehaviour
 
     public List<FootprintTile> footprints;
     private Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>> footprintQueue; // save tiles player has been previously
-    void Start()
+    void Awake()
     {
  
         SceneManager.sceneLoaded += OnSceneLoaded;

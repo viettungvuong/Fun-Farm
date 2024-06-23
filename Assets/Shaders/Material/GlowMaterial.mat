@@ -81,7 +81,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _FlipbookMode: 0
     - _Glossiness: 0.5
-    - _GlowIntensity: 0.66636366
+    - _GlowIntensity: 1.7369766
     - _GlowStrength: 0.5
     - _InnerGlowStrength: 0.3
     - _LightingEnabled: 1

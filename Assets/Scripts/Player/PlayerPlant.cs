@@ -1,19 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class PlayerPlant : MonoBehaviour
 {
     [HideInInspector] public bool isPlanting = false;
-    public Tilemap plantTilemap;
+    private Tilemap plantTilemap;
 
     PlayerMove playerMove;
     Animator animator;
     Rigidbody2D rb;
     PlayerUnit playerUnit;
 
+
+    private void OnDestroy()
+    {
+ 
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+ 
+        InitializeMap();
+    }
+
+    void InitializeMap(){
+        plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+    }
+
+
+
     void Start(){
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeMap();
+        
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();

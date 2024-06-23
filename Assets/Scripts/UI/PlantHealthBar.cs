@@ -66,13 +66,21 @@ public class PlantHealthBar : MonoBehaviour
 
 
     private void LateUpdate() {
+        if (GameController.HomeScene()){
+            healthSlider.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else{
+            healthSlider.transform.localScale = new Vector3(0, 0, 0);
+        }
 
         if (plant == null) return;
 
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE||GameController.HomeScene()==false||plant.currentStage == plant.maxStage){
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE||plant.currentStage == plant.maxStage){
             healthSlider.gameObject.SetActive(false);
             return;
         }
+
+
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
 

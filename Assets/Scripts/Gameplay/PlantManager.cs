@@ -107,10 +107,13 @@ public class PlantManager : MonoBehaviour
                     // reput plant 
                     plantMap.SetTile(position,plant.tiles[plant.currentStage]);
 
-                    // reinitialize plant health bar
-                    PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
-                    plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
-                    plantHealthBars.Add(plant, plantHealthBar);
+                    // // // reinitialize plant health bar
+                    // PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
+                    // plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
+                    // if (plantHealthBars.ContainsKey(plant)==false){
+                    //     plantHealthBars.Add(plant, plantHealthBar);
+                    // }
+
                 }
             }
 

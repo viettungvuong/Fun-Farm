@@ -17,12 +17,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b84dcaf84ac44fb6a824cd1b77065e6, type: 2}
   - {fileID: 11400000, guid: 0e91fa1b9e13e4429adf6c8c184646f3, type: 2}
   - {fileID: 11400000, guid: 05b0aea9f11964c53ab1c4204588c332, type: 2}
-  gridPosition: {x: -5, y: -2, z: 0}
-  levelUpTime: 60
-  currentStage: 2
+  levelUpTime: 100
   maxHealth: 100
-  health: 100
-  maxStage: 3
   buyMoney: 200
   harvestMoney: 350
-  deteriorateTime: 30
+  deteriorateTime: 65
