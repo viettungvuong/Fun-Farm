@@ -40,10 +40,10 @@ public class PlantPos : MonoBehaviour
         lastLevelTime = serializedLastLevelTime.ToDictionary();
     }
 
-    private void OnDestroy()
-    {
-        serializedPlantPos.FromDictionary(plantPos);
-    }
+    // private void OnDestroy()
+    // {
+    //     serializedPlantPos.FromDictionary(plantPos);
+    // }
 
     public void AddPlant(Vector3Int cellPosition, PlantedPlant plant)
     {

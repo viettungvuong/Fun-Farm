@@ -14,36 +14,8 @@ public class HealthBar : MonoBehaviour
     private Unit unit;
 
     private double maxHealth;
-    private Canvas canvas;
 
-    private void OnDestroy()
-    {
- 
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
- 
-        InitializeCanvas();
-    }
-
-    private void InitializeCanvas()
-    {
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        if (canvases.Length>=2){
-            foreach (Canvas cv in canvases){
-                if (cv.gameObject.scene.name!="DontDestroyOnLoad"){
-                    cv.gameObject.SetActive(false);
-                    Debug.Log("canvas disabled");
-                }
-            }
-        }
-
-        canvas = canvases[0];
-        DontDestroyOnLoad(canvas);
-    }
-
+   
     void Start()
     {
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
@@ -51,9 +23,7 @@ public class HealthBar : MonoBehaviour
             enabled = false;
             return;
         }
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        InitializeCanvas();
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas

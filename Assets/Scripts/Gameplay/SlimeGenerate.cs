@@ -66,9 +66,9 @@ public class SlimeGenerate : Generate
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;
             }
-
-            Spawn(number);
             slimes += number;
+            Spawn(number);
+
         }
     }
 

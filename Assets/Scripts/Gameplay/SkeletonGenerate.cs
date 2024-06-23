@@ -63,9 +63,9 @@ public class SkeletonGenerate : Generate
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;
             }
-
-            Spawn(number);
             skeletons += number;
+            Spawn(number);
+
         }
     }
 }
