@@ -80,8 +80,6 @@ public class PlantButton : MonoBehaviour
             return;
         }
         var newPlant = Instantiate(plant); // create new copy of scriptable object
-        newPlant.currentStage = 0;
-        newPlant.health = 100;
         playerPlant.PlantTree(rb.position, newPlant);
     }
 }

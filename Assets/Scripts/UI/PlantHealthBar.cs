@@ -12,13 +12,13 @@ public class PlantHealthBar : MonoBehaviour
     [HideInInspector] public Slider healthSlider;
     private Image sliderImageFill;
 
-    private Plant plant;
+    private PlantedPlant plant;
     private Tilemap plantTilemap;
 
     
 
     
-    public void Initialize(Plant plant, Tilemap plantTilemap, Slider healthSliderPrefab)
+    public void Initialize(PlantedPlant plant, Tilemap plantTilemap, Slider healthSliderPrefab)
     {
         this.plant = plant;
         this.plantTilemap = plantTilemap;

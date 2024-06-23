@@ -12,10 +12,11 @@ public class PlantManager : MonoBehaviour
 {
     private Tilemap plantMap;
 
-    private Dictionary<Vector3Int, Plant> plantPos; // position of plants
-    private Dictionary<Plant, DateTime> lastLevelTime, lastCheckFreshTime;
-    private Dictionary<Plant, PlantHealthBar> plantHealthBars;
+    private Dictionary<Vector3Int, PlantedPlant> plantPos; // position of plants
+    private Dictionary<PlantedPlant, DateTime> lastLevelTime, lastCheckFreshTime;
+    private Dictionary<PlantedPlant, PlantHealthBar> plantHealthBars;
     // last time this plant was leveled and watered
+
     public static PlantManager instance;
 
     public Slider healthSliderPrefab;
@@ -34,17 +35,15 @@ public class PlantManager : MonoBehaviour
     }
 
     private void Start() {
-        plantPos = new Dictionary<Vector3Int, Plant>();
-        lastLevelTime = new Dictionary<Plant, DateTime>();
-        lastCheckFreshTime = new Dictionary<Plant, DateTime>();
-        plantHealthBars = new Dictionary<Plant, PlantHealthBar>();
+        plantPos = new Dictionary<Vector3Int, PlantedPlant>();
+        lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
+        lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
+        plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
 
  
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
-
-
 
     }
 
@@ -69,7 +68,7 @@ public class PlantManager : MonoBehaviour
             foreach (var entry in plantPos)
             {
                 Vector3Int position = entry.Key;
-                Plant plant = entry.Value;
+                PlantedPlant plant = entry.Value;
 
                 // reput plant 
                 plantMap.SetTile(position,plant.tiles[plant.currentStage]);
@@ -89,7 +88,7 @@ public class PlantManager : MonoBehaviour
         CheckDeterioration();
     }
 
-    private void ColorPlant(Plant plant, Color color){
+    private void ColorPlant(PlantedPlant plant, Color color){
 
         plantMap.RemoveTileFlags(plant.gridPosition, TileFlags.LockColor);
         plantMap.SetColor(plant.gridPosition, color);
@@ -102,11 +101,11 @@ public class PlantManager : MonoBehaviour
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
-        var updates = new Dictionary<Plant, DateTime>();
+        var updates = new Dictionary<PlantedPlant, DateTime>();
 
         foreach (var entry in lastLevelTime)
         {
-            Plant plant = entry.Key;
+            PlantedPlant plant = entry.Key;
 
             if (plant.currentStage >= plant.maxStage)
             {
@@ -140,7 +139,7 @@ public class PlantManager : MonoBehaviour
         return plantPos.ContainsKey(cellPosition);
     }
 
-    public DateTime? GetLastTimeWatered(Plant plant){
+    public DateTime? GetLastTimeWatered(PlantedPlant plant){
         if (lastCheckFreshTime.ContainsKey(plant)==false){
             return null;
         }
@@ -164,7 +163,7 @@ public class PlantManager : MonoBehaviour
                 if (plantPos.ContainsKey(cellPosition))
                 {
                     if (notIncludeMax){
-                        Plant plant = GetPlantAt(cellPosition);
+                        PlantedPlant plant = GetPlantAt(cellPosition);
                         if (plant.currentStage==plant.maxStage){
                             continue; // not include plant at max stage
                         }
@@ -181,13 +180,13 @@ public class PlantManager : MonoBehaviour
         DateTime now = DateTime.Now;
 
         // update in temp dictionary
-        var updates = new Dictionary<Plant, DateTime>();
+        var updates = new Dictionary<PlantedPlant, DateTime>();
 
-        List<Plant> plantsToRemove = new List<Plant>();
+        List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
 
         foreach (var entry in lastCheckFreshTime)
         {
-            Plant plant = entry.Key;
+            PlantedPlant plant = entry.Key;
 
             if (plant.health <= 0 || plant.currentStage == plant.maxStage)
             {
@@ -205,7 +204,7 @@ public class PlantManager : MonoBehaviour
             }
         }
 
-        foreach (Plant plant in plantsToRemove)
+        foreach (PlantedPlant plant in plantsToRemove)
         {
             lastCheckFreshTime.Remove(plant);
             lastLevelTime.Remove(plant);
@@ -217,7 +216,7 @@ public class PlantManager : MonoBehaviour
 
         if (tile != null)
         {
-            Plant plant = GetPlantAt(cellPosition);
+            PlantedPlant plant = GetPlantAt(cellPosition);
 
             return plant != null;
         }
@@ -232,7 +231,7 @@ public class PlantManager : MonoBehaviour
 
         if (tile != null)
         {
-            Plant plant = GetPlantAt(cellPosition);
+            PlantedPlant plant = GetPlantAt(cellPosition);
 
             return plant != null;
         }
@@ -246,7 +245,7 @@ public class PlantManager : MonoBehaviour
 
         if (tile != null)
         {
-            Plant plant = GetPlantAt(cellPosition);
+            PlantedPlant plant = GetPlantAt(cellPosition);
 
             return plant != null && plant.currentStage == plant.maxStage;
         }
@@ -261,7 +260,7 @@ public class PlantManager : MonoBehaviour
 
         if (tile != null)
         {
-            Plant plant = GetPlantAt(cellPosition);
+            PlantedPlant plant = GetPlantAt(cellPosition);
 
             return plant != null && plant.currentStage == plant.maxStage;
         }
@@ -270,7 +269,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    public void RemovePlant(Plant plant, bool removeOnMap=false){
+    public void RemovePlant(PlantedPlant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
 
         if (removeOnMap){
@@ -280,7 +279,7 @@ public class PlantManager : MonoBehaviour
 
     }
 
-    public void DamagePlant(Plant plant){
+    public void DamagePlant(PlantedPlant plant){
         ColorPlant(plant, Color.black);
 
         RemovePlant(plant);
@@ -289,7 +288,7 @@ public class PlantManager : MonoBehaviour
         plantHealthBars.Remove(plant);
     }
 
-    public Plant GetPlantAt(Vector3 worldPosition){
+    public PlantedPlant GetPlantAt(Vector3 worldPosition){
         if (!Planted(worldPosition)){
             return null;
         }
@@ -299,7 +298,7 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    public Plant GetPlantAt(Vector3Int cellPosition){
+    public PlantedPlant GetPlantAt(Vector3Int cellPosition){
         if (!Planted(plantMap.CellToWorld(cellPosition))){
             return null;
         }
@@ -318,7 +317,7 @@ public class PlantManager : MonoBehaviour
         return plantPos[gridPosition].currentStage;
     }
 
-    public bool AddPlant(Vector3 worldPosition, Plant plant){
+    public bool AddPlant(Vector3 worldPosition, PlantedPlant plant){
         Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
         if (gridPosition == null)
@@ -349,7 +348,7 @@ public class PlantManager : MonoBehaviour
             return false; // no plant here to water
         }
 
-        Plant plant = plantPos[gridPosition]; // get plant at position
+        PlantedPlant plant = plantPos[gridPosition]; // get plant at position
 
         if (lastCheckFreshTime.ContainsKey(plant)==false){
             lastCheckFreshTime.Add(plant, DateTime.Now);

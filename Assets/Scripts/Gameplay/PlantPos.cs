@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 [Serializable]
 public class PlantPos : MonoBehaviour
 {
-    private Dictionary<Vector3Int, Plant> matrix;
+    private Dictionary<Vector3Int, PlantedPlant> matrix;
     private Tilemap plantTilemap;
     public static PlantPos instance;
 
@@ -23,10 +23,10 @@ public class PlantPos : MonoBehaviour
     private void Start() {
         plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
 
-        matrix = new Dictionary<Vector3Int, Plant>();
+        matrix = new Dictionary<Vector3Int, PlantedPlant>();
     }
 
-    public void AddPlant(Vector3Int cellPosition, Plant plant){
+    public void AddPlant(Vector3Int cellPosition, PlantedPlant plant){
         if (matrix.ContainsKey(cellPosition)==false){
             matrix.Add(cellPosition, plant);
         }else{
@@ -49,7 +49,7 @@ public class PlantPos : MonoBehaviour
         foreach (var entry in matrix)
         {
             Vector3Int cellPosition = entry.Key;
-            Plant plant = entry.Value;
+            PlantedPlant plant = entry.Value;
 
             if (plant != null)
             {

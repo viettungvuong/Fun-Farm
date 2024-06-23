@@ -41,12 +41,12 @@ public class PlayerPlant : MonoBehaviour
 
         playerUnit.UseMoney(plant.buyMoney);
 
-        StartCoroutine(PlantTreeCoroutine(worldPosition, plant)); // planting tree animation
+        StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition)))); // planting tree animation
         
 
     }
 
-    private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, Plant plant)
+    private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, PlantedPlant plant)
     {
 
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);

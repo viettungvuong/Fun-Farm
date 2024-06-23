@@ -21,7 +21,7 @@ public class PlayerHarvest : MonoBehaviour
             return;
         }
         if (PlantManager.instance.DetectPlantMaxStage(rb.position)){ // detect any plant
-            Plant plant = PlantManager.instance.GetPlantAt(rb.position);
+            PlantedPlant plant = PlantManager.instance.GetPlantAt(rb.position);
             
             plantManager.RemovePlant(plant, removeOnMap: true);
 
