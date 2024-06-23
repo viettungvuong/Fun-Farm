@@ -41,7 +41,7 @@ public class SkeletonGenerate : Generate
         }
         if (TimeManage.instance.currentMinute != nextMinuteRefill)
         {
-            hasSpawned = false;
+            hasSpawned = false; // allow spawning once per min
             conditionHandled = false;// allow check home scene and add 1 min only do once per min
         }
         if (GameController.HomeScene()==false){ 

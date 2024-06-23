@@ -84,9 +84,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 1690069389
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: -115750617, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   highlightTile: {fileID: 11400000, guid: bf165adecac494d0d8adb210d85eb027, type: 2}
   arrowSprite: {fileID: 0}
   orientation: 0
+  footprints: []
 --- !u!50 &436781378712855968
 Rigidbody2D:
   serializedVersion: 4
@@ -350,6 +351,7 @@ MonoBehaviour:
   fenceVertical: {fileID: 0}
   woodTakenText: {fileID: 0}
   fenceText: {fileID: 0}
+  intervalBetweenRefill: 45
 --- !u!114 &7213360196023523754
 MonoBehaviour:
   m_ObjectHideFlags: 0

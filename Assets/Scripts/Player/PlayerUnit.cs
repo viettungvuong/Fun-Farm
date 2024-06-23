@@ -14,7 +14,7 @@ public class PlayerUnit : Unit
     [HideInInspector] public int currentMoney;
     public static PlayerMode playerMode;
 
-    Animator animator;
+
     
     public override void Awake()
     {
@@ -30,8 +30,6 @@ public class PlayerUnit : Unit
         {
             Destroy(gameObject);
         }
-
-        animator = GetComponent<Animator>();
 
         playerMode = PlayerMode.SURVIVAL; // default is survival
     }

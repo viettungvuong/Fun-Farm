@@ -23,20 +23,19 @@ public class GameSaving : MonoBehaviour
     }
 
     void SaveGame(){
-        string SavePlayer(){
+        string SavePlayer(){ // player health, money
             return JsonUtility.ToJson(playerUnit);
         }
 
-        string SaveTime(){
+        string SaveTime(){ // current time
             return JsonUtility.ToJson(time);
         }
 
-        string SavePlants(){
+        string SavePlants(){ // planted plant, their status
             return JsonUtility.ToJson(plantManager);
         }
 
         string playerFile = Application.persistentDataPath + "/player.data";
-        Debug.Log(SavePlayer());
         File.WriteAllText(playerFile, SavePlayer());
 
         string timeFile = Application.persistentDataPath + "/time.data";
