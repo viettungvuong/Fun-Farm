@@ -10,7 +10,6 @@ public class KeepCanvas : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitializeCanvas();
-        DontDestroyOnLoad(canvas);
     }
 
     private void OnDestroy()
@@ -21,7 +20,6 @@ public class KeepCanvas : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
- 
         InitializeCanvas();
     }
 

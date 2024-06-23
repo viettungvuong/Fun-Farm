@@ -15,6 +15,8 @@ public class HealthBar : MonoBehaviour
 
     private double maxHealth;
 
+    private Camera cam;
+
    
     void Start()
     {
@@ -23,8 +25,8 @@ public class HealthBar : MonoBehaviour
             enabled = false;
             return;
         }
-        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        Canvas canvas = FindObjectOfType<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
@@ -66,10 +68,13 @@ public class HealthBar : MonoBehaviour
 
 
     private void FixedUpdate() {
-        // follows player
+        if (GameController.HomeScene()==false){
+            return;
+        }
+        // follows object
         Vector2 position = transform.position;
         Vector2 offset = new Vector2(0f, 1f);
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(position + offset); // change to screen position
+        Vector3 screenPosition = cam.WorldToScreenPoint(position + offset); // change to screen position
         healthSlider.transform.position = screenPosition;
     }
 }

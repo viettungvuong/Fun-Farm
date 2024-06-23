@@ -23,12 +23,14 @@ public class PlayerPlant : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
- 
         InitializeMap();
     }
 
     void InitializeMap(){
-        plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        if (GameController.HomeScene()){
+            plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        }
+
     }
 
 
@@ -37,7 +39,7 @@ public class PlayerPlant : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
-        
+
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();

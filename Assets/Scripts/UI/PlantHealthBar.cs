@@ -14,7 +14,7 @@ public class PlantHealthBar : MonoBehaviour
 
     private PlantedPlant plant;
     private Tilemap plantTilemap;
-
+    private Camera cam;
     
 
     
@@ -32,9 +32,13 @@ public class PlantHealthBar : MonoBehaviour
             return;
         }
 
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
         Canvas canvas = FindObjectOfType<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
+
+
 
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 
@@ -65,22 +69,27 @@ public class PlantHealthBar : MonoBehaviour
     }
 
 
-    private void LateUpdate() {
-        if (GameController.HomeScene()){
-            healthSlider.transform.localScale = new Vector3(1, 1, 1);
-        }
-        else{
-            healthSlider.transform.localScale = new Vector3(0, 0, 0);
-        }
+    private void FixedUpdate() {
+        UpdateSliderPosition();
+    }
 
-        if (plant == null) return;
+    private void LateUpdate() {
+
+
+        if (plant == null){
+            healthSlider.gameObject.SetActive(false);
+            return;
+        }
 
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE||plant.currentStage == plant.maxStage){
             healthSlider.gameObject.SetActive(false);
             return;
         }
 
-
+        if (GameController.HomeScene()==false){
+            healthSlider.gameObject.SetActive(false);
+            return;
+        }
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
 
@@ -104,19 +113,23 @@ public class PlantHealthBar : MonoBehaviour
             sliderImageFill.color = Color.red;
         }
 
-        UpdateSliderPosition();
+
     }
 
     private void UpdateSliderPosition()
     {
-        if (plant == null || plantTilemap == null) return;
+        if (plant == null || plantTilemap == null){
+            return;
+        }
+        if (GameController.HomeScene()==false){
+            return;
+        }
 
-        Vector3Int gridPosition = plant.gridPosition;
-        Vector3 offset = new Vector2(0f, 1f);
-        Vector3 worldPosition = plantTilemap.CellToWorld(gridPosition) + offset;
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
-
+        Vector2 position = plantTilemap.CellToWorld(plant.gridPosition);
+        Vector2 offset = new Vector2(0f, 1f);
+        Vector3 screenPosition = cam.WorldToScreenPoint(position + offset); // change to screen position
         healthSlider.transform.position = screenPosition;
+        Debug.Log(screenPosition);
     }
 
 }
