@@ -23,6 +23,18 @@ public class PlantHealthBar : MonoBehaviour
         this.plant = plant;
         this.plantTilemap = plantTilemap;
         this.healthSliderPrefab = healthSliderPrefab;
+
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+        Canvas canvas = FindObjectOfType<Canvas>();
+        healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
+        healthSlider.gameObject.SetActive(true);
+        healthSlider.enabled = true;
+        // save as a child in canvas
+    }
+
+    private void Awake() {
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     void Start()
@@ -32,13 +44,6 @@ public class PlantHealthBar : MonoBehaviour
             return;
         }
 
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-
-        Canvas canvas = FindObjectOfType<Canvas>();
-        healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
-        // save as a child in canvas
-
-
 
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 
@@ -47,9 +52,15 @@ public class PlantHealthBar : MonoBehaviour
         try
         {
             var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
+
             if (lastTimeWatered != null && lastTimeWatered is DateTime lastWateredTime)
             {
-                double timeDiff = (DateTime.Now - lastWateredTime).TotalSeconds;
+                double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
+                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving to remove inaccurate calculation (idle between openings of the game)
+                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                    timeDiff -= unneededDifference;
+                }
+                
                 healthSlider.value = (float)timeDiff;
             }
             else
@@ -74,10 +85,7 @@ public class PlantHealthBar : MonoBehaviour
     }
 
     private void LateUpdate() {
-
-
         if (plant == null){
-            healthSlider.gameObject.SetActive(false);
             return;
         }
 
@@ -92,9 +100,14 @@ public class PlantHealthBar : MonoBehaviour
         }
 
         double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
-
+        if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
+                double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                timeDiff -= unneededDifference;
+        }
+        
         healthSlider.value = (float)timeDiff;
         float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
+
 
         if (timePercentage>=1f){ // die
             healthSlider.gameObject.SetActive(false); 
@@ -129,7 +142,6 @@ public class PlantHealthBar : MonoBehaviour
         Vector2 offset = new Vector2(0f, 1f);
         Vector3 screenPosition = cam.WorldToScreenPoint(position + offset); // change to screen position
         healthSlider.transform.position = screenPosition;
-        Debug.Log(screenPosition);
     }
 
 }

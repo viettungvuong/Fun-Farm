@@ -78,7 +78,17 @@ public class PlantedPlant
     public int harvestMoney;
     public double deteriorateTime;
 
-    public DateTime lastSavedTime, lastOpenedTime; // used for saving game
+    public DateTime? lastSavedTime, lastOpenedTime; // used for saving game
+    [SerializeField] private double unixTimestampSavedTime;
+
+    public void SetSaveTime(DateTime dateTime){
+        lastSavedTime = dateTime;
+        unixTimestampSavedTime = GameController.SerializeDateTime(dateTime);
+    }
+
+    public void LoadSavetime(){ // when reload game
+        lastSavedTime = GameController.DeserializeDateTime(unixTimestampSavedTime);
+    }
 
     public override int GetHashCode()
     {

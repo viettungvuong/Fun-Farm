@@ -8,16 +8,18 @@ using UnityEngine.Tilemaps;
 public class PlantPos : MonoBehaviour
 {
     private Dictionary<Vector3Int, PlantedPlant> plantPos;
-    private Dictionary<PlantedPlant, DateTime> lastLevelTime, lastCheckFreshTime;
+    private Dictionary<PlantedPlant, double> lastLevelTime, lastCheckFreshTime;
+
+    public Dictionary<Vector3Int, PlantedPlant> SerializedPlantPos => plantPos;
+    public Dictionary<PlantedPlant, double> SerializedLastLevelTime => lastLevelTime; // double bcs Datetime is unserializable
+    public Dictionary<PlantedPlant, double> SerializedLastCheckFreshTime => lastCheckFreshTime;
     private Tilemap plantTilemap;
     public static PlantPos instance;
 
     [SerializeField][HideInInspector] private SerializableDictionary<Vector3Int, PlantedPlant> serializedPlantPos;
-    [SerializeField][HideInInspector] private SerializableDictionary<PlantedPlant, DateTime> serializedLastLevelTime;
-    [SerializeField][HideInInspector] private SerializableDictionary<PlantedPlant, DateTime> serializedLastCheckFreshTime;
-    public SerializableDictionary<Vector3Int, PlantedPlant> SerializedPlantPos => serializedPlantPos;
-    public SerializableDictionary<PlantedPlant, DateTime> SerializedLastLevelTime => serializedLastLevelTime;
-    public SerializableDictionary<PlantedPlant, DateTime> SerializedLastCheckFreshTime => serializedLastCheckFreshTime;
+    [SerializeField][HideInInspector] private SerializableDictionary<PlantedPlant, double> serializedLastLevelTime;
+    [SerializeField][HideInInspector] private SerializableDictionary<PlantedPlant, double> serializedLastCheckFreshTime;
+
     private void Awake() {
         if (instance==null){
             instance = this;
@@ -30,8 +32,8 @@ public class PlantPos : MonoBehaviour
     private void Start()
     {
         serializedPlantPos = new SerializableDictionary<Vector3Int, PlantedPlant>();
-        serializedLastLevelTime = new SerializableDictionary<PlantedPlant, DateTime>();
-        serializedLastCheckFreshTime = new SerializableDictionary<PlantedPlant, DateTime>();
+        serializedLastLevelTime = new SerializableDictionary<PlantedPlant, double>();
+        serializedLastCheckFreshTime = new SerializableDictionary<PlantedPlant, double>();
 
         plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
 
@@ -95,20 +97,20 @@ public class PlantPos : MonoBehaviour
 
     public void LevelPlant(PlantedPlant plant, DateTime dateTime){
         if (lastLevelTime.ContainsKey(plant)==false){
-            lastLevelTime.Add(plant, dateTime);
+            lastLevelTime.Add(plant, GameController.SerializeDateTime(dateTime));
         }
         else{
-            lastLevelTime[plant] = dateTime;
+            lastLevelTime[plant] = GameController.SerializeDateTime(dateTime);
         }
         UpdateSerializedMatrix(lastLevelTime, serializedLastLevelTime);
     }
 
     public void HealthPlant(PlantedPlant plant, DateTime dateTime){
         if (lastCheckFreshTime.ContainsKey(plant)==false){
-            lastCheckFreshTime.Add(plant, dateTime);
+            lastCheckFreshTime.Add(plant, GameController.SerializeDateTime(dateTime));
         }
         else{
-            lastCheckFreshTime[plant] = dateTime;
+            lastCheckFreshTime[plant] = GameController.SerializeDateTime(dateTime);
         }
         UpdateSerializedMatrix(lastCheckFreshTime, serializedLastCheckFreshTime);
     }
@@ -119,11 +121,69 @@ public class PlantPos : MonoBehaviour
     }
 
     public void Deserialize(){
-        plantPos = serializedPlantPos.ToDictionary();
-        lastCheckFreshTime = serializedLastCheckFreshTime.ToDictionary();
-        lastLevelTime = serializedLastLevelTime.ToDictionary();
+        plantPos = new Dictionary<Vector3Int, PlantedPlant>();
+        foreach (var entry in serializedPlantPos.entries){
+            Vector3Int position = entry.key;
+            PlantedPlant plant = entry.value;
+            plantPos.Add(position, plant);
+
+            DateTime now = DateTime.Now;
+            plant.lastOpenedTime = now;
+        }
+        lastCheckFreshTime = new Dictionary<PlantedPlant, double>();
+        foreach (var entry in serializedLastCheckFreshTime.entries){
+            PlantedPlant plant = entry.key;
+            double dateTime = entry.value;
+            lastCheckFreshTime.Add(plant, dateTime);
+
+            DateTime now = DateTime.Now;
+            plant.lastOpenedTime = now;
+        }
+        lastLevelTime = new Dictionary<PlantedPlant, double>();
+        foreach (var entry in serializedLastLevelTime.entries){
+            PlantedPlant plant = entry.key;
+            double dateTime = entry.value;
+            lastLevelTime.Add(plant, dateTime);
+
+            DateTime now = DateTime.Now;
+            plant.lastOpenedTime = now;
+        }
     }
 
+    public void SetSaveTime(){ // for accurate deterioration check
+        DateTime now = DateTime.Now;
 
+        List<Vector3Int> keysToUpdate = new List<Vector3Int>(plantPos.Keys);
+
+        foreach (Vector3Int key in keysToUpdate)
+        {
+            PlantedPlant plant = plantPos[key];
+
+            plant.SetSaveTime(now);
+
+            plantPos[key] = plant;
+
+            if (lastCheckFreshTime.ContainsKey(plant))
+            {
+                double value = lastCheckFreshTime[plant];
+                lastCheckFreshTime.Remove(plant);
+
+                plant.SetSaveTime(now);
+
+                lastCheckFreshTime.Add(plant, value);
+            }
+
+            if (lastLevelTime.ContainsKey(plant))
+            {
+                double value = lastLevelTime[plant];
+                lastLevelTime.Remove(plant);
+
+                plant.SetSaveTime(now);
+
+                lastLevelTime.Add(plant, value);
+            }
+        }
+
+    }
 
 }

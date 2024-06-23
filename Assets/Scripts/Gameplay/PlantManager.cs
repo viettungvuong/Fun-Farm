@@ -70,23 +70,51 @@ public class PlantManager : MonoBehaviour
         this.plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
 
         
-        this.plantPos.AddRange(plantPos.SerializedPlantPos.ToDictionary());
-        this.lastLevelTime.AddRange(plantPos.SerializedLastLevelTime.ToDictionary());
-        this.lastCheckFreshTime.AddRange(plantPos.SerializedLastCheckFreshTime.ToDictionary());
+        this.plantPos.AddRange(plantPos.SerializedPlantPos);
 
+        foreach (var entry in plantPos.SerializedLastLevelTime){
+            PlantedPlant plant = entry.Key;
+            double timeStamp = entry.Value;
+
+            lastLevelTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
+        }
+
+        foreach (var entry in plantPos.SerializedLastCheckFreshTime){
+            PlantedPlant plant = entry.Key;
+            double timeStamp = entry.Value;
+
+            lastCheckFreshTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
+        }
 
         foreach (var entry in this.plantPos){
             Vector3Int cellPosition = entry.Key;
             PlantedPlant plant = entry.Value;
 
+            plant.LoadSavetime();
             plant.LoadTilesFromPaths(); // reload tiles from tile paths (because tiles are not directly serializable)
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
             plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
+        }
+
+        foreach (var entry in lastLevelTime.ToList())
+        {
+            PlantedPlant plant = entry.Key;
+            DateTime lastTime = entry.Value;
+            lastLevelTime.Remove(plant);
+            DateTime freshValue = lastCheckFreshTime[plant];
+            lastCheckFreshTime.Remove(plant);
+
+            plant.LoadSavetime();
+
+            lastLevelTime.Add(plant, lastTime);
+            lastCheckFreshTime.Add(plant, freshValue);
 
             PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
             plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add healthbar to plant
             plantHealthBars.Add(plant, plantHealthBar);
+        
         }
+
 
         // plantPos.LoadToTilemap(); // redraw tilemap
 
@@ -158,8 +186,11 @@ public class PlantManager : MonoBehaviour
                 }
 
                 DateTime lastTime = entry.Value;
-
-                double secondsDifference = (now - lastTime).TotalSeconds;
+                double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
+                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
+                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                    secondsDifference -= unneededDifference;
+                }
 
                 if (secondsDifference > plant.levelUpTime)
                 {
@@ -171,6 +202,8 @@ public class PlantManager : MonoBehaviour
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                         PlantPos.instance.LevelPlant(plant, now);
+                        plant.lastOpenedTime = null;
+                        plant.lastSavedTime = null; // no longer needed to keep this
                         updates[plant] = now; // collect the update
                     }
                     else
@@ -257,7 +290,11 @@ public class PlantManager : MonoBehaviour
 
             DateTime lastTime = entry.Value;
 
-            double secondsDifference = (now - lastTime).TotalSeconds;
+            double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
+            if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
+                double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                secondsDifference -= unneededDifference;
+            }
 
             if (secondsDifference > plant.deteriorateTime)
             {

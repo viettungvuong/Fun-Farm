@@ -38,6 +38,7 @@ public class GameSaving : MonoBehaviour
         }
 
         string SavePlants(){ // planted plant, their status
+            plant.SetSaveTime();
             return JsonUtility.ToJson(plant);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,5 +25,12 @@ public class GameController : MonoBehaviour
         return SceneManager.GetActiveScene().name == "SceneHome";
     }
 
+    public static double SerializeDateTime(DateTime dateTime){
+        return (dateTime - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds; 
+    }
+
+    public static DateTime DeserializeDateTime(double timeStamp){
+        return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(timeStamp); 
+    }
 
 }
