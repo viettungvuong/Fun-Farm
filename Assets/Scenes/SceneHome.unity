@@ -254,9 +254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
-
-'
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24be108d1bf304333a75bd6f330af3b8, type: 2}
   m_sharedMaterial: {fileID: 5715417991169087057, guid: 24be108d1bf304333a75bd6f330af3b8, type: 2}
@@ -561,7 +559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &97531445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8093,6 +8091,7 @@ GameObject:
   - component: {fileID: 1635994933}
   - component: {fileID: 1635994934}
   - component: {fileID: 1635994935}
+  - component: {fileID: 1635994936}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -8235,6 +8234,18 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &1635994936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635994926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfca7a25e6d44959ac7065be382ebb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
@@ -14983,7 +14994,7 @@ PrefabInstance:
     - target: {fileID: 5572432093568441648, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: woodTakenText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 20982660}
     - target: {fileID: 5572432093568441648, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: fenceHorizontal
       value: 

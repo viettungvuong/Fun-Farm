@@ -12,7 +12,7 @@ public class SlimeGenerate : Generate
     static bool hasSpawned = false, conditionHandled = false;
 
     public static SlimeGenerate instance;
-    static int intervalBetweenSpawns = 60, nextMinuteRefill = 0;
+    static int intervalBetweenSpawns = 60, nextMinuteRefill = 15;
 
     protected override void Awake() {
         base.Awake();
@@ -46,21 +46,21 @@ public class SlimeGenerate : Generate
             conditionHandled = false;// allow check home scene and add 1 min only do once per min
         }
 
-        if (GameController.HomeScene()==false||PlantManager.instance.GetNumberOfPlants()==0){ // no plants then not spawn
-            if (!conditionHandled)
-            {
-                nextMinuteRefill += 1;
-                if (nextMinuteRefill >= 60)
-                {
-                    nextMinuteRefill -= 60;
-                }
-                conditionHandled = true;
-            }
-            return;
-        }
-
 
         if (TimeManage.instance.currentMinute==nextMinuteRefill&&!hasSpawned){
+            if (GameController.HomeScene()==false||PlantManager.instance.GetNumberOfPlants()==0){ // no plants then not spawn
+                if (!conditionHandled)
+                {
+                    nextMinuteRefill += 1;
+                    if (nextMinuteRefill >= 60)
+                    {
+                        nextMinuteRefill -= 60;
+                    }
+                    conditionHandled = true;
+                }
+                return;
+            }
+
             hasSpawned = true;
             nextMinuteRefill+= intervalBetweenSpawns;
             if (nextMinuteRefill>=60){

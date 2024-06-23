@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public class Pair<T, U> {
     public Pair() {
     }

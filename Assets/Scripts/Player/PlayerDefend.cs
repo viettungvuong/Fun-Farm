@@ -17,12 +17,11 @@ public class PlayerDefend : MonoBehaviour
     private Dictionary<Vector3Int, FenceUnit> fences;
 
 
-    public TextMeshProUGUI woodTakenText, fenceText;
+    public TextMeshProUGUI fenceText;
 
     private PlayerMove playerMove;
     private Animator animator;
 
-    private int woodTaken = 0;
     private int numberOfFences = 0;
     public int intervalBetweenRefill = 45;
     private int nextMinuteRefill = 5;
@@ -87,6 +86,7 @@ public class PlayerDefend : MonoBehaviour
             }
 
             numberOfFences += 2;
+            fenceText.text = numberOfFences.ToString();
         }
         if (GameController.HomeScene()==false){
             return; // only in home scene
@@ -113,7 +113,7 @@ public class PlayerDefend : MonoBehaviour
                 BuildDefendFence(fenceVertical);
             }
 
-            buildFenceFlag = false; // Ensure it only builds once per key press
+            buildFenceFlag = false; // ensure it only builds once per key press
         }
     }
 
@@ -192,82 +192,82 @@ public class PlayerDefend : MonoBehaviour
         groundDefenseTilemap.SetTile(cellPosition, null);
     }
 
-    private IEnumerator GetWoodCoroutine(GameObject wood)
-    {
-        Vector3 woodPosition = wood.transform.position;
-        Orientation woodToPlayer()
-        {
-            Vector3 direction = woodPosition - (Vector3)rb.position;
-            direction.Normalize();
+    // private IEnumerator GetWoodCoroutine(GameObject wood)
+    // {
+    //     Vector3 woodPosition = wood.transform.position;
+    //     Orientation woodToPlayer()
+    //     {
+    //         Vector3 direction = woodPosition - (Vector3)rb.position;
+    //         direction.Normalize();
 
-            // Determine the orientation based on the direction vector
-            if (Mathf.Abs(direction.y) >= Mathf.Abs(direction.x))
-            {
-                if (direction.y > 0)
-                {
-                    return Orientation.UP;
-                }
-                else
-                {
-                    return Orientation.DOWN;
-                }
-            }
-            else
-            {
-                if (direction.x > 0)
-                {
-                    return Orientation.RIGHT;
-                }
-                else
-                {
-                    return Orientation.LEFT;
-                }
-            }
-        }
+    //         // Determine the orientation based on the direction vector
+    //         if (Mathf.Abs(direction.y) >= Mathf.Abs(direction.x))
+    //         {
+    //             if (direction.y > 0)
+    //             {
+    //                 return Orientation.UP;
+    //             }
+    //             else
+    //             {
+    //                 return Orientation.DOWN;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             if (direction.x > 0)
+    //             {
+    //                 return Orientation.RIGHT;
+    //             }
+    //             else
+    //             {
+    //                 return Orientation.LEFT;
+    //             }
+    //         }
+    //     }
 
 
-        isTakingWood = true;
-        string animationName;
+    //     isTakingWood = true;
+    //     string animationName;
 
-        switch (woodToPlayer()){
-            case Orientation.UP:{
-                    animationName = "PlayerHarvestUp";
-                    break;
-            }
-            case Orientation.DOWN:{
-                    animationName = "PlayerHarvestDown";
-                    break;
-            }
-            default:{
-                    animationName = "PlayerHarvestHorizontal";
-                    break;
-            }
-        }
-        animator.SetBool("idle", false);
-        animator.Play(animationName);
-        // wait for animation to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
-        animator.SetBool("idle", true);
+    //     switch (woodToPlayer()){
+    //         case Orientation.UP:{
+    //                 animationName = "PlayerHarvestUp";
+    //                 break;
+    //         }
+    //         case Orientation.DOWN:{
+    //                 animationName = "PlayerHarvestDown";
+    //                 break;
+    //         }
+    //         default:{
+    //                 animationName = "PlayerHarvestHorizontal";
+    //                 break;
+    //         }
+    //     }
+    //     animator.SetBool("idle", false);
+    //     animator.Play(animationName);
+    //     // wait for animation to complete
+    //     yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
+    //     animator.SetBool("idle", true);
 
-        isTakingWood = false;
+    //     isTakingWood = false;
 
-        woodTaken++;
+    //     woodTaken++;
 
-        if (woodTaken==3){
-            numberOfFences++;
-            woodTaken = 0;
-            fenceText.text = numberOfFences.ToString();
-        }
-        woodTakenText.text = woodTaken.ToString() + "/3";
-        wood.SetActive(false); // hide wood after being harvested
-    }
+    //     if (woodTaken==3){
+    //         numberOfFences++;
+    //         woodTaken = 0;
+    //     }
+    //     fenceText.text = numberOfFences.ToString();
+    //     woodTakenText.text = woodTaken.ToString() + "/3";
+    //     wood.SetActive(false); // hide wood after being harvested
+    // }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Wood")){ // take wood
-            // play harvest down animation
-            StopAllCoroutines();
-            StartCoroutine(GetWoodCoroutine(other.gameObject));
+    // private void OnCollisionEnter2D(Collision2D other) {
+    //     if (other.gameObject.CompareTag("Wood")){ // take wood
+    //         // play harvest down animation
+    //         StopAllCoroutines();
+    //         StartCoroutine(GetWoodCoroutine(other.gameObject));
             
-        }
-    }
+    //     }
+    // }
 }

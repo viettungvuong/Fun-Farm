@@ -5,39 +5,34 @@ using System.IO;
 
 public class GameLoading : MonoBehaviour
 {
-    private PlayerUnit playerUnit;
-    private TimeManage timeManage;
-    private PlantManager plantManager;
 
-    private string playerJsonFileName;
-    private string timeJsonFileName;
-    private string plantsJsonFileName;
+    private string playerJsonFileName, playerDefendJsonFileName, timeJsonFileName, plantsJsonFileName;
 
-    PlayerUnit FetchPlayer(string json)
+    void FetchPlayer(string unitJson, string defendJson)
     {
-        return JsonUtility.FromJson<PlayerUnit>(json);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
+        JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
     }
 
-    TimeManage FetchTime(string json)
+    void FetchTime(string json)
     {
-        return JsonUtility.FromJson<TimeManage>(json);
+        JsonUtility.FromJsonOverwrite(json, TimeManage.instance);
     }
 
-    PlantManager FetchPlants(string json)
+    void FetchPlants(string json)
     {
-        return JsonUtility.FromJson<PlantManager>(json);
+        JsonUtility.FromJsonOverwrite(json, PlantPos.instance);
+        PlantPos.instance.LoadToTilemap();
     }
 
     void Start()
     {
 
         playerJsonFileName = Application.persistentDataPath + "/player.data";
+        playerDefendJsonFileName = Application.persistentDataPath + "/playerDefend.data";
         timeJsonFileName = Application.persistentDataPath + "/time.data";
         plantsJsonFileName = Application.persistentDataPath + "/plant.data";
-
-        playerUnit = GetComponent<PlayerUnit>();
-        timeManage = GetComponent<TimeManage>();
-        plantManager = GetComponent<PlantManager>();
 
         LoadGame();
     }
@@ -45,22 +40,23 @@ public class GameLoading : MonoBehaviour
     void LoadGame()
     {
         string playerJson = LoadJsonFromFile(playerJsonFileName);
+        string playerDefendJson = LoadJsonFromFile(playerDefendJsonFileName);
         string timeJson = LoadJsonFromFile(timeJsonFileName);
         string plantsJson = LoadJsonFromFile(plantsJsonFileName);
 
-        if (!string.IsNullOrEmpty(playerJson))
+        if (!string.IsNullOrEmpty(playerJson)&&!string.IsNullOrEmpty(playerDefendJson))
         {
-            playerUnit = FetchPlayer(playerJson);
+            FetchPlayer(playerJson, playerDefendJson);
         }
 
         if (!string.IsNullOrEmpty(timeJson))
         {
-            timeManage = FetchTime(timeJson);
+            FetchTime(timeJson);
         }
 
         if (!string.IsNullOrEmpty(plantsJson))
         {
-            plantManager = FetchPlants(plantsJson);
+            FetchPlants(plantsJson);
         }
     }
 

@@ -273,8 +273,11 @@ public class PlantManager : MonoBehaviour
     public void RemovePlant(Plant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
 
-        if (removeOnMap)
+        if (removeOnMap){
             plantMap.SetTile(plant.gridPosition, null);
+            PlantPos.instance.RemovePlant(plant.gridPosition);
+        }
+
     }
 
     public void DamagePlant(Plant plant){
@@ -326,6 +329,8 @@ public class PlantManager : MonoBehaviour
         plantPos.Add(gridPosition, plant);
         lastLevelTime.Add(plant, DateTime.Now);
         lastCheckFreshTime.Add(plant, DateTime.Now);
+
+        PlantPos.instance.AddPlant(gridPosition, plant); // add to serializable matrix
 
         PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
         plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
