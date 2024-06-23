@@ -48,6 +48,9 @@ public class PlayerMove : MonoBehaviour
 
     public List<FootprintTile> footprints;
     private Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>> footprintQueue; // save tiles player has been previously
+
+    public Sprite[] spriteOrientation;
+
     void Awake()
     {
  
@@ -302,19 +305,23 @@ public class PlayerMove : MonoBehaviour
         {
             arrowSprite.flipY = true;
             arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            spriteRenderer.sprite = spriteOrientation[1];
         }
         else if (orientation == Orientation.DOWN)
         {
             arrowSprite.flipY = false;
             arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            spriteRenderer.sprite = spriteOrientation[0];
         }
         else if (orientation == Orientation.LEFT)
         {
+            spriteRenderer.sprite = spriteOrientation[2];
             arrowSprite.flipY = false;
             arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
         }
         else if (orientation == Orientation.RIGHT)
         {
+            spriteRenderer.sprite = spriteOrientation[2];
             arrowSprite.flipY = false;
             arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
         }

@@ -14984,6 +14984,20 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: spriteOrientation.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: spriteOrientation.Array.data[0]
+      value: 
+      objectReference: {fileID: -115750617, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: spriteOrientation.Array.data[1]
+      value: 
+      objectReference: {fileID: 1058037260, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: spriteOrientation.Array.data[2]
+    - target: {fileID: 4014417368897572481, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: footprints.Array.data[0].original
       value: 
       objectReference: {fileID: 11400000, guid: 9f3ee5859546a44bdb51576448ad58a7, type: 2}

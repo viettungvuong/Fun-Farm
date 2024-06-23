@@ -78,6 +78,8 @@ public class PlantedPlant
     public int harvestMoney;
     public double deteriorateTime;
 
+    public DateTime lastSavedTime, lastOpenedTime; // used for saving game
+
     public override int GetHashCode()
     {
         int hash = 17;
