@@ -9,9 +9,9 @@ public class GameLoading : MonoBehaviour
     private TimeManage timeManage;
     private PlantManager plantManager;
 
-    private string playerJsonFileName = Application.persistentDataPath + "/player.data";
-    private string timeJsonFileName = Application.persistentDataPath + "/time.data";
-    private string plantsJsonFileName = Application.persistentDataPath + "/plant.data";
+    private string playerJsonFileName;
+    private string timeJsonFileName;
+    private string plantsJsonFileName;
 
     PlayerUnit FetchPlayer(string json)
     {
@@ -30,6 +30,11 @@ public class GameLoading : MonoBehaviour
 
     void Start()
     {
+
+        playerJsonFileName = Application.persistentDataPath + "/player.data";
+        timeJsonFileName = Application.persistentDataPath + "/time.data";
+        plantsJsonFileName = Application.persistentDataPath + "/plant.data";
+
         playerUnit = GetComponent<PlayerUnit>();
         timeManage = GetComponent<TimeManage>();
         plantManager = GetComponent<PlantManager>();
