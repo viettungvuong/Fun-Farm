@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,8 @@ public class GameSaving : MonoBehaviour
     private TimeManage time;
     private PlantPos plant;
 
+    public GameObject savingPanel;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -24,7 +27,7 @@ public class GameSaving : MonoBehaviour
         plant = PlantPos.instance;
     }
 
-    void SaveGame(){
+    bool SaveGame(){
         string SavePlayer(){ // player health, money
             return JsonUtility.ToJson(playerUnit);
         }
@@ -42,27 +45,51 @@ public class GameSaving : MonoBehaviour
             return JsonUtility.ToJson(plant);
         }
 
-        string playerFile = Application.persistentDataPath + "/player.data";
-        File.WriteAllText(playerFile, SavePlayer());
+        try{
+            string playerFile = Application.persistentDataPath + "/player.data";
+            File.WriteAllText(playerFile, SavePlayer());
 
-        string playerDefendFile = Application.persistentDataPath + "/playerDefend.data";
-        File.WriteAllText(playerDefendFile, SavePlayerDefend());
+            string playerDefendFile = Application.persistentDataPath + "/playerDefend.data";
+            File.WriteAllText(playerDefendFile, SavePlayerDefend());
 
-        string timeFile = Application.persistentDataPath + "/time.data";
-        File.WriteAllText(timeFile, SaveTime());
+            string timeFile = Application.persistentDataPath + "/time.data";
+            File.WriteAllText(timeFile, SaveTime());
 
-        string plantFile = Application.persistentDataPath + "/plant.data";
-        Debug.Log(SavePlants());
-        File.WriteAllText(plantFile, SavePlants());
+            string plantFile = Application.persistentDataPath + "/plant.data";
+            Debug.Log(SavePlants());
+            File.WriteAllText(plantFile, SavePlants());
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
+
     }
 
 
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Player")){
-            if (SkeletonGenerate.skeletons<=0&&SlimeGenerate.slimes<=0)
-                SaveGame(); // only save when all enemies have been killed
-                Debug.Log("Saved game");
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (SkeletonGenerate.skeletons <= 0 && SlimeGenerate.slimes <= 0)
+            {
+                if (SaveGame()) // only save when all enemies have been killed
+                {
+                    StartCoroutine(ShowSavingPanel());
+                }
+
+            }
+        }
+    }
+
+    private IEnumerator ShowSavingPanel()
+    {
+        if (savingPanel != null)
+        {
+            savingPanel.SetActive(true);
+            yield return new WaitForSeconds(3.0f);
+            savingPanel.SetActive(false);
         }
     }
 }

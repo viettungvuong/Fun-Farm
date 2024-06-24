@@ -141,16 +141,16 @@ public class SlimeControl : MonoBehaviour
     // Slime only damages the plant, not the player
 
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Wood")||other.gameObject.CompareTag("Tree")){
-            Vector2 displacement = other.contacts[0].normal * 0.1f;
-            while (other.collider.bounds.Intersects(GetComponent<Collider2D>().bounds)) {
-                transform.position += (Vector3)displacement;
-            }
+    // private void OnCollisionEnter2D(Collision2D other) {
+    //     if (other.gameObject.CompareTag("Wood")||other.gameObject.CompareTag("Tree")){
+    //         Vector2 displacement = other.contacts[0].normal * 0.1f;
+    //         while (other.collider.bounds.Intersects(GetComponent<Collider2D>().bounds)) {
+    //             transform.position += (Vector3)displacement;
+    //         }
 
-            // move by displacement vector to move out of the wood
-        }
-    }
+    //         // move by displacement vector to move out of the wood
+    //     }
+    // }
 
 
 }

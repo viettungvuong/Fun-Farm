@@ -330,20 +330,27 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    public bool DetectPlant(Vector3 worldlPosition){
-        Vector3Int cellPosition = plantMap.WorldToCell(worldlPosition);
-        TileBase tile = plantMap.GetTile(cellPosition);
-
-        if (tile != null)
+    public bool DetectPlant(Vector3 worldPosition)
+    {
+        float detectionRadius = 0.5f;
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(worldPosition, detectionRadius);
+        
+        foreach (Collider2D hitCollider in hitColliders)
         {
-            PlantedPlant plant = GetPlantAt(cellPosition);
-
-            return plant != null;
+            if (hitCollider.CompareTag("Plant"))
+            {
+                Vector3Int cellPosition = plantMap.WorldToCell(hitCollider.transform.position);
+                PlantedPlant plant = GetPlantAt(cellPosition);
+                if (plant != null)
+                {
+                    return true;
+                }
+            }
         }
-        else{
-            return false;
-        }
+        
+        return false;
     }
+
 
     public bool DetectPlantMaxStage(Vector3Int cellPosition){
         TileBase tile = plantMap.GetTile(cellPosition);
