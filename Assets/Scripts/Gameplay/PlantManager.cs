@@ -68,46 +68,56 @@ public class PlantManager : MonoBehaviour
         this.lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
         this.lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
         this.plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
-
         
-        this.plantPos.AddRange(plantPos.SerializedPlantPos);
+
+        this.plantPos.AddRange(plantPos.SerializedPlantPos); // load plant pos from this
 
         foreach (var entry in plantPos.SerializedLastLevelTime){
             PlantedPlant plant = entry.Key;
             double timeStamp = entry.Value;
 
-            lastLevelTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
+            this.lastLevelTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
         }
 
         foreach (var entry in plantPos.SerializedLastCheckFreshTime){
             PlantedPlant plant = entry.Key;
             double timeStamp = entry.Value;
 
-            lastCheckFreshTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
+            this.lastCheckFreshTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
         }
 
-        foreach (var entry in this.plantPos){
+        foreach (var entry in this.plantPos){ // load for plantpos
             Vector3Int cellPosition = entry.Key;
             PlantedPlant plant = entry.Value;
 
-            plant.LoadSavetime();
+            plant.LoadSavetime(); // load save time for plantpos
             plant.LoadTilesFromPaths(); // reload tiles from tile paths (because tiles are not directly serializable)
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
             plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
         }
 
+        plantPos.SerializedLastCheckFreshTime.Clear();
+        plantPos.SerializedLastLevelTime.Clear();
+        plantPos.SerializedPlantPos.Clear(); // clear để làm sạch
+
         foreach (var entry in lastLevelTime.ToList())
         {
             PlantedPlant plant = entry.Key;
             DateTime lastTime = entry.Value;
+
             lastLevelTime.Remove(plant);
             DateTime freshValue = lastCheckFreshTime[plant];
             lastCheckFreshTime.Remove(plant);
 
-            plant.LoadSavetime();
+            plant.LoadSavetime(); // load save time
 
-            lastLevelTime.Add(plant, lastTime);
+            lastLevelTime.Add(plant, lastTime); // update giá trị mới của plant về save time
             lastCheckFreshTime.Add(plant, freshValue);
+
+            plantPos.LevelPlant(plant, lastTime);
+            plantPos.AddPlant(plant.gridPosition, plant);
+            plantPos.HealthPlant(plant, freshValue);
+  
 
             PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
             plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add healthbar to plant

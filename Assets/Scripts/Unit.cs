@@ -27,7 +27,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Die(){
+    public virtual void Die(){
         if (gameObject.name.Contains("Slime")){
             SlimeGenerate.slimes--;
         }

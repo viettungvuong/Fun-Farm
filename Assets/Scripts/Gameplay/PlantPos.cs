@@ -27,10 +27,6 @@ public class PlantPos : MonoBehaviour
         else{
             Destroy(this);
         }
-    }
-
-    private void Start()
-    {
         serializedPlantPos = new SerializableDictionary<Vector3Int, PlantedPlant>();
         serializedLastLevelTime = new SerializableDictionary<PlantedPlant, double>();
         serializedLastCheckFreshTime = new SerializableDictionary<PlantedPlant, double>();
@@ -41,6 +37,7 @@ public class PlantPos : MonoBehaviour
         lastCheckFreshTime = serializedLastCheckFreshTime.ToDictionary();
         lastLevelTime = serializedLastLevelTime.ToDictionary();
     }
+
 
     // private void OnDestroy()
     // {

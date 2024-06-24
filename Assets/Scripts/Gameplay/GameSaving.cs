@@ -76,6 +76,7 @@ public class GameSaving : MonoBehaviour
             {
                 if (SaveGame()) // only save when all enemies have been killed
                 {
+                    Debug.Log("save game");
                     StartCoroutine(ShowSavingPanel());
                 }
 

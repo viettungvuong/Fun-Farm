@@ -13,6 +13,7 @@ public class PlayerUnit : Unit
     public TextMeshProUGUI coinText;
     [HideInInspector] public int currentMoney;
     public static PlayerMode playerMode;
+    public GameObject diePanel;
 
 
     
@@ -60,9 +61,9 @@ public class PlayerUnit : Unit
         currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
     }
 
-    void Die(){
+    public override void Die(){
         // show die menu
-        // code die menu here
+        diePanel.SetActive(false);
     }
 
 
