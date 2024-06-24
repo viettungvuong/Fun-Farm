@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public abstract class Generate : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public abstract class Generate : MonoBehaviour
     private GameObject player;
 
     private LayerMask enemyLayer, playerLayer, obstacleLayer;
+
+    public Image enemyIndicatorIcon;
+    public Sprite slimeSprite, skeletonSprite;
+    public TextMeshProUGUI remainingTimeText;
 
 
     protected int number;
@@ -49,6 +55,15 @@ public abstract class Generate : MonoBehaviour
     protected void InitializeMap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+    }
+
+    private void FixedUpdate() {
+        if (TimeManage.instance.IsDay()){
+            enemyIndicatorIcon.sprite = slimeSprite;
+        }
+        else{
+            enemyIndicatorIcon.sprite = skeletonSprite;
+        }
     }
 
 

@@ -155,9 +155,8 @@ public class SkeletonMove : MonoBehaviour
         {
             targetPosition = target;
 
-            if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 0.6f)
+            if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 1f)
             {
-                Debug.Log("Attack torch"); 
                 SabotageTorch(); // Attack the torch when close
                 return;
             }
