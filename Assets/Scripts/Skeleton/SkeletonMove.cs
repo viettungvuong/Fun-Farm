@@ -34,7 +34,8 @@ public class SkeletonMove : MonoBehaviour
     private Vector3 lastPosition;
     private float stuckTime;
 
-    private List<Transform> torches;
+    private static List<Transform> torches;
+    private static bool initTorches = false;
     int currentTorch = 0;
 
     private void Awake() {
@@ -55,9 +56,15 @@ public class SkeletonMove : MonoBehaviour
 
         torches = new List<Transform>();
         var torchObjects =  GameObject.FindGameObjectsWithTag("Torch").ToList();
-        foreach (var torch in torchObjects){
-            torches.Add(torch.transform);
+
+        if (initTorches==false){
+            foreach (var torch in torchObjects){
+                Transform torchTransform = torch.transform;
+                torches.Add(torchTransform);
+            }
+            initTorches=true;
         }
+
 
         mapPath = MapPath.instance;
 
@@ -101,7 +108,20 @@ public class SkeletonMove : MonoBehaviour
 
             target = torches[currentTorch].position;
         }
+        if (status==SkeletonStatus.TorchSabotage){
+            while (torches[currentTorch].GetComponent<Torch>().sabotaged)
+            { // current torch has been sabotaged => not finding it anymore and find the next one
+                currentTorch++;
+                if (currentTorch>=torches.Count){
+                    skeletonMoves[SkeletonStatus.TorchSabotage].Remove(this);
+                    skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
+                    status = SkeletonStatus.PlayerAttack; // switch to attack player
+                    return;
+                }
 
+            }
+        }
+        
         MoveAlongPath(target);
 
         if (TimeManage.instance.IsDay()){
@@ -148,7 +168,7 @@ public class SkeletonMove : MonoBehaviour
             }
         }
         else
-        {
+        { // move near target
             targetPosition = ground.CellToWorld(path[currentPathIndex].Position) + new Vector3(0.5f, 0.5f, 0);
             if (Vector3.Distance(rb.position, targetPosition) < 0.1f)
             {
@@ -420,13 +440,16 @@ public class SkeletonMove : MonoBehaviour
             torchLight.intensity = 0.1f; 
         }
 
-        // move to next torch     
+        torches[currentTorch].GetComponent<Torch>().sabotaged = true;
+
         currentTorch++;
+        // move to next torch     
         if (currentTorch>=torches.Count){
             skeletonMoves[SkeletonStatus.TorchSabotage].Remove(this);
             skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
             status = SkeletonStatus.PlayerAttack; // switch to attack player
         }
+
         path = null; // reset path
     }
 
