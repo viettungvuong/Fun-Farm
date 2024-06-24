@@ -84,9 +84,8 @@ public class SlimeControl : MonoBehaviour
                 targetPlantPosition = SetRandomTargetPosition(); // reset target if reached
             }
 
-            timeSpent = 0f; // Reset timer for the new target
+            timeSpent = 0f; 
 
-            // Set the next move time to current time plus cooldown
             nextMoveTime = Time.time + cooldownTime;
         }
 

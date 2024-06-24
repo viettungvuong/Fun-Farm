@@ -351,7 +351,6 @@ public class PlayerMove : MonoBehaviour
                 }
         }
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         animator.SetTrigger("walk");
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         animator.ResetTrigger("walk");

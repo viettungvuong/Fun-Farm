@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour
 
     [HideInInspector] public double currentHealth;
 
-    Animator animator;
+    protected Animator animator;
 
     public virtual void Awake() // virtual for polymorphism
     {

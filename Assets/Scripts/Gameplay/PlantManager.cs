@@ -342,7 +342,7 @@ public class PlantManager : MonoBehaviour
 
     public bool DetectPlant(Vector3 worldPosition)
     {
-        float detectionRadius = 0.5f;
+        float detectionRadius = 0.2f;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(worldPosition, detectionRadius);
         
         foreach (Collider2D hitCollider in hitColliders)

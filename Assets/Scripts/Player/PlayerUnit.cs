@@ -38,7 +38,7 @@ public class PlayerUnit : Unit
     private void LateUpdate() {
         coinText.text = currentMoney.ToString();
 
-        if (currentHealth<=0){
+        if (currentHealth<=0||(currentMoney==0&&PlantManager.instance.GetNumberOfPlants()==0)){
             Die(); // run die animation
         }
     }
@@ -61,9 +61,17 @@ public class PlayerUnit : Unit
         currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
     }
 
+    private IEnumerator DieCoroutine(){
+        base.animator.SetBool("die", true);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
+        diePanel.SetActive(false);
+    }
+
     public override void Die(){
         // show die menu
-        diePanel.SetActive(false);
+        StopAllCoroutines();
+        StartCoroutine(DieCoroutine());
+
     }
 
 
