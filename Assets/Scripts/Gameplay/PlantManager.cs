@@ -188,8 +188,11 @@ public class PlantManager : MonoBehaviour
                 DateTime lastTime = entry.Value;
                 double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
                 if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                    secondsDifference -= unneededDifference;
+                    if (plant.lastOpenedTime >= lastTime){
+                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                        secondsDifference -= unneededDifference;
+                    }
+
                 }
 
                 if (secondsDifference > plant.levelUpTime)
@@ -292,8 +295,10 @@ public class PlantManager : MonoBehaviour
 
             double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
             if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                secondsDifference -= unneededDifference;
+                if (plant.lastOpenedTime >= lastTime){
+                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                    secondsDifference -= unneededDifference;
+                }
             }
 
             if (secondsDifference > plant.deteriorateTime)
@@ -473,12 +478,15 @@ public class PlantManager : MonoBehaviour
 
         PlantedPlant plant = plantPos[gridPosition]; // get plant at position
         DateTime now = DateTime.Now;
-        if (lastCheckFreshTime.ContainsKey(plant)==false){
-            lastCheckFreshTime.Add(plant, now);
+        // plant.lastOpenedTime = null;
+        // plant.lastSavedTime = null; // no longer needed to keep this
+        if (lastCheckFreshTime.ContainsKey(plant)){
+            lastCheckFreshTime.Remove(plant);
         }
-        else{
-            lastCheckFreshTime[plant] = now;
-        }
+
+        lastCheckFreshTime.Add(plant, now);
+        
+
         PlantPos.instance.HealthPlant(plant, now);
         
         ColorPlant(plant, Color.white); // fresh plant again

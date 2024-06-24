@@ -55,10 +55,13 @@ public class PlantHealthBar : MonoBehaviour
 
             if (lastTimeWatered != null && lastTimeWatered is DateTime lastWateredTime)
             {
-                double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
+                double timeDiff = (DateTime.Now-(DateTime)lastTimeWatered).TotalSeconds;
                 if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving to remove inaccurate calculation (idle between openings of the game)
-                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                    timeDiff -= unneededDifference;
+                    if (plant.lastOpenedTime >= (DateTime)lastTimeWatered)
+                    {
+                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                        timeDiff -= unneededDifference;
+                    }
                 }
                 
                 healthSlider.value = (float)timeDiff;
@@ -98,11 +101,16 @@ public class PlantHealthBar : MonoBehaviour
             healthSlider.gameObject.SetActive(false);
             return;
         }
-
-        double timeDiff = (DateTime.Now-(DateTime)PlantManager.instance.GetLastTimeWatered(plant)).TotalSeconds;
+        
+        var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
+        double timeDiff = (DateTime.Now-(DateTime)lastTimeWatered).TotalSeconds;
         if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                timeDiff -= unneededDifference;
+                if (plant.lastOpenedTime >= (DateTime)lastTimeWatered) // only calc if lastopen occurs before lastwatered
+                {
+                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                    timeDiff -= unneededDifference;
+                }
+
         }
         
         healthSlider.value = (float)timeDiff;
