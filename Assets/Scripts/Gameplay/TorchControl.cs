@@ -37,9 +37,8 @@ public class TorchControl : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Enemies"))
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag("Enemy"))
         {
             // Dim the light
             torchLight.intensity = 0.1f;

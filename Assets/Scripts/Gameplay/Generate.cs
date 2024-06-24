@@ -56,7 +56,7 @@ public abstract class Generate : MonoBehaviour
     {
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
-        int offset = 0;
+        int offset = 1;
 
         for (int i = 0; i < number; i++)
         {

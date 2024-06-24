@@ -34,8 +34,7 @@ public class SkeletonMove : MonoBehaviour
     private Vector3 lastPosition;
     private float stuckTime;
 
-    private static List<Transform> torches;
-    private static bool initTorches = false;
+    private List<Transform> torches;
     int currentTorch = 0;
 
     private void Awake() {
@@ -57,14 +56,11 @@ public class SkeletonMove : MonoBehaviour
         torches = new List<Transform>();
         var torchObjects =  GameObject.FindGameObjectsWithTag("Torch").ToList();
 
-        if (initTorches==false){
-            foreach (var torch in torchObjects){
-                Transform torchTransform = torch.transform;
-                torches.Add(torchTransform);
-            }
-            initTorches=true;
+        foreach (var torch in torchObjects)
+        {
+            Transform torchTransform = torch.transform;
+            torches.Add(torchTransform);
         }
-
 
         mapPath = MapPath.instance;
 
@@ -83,7 +79,7 @@ public class SkeletonMove : MonoBehaviour
 
     void Update()
     {
-        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 1.5f;
+        moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 2f;
         Vector3 target;
 
         if (status==SkeletonStatus.PlayerAttack){
@@ -116,12 +112,13 @@ public class SkeletonMove : MonoBehaviour
                     skeletonMoves[SkeletonStatus.TorchSabotage].Remove(this);
                     skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
                     status = SkeletonStatus.PlayerAttack; // switch to attack player
+                    currentTorch = 0;
                     return;
                 }
 
             }
         }
-        
+
         MoveAlongPath(target);
 
         if (TimeManage.instance.IsDay()){
@@ -159,7 +156,8 @@ public class SkeletonMove : MonoBehaviour
             targetPosition = target;
 
             if (status==SkeletonStatus.TorchSabotage&&Vector3.Distance(rb.position, target) <= 0.6f)
-            {                         
+            {
+                Debug.Log("Attack torch"); 
                 SabotageTorch(); // Attack the torch when close
                 return;
             }
@@ -430,6 +428,17 @@ public class SkeletonMove : MonoBehaviour
 
     private void SabotageTorch()
     {
+        Torch torch = torches[currentTorch].GetComponent<Torch>();
+        if (currentTorch>=torches.Count||torch.sabotaged){
+            if (currentTorch >= torches.Count)
+            {
+                {
+                    currentTorch = 0;
+                }
+            }
+            return;
+        }
+
         // torch position
         Transform torchTransform = torches[currentTorch];
         Light2D torchLight = torchTransform.GetChild(0).GetComponent<Light2D>();
@@ -440,7 +449,7 @@ public class SkeletonMove : MonoBehaviour
             torchLight.intensity = 0.1f; 
         }
 
-        torches[currentTorch].GetComponent<Torch>().sabotaged = true;
+        torch.sabotaged = true;
 
         currentTorch++;
         // move to next torch     
@@ -448,6 +457,7 @@ public class SkeletonMove : MonoBehaviour
             skeletonMoves[SkeletonStatus.TorchSabotage].Remove(this);
             skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
             status = SkeletonStatus.PlayerAttack; // switch to attack player
+            currentTorch = 0;
         }
 
         path = null; // reset path
@@ -462,6 +472,14 @@ public class SkeletonMove : MonoBehaviour
         else{
             skeletonMoves[SkeletonStatus.PlayerAttack].Add(this);
             status = SkeletonStatus.PlayerAttack;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag("Torch"))
+        {
+            Debug.Log("Attacked torch");
+            SabotageTorch();
         }
     }
 }
