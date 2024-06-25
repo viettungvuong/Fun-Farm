@@ -18,9 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9aeb3b27d5f39484c96149d290bc15f4, type: 2}
   - {fileID: 11400000, guid: a5ee8cdb981f5418fb2d0cbbfb7a97eb, type: 2}
   - {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
-  - {fileID: 11400000, guid: 01e788b2958e648f5bc62258b8f2f051, type: 2}
-  levelUpTime: 50
+  levelUpTime: 2
   maxHealth: 100
   buyMoney: 100
   harvestMoney: 150
-  deteriorateTime: 45
+  deteriorateTime: 100000000

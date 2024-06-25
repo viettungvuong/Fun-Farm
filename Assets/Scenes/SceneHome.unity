@@ -8728,6 +8728,7 @@ GameObject:
   - component: {fileID: 1635994934}
   - component: {fileID: 1635994935}
   - component: {fileID: 1635994936}
+  - component: {fileID: 1635994937}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -8838,7 +8839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635994926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02e3b292e723944d4926552a70c872a4, type: 3}
   m_Name: 
@@ -8854,7 +8855,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635994926}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 221627f4bb1004f209e852b0feaf8bb1, type: 3}
   m_Name: 
@@ -8896,6 +8897,19 @@ MonoBehaviour:
     entries: []
   serializedLastCheckFreshTime:
     entries: []
+--- !u!114 &1635994937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635994926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c632d2f33a4841f09f747d45020b38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customMaterial: {fileID: 2100000, guid: f6c62f558cc8641a3985f3c3279ec050, type: 2}
 --- !u!1 &1668495235
 GameObject:
   m_ObjectHideFlags: 0

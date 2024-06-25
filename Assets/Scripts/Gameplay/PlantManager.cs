@@ -198,8 +198,13 @@ public class PlantManager : MonoBehaviour
                 DateTime lastTime = entry.Value;
                 double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
                 if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                    if (plant.lastOpenedTime >= lastTime){
+
+                    if (plant.lastOpenedTime > lastTime){
                         double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                        Debug.Log(plant.lastSavedTime.ToString());
+                        Debug.Log(plant.lastOpenedTime.ToString());
+                        Debug.Log(unneededDifference);
+                        Debug.Log(secondsDifference);
                         secondsDifference -= unneededDifference;
                     }
 
@@ -208,19 +213,22 @@ public class PlantManager : MonoBehaviour
                 if (secondsDifference > plant.levelUpTime)
                 {
                     plant.currentStage++;
+                    Debug.Log(plant.currentStage);
 
                     // Check if currentStage is within number of available tiles
                     if (plant.currentStage < plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                         PlantPos.instance.LevelPlant(plant, now);
-                        plant.lastOpenedTime = null;
-                        plant.lastSavedTime = null; // no longer needed to keep this
+                        // plant.lastOpenedTime = null;
+                        // plant.lastSavedTime = null; // no longer needed to keep this
                         updates[plant] = now; // collect the update
                     }
                     else if (plant.currentStage == plant.maxStage)
                     {
-                        
+                        Debug.Log("Max stage");
+                        PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
+                        tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax");
                     }
                 }
             }
@@ -233,21 +241,6 @@ public class PlantManager : MonoBehaviour
         foreach (var update in updates)
         {
             lastLevelTime[update.Key] = update.Value;
-        }
-    }
-
-    private void ApplyMaxShaderToTile(PlantedPlant plant)
-    {
-        try{
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            mpb.SetTexture("_MainTex", plant.tiles[plant.maxStage].sprite.texture);
-            mpb.SetColor("_GlowColor", Color.green);
-            mpb.SetFloat("_GlowIntensity", 1.5f);
-
-            plantMap.SetTileFlags(plant.gridPosition, TileFlags.None);
-            plantMap.SetMaterialPropertyBlock(mpb, gridPosition);
-        } catch (Exception err){
-            Debug.LogError(err);
         }
     }
 
@@ -308,29 +301,34 @@ public class PlantManager : MonoBehaviour
 
         foreach (var entry in lastCheckFreshTime)
         {
-            PlantedPlant plant = entry.Key;
+            try {
+                PlantedPlant plant = entry.Key;
 
-            if (plant.health <= 0 || plant.currentStage == plant.maxStage)
-            {
-                continue; // die or max stage
-            }
-
-            DateTime lastTime = entry.Value;
-
-            double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
-            if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                if (plant.lastOpenedTime >= lastTime){
-                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                    secondsDifference -= unneededDifference;
+                if (plant.health <= 0 || plant.currentStage == plant.maxStage)
+                {
+                    continue; // die or max stage
                 }
-            }
 
-            if (secondsDifference > plant.deteriorateTime)
-            {
-                DamagePlant(plant);
-                plantsToRemove.Add(plant);
-                PlantPos.instance.RemovePlant(plant, plant.gridPosition);
+                DateTime lastTime = entry.Value;
+
+                double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
+                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
+                    if (plant.lastOpenedTime > lastTime){
+                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
+                        secondsDifference -= unneededDifference;
+                    }
+                }
+
+                if (secondsDifference > plant.deteriorateTime)
+                {
+                    DamagePlant(plant);
+                    plantsToRemove.Add(plant);
+                    PlantPos.instance.RemovePlant(plant, plant.gridPosition);
+                } 
+            } catch (Exception err){
+                Debug.LogError($"Error updating plant water: {err.Message}");
             }
+            
         }
 
         foreach (PlantedPlant plant in plantsToRemove)
@@ -512,13 +510,16 @@ public class PlantManager : MonoBehaviour
         DateTime now = DateTime.Now;
         // plant.lastOpenedTime = null;
         // plant.lastSavedTime = null; // no longer needed to keep this
-        if (lastCheckFreshTime.ContainsKey(plant)){
-            lastCheckFreshTime.Remove(plant);
+        // if (lastCheckFreshTime.ContainsKey(plant)){
+        //     lastCheckFreshTime.Remove(plant);
+        // }
+
+        if (lastCheckFreshTime.ContainsKey(plant)==false){
+            return false;
         }
 
-        lastCheckFreshTime.Add(plant, now);
-        
-
+        lastCheckFreshTime[plant] = now;
+    
         PlantPos.instance.HealthPlant(plant, now);
         
         ColorPlant(plant, Color.white); // fresh plant again

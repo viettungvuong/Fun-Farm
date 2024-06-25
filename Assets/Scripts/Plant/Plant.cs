@@ -39,7 +39,7 @@ public class PlantedPlant
         maxHealth = plant.maxHealth;
         health = maxHealth;
 
-        maxStage = tiles.ToList().Count;
+        maxStage = tiles.ToList().Count-1;
 
         buyMoney = plant.buyMoney;
         harvestMoney = plant.harvestMoney;
@@ -95,7 +95,6 @@ public class PlantedPlant
         int hash = 17;
 
         hash = hash * 31 + gridPosition.GetHashCode();
-        hash = hash * 31 + currentStage;
 
         foreach (var path in tilePaths)
         {
@@ -112,7 +111,6 @@ public class PlantedPlant
 
         PlantedPlant other = (PlantedPlant)obj;
 
-        return gridPosition.Equals(other.gridPosition) &&
-               currentStage == other.currentStage;
+        return gridPosition.Equals(other.gridPosition);
     }
 }

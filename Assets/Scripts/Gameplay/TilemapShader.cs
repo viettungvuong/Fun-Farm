@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class TilemapShader : MonoBehaviour
@@ -8,9 +9,12 @@ public class TilemapShader : MonoBehaviour
 
     public void ApplyShaderToTile(Vector3Int tilePosition, Sprite tileSprite, string gObjectName)
     {
+
         // placeholder object with spriterenderer
         GameObject tileObject = new GameObject(gObjectName);
         SpriteRenderer spriteRenderer = tileObject.AddComponent<SpriteRenderer>();
+
+        tileObject.layer = tilemap.gameObject.layer;
 
         // gameobject to match tile position
         Vector3 worldPosition = tilemap.CellToWorld(tilePosition);
@@ -18,5 +22,7 @@ public class TilemapShader : MonoBehaviour
 
         spriteRenderer.sprite = tileSprite;
         spriteRenderer.material = customMaterial;
+
     }
 }
+
