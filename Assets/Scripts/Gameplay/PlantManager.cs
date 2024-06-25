@@ -69,9 +69,6 @@ public class PlantManager : MonoBehaviour
         this.lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
         this.plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
         
-
-        this.plantPos.AddRange(plantPos.SerializedPlantPos); // load plant pos from this
-
         foreach (var entry in plantPos.SerializedLastLevelTime){
             PlantedPlant plant = entry.Key;
             double timeStamp = entry.Value;
@@ -86,21 +83,6 @@ public class PlantManager : MonoBehaviour
             this.lastCheckFreshTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
         }
 
-        foreach (var entry in this.plantPos){ // load for plantpos
-            Vector3Int cellPosition = entry.Key;
-            PlantedPlant plant = entry.Value;
-
-            plant.LoadSavetime(); // load save time for plantpos
-            plant.LoadTilesFromPaths(); // reload tiles from tile paths (because tiles are not directly serializable)
-
-            plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
-            plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
-        }
-
-        plantPos.SerializedLastCheckFreshTime.Clear();
-        plantPos.SerializedLastLevelTime.Clear();
-        plantPos.SerializedPlantPos.Clear(); // clear để làm sạch
-
         foreach (var entry in lastLevelTime.ToList())
         {
             PlantedPlant plant = entry.Key;
@@ -110,8 +92,18 @@ public class PlantManager : MonoBehaviour
             DateTime freshValue = lastCheckFreshTime[plant];
             lastCheckFreshTime.Remove(plant);
 
+            if (!plantPos.SerializedPlantPos.ContainsKey(plant.gridPosition)){
+                continue;
+            }
+
+            PlantPos.instance.RemovePlant(plant, plant.gridPosition); // làm sạch
+
+            Vector3Int cellPosition = plant.gridPosition;
+
             plant.LoadSavetime(); // load save time
             plant.LoadTilesFromPaths();
+
+            this.plantPos.Add(cellPosition, plant); // add to plant pos with updated tiles
 
             lastLevelTime.Add(plant, lastTime); // update giá trị mới của plant về save time
             lastCheckFreshTime.Add(plant, freshValue);
@@ -119,6 +111,9 @@ public class PlantManager : MonoBehaviour
             plantPos.LevelPlant(plant, lastTime);
             plantPos.AddPlant(plant.gridPosition, plant);
             plantPos.HealthPlant(plant, freshValue);
+
+            plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>(); // draw on tilemap
+            plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
   
 
             PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
