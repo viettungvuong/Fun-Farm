@@ -207,11 +207,10 @@ public class PlantManager : MonoBehaviour
 
                 if (secondsDifference > plant.levelUpTime)
                 {
-                    // Attempt to increment currentStage
                     plant.currentStage++;
 
-                    // Check if currentStage is within bounds
-                    if (plant.currentStage < plant.tiles.Count)
+                    // Check if currentStage is within number of available tiles
+                    if (plant.currentStage < plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                         PlantPos.instance.LevelPlant(plant, now);
@@ -219,9 +218,9 @@ public class PlantManager : MonoBehaviour
                         plant.lastSavedTime = null; // no longer needed to keep this
                         updates[plant] = now; // collect the update
                     }
-                    else
+                    else if (plant.currentStage == plant.maxStage)
                     {
-                        Debug.LogWarning($"Plant currentStage ({plant.currentStage}) exceeded tile count ({plant.tiles.Count}) for plant at {plant.gridPosition}");
+                        
                     }
                 }
             }
@@ -234,6 +233,21 @@ public class PlantManager : MonoBehaviour
         foreach (var update in updates)
         {
             lastLevelTime[update.Key] = update.Value;
+        }
+    }
+
+    private void ApplyMaxShaderToTile(PlantedPlant plant)
+    {
+        try{
+            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            mpb.SetTexture("_MainTex", plant.tiles[plant.maxStage].sprite.texture);
+            mpb.SetColor("_GlowColor", Color.green);
+            mpb.SetFloat("_GlowIntensity", 1.5f);
+
+            plantMap.SetTileFlags(plant.gridPosition, TileFlags.None);
+            plantMap.SetMaterialPropertyBlock(mpb, gridPosition);
+        } catch (Exception err){
+            Debug.LogError(err);
         }
     }
 
@@ -398,6 +412,7 @@ public class PlantManager : MonoBehaviour
 
         if (removeOnMap){
             plantMap.SetTile(plant.gridPosition, null);
+            // remove gameobject of plant max stage
             PlantPos.instance.RemovePlant(plant, plant.gridPosition);
         }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class GameLoading : MonoBehaviour
 {
@@ -45,33 +46,45 @@ public class GameLoading : MonoBehaviour
         string timeJson = LoadJsonFromFile(timeJsonFileName);
         string plantsJson = LoadJsonFromFile(plantsJsonFileName);
 
-        if (!string.IsNullOrEmpty(playerJson)&&!string.IsNullOrEmpty(playerDefendJson))
-        {
-            FetchPlayer(playerJson, playerDefendJson);
+        try{
+            if (!string.IsNullOrEmpty(playerJson)&&!string.IsNullOrEmpty(playerDefendJson))
+            {
+                FetchPlayer(playerJson, playerDefendJson);
+            }
+
+            if (!string.IsNullOrEmpty(timeJson))
+            {
+                FetchTime(timeJson);
+            }
+
+            if (!string.IsNullOrEmpty(plantsJson))
+            {
+                FetchPlants(plantsJson);
+            }
+        } catch (Exception err){
+            Debug.LogError(err);
         }
 
-        if (!string.IsNullOrEmpty(timeJson))
-        {
-            FetchTime(timeJson);
-        }
 
-        if (!string.IsNullOrEmpty(plantsJson))
-        {
-            FetchPlants(plantsJson);
-        }
     }
 
     string LoadJsonFromFile(string fileName)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-        if (File.Exists(filePath))
-        {
-            return File.ReadAllText(filePath);
-        }
-        else
-        {
-            Debug.LogError("File not found: " + filePath);
+        try{
+            string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else
+            {
+                Debug.LogError("File not found: " + filePath);
+                return null;
+            }
+        } catch (Exception err){
+            Debug.LogError(err);
             return null;
         }
+
     }
 }
