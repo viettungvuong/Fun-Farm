@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 7213360196023523754}
   - component: {fileID: 4549481178296448086}
   - component: {fileID: -9202891944508619798}
+  - component: {fileID: -5970118171762299643}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -179,6 +180,7 @@ MonoBehaviour:
   arrowSprite: {fileID: 0}
   orientation: 0
   footprints: []
+  spriteOrientation: []
 --- !u!50 &436781378712855968
 Rigidbody2D:
   serializedVersion: 4
@@ -219,7 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlanting: 0
-  plantTilemap: {fileID: 0}
 --- !u!114 &573766176366255923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +320,7 @@ MonoBehaviour:
   maxMoney: 1
   coinText: {fileID: 0}
   currentMoney: 0
+  diePanel: {fileID: 0}
 --- !u!114 &5572432093568441648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +378,20 @@ MonoBehaviour:
   timeManage: {fileID: 0}
   maxHealthDecreasePerDay: 50
   healthText: {fileID: 0}
+--- !u!114 &-5970118171762299643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cedeb3990dae4f3ea2aba20bb2a1899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrocutionMaterial: {fileID: 2100000, guid: c8994f8d12b05496695164f51ec41e53, type: 2}
+  flashDuration: 0.3
 --- !u!1 &4560234531328760781
 GameObject:
   m_ObjectHideFlags: 0

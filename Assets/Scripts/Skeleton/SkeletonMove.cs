@@ -232,8 +232,12 @@ public class SkeletonMove : MonoBehaviour
             isAttacking = true;
             StopAllCoroutines();
             StartCoroutine(AttackCoroutine());
+
             Unit playerUnit = other.gameObject.GetComponent<Unit>(); // repeatedly attack player
             playerUnit.TakeDamage(unit.damage);
+
+            other.gameObject.GetComponent<HitFlash>().Flash(); // flash player
+
             StartCoroutine(AttackCooldown());
         }
     }

@@ -51,6 +51,8 @@ public class PlayerAttack : MonoBehaviour
             if (enemyUnit != null)
             {
                 enemyUnit.TakeDamage(playerUnit.damage);
+
+                hit.collider.GetComponent<HitFlash>().Flash();
             }
         }
     }

@@ -60,10 +60,9 @@ public class GameSaving : MonoBehaviour
             File.WriteAllText(plantFile, SavePlants());
             return true;
         } catch (Exception e){
+            Debug.LogError(e);
             return false;
         }
-
-
     }
 
 
@@ -76,7 +75,6 @@ public class GameSaving : MonoBehaviour
             {
                 if (SaveGame()) // only save when all enemies have been killed
                 {
-                    Debug.Log("save game");
                     StartCoroutine(ShowSavingPanel());
                 }
 
