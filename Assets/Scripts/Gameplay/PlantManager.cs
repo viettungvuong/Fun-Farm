@@ -206,7 +206,7 @@ public class PlantManager : MonoBehaviour
                 {
                     plant.currentStage++;
                     Debug.Log(plant.tiles.Count);
-                    if (plant.currentStage <  plant.maxStage)
+                    if (plant.currentStage <=  plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                         PlantPos.instance.LevelPlant(plant, now);
@@ -215,7 +215,7 @@ public class PlantManager : MonoBehaviour
                         if (plant.currentStage == plant.maxStage)
                         {
                             PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
-                            tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax");
+                            tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax", 2);
                         }
                     }
 

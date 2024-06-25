@@ -1,57 +1,46 @@
-Shader "Custom/PlantMaxShader"
+Shader "Custom/StarOutline"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _GlowColor ("Glow Color", Color) = (1,1,1,1)
-        _GlowIntensity ("Glow Intensity", Range(0,5)) = 1
+        _Color ("Color", Color) = (1,1,1,1)
+        _OutlineColor ("Outline Color", Color) = (1,1,1,1)
+        _OutlineWidth ("Outline Width", Range (0.002, 0.03)) = 0.005
     }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
-        LOD 200
 
-        Pass
+        CGPROGRAM
+        #pragma surface surf Lambert vertex:vert
+
+        struct Input
         {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            float2 uv_MainTex;
+        };
 
-            #include "UnityCG.cginc"
+        sampler2D _MainTex;
+        fixed4 _Color;
+        fixed4 _OutlineColor;
+        float _OutlineWidth;
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
-
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-            };
-
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            float4 _GlowColor;
-            float _GlowIntensity;
-
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                return o;
-            }
-
-            fixed4 frag (v2f i) : SV_Target
-            {
-                fixed4 col = tex2D(_MainTex, i.uv);
-                col.rgb += _GlowColor.rgb * _GlowIntensity;
-                return col;
-            }
-            ENDCG
+        void vert(inout appdata_full v, out Input o)
+        {
+            UNITY_INITIALIZE_OUTPUT(Input, o);
+            float4 worldPos = mul(unity_ObjectToWorld, v.vertex);
+            o.uv_MainTex = v.texcoord;
+            o.uv_MainTex += worldPos.xy * _OutlineWidth;
         }
+
+        void surf(Input IN, inout SurfaceOutput o)
+        {
+            fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+            o.Albedo = c.rgb;
+            o.Alpha = c.a;
+        }
+        ENDCG
     }
+
     FallBack "Diffuse"
 }
