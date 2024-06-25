@@ -92,6 +92,7 @@ public class PlantManager : MonoBehaviour
 
             plant.LoadSavetime(); // load save time for plantpos
             plant.LoadTilesFromPaths(); // reload tiles from tile paths (because tiles are not directly serializable)
+
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
             plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
         }
@@ -110,6 +111,7 @@ public class PlantManager : MonoBehaviour
             lastCheckFreshTime.Remove(plant);
 
             plant.LoadSavetime(); // load save time
+            plant.LoadTilesFromPaths();
 
             lastLevelTime.Add(plant, lastTime); // update giá trị mới của plant về save time
             lastCheckFreshTime.Add(plant, freshValue);
@@ -124,7 +126,6 @@ public class PlantManager : MonoBehaviour
             plantHealthBars.Add(plant, plantHealthBar);
         
         }
-
 
         // plantPos.LoadToTilemap(); // redraw tilemap
 
@@ -201,10 +202,6 @@ public class PlantManager : MonoBehaviour
 
                     if (plant.lastOpenedTime > lastTime){
                         double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                        Debug.Log(plant.lastSavedTime.ToString());
-                        Debug.Log(plant.lastOpenedTime.ToString());
-                        Debug.Log(unneededDifference);
-                        Debug.Log(secondsDifference);
                         secondsDifference -= unneededDifference;
                     }
 
@@ -213,23 +210,20 @@ public class PlantManager : MonoBehaviour
                 if (secondsDifference > plant.levelUpTime)
                 {
                     plant.currentStage++;
-                    Debug.Log(plant.currentStage);
-
-                    // Check if currentStage is within number of available tiles
-                    if (plant.currentStage < plant.maxStage)
+                    Debug.Log(plant.tiles.Count);
+                    if (plant.currentStage <  plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
                         PlantPos.instance.LevelPlant(plant, now);
-                        // plant.lastOpenedTime = null;
-                        // plant.lastSavedTime = null; // no longer needed to keep this
                         updates[plant] = now; // collect the update
+
+                        if (plant.currentStage == plant.maxStage)
+                        {
+                            PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
+                            tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax");
+                        }
                     }
-                    else if (plant.currentStage == plant.maxStage)
-                    {
-                        Debug.Log("Max stage");
-                        PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
-                        tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax");
-                    }
+
                 }
             }
             catch (Exception e)
