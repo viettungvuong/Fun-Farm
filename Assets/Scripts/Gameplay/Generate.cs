@@ -57,15 +57,6 @@ public abstract class Generate : MonoBehaviour
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
     }
 
-    private void FixedUpdate() {
-        if (TimeManage.instance.IsDay()){
-            enemyIndicatorIcon.sprite = slimeSprite;
-        }
-        else{
-            enemyIndicatorIcon.sprite = skeletonSprite;
-        }
-    }
-
 
     protected void Spawn(int number)
     {

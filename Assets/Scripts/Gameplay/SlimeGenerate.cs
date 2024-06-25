@@ -37,9 +37,14 @@ public class SlimeGenerate : Generate
 
     void FixedUpdate()
     {
-        if (TimeManage.instance.IsDay()==false){
+        if (TimeManage.instance.IsDay()){
+            enemyIndicatorIcon.sprite = slimeSprite;
+        }
+        else{
+            enemyIndicatorIcon.sprite = skeletonSprite;
             return;
         }
+
         if (TimeManage.instance.currentMinute != nextMinuteRefill)
         {
             int minsDiff;

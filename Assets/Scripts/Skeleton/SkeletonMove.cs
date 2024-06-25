@@ -223,19 +223,18 @@ public class SkeletonMove : MonoBehaviour
 
     private bool isAttacking = false;
     private float nextAttackTime = 0f; 
-    public float attackCooldown = 1f; 
+    public float attackCooldown = 0.8f; 
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (status == SkeletonStatus.PlayerAttack && !isAttacking && other.gameObject.name == "Player" && Time.time >= nextAttackTime)
+        if (!isAttacking && other.gameObject.CompareTag("Player") && Time.time >= nextAttackTime)
         {
             isAttacking = true;
             StopAllCoroutines();
             StartCoroutine(AttackCoroutine());
-            StartCoroutine(AttackCooldown());
-
-            Unit playerUnit = other.gameObject.GetComponent<Unit>();
+            Unit playerUnit = other.gameObject.GetComponent<Unit>(); // repeatedly attack player
             playerUnit.TakeDamage(unit.damage);
+            StartCoroutine(AttackCooldown());
         }
     }
 
@@ -272,16 +271,12 @@ public class SkeletonMove : MonoBehaviour
                 break;
         }
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateInfo.IsName(animationName)) // make sure not playing the current animation
-        {
-            animator.SetBool("walk", false);
-            animator.SetTrigger("attack");
-            yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
+        animator.SetBool("walk", false);
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
 
-            animator.ResetTrigger("attack");
-            animator.SetBool("walk", true);
-        }
+        animator.ResetTrigger("attack");
+        animator.SetBool("walk", true);
     }
 
     private List<Node> AStarPathfinding(Vector3 start, Vector3 goal)
