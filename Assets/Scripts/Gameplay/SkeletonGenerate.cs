@@ -54,7 +54,7 @@ public class SkeletonGenerate : Generate
             int hours = minsDiff / 60;
             int mins = minsDiff - hours * 60;
             string minsString = (mins < 10) ? "0" + mins : mins.ToString();
-            base.remainingTimeText.text = hours + " : " + minsString;
+            base.remainingTimeText.text = hours + ":" + minsString;
 
             hasSpawned = false; // allow spawning once per min (this is resetting)
             conditionHandled = false;// allow check home scene and add 1 min only do once per min

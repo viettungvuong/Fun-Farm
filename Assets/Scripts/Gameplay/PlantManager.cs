@@ -214,6 +214,7 @@ public class PlantManager : MonoBehaviour
                         if (plant.currentStage == plant.maxStage)
                         {
                             PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
+                            plantMap.SetTile(plant.gridPosition, null); // delete from map for the max plant shader
                             tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax", 2);
                         }
                     }

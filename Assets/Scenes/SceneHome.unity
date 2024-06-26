@@ -4217,7 +4217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e163f26e46245de85aabccfe1958e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimap: {fileID: 1781306351}
+  minimap: {fileID: 663717758}
 --- !u!114 &732015805
 MonoBehaviour:
   m_ObjectHideFlags: 0

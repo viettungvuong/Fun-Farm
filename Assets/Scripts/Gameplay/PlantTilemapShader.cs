@@ -26,7 +26,10 @@ public class PlantTilemapShader: TilemapShader{
     }
 
     private void InitializeMap(){
-        tilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        if (GameController.HomeScene()){
+            tilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        }
+
     }
 
 }
