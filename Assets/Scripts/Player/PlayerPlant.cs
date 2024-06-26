@@ -84,7 +84,7 @@ public class PlayerPlant : MonoBehaviour
 
         Orientation tileToPlayer()
         {
-            Vector3 direction = (Vector3)rb.position - worldPosition;
+            Vector3 direction = worldPosition-(Vector3)rb.position; // player position to plant posiiotn
             direction.Normalize();
 
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
@@ -162,7 +162,7 @@ public class PlayerPlant : MonoBehaviour
         }
 
         animator.Play(animationName);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 0.5f);
         isPlanting = false;
     }
 }
