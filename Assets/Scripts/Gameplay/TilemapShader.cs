@@ -18,7 +18,7 @@ public class TilemapShader : MonoBehaviour
         PolygonCollider2D collider = tileObject.AddComponent<PolygonCollider2D>();
         collider.isTrigger = true;
 
-        tileObject.AddComponent<PlantMaxShader>(); // detect player to hide itself
+        tileObject.AddComponent<PlantMaxShader>(); // detect player trigger to hide itself
 
         renderer.sortingOrder = layer;
 
@@ -29,12 +29,7 @@ public class TilemapShader : MonoBehaviour
         spriteRenderer.sprite = tileSprite;
         spriteRenderer.material = customMaterial;
 
-        GlowPulse glowPulse = tileObject.AddComponent<GlowPulse>();
-        glowPulse.glowMaterial = customMaterial;
-        glowPulse.pulseSpeed = 0.5f;
-        glowPulse.minGlowIntensity = 0.1f;
-        glowPulse.maxGlowIntensity = 0.5f;
-        glowPulse.moveAmount = 0;
+        tileObject.SetActive(true);
 
     }
 }

@@ -205,7 +205,6 @@ public class PlantManager : MonoBehaviour
                 if (secondsDifference > plant.levelUpTime)
                 {
                     plant.currentStage++;
-                    Debug.Log(plant.tiles.Count);
                     if (plant.currentStage <=  plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
