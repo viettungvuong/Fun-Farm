@@ -10,6 +10,7 @@ TagManager:
   - Defense
   - Wood
   - Tree
+  - Bullet
   layers:
   - Default
   - TransparentFX

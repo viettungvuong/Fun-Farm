@@ -43,6 +43,7 @@ public class PlayerMove : MonoBehaviour
     private bool changingAnimation = false;
     private PlayerPlant playerPlant;
     private PlayerAttack playerAttack;
+    private PlayerGun playerGun;
 
     public List<FootprintTile> footprints;
     private Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>> footprintQueue; // save tiles player has been previously
@@ -70,6 +71,7 @@ public class PlayerMove : MonoBehaviour
 
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
+        playerGun = GetComponent<PlayerGun>();
 
         plantPanel = GameObject.Find("PlantPanel");
     }
@@ -175,7 +177,7 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                if (playerPlant.isPlanting == false && playerAttack.isAttacking == false)
+                if (playerPlant.isPlanting == false && playerAttack.isAttacking == false && playerGun.isShooting == false)
                 { // not planting or attacking then start the idle animation
                     animator.Play(GetIdleAnimationName());
                 }
