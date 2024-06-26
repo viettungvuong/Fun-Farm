@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -53,11 +51,10 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
- 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeGroundTilemap();
-        
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -75,12 +72,10 @@ public class PlayerMove : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
 
         plantPanel = GameObject.Find("PlantPanel");
-
     }
 
     private void OnDestroy()
     {
- 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -94,10 +89,10 @@ public class PlayerMove : MonoBehaviour
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
 
-        if (GameController.HomeScene()){
+        if (GameController.HomeScene())
+        {
             highlightTilemap = GameObject.Find("Highlight").GetComponent<Tilemap>();
         }
-
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;
@@ -168,45 +163,35 @@ public class PlayerMove : MonoBehaviour
                 }
                 else if (prevOrientation == orientation)  // not changing orientation but still walking
                 {
-                    // ensure animation to rotate player by arrow
-                    animator.SetBool("idle", false);
-                    StopAllCoroutines();
-                    StartCoroutine(WalkCoroutine());
+                    animator.Play(GetWalkAnimationName());
                 }
             }
         }
-        else
+        else // not hold arrow key => idle
         {
             if (SceneManager.GetActiveScene().name != "SceneHome")
             {
-                animator.SetBool("idle", true);
+                animator.Play(GetIdleAnimationName());
             }
             else
             {
                 if (playerPlant.isPlanting == false && playerAttack.isAttacking == false)
                 { // not planting or attacking then start the idle animation
-                    animator.SetBool("idle", true);
-                    // StopAllCoroutines();
-                    // StartCoroutine(IdleCoroutine());
-                }
-                else
-                {
-                    animator.SetBool("idle", false);
+                    animator.Play(GetIdleAnimationName());
                 }
             }
         }
 
-        if (TimeManage.instance.IsDay()==false&&GameController.HomeScene()==false){ // go home when the night comes
-                // thêm panel để thông báo
+        if (!TimeManage.instance.IsDay() && !GameController.HomeScene())
+        { // go home when the night comes
             VillagePlayerSpawn.GoBackHome(transform);
-            SceneManager.LoadScene("SceneHome"); 
-
+            SceneManager.LoadScene("SceneHome");
         }
 
-        if (GameController.HomeScene()){
+        if (GameController.HomeScene())
+        {
             CheckFootprint();
         }
-    
     }
 
     private void FixedUpdate()
@@ -223,14 +208,12 @@ public class PlayerMove : MonoBehaviour
 
         Vector3Int cellPosition = groundTilemap.WorldToCell(rb.position);
 
-
-        if (GameController.HomeScene()&&highlightTilemap != null)
+        if (GameController.HomeScene() && highlightTilemap != null)
         {
             highlightTilemap.SetTile(groundTilemap.WorldToCell(previousPos), null); // delete highlight on previous pos
-            
-            if (GameController.HomeScene()&&MapManager.instance.Plantable(rb.position)) // plantable position
-            {
 
+            if (GameController.HomeScene() && MapManager.instance.Plantable(rb.position)) // plantable position
+            {
                 // Only highlight if highlightTile is assigned
                 if (highlightTile != null)
                 {
@@ -251,17 +234,21 @@ public class PlayerMove : MonoBehaviour
         AddFootprint(previousPos); // add footprint
     }
 
-    private void AddFootprint(Vector3 pos){
+    private void AddFootprint(Vector3 pos)
+    {
         Vector3Int cellPosition = groundTilemap.WorldToCell(pos);
 
-        TileBase footprintTile=null;
+        TileBase footprintTile = null;
         TileBase tile = groundTilemap.GetTile(cellPosition);
-        foreach (FootprintTile ft in footprints){
-            if (ft.original==tile){
+        foreach (FootprintTile ft in footprints)
+        {
+            if (ft.original == tile)
+            {
                 footprintTile = ft.footprint;
             }
         }
-        if (footprintTile==null){
+        if (footprintTile == null)
+        {
             return;
         }
         groundTilemap.SetTile(cellPosition, footprintTile);
@@ -270,7 +257,8 @@ public class PlayerMove : MonoBehaviour
         footprintQueue.Enqueue(new Pair<Pair<TileBase, Vector3Int>, DateTime>(new Pair<TileBase, Vector3Int>(tile, cellPosition), DateTime.Now));
     }
 
-    private void CheckFootprint(){
+    private void CheckFootprint()
+    {
         // footprint disappear after 1 min
         TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
 
@@ -290,128 +278,81 @@ public class PlayerMove : MonoBehaviour
                 break;
             }
         }
-
     }
 
     public void SetOrientation(Orientation newOrientation)
     {
         orientation = newOrientation;
-        animator.SetBool("up", orientation == Orientation.UP);
-        animator.SetBool("down", orientation == Orientation.DOWN);
-        animator.SetBool("horizontal", orientation == Orientation.LEFT || orientation == Orientation.RIGHT);
         spriteRenderer.flipX = orientation == Orientation.LEFT;
 
-        if (orientation == Orientation.UP)
+        switch (orientation)
         {
-            arrowSprite.flipY = true;
-            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-            spriteRenderer.sprite = spriteOrientation[1];
-        }
-        else if (orientation == Orientation.DOWN)
-        {
-            arrowSprite.flipY = false;
-            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-            spriteRenderer.sprite = spriteOrientation[0];
-        }
-        else if (orientation == Orientation.LEFT)
-        {
-            spriteRenderer.sprite = spriteOrientation[2];
-            arrowSprite.flipY = false;
-            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
-        }
-        else if (orientation == Orientation.RIGHT)
-        {
-            spriteRenderer.sprite = spriteOrientation[2];
-            arrowSprite.flipY = false;
-            arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
-        }
+            case Orientation.UP:
+                spriteRenderer.sprite = spriteOrientation[1];
+                arrowSprite.flipY = false; // flip arrow
+                arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
+                break;
+            case Orientation.DOWN:
+                spriteRenderer.sprite = spriteOrientation[0];
+                arrowSprite.flipY = false;
+                arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case Orientation.LEFT:
+                spriteRenderer.sprite = spriteOrientation[2];
+                arrowSprite.flipY = false;
+                arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
+                break;
+            case Orientation.RIGHT:
+                spriteRenderer.sprite = spriteOrientation[2];
+                arrowSprite.flipY = false;
+                arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+                break;
+        }
     }
 
     private IEnumerator WalkCoroutine()
     {
-        string animationName;
-
-        switch (orientation)
-        {
-            case Orientation.UP:
-                {
-                    animationName = "PlayerWalkUp";
-                    break;
-                }
-            case Orientation.DOWN:
-                {
-                    animationName = "PlayerWalkDown";
-                    break;
-                }
-            default:
-                {
-                    animationName = "PlayerWalkHorizontal";
-                    break;
-                }
-        }
-
-        animator.SetTrigger("walk");
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-        animator.ResetTrigger("walk");
+        animator.Play(GetWalkAnimationName());
+        yield return null;
     }
 
     private void StartOrientationChange()
     {
-        string animationName;
-        switch (orientation)
-        {
-            case Orientation.UP:
-                {
-                    animationName = "PlayerIdleUp";
-                    break;
-                }
-            case Orientation.DOWN:
-                {
-                    animationName = "PlayerIdleDown";
-                    break;
-                }
-            default:
-                {
-                    animationName = "PlayerIdleHorizontal";
-                    break;
-                }
-        }
         changingAnimation = true;
-        animator.SetBool("idle", true);
-        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, animationName));
+        animator.Play(GetIdleAnimationName());
+        Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, GetIdleAnimationName()));
     }
 
-    private IEnumerator IdleCoroutine()
+    private string GetWalkAnimationName()
     {
-        string animationName;
         switch (orientation)
         {
             case Orientation.UP:
-                {
-                    animationName = "PlayerIdleUp";
-                    break;
-                }
+                return "PlayerWalkUp";
             case Orientation.DOWN:
-                {
-                    animationName = "PlayerIdleDown";
-                    break;
-                }
+                return "PlayerWalkDown";
             default:
-                {
-                    animationName = "PlayerIdleHorizontal";
-                    break;
-                }
+                return "PlayerWalkHorizontal";
         }
-        changingAnimation = true;
-        animator.SetBool("idle", true);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
-        animator.SetBool("idle", false);
+    }
+
+    private string GetIdleAnimationName()
+    {
+        switch (orientation)
+        {
+            case Orientation.UP:
+                return "PlayerIdleUp";
+            case Orientation.DOWN:
+                return "PlayerIdleDown";
+            default:
+                return "PlayerIdleHorizontal";
+        }
     }
 
     private void EndOrientationChange()
     {
         changingAnimation = false;
-        animator.SetBool("idle", false);
+        animator.Play(GetIdleAnimationName());
     }
 }

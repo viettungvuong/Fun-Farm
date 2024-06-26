@@ -14,10 +14,8 @@ public class PlayerPlant : MonoBehaviour
     Rigidbody2D rb;
     PlayerUnit playerUnit;
 
-
     private void OnDestroy()
     {
- 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -26,178 +24,145 @@ public class PlayerPlant : MonoBehaviour
         InitializeMap();
     }
 
-    void InitializeMap(){
-        if (GameController.HomeScene()){
+    void InitializeMap()
+    {
+        if (GameController.HomeScene())
+        {
             plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
         }
-
     }
 
-
-
-    void Start(){
+    void Start()
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
-
         InitializeMap();
-
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
         playerUnit = GetComponent<PlayerUnit>();
     }
 
-    void Update(){
-        if (GameController.HomeScene()==false){
+    void Update()
+    {
+        if (!GameController.HomeScene())
+        {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
             WaterTree(rb.position);
-        } // press W to water
+        }
     }
 
-    public void PlantTree(Vector3 worldPosition, Plant plant){
+    public void PlantTree(Vector3 worldPosition, Plant plant)
+    {
         bool plantable = MapManager.instance.Plantable(worldPosition);
-        if (!plantable){
+        if (!plantable)
+        {
             return;
         }
 
-        if (playerUnit.SufficientMoney(plant.buyMoney)==false){
-            return; // not enough money to buy
+        if (!playerUnit.SufficientMoney(plant.buyMoney))
+        {
+            return;
         }
 
         playerUnit.UseMoney(plant.buyMoney);
-
-        StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition)))); // planting tree animation
-        
-
+        StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition))));
     }
 
     private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, PlantedPlant plant)
     {
-
         Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
-        plant.gridPosition = cellPosition; // store position
+        plant.gridPosition = cellPosition;
         bool plantEligible = PlantManager.instance.AddPlant(worldPosition, plant);
 
-        if (plantEligible==false){
+        if (!plantEligible)
+        {
             yield break;
         }
 
         Orientation tileToPlayer()
         {
-            // Calculate the direction vector from the tile to the player
             Vector3 direction = (Vector3)rb.position - worldPosition;
-            
-            // Normalize the direction vector to get the direction in terms of unit vectors
             direction.Normalize();
 
-            // Determine the orientation based on the direction vector
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
-                if (direction.x > 0)
-                {
-                    return Orientation.RIGHT;
-                }
-                else
-                {
-                    return Orientation.LEFT;
-                }
+                return direction.x > 0 ? Orientation.RIGHT : Orientation.LEFT;
             }
             else
             {
-                if (direction.y > 0)
-                {
-                    return Orientation.UP;
-                }
-                else
-                {
-                    return Orientation.DOWN;
-                }
+                return direction.y > 0 ? Orientation.UP : Orientation.DOWN;
             }
         }
-
 
         isPlanting = true;
         string animationName;
 
-        switch (tileToPlayer()){
-            case Orientation.UP:{
-                    animationName = "PlayerPlantUp";
-                    break;
-            }
-            case Orientation.DOWN:{
-                    animationName = "PlayerPlantDown";
-                    break;
-            }
-            default:{
-                    animationName = "PlayerPlantHorizontal";
-                    break;
-            }
+        switch (tileToPlayer())
+        {
+            case Orientation.UP:
+                animationName = "PlayerPlantUp";
+                break;
+            case Orientation.DOWN:
+                animationName = "PlayerPlantDown";
+                break;
+            default:
+                animationName = "PlayerPlantHorizontal";
+                break;
         }
-        animator.SetBool("idle", false);
-        animator.SetTrigger("plant");
-        // wait for animation to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
-        animator.ResetTrigger("plant");
-        animator.SetBool("idle", true);
 
+        animator.Play(animationName);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
         isPlanting = false;
-        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]); // set plant on tilemap
+        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]);
     }
 
     const double waterUsage = 0.15;
 
-    public void WaterTree(Vector3 worldPosition){
-
-
+    public void WaterTree(Vector3 worldPosition)
+    {
         bool plantable = MapManager.instance.Plantable(worldPosition);
-        if (!plantable){
+        if (!plantable)
+        {
             return;
         }
         bool planted = PlantManager.instance.Planted(worldPosition);
-        if (!planted){
+        if (!planted)
+        {
             return;
         }
 
-
-        // PlantManager.instance.WaterPlant(worldPosition);
         StartCoroutine(WaterTreeCoroutine(worldPosition));
     }
 
     private IEnumerator WaterTreeCoroutine(Vector3 worldPosition)
     {
         bool water = PlantManager.instance.WaterPlant(worldPosition);
-        if (water==false){ // failed to water
+        if (!water)
+        {
             yield break;
         }
 
         isPlanting = true;
         string animationName;
-        
 
-        switch (playerMove.orientation){
-            case Orientation.UP:{
-                    animationName = "PlayerWaterUp";
-                    break;
-            }
-            case Orientation.DOWN:{
-                    animationName = "PlayerWaterDown";
-                    break;
-            }
-            default:{
-                    animationName = "PlayerWaterHorizontal";
-                    break;
-            }
+        switch (playerMove.orientation)
+        {
+            case Orientation.UP:
+                animationName = "PlayerWaterUp";
+                break;
+            case Orientation.DOWN:
+                animationName = "PlayerWaterDown";
+                break;
+            default:
+                animationName = "PlayerWaterHorizontal";
+                break;
         }
-        animator.SetBool("idle", false);
-        animator.SetTrigger("water");
-        // wait for animation to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+1f);
-        animator.ResetTrigger("water");
-        animator.SetBool("idle", true);
 
+        animator.Play(animationName);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
         isPlanting = false;
-
-
     }
 }
