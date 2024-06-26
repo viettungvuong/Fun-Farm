@@ -289,7 +289,7 @@ public class PlayerMove : MonoBehaviour
         {
             case Orientation.UP:
                 spriteRenderer.sprite = spriteOrientation[1];
-                arrowSprite.flipY = false; // flip arrow
+                arrowSprite.flipY = true; // flip arrow
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
                 break;
@@ -309,6 +309,8 @@ public class PlayerMove : MonoBehaviour
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
                 break;
         }
+
+        // StartOrientationChange(); // play animation to change orientation
     }
 
     private IEnumerator WalkCoroutine()
