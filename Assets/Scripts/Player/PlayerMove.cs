@@ -317,6 +317,24 @@ public class PlayerMove : MonoBehaviour
     {
         animator.Play(GetWalkAnimationName());
         yield return null;
+        switch (orientation){
+            case Orientation.UP:
+                spriteRenderer.sprite = spriteOrientation[1];
+
+                break;
+            case Orientation.DOWN:
+                spriteRenderer.sprite = spriteOrientation[0];
+                break;
+            case Orientation.LEFT:
+                spriteRenderer.sprite = spriteOrientation[2];
+                spriteRenderer.flipX = true;
+                break;
+            case Orientation.RIGHT:
+                spriteRenderer.sprite = spriteOrientation[2];
+                spriteRenderer.flipX = false;
+                break;
+        }
+
     }
 
     private void StartOrientationChange()
