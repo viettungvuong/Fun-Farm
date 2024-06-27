@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum Weapon
@@ -44,9 +45,36 @@ public class PlayerGun : MonoBehaviour
     public Transform gunDown;
     public Transform gunHorizontal;
 
+    private void InitializeCam() {
+        if (GameController.HomeScene()){
+            cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        }
+
+    }
+
+     void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        InitializeCam();
+
+    
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-initialize the groundTilemap when a new scene is loaded
+        InitializeCam();
+    }
+
     private void Start()
     {
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
@@ -75,8 +103,9 @@ public class PlayerGun : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isShooting && !isReloading)
+        if (Input.GetKey(KeyCode.Space) && !isShooting && !isReloading)
         {
+            Debug.Log("Press shoot");
             StopAllCoroutines();
             StartCoroutine(GunCoroutine());
         }
@@ -85,7 +114,7 @@ public class PlayerGun : MonoBehaviour
     public void AddBullet()
     {
         totalBullets++;
-        if (bulletsInClip < clipCapacity && totalBullets < clipCapacity)
+        if (bulletsInClip < clipCapacity && totalBullets <= clipCapacity)
         {
             bulletsInClip = totalBullets;
         }
@@ -185,9 +214,11 @@ public class PlayerGun : MonoBehaviour
         animator.SetBool("idle", false);
         animator.Play(animationName);
 
-        Shoot();
-
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+        if (isShooting==false){
+            Shoot();
+        }
+
         animator.SetBool("idle", true);
         isShooting = false;
     }
@@ -258,7 +289,7 @@ public class PlayerGun : MonoBehaviour
     private IEnumerator ShowWeaponHandle()
     {
         weaponHandle.SetActive(true);
-        yield return new WaitForSeconds(5); // show for 2 seconds
+        yield return new WaitForSeconds(2); // show for 2 seconds
         weaponHandle.SetActive(false);
     }
 }

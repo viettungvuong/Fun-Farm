@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextAttackTime)
+        if (Input.GetKey(KeyCode.Space) && Time.time >= nextAttackTime)
         {
             nextAttackTime = Time.time + 1f / cooldownTime;
 

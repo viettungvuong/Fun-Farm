@@ -10,6 +10,7 @@ public class GameSaving : MonoBehaviour
 
     private PlayerUnit playerUnit;
     private PlayerDefend playerDefend;
+    private PlayerGun playerGun;
 
     private TimeManage time;
     private PlantPos plant;
@@ -22,6 +23,7 @@ public class GameSaving : MonoBehaviour
 
         playerUnit = player.GetComponent<PlayerUnit>();
         playerDefend = player.GetComponent<PlayerDefend>();
+        playerGun = player.GetComponent<PlayerGun>();
 
         time = TimeManage.instance;
         plant = PlantPos.instance;
@@ -34,6 +36,10 @@ public class GameSaving : MonoBehaviour
 
         string SavePlayerDefend(){ // number of fences
             return JsonUtility.ToJson(playerDefend);
+        }
+
+        string SavePlayerGun(){ // number of fences
+            return JsonUtility.ToJson(playerGun);
         }
 
         string SaveTime(){ // current time
@@ -51,6 +57,9 @@ public class GameSaving : MonoBehaviour
 
             string playerDefendFile = Application.persistentDataPath + "/playerDefend.data";
             File.WriteAllText(playerDefendFile, SavePlayerDefend());
+
+            string playerGunFile = Application.persistentDataPath + "/playerGun.data";
+            File.WriteAllText(playerDefendFile, SavePlayerGun());
 
             string timeFile = Application.persistentDataPath + "/time.data";
             File.WriteAllText(timeFile, SaveTime());

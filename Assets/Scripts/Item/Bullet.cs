@@ -15,9 +15,6 @@ public class Bullet : MonoBehaviour
     public void Shoot(Vector2 direction)
     {
         initialPosition = transform.position;
-        Debug.Log(direction);
-        Debug.Log(rb);
-        Debug.Log(speed);
         rb.velocity = direction * speed;
     }
 

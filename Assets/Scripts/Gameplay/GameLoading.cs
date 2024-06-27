@@ -7,13 +7,14 @@ using System;
 public class GameLoading : MonoBehaviour
 {
 
-    private string playerJsonFileName, playerDefendJsonFileName, timeJsonFileName, plantsJsonFileName;
+    private string playerJsonFileName, playerDefendJsonFileName, playerGunJsonFileName, timeJsonFileName, plantsJsonFileName;
 
-    void FetchPlayer(string unitJson, string defendJson)
+    void FetchPlayer(string unitJson, string defendJson, string gunJson)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
         JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
+        JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
     }
 
     void FetchTime(string json)
@@ -33,6 +34,7 @@ public class GameLoading : MonoBehaviour
 
         playerJsonFileName = Application.persistentDataPath + "/player.data";
         playerDefendJsonFileName = Application.persistentDataPath + "/playerDefend.data";
+        playerGunJsonFileName = Application.persistentDataPath + "/playerGun.data"; 
         timeJsonFileName = Application.persistentDataPath + "/time.data";
         plantsJsonFileName = Application.persistentDataPath + "/plant.data";
 
@@ -43,13 +45,14 @@ public class GameLoading : MonoBehaviour
     {
         string playerJson = LoadJsonFromFile(playerJsonFileName);
         string playerDefendJson = LoadJsonFromFile(playerDefendJsonFileName);
+        string playerGunJson = LoadJsonFromFile(playerGunJsonFileName);
         string timeJson = LoadJsonFromFile(timeJsonFileName);
         string plantsJson = LoadJsonFromFile(plantsJsonFileName);
 
         try{
             if (!string.IsNullOrEmpty(playerJson)&&!string.IsNullOrEmpty(playerDefendJson))
             {
-                FetchPlayer(playerJson, playerDefendJson);
+                FetchPlayer(playerJson, playerDefendJson, playerGunJson);
             }
 
             if (!string.IsNullOrEmpty(timeJson))

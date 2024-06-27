@@ -15,10 +15,10 @@ public class ReloadingIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateIndicatorPosition();
     }
 
-    private void UpdateSliderPosition()
+    private void UpdateIndicatorPosition()
     {
 
         if (GameController.HomeScene()==false){

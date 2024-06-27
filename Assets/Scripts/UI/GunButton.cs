@@ -14,10 +14,9 @@ public class GunButton : MonoBehaviour
     private PlayerUnit playerUnit;
     private PlayerGun playerGun;
     // public int price;
-    private Image background, priceBg;
+    private Image background;
     private TextMeshProUGUI buyText;
 
-    public GameObject bulletPanel;
 
     void Start(){
         player = GameObject.FindGameObjectWithTag("Player");
@@ -26,7 +25,6 @@ public class GunButton : MonoBehaviour
         playerGun = player.GetComponent<PlayerGun>();
 
         background = GetComponent<Image>();
-        priceBg = transform.GetChild(0).GetComponent<Image>();
 
         buyText = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
         buyText.text = price.ToString();
@@ -35,11 +33,9 @@ public class GunButton : MonoBehaviour
     private void LateUpdate() {
         if (!playerUnit.SufficientMoney(price)||(gun&&PlayerGun.ownedGun)||(!gun&&!PlayerGun.ownedGun)) {
             background.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
-            priceBg.color = new Color(144f / 255f, 144f / 255f, 144f / 255f); 
         }
         else {
             background.color = new Color(60f / 255f, 109f / 255f, 93f / 255f); 
-            priceBg.color = new Color(144f / 255f, 169f / 255f, 212f / 255f); 
         }
     }
 
@@ -64,13 +60,7 @@ public class GunButton : MonoBehaviour
             transform.localPosition = originalPosition;
         }
 
-        IEnumerator ShowBulletPanelCoroutine(){
-            bulletPanel.SetActive(true);
-            playerGun.AddBullet();
-            yield return new WaitForSeconds(5);
-            bulletPanel.SetActive(false);
-            
-        }
+
         
         if (!playerUnit.SufficientMoney(price)||(gun&&PlayerGun.ownedGun)||(!gun&&!PlayerGun.ownedGun)) {
             // shake button
@@ -78,11 +68,16 @@ public class GunButton : MonoBehaviour
             return;
         }
         playerUnit.UseMoney(price);
+
         if (gun){
             PlayerGun.ownedGun = true;
+            for (int i=0; i<12; i++){
+                playerGun.AddBullet();
+            }
         }
         else{ // for bullets
-            StartCoroutine(ShowBulletPanelCoroutine());
+            playerGun.AddBullet();
         }
+
     }
 }

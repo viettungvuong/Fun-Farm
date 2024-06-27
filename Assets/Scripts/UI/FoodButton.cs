@@ -45,6 +45,7 @@ public class FoodButton : MonoBehaviour
     }
 
     public void ChooseFood(){
+        Debug.Log("Clicked food");
         IEnumerator ShakeButton() {
             float duration = 0.1f;
             float magnitude = 5f;

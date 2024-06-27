@@ -149,8 +149,8 @@ Transform:
   m_GameObject: {fileID: 291114182}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.152, y: -1.722, z: 0}
-  m_LocalScale: {x: 4.8330154, y: 0.8881, z: 1}
+  m_LocalPosition: {x: -1.0467, y: -1.806, z: 0}
+  m_LocalScale: {x: 2.43584, y: 1.0562173, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1853693863}
@@ -1076,8 +1076,8 @@ Transform:
   m_GameObject: {fileID: 1548658952}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.125, y: -1.985, z: 0}
-  m_LocalScale: {x: 4.8330154, y: 0.8881, z: 1}
+  m_LocalPosition: {x: 0.71, y: -1.6653, z: 0}
+  m_LocalScale: {x: 2.675346, y: 1.3786864, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1866957952}
@@ -1190,7 +1190,6 @@ GameObject:
   - component: {fileID: 1794759194}
   - component: {fileID: 1794759193}
   - component: {fileID: 1794759192}
-  - component: {fileID: 1794759195}
   m_Layer: 0
   m_Name: WaterEntrance
   m_TagString: Untagged
@@ -1313,18 +1312,6 @@ Transform:
   - {fileID: 843372885}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1794759195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794759190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04407fef194404dfa9c12ca74f0ca395, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1853693861
 GameObject:
   m_ObjectHideFlags: 0
