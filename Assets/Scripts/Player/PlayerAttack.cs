@@ -27,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (GameController.HomeScene() == false)
+        if (GameController.HomeScene() == false || PlayerGun.currentWeapon != Weapon.SWORD)
         {
             return;
         }

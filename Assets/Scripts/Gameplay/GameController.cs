@@ -33,4 +33,12 @@ public class GameController : MonoBehaviour
         return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(timeStamp); 
     }
 
+    public static void Hide(Transform transform){
+        transform.localScale = new Vector3(0, 0, 0);
+    }
+
+    public static void Show(Transform transform){
+        transform.localScale = new Vector3(1, 1, 1);
+    }
+
 }

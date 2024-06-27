@@ -1,6 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum Weapon
+{
+    GUN,
+    SWORD
+}
 
 public class PlayerGun : MonoBehaviour
 {
@@ -10,44 +19,74 @@ public class PlayerGun : MonoBehaviour
     private Camera cam;
 
     [HideInInspector] public bool isShooting = false;
+    [HideInInspector] public bool isReloading = false;
 
     Animator animator;
     PlayerMove playerMove;
 
-    // References to muzzle flash points
+
+    public int clipCapacity = 3;
+    public static int totalBullets = 12;
+    private static int bulletsInClip;
+
+    public TextMeshProUGUI bulletCount;
+    public GameObject bulletInfo;
+
+    public Sprite swordSprite, gunSprite;
+    public GameObject weaponHandle;
+    private TextMeshProUGUI weaponName;
+    private Image weaponImage;
+    public static Weapon currentWeapon = Weapon.SWORD;
+
+    // Bullet points
     public Transform gunUp;
     public Transform gunDown;
     public Transform gunHorizontal;
 
-    private void Start() {
+    private void Start()
+    {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
+
+        bulletsInClip = clipCapacity;
+        bulletCount.text = bulletsInClip + "/" + totalBullets;
+
+        weaponImage = weaponHandle.transform.GetChild(1).GetComponent<Image>();
+        weaponName = weaponHandle.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameController.HomeScene() == false){
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            SwitchWeapon();
+        }
+
+        if (GameController.HomeScene() == false || currentWeapon != Weapon.GUN)
+        {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Space) && !isShooting && !isReloading)
         {
             StopAllCoroutines();
             StartCoroutine(GunCoroutine());
         }
+
+
     }
 
     public void Shoot()
     {
+        bulletsInClip--;
+        bulletCount.text = bulletsInClip + "/" + totalBullets;
 
         Vector3 spawnPosition;
         Vector2 shootDirection;
         Quaternion rotation;
 
-
-        // spawn bullet
         switch (playerMove.orientation)
         {
             case Orientation.UP:
@@ -78,26 +117,41 @@ public class PlayerGun : MonoBehaviour
 
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
         bullet.maxRange = range;
-
         bullet.Shoot(shootDirection);
 
+        // Raycast check hit
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
         {
-            // damage
             Unit unit = hit.transform.GetComponent<Unit>();
             if (unit != null)
             {
                 unit.TakeDamage(damage);
 
                 HitFlash hitFlash = hit.transform.GetComponent<HitFlash>();
-                hitFlash.Flash();
+                if (hitFlash != null)
+                {
+                    hitFlash.Flash();
+                }
             }
         }
     }
 
     private IEnumerator GunCoroutine()
     {
+        if (bulletsInClip <= 0)
+        {
+            if (totalBullets > 0)
+            {
+                yield return StartCoroutine(ReloadGunCoroutine());
+            }
+            else
+            {
+                Debug.Log("No bullets available!");
+                yield break;
+            }
+        }
+
         isShooting = true;
         string animationName;
 
@@ -118,9 +172,56 @@ public class PlayerGun : MonoBehaviour
         animator.SetBool("idle", false);
         animator.Play(animationName);
 
+        Shoot();
 
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         animator.SetBool("idle", true);
         isShooting = false;
+    }
+
+    private IEnumerator ReloadGunCoroutine()
+    {
+        isReloading = true;
+        Debug.Log("Reloading...");
+
+        yield return new WaitForSeconds(2); // 2s to reload gun 
+
+        int bulletsToReload = Math.Min(clipCapacity, totalBullets);
+        bulletsInClip = bulletsToReload;
+        totalBullets -= bulletsToReload;
+
+        bulletCount.text = bulletsInClip + "/" + totalBullets;
+
+        Debug.Log("Reloaded!");
+
+        isReloading = false;
+    }
+
+    private void SwitchWeapon()
+    {
+        if (currentWeapon == Weapon.GUN)
+        {
+            currentWeapon = Weapon.SWORD;
+            weaponImage.sprite = swordSprite;
+            weaponName.text = "Sword";
+            bulletInfo.SetActive(false);
+        }
+        else
+        {
+            currentWeapon = Weapon.GUN;
+            weaponImage.sprite = gunSprite;
+            weaponName.text = "Gun";
+            bulletInfo.SetActive(true);
+        }
+
+        StartCoroutine(ShowWeaponHandle());
+    }
+
+
+    private IEnumerator ShowWeaponHandle()
+    {
+        weaponHandle.SetActive(true);
+        yield return new WaitForSeconds(5); // show for 2 seconds
+        weaponHandle.SetActive(false);
     }
 }
