@@ -362,7 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644e7962220244b7895b27d0202e2b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marketPanel: {fileID: 0}
+  marketPanel: {fileID: 7058419302303376916, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
+  gunPanel: {fileID: 7058419302303376916, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
 --- !u!114 &-9202891944508619798
 MonoBehaviour:
   m_ObjectHideFlags: 0

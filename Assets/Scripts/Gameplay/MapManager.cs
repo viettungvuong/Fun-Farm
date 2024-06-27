@@ -13,7 +13,7 @@ public class MapManager : MonoBehaviour
     private Dictionary<TileBase, TileData> dataFromTiles;
     public static MapManager instance;
 
-    private const float defaultSpeed = 2f;
+    private const float defaultSpeed = 1f;
 
     private void Awake()
     {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +12,8 @@ public enum Weapon
 
 public class PlayerGun : MonoBehaviour
 {
-    public float range = 5f; 
-    public static float damage = 30f; 
+    public float range = 5f;
+    public static float damage = 30f;
 
     private Camera cam;
 
@@ -24,10 +23,11 @@ public class PlayerGun : MonoBehaviour
     Animator animator;
     PlayerMove playerMove;
 
-
-    public int clipCapacity = 3;
-    public static int totalBullets = 12;
+    public static int clipCapacity = 3;
+    public static int totalBullets = 0;
     private static int bulletsInClip;
+
+    public static bool ownedGun = false; // own a gun or not
 
     public TextMeshProUGUI bulletCount;
     public GameObject bulletInfo;
@@ -36,6 +36,7 @@ public class PlayerGun : MonoBehaviour
     public GameObject weaponHandle;
     private TextMeshProUGUI weaponName;
     private Image weaponImage;
+    public Image reloadingIndicator;
     public static Weapon currentWeapon = Weapon.SWORD;
 
     // Bullet points
@@ -49,14 +50,19 @@ public class PlayerGun : MonoBehaviour
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
-        bulletsInClip = clipCapacity;
+        bulletsInClip = 0;
         bulletCount.text = bulletsInClip + "/" + totalBullets;
 
         weaponImage = weaponHandle.transform.GetChild(1).GetComponent<Image>();
         weaponName = weaponHandle.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        if (reloadingIndicator != null)
+        {
+            reloadingIndicator.fillAmount = 0;
+            reloadingIndicator.gameObject.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -74,8 +80,16 @@ public class PlayerGun : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(GunCoroutine());
         }
+    }
 
-
+    public void AddBullet()
+    {
+        totalBullets++;
+        if (bulletsInClip < clipCapacity && totalBullets < clipCapacity)
+        {
+            bulletsInClip = totalBullets;
+        }
+        bulletCount.text = bulletsInClip + "/" + totalBullets;
     }
 
     public void Shoot()
@@ -92,7 +106,7 @@ public class PlayerGun : MonoBehaviour
             case Orientation.UP:
                 spawnPosition = gunUp.position;
                 shootDirection = Vector2.up;
-                rotation = Quaternion.Euler(0f, 0f, 90f); 
+                rotation = Quaternion.Euler(0f, 0f, 90f);
                 break;
             case Orientation.DOWN:
                 spawnPosition = gunDown.position;
@@ -102,7 +116,7 @@ public class PlayerGun : MonoBehaviour
             case Orientation.LEFT:
                 spawnPosition = gunHorizontal.position;
                 shootDirection = Vector2.left;
-                rotation = Quaternion.Euler(0f, 0f, 180f); 
+                rotation = Quaternion.Euler(0f, 0f, 180f);
                 break;
             default:
                 spawnPosition = gunHorizontal.position;
@@ -155,7 +169,6 @@ public class PlayerGun : MonoBehaviour
         isShooting = true;
         string animationName;
 
-        // Set the muzzle flash position based on orientation
         switch (playerMove.orientation)
         {
             case Orientation.UP:
@@ -184,7 +197,29 @@ public class PlayerGun : MonoBehaviour
         isReloading = true;
         Debug.Log("Reloading...");
 
-        yield return new WaitForSeconds(2); // 2s to reload gun 
+        if (reloadingIndicator != null)
+        {
+            reloadingIndicator.gameObject.SetActive(true);
+        }
+
+        float reloadTime = 2f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < reloadTime)
+        {
+            elapsedTime += Time.deltaTime;
+            if (reloadingIndicator != null)
+            {
+                reloadingIndicator.fillAmount = elapsedTime / reloadTime;
+            }
+            yield return null;
+        }
+
+        if (reloadingIndicator != null)
+        {
+            reloadingIndicator.fillAmount = 0;
+            reloadingIndicator.gameObject.SetActive(false);
+        }
 
         int bulletsToReload = Math.Min(clipCapacity, totalBullets);
         bulletsInClip = bulletsToReload;
@@ -199,6 +234,9 @@ public class PlayerGun : MonoBehaviour
 
     private void SwitchWeapon()
     {
+        if (ownedGun==false){
+            return;
+        }
         if (currentWeapon == Weapon.GUN)
         {
             currentWeapon = Weapon.SWORD;
@@ -216,7 +254,6 @@ public class PlayerGun : MonoBehaviour
 
         StartCoroutine(ShowWeaponHandle());
     }
-
 
     private IEnumerator ShowWeaponHandle()
     {
