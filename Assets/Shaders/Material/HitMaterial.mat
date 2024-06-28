@@ -46,7 +46,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _FlashAmount: 0
+    - _FlashAmount: 1
     - _FlickerSpeed: 20
     - _NoiseScale: 10
     m_Colors:

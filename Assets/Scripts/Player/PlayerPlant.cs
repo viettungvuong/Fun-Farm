@@ -114,7 +114,7 @@ public class PlayerPlant : MonoBehaviour
         }
 
         animator.Play(animationName);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
         isPlanting = false;
         plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]);
     }

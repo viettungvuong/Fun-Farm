@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -13,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     public float cooldownTime = 0.5f;
     public float attackRange = 1.0f; 
     public LayerMask enemyLayers; 
+    private Collider2D attackCollider;
 
     void Start()
     {
@@ -25,6 +25,9 @@ public class PlayerAttack : MonoBehaviour
         playerGun = GetComponent<PlayerGun>();
         animator = GetComponent<Animator>();
         playerUnit = GetComponent<Unit>();
+
+        attackCollider = GetComponent<Collider2D>();
+        attackCollider.enabled = false; // Ensure the collider is disabled initially
     }
 
     void Update()
@@ -44,17 +47,20 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void PerformRaycastAttack(Vector2 direction)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, attackRange, enemyLayers);
-        if (hit.collider != null)
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            Unit enemyUnit = hit.collider.GetComponent<Unit>();
+            Unit enemyUnit = other.GetComponent<Unit>();
             if (enemyUnit != null)
             {
                 enemyUnit.TakeDamage(playerUnit.damage);
 
-                hit.collider.GetComponent<HitFlash>().Flash();
+                HitFlash hitFlash = other.GetComponent<HitFlash>();
+                if (hitFlash != null)
+                {
+                    hitFlash.Flash();
+                }
             }
         }
     }
@@ -63,39 +69,37 @@ public class PlayerAttack : MonoBehaviour
     {
         string animationName;
         Orientation orientation = playerMove.orientation;
-        Vector2 attackDirection;
 
         switch (orientation)
         {
             case Orientation.UP:
                 animationName = "PlayerAttackUp";
-                attackDirection = Vector2.up;
                 break;
             case Orientation.DOWN:
                 animationName = "PlayerAttackDown";
-                attackDirection = Vector2.down;
                 break;
             case Orientation.LEFT:
                 animationName = "PlayerAttackHorizontal";
-                attackDirection = Vector2.left;
                 break;
             case Orientation.RIGHT:
                 animationName = "PlayerAttackHorizontal";
-                attackDirection = Vector2.right;
                 break;
             default:
                 animationName = "PlayerAttackHorizontal";
-                attackDirection = Vector2.right;
                 break;
         }
 
         animator.SetBool("idle", false);
         animator.Play(animationName);
 
-        // Perform the raycast attack in the determined direction
-        PerformRaycastAttack(attackDirection);
+        // Enable the attack collider at the start of the attack
+        attackCollider.enabled = true;
 
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+
+        // Disable the attack collider at the end of the attack
+        attackCollider.enabled = false;
+
         animator.SetBool("idle", true);
         isAttacking = false;
     }

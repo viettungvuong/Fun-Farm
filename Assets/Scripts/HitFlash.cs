@@ -8,7 +8,6 @@ public class HitFlash : MonoBehaviour
 
     private Material originalMaterial;
     private SpriteRenderer spriteRenderer;
-    private Coroutine flashRoutine;
 
     void Start()
     {
@@ -18,20 +17,16 @@ public class HitFlash : MonoBehaviour
 
     public void Flash()
     {
-        if (flashRoutine != null)
-        {
-            StopCoroutine(flashRoutine);
-        }
-        flashRoutine = StartCoroutine(DoFlash());
+        StartCoroutine(DoFlash());
     }
 
     private IEnumerator DoFlash()
     {
+        Debug.Log("Hitting flash");
         spriteRenderer.material = electrocutionMaterial;
         electrocutionMaterial.SetFloat("_FlashAmount", 1);
         yield return new WaitForSeconds(flashDuration);
         electrocutionMaterial.SetFloat("_FlashAmount", 0);
         spriteRenderer.material = originalMaterial;
-        flashRoutine = null;
     }
 }

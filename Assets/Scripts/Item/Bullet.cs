@@ -25,6 +25,25 @@ public class Bullet : MonoBehaviour
         rb.velocity = direction * speed;
     }
 
+     private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Unit enemyUnit = other.GetComponent<Unit>();
+            if (enemyUnit != null)
+            {
+                enemyUnit.TakeDamage(damage);
+
+                HitFlash hitFlash = other.GetComponent<HitFlash>();
+                if (hitFlash != null)
+                {
+                    hitFlash.Flash();
+                }
+            }
+        }
+    }
+
+
     private void Update()
     {
         float distanceTraveled = Vector2.Distance(initialPosition, transform.position);
@@ -32,25 +51,7 @@ public class Bullet : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        else{
-            // Raycast check hit
-            float offset = 2f;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distanceTraveled + offset , enemyLayers);
-            if (hit.collider!=null)
-            {
-                Unit unit = hit.transform.GetComponent<Unit>();
-                if (unit != null)
-                {
-                    unit.TakeDamage(damage);
-
-                    HitFlash hitFlash = hit.transform.GetComponent<HitFlash>();
-                    if (hitFlash != null)
-                    {
-                        hitFlash.Flash();
-                    }
-                }
-            }
-        }
+       
     }
 
 }

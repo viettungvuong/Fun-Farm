@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electrocutionMaterial: {fileID: 2100000, guid: c8994f8d12b05496695164f51ec41e53, type: 2}
-  flashDuration: 0.3
+  flashDuration: 0.6
 --- !u!1 &5756817843642567100
 GameObject:
   m_ObjectHideFlags: 0
