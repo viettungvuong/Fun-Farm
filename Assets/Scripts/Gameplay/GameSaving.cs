@@ -7,51 +7,64 @@ using UnityEngine;
 public class GameSaving : MonoBehaviour
 {
     private GameObject player;
-
     private PlayerUnit playerUnit;
     private PlayerDefend playerDefend;
     private PlayerGun playerGun;
-
     private TimeManage time;
     private PlantPos plant;
 
-    public GameObject savingPanel;
+    public GameObject savingPanelPrefab;
 
     void Start()
     {
+        InitializeReferences();
+    }
+
+    private void InitializeReferences()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        playerUnit = player.GetComponent<PlayerUnit>();
-        playerDefend = player.GetComponent<PlayerDefend>();
-        playerGun = player.GetComponent<PlayerGun>();
+        if (player != null)
+        {
+            playerUnit = player.GetComponent<PlayerUnit>();
+            playerDefend = player.GetComponent<PlayerDefend>();
+            playerGun = player.GetComponent<PlayerGun>();
+        }
 
         time = TimeManage.instance;
         plant = PlantPos.instance;
     }
 
-    bool SaveGame(){
-        string SavePlayer(){ // player health, money
+    bool SaveGame()
+    {
+        string SavePlayer()
+        {
             return JsonUtility.ToJson(playerUnit);
         }
 
-        string SavePlayerDefend(){ // number of fences
+        string SavePlayerDefend()
+        {
             return JsonUtility.ToJson(playerDefend);
         }
 
-        string SavePlayerGun(){ // number of fences
+        string SavePlayerGun()
+        {
             return JsonUtility.ToJson(playerGun);
         }
 
-        string SaveTime(){ // current time
+        string SaveTime()
+        {
             return JsonUtility.ToJson(time);
         }
 
-        string SavePlants(){ // planted plant, their status
+        string SavePlants()
+        {
             plant.SetSaveTime();
             return JsonUtility.ToJson(plant);
         }
 
-        try{
+        try
+        {
             string playerFile = Application.persistentDataPath + "/player.data";
             File.WriteAllText(playerFile, SavePlayer());
 
@@ -68,13 +81,13 @@ public class GameSaving : MonoBehaviour
             string plantFile = Application.persistentDataPath + "/plant.data";
             File.WriteAllText(plantFile, SavePlants());
             return true;
-        } catch (Exception e){
+        }
+        catch (Exception e)
+        {
             Debug.LogError(e);
             return false;
         }
     }
-
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -87,18 +100,41 @@ public class GameSaving : MonoBehaviour
                     Debug.Log("Saved successfully");
                     StartCoroutine(ShowSavingPanel());
                 }
-
             }
         }
     }
 
     private IEnumerator ShowSavingPanel()
     {
-        if (savingPanel != null)
+        GameObject activeCanvas = FindActiveCanvas();
+        if (activeCanvas != null)
         {
-            savingPanel.SetActive(true);
+            GameObject savingPanelInstance = Instantiate(savingPanelPrefab, activeCanvas.transform);
+            RectTransform rectTransform = savingPanelInstance.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.anchorMin = new Vector2(1, 0); // Bottom right corner
+                rectTransform.anchorMax = new Vector2(1, 0);
+                rectTransform.pivot = new Vector2(1, 0);
+                rectTransform.anchoredPosition = new Vector2(-10, 10); // Adjust as needed
+            }
+
+            savingPanelInstance.SetActive(true);
             yield return new WaitForSeconds(4.0f);
-            savingPanel.SetActive(false);
+            Destroy(savingPanelInstance);
         }
+    }
+
+    private GameObject FindActiveCanvas()
+    {
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        foreach (Canvas canvas in canvases)
+        {
+            if (canvas.isActiveAndEnabled && canvas.gameObject.scene.isLoaded)
+            {
+                return canvas.gameObject;
+            }
+        }
+        return null;
     }
 }
