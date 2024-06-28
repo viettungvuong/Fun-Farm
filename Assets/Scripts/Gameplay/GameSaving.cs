@@ -59,13 +59,13 @@ public class GameSaving : MonoBehaviour
             File.WriteAllText(playerDefendFile, SavePlayerDefend());
 
             string playerGunFile = Application.persistentDataPath + "/playerGun.data";
-            File.WriteAllText(playerDefendFile, SavePlayerGun());
+            Debug.Log(SavePlayerGun());
+            File.WriteAllText(playerGunFile, SavePlayerGun());
 
             string timeFile = Application.persistentDataPath + "/time.data";
             File.WriteAllText(timeFile, SaveTime());
 
             string plantFile = Application.persistentDataPath + "/plant.data";
-            Debug.Log(SavePlants());
             File.WriteAllText(plantFile, SavePlants());
             return true;
         } catch (Exception e){
@@ -84,6 +84,7 @@ public class GameSaving : MonoBehaviour
             {
                 if (SaveGame()) // only save when all enemies have been killed
                 {
+                    Debug.Log("Saved successfully");
                     StartCoroutine(ShowSavingPanel());
                 }
 

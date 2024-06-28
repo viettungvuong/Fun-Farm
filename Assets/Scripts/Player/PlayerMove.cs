@@ -190,10 +190,7 @@ public class PlayerMove : MonoBehaviour
             SceneManager.LoadScene("SceneHome");
         }
 
-        if (GameController.HomeScene())
-        {
-            CheckFootprint();
-        }
+        // CheckFootprint(); // check all footprints in game
     }
 
     private void FixedUpdate()
@@ -233,7 +230,7 @@ public class PlayerMove : MonoBehaviour
 
         previousPos = rb.position;
 
-        AddFootprint(previousPos); // add footprint
+        // AddFootprint(previousPos); // add footprint
     }
 
     private void AddFootprint(Vector3 pos)

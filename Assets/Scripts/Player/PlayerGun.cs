@@ -14,7 +14,7 @@ public enum Weapon
 public class PlayerGun : MonoBehaviour
 {
     public float range = 5f;
-    public static int damage = 30;
+    public int damage = 30;
 
     private Camera cam;
 
@@ -24,11 +24,11 @@ public class PlayerGun : MonoBehaviour
     Animator animator;
     PlayerMove playerMove;
 
-    public static int clipCapacity = 3;
-    public static int totalBullets = 0;
-    private static int bulletsInClip;
+    public int clipCapacity = 3;
+    public int totalBullets=0;
+    [SerializeField] private int bulletsInClip=0;
 
-    public static bool ownedGun = false; // own a gun or not
+    public bool ownedGun = false; // own a gun or not
 
     public TextMeshProUGUI bulletCount;
     public GameObject bulletInfo;
@@ -38,7 +38,7 @@ public class PlayerGun : MonoBehaviour
     private TextMeshProUGUI weaponName;
     private Image weaponImage;
     public Image reloadingIndicator;
-    public static Weapon currentWeapon = Weapon.SWORD;
+    public Weapon currentWeapon = Weapon.SWORD;
 
     // Bullet points
     public Transform gunUp;
@@ -51,7 +51,6 @@ public class PlayerGun : MonoBehaviour
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
-        bulletsInClip = 0;
         bulletCount.text = bulletsInClip + "/" + totalBullets;
 
         weaponImage = weaponHandle.transform.GetChild(1).GetComponent<Image>();

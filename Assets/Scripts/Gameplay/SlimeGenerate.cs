@@ -30,7 +30,7 @@ public class SlimeGenerate : Generate
         base.Start();
 
         objectTag = "Slime";
-        number = 4;
+        number = 3;
     }
 
 

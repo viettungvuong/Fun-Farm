@@ -31,7 +31,7 @@ public class GunButton : MonoBehaviour
     }
 
     private void LateUpdate() {
-        if (!playerUnit.SufficientMoney(price)||(gun&&PlayerGun.ownedGun)||(!gun&&!PlayerGun.ownedGun)) {
+        if (!playerUnit.SufficientMoney(price)||(gun&&playerGun.ownedGun)||(!gun&&!playerGun.ownedGun)) {
             background.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
         }
         else {
@@ -62,7 +62,7 @@ public class GunButton : MonoBehaviour
 
 
         
-        if (!playerUnit.SufficientMoney(price)||(gun&&PlayerGun.ownedGun)||(!gun&&!PlayerGun.ownedGun)) {
+        if (!playerUnit.SufficientMoney(price)||(gun&&playerGun.ownedGun)||(!gun&&!playerGun.ownedGun)) {
             // shake button
             StartCoroutine(ShakeButton());
             return;
@@ -70,7 +70,7 @@ public class GunButton : MonoBehaviour
         playerUnit.UseMoney(price);
 
         if (gun){
-            PlayerGun.ownedGun = true;
+            playerGun.ownedGun = true;
             for (int i=0; i<12; i++){
                 playerGun.AddBullet();
             }

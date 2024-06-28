@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    PlayerMove playerMove;
+    private PlayerMove playerMove;
+    private PlayerGun playerGun;
     Animator animator;
     Unit playerUnit;
     [HideInInspector] public bool isAttacking = false;
@@ -21,13 +22,14 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
         playerMove = GetComponent<PlayerMove>();
+        playerGun = GetComponent<PlayerGun>();
         animator = GetComponent<Animator>();
         playerUnit = GetComponent<Unit>();
     }
 
     void Update()
     {
-        if (GameController.HomeScene() == false || PlayerGun.currentWeapon != Weapon.SWORD)
+        if (GameController.HomeScene() == false || playerGun.currentWeapon != Weapon.SWORD)
         {
             return;
         }
