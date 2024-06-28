@@ -14,7 +14,7 @@ public enum Weapon
 public class PlayerGun : MonoBehaviour
 {
     public float range = 5f;
-    public static float damage = 30f;
+    public static int damage = 30;
 
     private Camera cam;
 
@@ -45,36 +45,9 @@ public class PlayerGun : MonoBehaviour
     public Transform gunDown;
     public Transform gunHorizontal;
 
-    private void InitializeCam() {
-        if (GameController.HomeScene()){
-            cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        }
-
-    }
-
-     void Awake()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        InitializeCam();
-
-    
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Re-initialize the groundTilemap when a new scene is loaded
-        InitializeCam();
-    }
 
     private void Start()
     {
-
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
@@ -160,24 +133,10 @@ public class PlayerGun : MonoBehaviour
 
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
         bullet.maxRange = range;
+        bullet.damage = damage;
         bullet.Shoot(shootDirection);
 
-        // Raycast check hit
-        RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
-        {
-            Unit unit = hit.transform.GetComponent<Unit>();
-            if (unit != null)
-            {
-                unit.TakeDamage(damage);
 
-                HitFlash hitFlash = hit.transform.GetComponent<HitFlash>();
-                if (hitFlash != null)
-                {
-                    hitFlash.Flash();
-                }
-            }
-        }
     }
 
     private IEnumerator GunCoroutine()

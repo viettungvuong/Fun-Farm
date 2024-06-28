@@ -100,6 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   maxRange: 50
+  damage: 0
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &5895855745612784526
 Rigidbody2D:
   serializedVersion: 4
