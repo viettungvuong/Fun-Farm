@@ -15,6 +15,9 @@ public class PlayerUnit : Unit
     public static PlayerMode playerMode;
     public GameObject diePanel;
 
+    public GameObject coinPrefab; // Coin prefab
+    public Transform headTransform; 
+
 
     
     public override void Awake()
@@ -49,6 +52,8 @@ public class PlayerUnit : Unit
 
     public void UseMoney(int amount){
         currentMoney -= amount;
+        Vector2 coinPosition = (Vector2) headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
+        GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity, headTransform);
     }
 
     public void AddMoney(int amount){
