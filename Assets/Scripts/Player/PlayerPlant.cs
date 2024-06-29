@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -88,13 +89,17 @@ public class PlayerPlant : MonoBehaviour
         {
             Vector3Int direction = plantCellPosition - playerCellPosition;
 
+            if (direction.x==0&&direction.y==0){ // the same position
+                return playerMove.orientation;
+            }
+
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
-                return direction.x > 0 ? Orientation.RIGHT : Orientation.LEFT;
+                return direction.x >= 0 ? Orientation.RIGHT : Orientation.LEFT;
             }
             else
             {
-                return direction.y > 0 ? Orientation.UP : Orientation.DOWN;
+                return direction.y >= 0 ? Orientation.UP : Orientation.DOWN;
             }
         }
 
@@ -119,7 +124,7 @@ public class PlayerPlant : MonoBehaviour
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
 
         isPlanting = false;
-
+ 
         plantTilemap.SetTile(plantCellPosition, plant.tiles[plant.currentStage]);
     }
 
