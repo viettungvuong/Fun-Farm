@@ -89,6 +89,15 @@ public class GameSaving : MonoBehaviour
         }
     }
 
+    private void Update() {
+        if (SkeletonGenerate.skeletons <= 0 && SlimeGenerate.slimes <= 0){
+            gameObject.SetActive(true);
+        }
+        else{
+            gameObject.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))

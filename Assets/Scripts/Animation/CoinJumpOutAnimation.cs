@@ -28,10 +28,8 @@ public class CoinJumpOutAnimation : MonoBehaviour
         t = Mathf.Clamp01(t); // Ensure t stays within 0 and 1
         transform.position = Vector2.Lerp(startPosition, endPosition, t);
 
-        Debug.Log($"Current Position: {transform.position}");
         if (t >= 1f)
         {
-            Debug.Log("Jump completed. Destroying the coin.");
 
             // Coin has finished the jump, you can now destroy it or perform another action
             Destroy(gameObject);
