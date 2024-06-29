@@ -75,7 +75,8 @@ public class SlimeControl : MonoBehaviour
             return; // only work in home scene
         }
 
-        if (PlantManager.instance.DetectPlant(rb.position)){ // detect any plant
+        if ((targetPlantPosition!=null&&(Vector3)rb.position==plantTilemap.CellToWorld((Vector3Int)targetPlantPosition))||PlantManager.instance.DetectPlant(rb.position)){ // detect any plant
+            Debug.Log("Detect plant");
             PlantedPlant plant = PlantManager.instance.GetPlantAt(rb.position);
             PlantManager.instance.DamagePlant(plant);
 
@@ -114,17 +115,19 @@ public class SlimeControl : MonoBehaviour
                     return; // stop because no target plant
                 }
             }
-
-            if (Vector3.Distance(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition)) >= 0.001f)
+            Vector3 plantPosition = plantTilemap.CellToWorld((Vector3Int)targetPlantPosition);
+            if (Vector3.Distance(rb.position, plantPosition) >= 0.001f)
             { // move towards target plant
-                var step = moveSpeed * Time.deltaTime; // Calculate distance to move
-                transform.position = Vector3.MoveTowards(transform.position, plantTilemap.CellToWorld((Vector3Int)targetPlantPosition), step);
+
+                var step = moveSpeed * Time.deltaTime; // calculate distance to move
+                Vector2 newPosition = Vector2.MoveTowards(rb.position, plantPosition, step);
+                rb.MovePosition(newPosition);                
                 timeSpent += Time.deltaTime;
 
                 if (timeSpent >= targetTimeLimit)
                 {
                     targetPlantPosition = SetRandomTargetPosition();
-                    timeSpent = 0f; // Reset timer for the new target
+                    timeSpent = 0f; // reset timer for the new target
                 }
             }
 

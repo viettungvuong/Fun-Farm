@@ -3,30 +3,48 @@ using UnityEngine;
 
 public class HitFlash : MonoBehaviour
 {
-    public Material electrocutionMaterial;
-    public float flashDuration = 0.1f;
+    private SpriteRenderer spriteRenderer;  
+    public float blinkSpeed = 10.0f; 
+    public float blinkDuration = 0.5f;  
+    public Color blinkColor = Color.white; 
 
-    private Material originalMaterial;
-    private SpriteRenderer spriteRenderer;
+    private bool isBlinking = false;
+    private float blinkTimer = 0.0f;
+    private Color originalColor;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalMaterial = spriteRenderer.material;
+        originalColor = spriteRenderer.color;
+    }
+
+    void Update()
+    {
+        if (isBlinking)
+        {
+            blinkTimer += Time.deltaTime;
+
+            // Calculate blink effect using sine function based on time
+            float blink = Mathf.Abs(Mathf.Sin(Time.time * blinkSpeed));
+            Color currentColor = Color.Lerp(originalColor, blinkColor, blink);
+            spriteRenderer.color = currentColor;
+
+            if (blinkTimer >= blinkDuration)
+            {
+                StopBlink();
+            }
+        }
     }
 
     public void Flash()
     {
-        StartCoroutine(DoFlash());
+        isBlinking = true;
+        blinkTimer = 0.0f;
     }
 
-    private IEnumerator DoFlash()
+    void StopBlink()
     {
-        Debug.Log("Hitting flash");
-        spriteRenderer.material = electrocutionMaterial;
-        electrocutionMaterial.SetFloat("_FlashAmount", 1);
-        yield return new WaitForSeconds(flashDuration);
-        electrocutionMaterial.SetFloat("_FlashAmount", 0);
-        spriteRenderer.material = originalMaterial;
+        isBlinking = false;
+        spriteRenderer.color = originalColor;  // Reset to the original color
     }
 }

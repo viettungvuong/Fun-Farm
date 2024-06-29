@@ -71,21 +71,22 @@ public class PlayerPlant : MonoBehaviour
         StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition))));
     }
 
-    private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, PlantedPlant plant)
+   private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, PlantedPlant plant)
     {
-        Vector3Int cellPosition = plantTilemap.WorldToCell(worldPosition);
-        plant.gridPosition = cellPosition;
-        bool plantEligible = PlantManager.instance.AddPlant(worldPosition, plant);
+        Vector3Int plantCellPosition = plantTilemap.WorldToCell(worldPosition);
+        plant.gridPosition = plantCellPosition;
+        Vector3Int playerCellPosition = plantTilemap.WorldToCell(rb.position);
 
+        bool plantEligible = PlantManager.instance.AddPlant(worldPosition, plant);
         if (!plantEligible)
         {
             yield break;
         }
 
-        Orientation tileToPlayer()
+        // direction between plant and player
+        Orientation GetTileToPlayerOrientation()
         {
-            Vector3 direction = worldPosition-(Vector3)rb.position; // player position to plant posiiotn
-            direction.Normalize();
+            Vector3Int direction = plantCellPosition - playerCellPosition;
 
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
@@ -100,7 +101,7 @@ public class PlayerPlant : MonoBehaviour
         isPlanting = true;
         string animationName;
 
-        switch (tileToPlayer())
+        switch (GetTileToPlayerOrientation())
         {
             case Orientation.UP:
                 animationName = "PlayerPlantUp";
@@ -114,9 +115,12 @@ public class PlayerPlant : MonoBehaviour
         }
 
         animator.Play(animationName);
+
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+
         isPlanting = false;
-        plantTilemap.SetTile(cellPosition, plant.tiles[plant.currentStage]);
+
+        plantTilemap.SetTile(plantCellPosition, plant.tiles[plant.currentStage]);
     }
 
     const double waterUsage = 0.15;

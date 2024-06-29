@@ -315,12 +315,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damage: 20
+  damage: 15
   currentHealth: 0
   maxMoney: 1
   coinText: {fileID: 0}
   currentMoney: 0
   diePanel: {fileID: 0}
+  coinPrefab: {fileID: 0}
+  headTransform: {fileID: 0}
 --- !u!114 &5572432093568441648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   marketPanel: {fileID: 7058419302303376916, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
   gunPanel: {fileID: 7058419302303376916, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
+  bulletPanel: {fileID: 0}
 --- !u!114 &-9202891944508619798
 MonoBehaviour:
   m_ObjectHideFlags: 0

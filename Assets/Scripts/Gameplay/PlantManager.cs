@@ -409,6 +409,10 @@ public class PlantManager : MonoBehaviour
     {
         try
         {
+            if (plant==null){
+                return;
+            }
+            
             ColorPlant(plant, Color.black);
 
             RemovePlant(plant);

@@ -293,8 +293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cedeb3990dae4f3ea2aba20bb2a1899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  electrocutionMaterial: {fileID: 2100000, guid: c8994f8d12b05496695164f51ec41e53, type: 2}
-  flashDuration: 0.6
+  blinkSpeed: 10
+  blinkDuration: 0.5
+  blinkColor: {r: 0.9245283, g: 0.06541473, b: 0.06541473, a: 1}
 --- !u!1 &5756817843642567100
 GameObject:
   m_ObjectHideFlags: 0

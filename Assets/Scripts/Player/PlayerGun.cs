@@ -14,7 +14,7 @@ public enum Weapon
 public class PlayerGun : MonoBehaviour
 {
     public float range = 5f;
-    public int damage = 30;
+    public int damage = 20;
 
     private Camera cam;
 
