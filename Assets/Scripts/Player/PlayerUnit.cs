@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,9 @@ public class PlayerUnit : Unit
     public static PlayerMode playerMode;
     public GameObject diePanel;
 
-    public GameObject coinPrefab; // Coin prefab
+    public GameObject coinJumpOutPrefab; // Coin prefab
+    public GameObject coinJumpInPrefab; // Coin prefab
+
     public Transform headTransform; 
 
 
@@ -35,11 +38,16 @@ public class PlayerUnit : Unit
             Destroy(gameObject);
         }
 
+
         playerMode = PlayerMode.SURVIVAL; // default is survival
+    }
+    void Start()
+    {
+        
     }
 
     private void LateUpdate() {
-        coinText.text = currentMoney.ToString();
+        if (coinText != null) coinText.text = currentMoney.ToString();
 
         if (currentHealth<=0||(currentMoney==0&&PlantManager.instance.GetNumberOfPlants()==0)){
             Die(); // run die animation
@@ -52,11 +60,53 @@ public class PlayerUnit : Unit
 
     public void UseMoney(int amount){
         currentMoney -= amount;
+        if (coinJumpOutPrefab == null) {
+            coinJumpOutPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/CoinJump.prefab");
+            if (coinJumpOutPrefab == null){
+                Debug.LogError("Coin Prefab is not found");
+
+            }
+        }
+        if (headTransform == null)
+        {
+            Transform head = transform.Find("Head"); 
+            if (head != null)
+            {
+                headTransform = head;
+            }
+            else
+            {
+                Debug.LogError("Head transform not found as a child of PlayerUnit.");
+            }
+        }
+        
         Vector2 coinPosition = (Vector2) headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
-        GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity, headTransform);
+        GameObject coin = Instantiate(coinJumpOutPrefab, coinPosition, Quaternion.identity, headTransform);
     }
 
     public void AddMoney(int amount){
+        if (coinJumpInPrefab == null) {
+            coinJumpInPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/CoinEarn.prefab");
+            if (coinJumpInPrefab == null){
+                Debug.LogError("Coin Prefab is not found");
+
+            }
+        }
+        if (headTransform == null)
+        {
+            Transform head = transform.Find("Head"); 
+            if (head != null)
+            {
+                headTransform = head;
+            }
+            else
+            {
+                Debug.LogError("Head transform not found as a child of PlayerUnit.");
+            }
+        }
+        
+        Vector2 coinPosition = (Vector2) headTransform.position + Vector2.up * 0.75f; // Adjust the offset as needed
+        GameObject coin = Instantiate(coinJumpInPrefab, coinPosition, Quaternion.identity, headTransform);
         currentMoney += amount;
     }
 

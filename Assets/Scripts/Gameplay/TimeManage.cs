@@ -78,7 +78,7 @@ public class TimeManage : MonoBehaviour
                 }
             }
             string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
-            timeText.text = hourString + ":" + minString;
+            if (timeText != null)timeText.text = hourString + ":" + minString;
             UpdateLight();
         }
 

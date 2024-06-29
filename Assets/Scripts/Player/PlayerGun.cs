@@ -51,7 +51,7 @@ public class PlayerGun : MonoBehaviour
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
-        bulletCount.text = bulletsInClip + "/" + totalBullets;
+        if (bulletCount != null) bulletCount.text = bulletsInClip + "/" + totalBullets;
 
         weaponImage = weaponHandle.transform.GetChild(1).GetComponent<Image>();
         weaponName = weaponHandle.transform.GetChild(0).GetComponent<TextMeshProUGUI>();

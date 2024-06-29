@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CoinAnimation : MonoBehaviour
+public class CoinJumpOutAnimation : MonoBehaviour
 {
     public float jumpHeight = 0.5f; // Height the coin will jump
     public float moveDuration = 1.0f; // Duration of the jump
