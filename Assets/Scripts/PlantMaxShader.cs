@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PlantMaxShader : MonoBehaviour
 {
+    public PlantedPlant plant;
+
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")){
             gameObject.SetActive(false);
 
-            // PlantedPlant plant = PlantManager.instance.GetPlantAt(rb.position);
-            
-            // plantManager.RemovePlant(plant, removeOnMap: true);
+            PlayerUnit playerUnit = other.gameObject.GetComponent<PlayerUnit>();
 
-            // // Add money to player account
-            // playerUnit.AddMoney(plant.harvestMoney);
+            if (plant==null){
+                return;
+            }
+            Debug.Log("Harvest");
+            PlantManager.instance.RemovePlant(plant, removeOnMap: true);
+
+            // Add money to player account
+            playerUnit.AddMoney(plant.harvestMoney);
         }
     }
 }

@@ -215,7 +215,7 @@ public class PlantManager : MonoBehaviour
                         {
                             PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
                             plantMap.SetTile(plant.gridPosition, null); // delete from map for the max plant shader
-                            tileShaderManager.ApplyShaderToTile(plant.gridPosition, plant.tiles[plant.currentStage].sprite, "PlantMax", 2);
+                            tileShaderManager.ApplyShaderToTile(plant, "PlantMax", 2);
                         }
                     }
 
@@ -412,7 +412,7 @@ public class PlantManager : MonoBehaviour
             if (plant==null){
                 return;
             }
-            
+
             ColorPlant(plant, Color.black);
 
             RemovePlant(plant);

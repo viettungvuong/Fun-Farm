@@ -7,18 +7,17 @@ public class TilemapShader : MonoBehaviour
     protected Tilemap tilemap; 
     public Material customMaterial; 
 
-    public void ApplyShaderToTile(Vector3Int tilePosition, Sprite tileSprite, string gObjectName, int layer)
+    public void ApplyShaderToTile(PlantedPlant plant, string gObjectName, int layer)
     {
-
+        Vector3Int tilePosition = plant.gridPosition;
+        Sprite tileSprite = plant.tiles[plant.maxStage].sprite;
         // placeholder object with spriterenderer
         GameObject tileObject = new GameObject(gObjectName);
         SpriteRenderer spriteRenderer = tileObject.AddComponent<SpriteRenderer>();
         Renderer renderer = tileObject.GetComponent<Renderer>();
 
-        PolygonCollider2D collider = tileObject.AddComponent<PolygonCollider2D>();
-        collider.isTrigger = true;
-
-        tileObject.AddComponent<PlantMaxShader>(); // detect player trigger to hide itself
+        PlantMaxShader plantMax = tileObject.AddComponent<PlantMaxShader>(); // detect player trigger to hide itself
+        plantMax.plant = plant;
 
         renderer.sortingOrder = layer;
 
@@ -30,7 +29,8 @@ public class TilemapShader : MonoBehaviour
         spriteRenderer.material = customMaterial;
 
         tileObject.SetActive(true);
-
+        PolygonCollider2D collider = tileObject.AddComponent<PolygonCollider2D>();
+        collider.isTrigger = true;
     }
 }
 
