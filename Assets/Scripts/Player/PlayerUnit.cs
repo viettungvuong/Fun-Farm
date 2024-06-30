@@ -58,6 +58,10 @@ public class PlayerUnit : Unit
         return currentMoney >= amount;
     }
 
+    public bool EatNeeded(double healthRecovered){
+        return currentHealth+healthRecovered<=maxHealth;
+    }
+
     public void UseMoney(int amount){
         currentMoney -= amount;
         if (coinJumpOutPrefab == null) {
