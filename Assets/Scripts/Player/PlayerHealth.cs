@@ -40,7 +40,9 @@ public class PlayerHealth : MonoBehaviour
 
         float healthDecrease = maxHealthDecreasePerDay * ratio;
 
+
         playerUnit.currentHealth -= healthDecrease;
+        if (healthDecrease > 0) playerUnit.HealthDamageAnimation();
         previousTimeOfDay = currentTimeOfDay;
 
         healthText.text = playerUnit.currentHealth.ToString("F1"); // round to 1 decimal point

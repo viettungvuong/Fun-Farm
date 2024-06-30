@@ -16,8 +16,9 @@ public class PlayerUnit : Unit
     public static PlayerMode playerMode;
     public GameObject diePanel;
 
-    public GameObject coinJumpOutPrefab; // Coin prefab
-    public GameObject coinJumpInPrefab; // Coin prefab
+    public GameObject coinJumpOutPrefab;
+    public GameObject coinJumpInPrefab; 
+    public GameObject heartBrokenPrefab;
 
     public Transform headTransform; 
 
@@ -118,6 +119,31 @@ public class PlayerUnit : Unit
 
     public void RecoverHealth(double healthRecovered){
         currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
+    }
+
+    public void HealthDamageAnimation() {
+        if (heartBrokenPrefab == null) {
+            heartBrokenPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HeartBroken.prefab");
+            if (heartBrokenPrefab == null){
+                Debug.LogError("Heart Prefab is not found");
+
+            }
+        }
+        if (headTransform == null)
+        {
+            Transform head = transform.Find("Head"); 
+            if (head != null)
+            {
+                headTransform = head;
+            }
+            else
+            {
+                Debug.LogError("Head transform not found as a child of PlayerUnit.");
+            }
+        }
+        
+        Vector2 heartBrokenAnim = (Vector2) headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
+        GameObject heart = Instantiate(heartBrokenPrefab, heartBrokenAnim, Quaternion.identity, headTransform);
     }
 
     private IEnumerator DieCoroutine(){
