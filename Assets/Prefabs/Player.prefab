@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 5647710133540907320}
   - component: {fileID: 6121841857472381701}
   - component: {fileID: 5572432093568441648}
-  - component: {fileID: 7213360196023523754}
   - component: {fileID: 4549481178296448086}
   - component: {fileID: -9202891944508619798}
   - component: {fileID: -5970118171762299643}
@@ -321,7 +320,8 @@ MonoBehaviour:
   coinText: {fileID: 0}
   currentMoney: 0
   diePanel: {fileID: 0}
-  coinPrefab: {fileID: 0}
+  coinJumpOutPrefab: {fileID: 0}
+  coinJumpInPrefab: {fileID: 0}
   headTransform: {fileID: 0}
 --- !u!114 &5572432093568441648
 MonoBehaviour:
@@ -340,18 +340,6 @@ MonoBehaviour:
   fenceVertical: {fileID: 0}
   fenceText: {fileID: 0}
   intervalBetweenRefill: 45
---- !u!114 &7213360196023523754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927298600777772009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: effb5cf1c004d490c974f4e67f5e3f71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4549481178296448086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,8 +382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cedeb3990dae4f3ea2aba20bb2a1899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  electrocutionMaterial: {fileID: 2100000, guid: c8994f8d12b05496695164f51ec41e53, type: 2}
-  flashDuration: 0.3
+  blinkSpeed: 10
+  blinkDuration: 0.5
+  blinkColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4560234531328760781
 GameObject:
   m_ObjectHideFlags: 0
