@@ -16,8 +16,6 @@ public class PlayerGun : MonoBehaviour
     public float range = 5f;
     public int damage = 20;
 
-    private Camera cam;
-
     [HideInInspector] public bool isShooting = false;
     [HideInInspector] public bool isReloading = false;
 
@@ -34,7 +32,7 @@ public class PlayerGun : MonoBehaviour
     public GameObject bulletInfo;
 
     public Sprite swordSprite, gunSprite;
-    public GameObject weaponHandle;
+    public GameObject weaponShow;
     private TextMeshProUGUI weaponName;
     private Image weaponImage;
     public Image reloadingIndicator;
@@ -53,8 +51,10 @@ public class PlayerGun : MonoBehaviour
 
         if (bulletCount != null) bulletCount.text = bulletsInClip + "/" + totalBullets;
 
-        weaponImage = weaponHandle.transform.GetChild(1).GetComponent<Image>();
-        weaponName = weaponHandle.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        // Debug.Log(weaponShow);
+
+        weaponImage = weaponShow.transform.GetChild(1).GetComponent<Image>();
+        weaponName = weaponShow.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         if (reloadingIndicator != null)
         {
@@ -241,13 +241,13 @@ public class PlayerGun : MonoBehaviour
             bulletInfo.SetActive(true);
         }
 
-        StartCoroutine(ShowWeaponHandle());
+        StartCoroutine(ShowWeaponShow());
     }
 
-    private IEnumerator ShowWeaponHandle()
+    private IEnumerator ShowWeaponShow()
     {
-        weaponHandle.SetActive(true);
+        weaponShow.SetActive(true);
         yield return new WaitForSeconds(2); // show for 2 seconds
-        weaponHandle.SetActive(false);
+        weaponShow.SetActive(false);
     }
 }
