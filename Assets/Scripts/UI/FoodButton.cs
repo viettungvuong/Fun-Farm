@@ -71,6 +71,7 @@ public class FoodButton : MonoBehaviour
             player.RecoverHealth(food.healthRecovered);
         }
         else{
+            
             StartCoroutine(ShakeButton());
         }
     }
