@@ -63,6 +63,7 @@ public abstract class Generate : MonoBehaviour
 
         BoundsInt groundBounds = groundTilemap.cellBounds;
         int offset = 1;
+        int middleY = groundBounds.yMin + (groundBounds.size.y / 2);
 
         for (int i = 0; i < number; i++)
         {
@@ -72,35 +73,21 @@ public abstract class Generate : MonoBehaviour
             do
             {
                 Vector3Int randomCell;
-                int edge = Random.Range(0, 4); // 0: top, 1: bottom, 2: left, 3: right
+                int edge = Random.Range(0, 2); 
 
                 switch (edge)
                 {
-                    case 0: // Top edge
-                        randomCell = new Vector3Int(
-                            Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
-                            groundBounds.yMax - offset,
-                            0
-                        );
-                        break;
-                    case 1: // Bottom edge
-                        randomCell = new Vector3Int(
-                            Random.Range(groundBounds.xMin + offset, groundBounds.xMax - offset),
-                            groundBounds.yMin + offset,
-                            0
-                        );
-                        break;
-                    case 2: // Left edge
+                    case 0: // Left edge
                         randomCell = new Vector3Int(
                             groundBounds.xMin + offset,
-                            Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                            Random.Range(groundBounds.yMin + offset, middleY - offset),
                             0
                         );
                         break;
-                    case 3: // Right edge
+                    case 1: // Right edge
                         randomCell = new Vector3Int(
                             groundBounds.xMax - offset,
-                            Random.Range(groundBounds.yMin + offset, groundBounds.yMax - offset),
+                            Random.Range(groundBounds.yMin + offset, middleY - offset),
                             0
                         );
                         break;

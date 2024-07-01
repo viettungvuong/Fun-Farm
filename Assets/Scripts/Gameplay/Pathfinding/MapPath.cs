@@ -57,7 +57,7 @@ public class MapPath : MonoBehaviour
                 Vector3Int position = new Vector3Int(x, y, 0);
                 Vector3 worldPosition = groundTilemap.CellToWorld(position);
 
-                bool isWalkable = !Physics2D.OverlapCircle(worldPosition, 0.5f, obstacleLayer);
+                bool isWalkable = !Physics2D.OverlapCircle(worldPosition, 0.3f, obstacleLayer);
                 
                 grid[position] = new Node(position, isWalkable);
             }

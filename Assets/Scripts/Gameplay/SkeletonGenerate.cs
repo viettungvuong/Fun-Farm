@@ -27,8 +27,6 @@ public class SkeletonGenerate : Generate
     {
         base.Start();
 
-        intervalBetweenSpawns = 60;
-        nextMinuteRefill = 15;
         objectTag = "Skeleton";
         number = 2;
     }
