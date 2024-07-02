@@ -10,4 +10,5 @@ public class TileData : ScriptableObject
 
     public float walkSpeed;
     public bool plantable;
+    public Color trailColor;
 }

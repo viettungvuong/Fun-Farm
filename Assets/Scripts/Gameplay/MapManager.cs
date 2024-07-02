@@ -77,6 +77,23 @@ public class MapManager : MonoBehaviour
         return walkingSpeed;
     }
 
+    public Color GetTrailColor(Vector3 worldPosition){
+        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+
+        TileBase tile = map.GetTile(gridPosition);
+
+        if (tile == null)
+            return Color.white;
+
+        if (dataFromTiles.ContainsKey(tile) == false)
+        {
+            return Color.white;
+        }
+
+        return dataFromTiles[tile].trailColor;
+
+    }
+
     public bool Plantable(Vector3 worldPosition)
     {
         Vector3Int gridPosition = map.WorldToCell(worldPosition);

@@ -24,3 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c3270ab0526e4892bebf679279bea14, type: 2}
   walkSpeed: 2
   plantable: 1
+  trailColor: {r: 0.754717, g: 0.5765143, b: 0.49483803, a: 1}

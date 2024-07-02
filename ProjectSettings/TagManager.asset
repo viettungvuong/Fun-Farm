@@ -51,3 +51,6 @@ TagManager:
   - name: Player and Enemies
     uniqueID: 1690069389
     locked: 0
+  - name: Misc
+    uniqueID: 1925416229
+    locked: 0
