@@ -6,8 +6,9 @@ using System;
 
 public class GameLoading : MonoBehaviour
 {
-    public static List<string> LoadGames(){
-        // fetch subfolders from the saves folder
+    public static List<string> LoadGames()
+    {
+        // Fetch subfolders from the saves folder
         List<string> gameNames = new List<string>();
 
         string savesDirectory = Path.Combine(Application.persistentDataPath, "saves");
@@ -25,55 +26,46 @@ public class GameLoading : MonoBehaviour
         return gameNames;
     }
 
-    void LoadGame(string gameName){
+    public void LoadGame(string gameName)
+    {
+        void FetchPlayer(string unitJson, string defendJson, string gunJson)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
+            JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
+            JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
+        }
+
+        void FetchTime(string json)
+        {
+            JsonUtility.FromJsonOverwrite(json, TimeManage.instance);
+        }
+
+        void FetchPlants(string json)
+        {
+            JsonUtility.FromJsonOverwrite(json, PlantPos.instance);
+            PlantPos.instance.Deserialize();
+            PlantManager.instance.Load(); // Load information about plant
+        }
+        
         GameSaving gameSaving = transform.parent.GetComponent<GameSaving>();
-        gameSaving.NewGame(gameName); 
-    }
+        gameSaving.NewGame(gameName);
 
-    private string playerJsonFileName, playerDefendJsonFileName, playerGunJsonFileName, timeJsonFileName, plantsJsonFileName;
+        string playerJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "player.data");
+        string playerDefendJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "playerDefend.data");
+        string playerGunJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "playerGun.data");
+        string timeJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "time.data");
+        string plantsJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "plant.data");
 
-    void FetchPlayer(string unitJson, string defendJson, string gunJson)
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
-        JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
-        JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
-    }
-
-    void FetchTime(string json)
-    {
-        JsonUtility.FromJsonOverwrite(json, TimeManage.instance);
-    }
-
-    void FetchPlants(string json)
-    {
-        JsonUtility.FromJsonOverwrite(json, PlantPos.instance);
-        PlantPos.instance.Deserialize();
-        PlantManager.instance.Load(); // load information about plant
-    }
-
-    void Start()
-    {
-
-        playerJsonFileName = Application.persistentDataPath + "/player.data";
-        playerDefendJsonFileName = Application.persistentDataPath + "/playerDefend.data";
-        playerGunJsonFileName = Application.persistentDataPath + "/playerGun.data"; 
-        timeJsonFileName = Application.persistentDataPath + "/time.data";
-        plantsJsonFileName = Application.persistentDataPath + "/plant.data";
-
-        LoadGame();
-    }
-
-    void LoadGame()
-    {
         string playerJson = LoadJsonFromFile(playerJsonFileName);
         string playerDefendJson = LoadJsonFromFile(playerDefendJsonFileName);
         string playerGunJson = LoadJsonFromFile(playerGunJsonFileName);
         string timeJson = LoadJsonFromFile(timeJsonFileName);
         string plantsJson = LoadJsonFromFile(plantsJsonFileName);
 
-        try{
-            if (!string.IsNullOrEmpty(playerJson)&&!string.IsNullOrEmpty(playerDefendJson))
+        try
+        {
+            if (!string.IsNullOrEmpty(playerJson) && !string.IsNullOrEmpty(playerDefendJson))
             {
                 FetchPlayer(playerJson, playerDefendJson, playerGunJson);
             }
@@ -87,30 +79,33 @@ public class GameLoading : MonoBehaviour
             {
                 FetchPlants(plantsJson);
             }
-        } catch (Exception err){
+        }
+        catch (Exception err)
+        {
             Debug.LogError(err);
         }
-
-
     }
+
+
 
     string LoadJsonFromFile(string fileName)
     {
-        try{
-            string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-            if (File.Exists(filePath))
+        try
+        {
+            if (File.Exists(fileName))
             {
-                return File.ReadAllText(filePath);
+                return File.ReadAllText(fileName);
             }
             else
             {
-                Debug.LogError("File not found: " + filePath);
+                Debug.LogError("File not found: " + fileName);
                 return null;
             }
-        } catch (Exception err){
+        }
+        catch (Exception err)
+        {
             Debug.LogError(err);
             return null;
         }
-
     }
 }
