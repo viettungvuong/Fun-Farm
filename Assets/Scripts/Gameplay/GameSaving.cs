@@ -19,8 +19,16 @@ public class GameSaving : MonoBehaviour
 
     private Renderer renderer;
 
-    public void NewGame(string gameName){
-        this.gameName = gameName;
+    public bool NewGame(string gameName){
+        if (SaveGame()){ // save beforehand
+            this.gameName = gameName;
+            return true;
+        }
+        else{
+            Debug.LogError("Error when saving game");
+            return false;
+        }
+
     }
 
     public string GetName(){

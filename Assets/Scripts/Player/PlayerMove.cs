@@ -294,18 +294,17 @@ public class PlayerMove : MonoBehaviour
 
     public void SetOrientation(Orientation newOrientation)
     {
-        const float xTrailLeft = -0.3f;
-        const float xTrailRight = 0.3f;
+        const float xTrail = 0.3f;
 
         void FlipSprite(bool flip)
         {
             spriteRenderer.flipX = flip;
             float x;
             if (flip){
-                x = xTrailRight;
+                x = xTrail;
             }
             else{
-                x = xTrailLeft;
+                x = -xTrail;
             }
             float y = dustTrail.transform.localPosition.y;
             dustTrail.transform.localPosition = new Vector3(x, y);

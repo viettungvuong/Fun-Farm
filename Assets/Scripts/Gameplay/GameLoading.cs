@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameLoading : MonoBehaviour
 {
@@ -23,6 +24,20 @@ public class GameLoading : MonoBehaviour
         return null;
 
     }
+
+    public static bool GameNameExists(string gameName)
+    {
+        List<string> gameNames = LoadGames();
+
+        if (gameNames != null && gameNames.Contains(gameName))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     public void LoadGame(string gameName)
     {
@@ -86,7 +101,7 @@ public class GameLoading : MonoBehaviour
 
 
 
-    string LoadJsonFromFile(string fileName)
+    private string LoadJsonFromFile(string fileName)
     {
         try
         {

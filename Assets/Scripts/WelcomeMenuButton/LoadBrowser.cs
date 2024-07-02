@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadBrowser : MonoBehaviour
@@ -37,6 +38,37 @@ public class LoadBrowser : MonoBehaviour
 
     private void SelectLoadFile(string name)
     {
-        Debug.Log("Load file name: " + name);
+        // Debug.Log("Load file name: " + name);
+        StartCoroutine(LoadSceneAndAccessGameController(name));
+    }
+
+    private IEnumerator LoadSceneAndAccessGameController(string name)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneHome");
+
+        // wait until scene fully loaded
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        GameObject gameControllerObject = GameObject.Find("GameController");
+        if (gameControllerObject != null)
+        {
+            GameController gameController = gameControllerObject.GetComponent<GameController>();
+            GameLoading gameLoading = gameController.transform.GetChild(0).GetComponent<GameLoading>();
+            if (gameController != null)
+            {
+                gameLoading.LoadGame(name);
+            }
+            else{
+                Debug.LogError("Game controller not found");
+                SceneManager.LoadScene("SceneWelcome"); // go back to menu
+            }
+        }
+        else
+        {
+            Debug.LogError("GameController object not found in the scene.");
+        }
     }
 }
