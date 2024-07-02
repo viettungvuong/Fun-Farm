@@ -8,21 +8,11 @@ public class LoadBrowser : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public GameObject buttonParent;
+    private Canvas topLevelCanvas;
 
-    private void OnEnable()
-    {
+    private void Start() {
         List<string> games;
-        if (GameLoading.LoadGames() == null)
-        {
-            games = new List<string>(new string[] { "EMPTY 1", "EMPTY 2", "EMPTY 3", "EMPTY 4", "EMPTY 5", "EMPTY 6" });
-        }
-        else
-        {
-            games = GameLoading.LoadGames();
-        }
-
-
-        Debug.Log("Number of games loaded: " + games.Count);
+        games = GameLoading.LoadGames();
 
 
         for (int i = 0; i < games.Count; i++)
@@ -31,44 +21,86 @@ public class LoadBrowser : MonoBehaviour
             LoadButton loadButtonComponent = newButton.GetComponent<LoadButton>();
             loadButtonComponent.loadText.text = games[i];
             int index = i; // Capture the current value of i
-            newButton.GetComponent<Button>().onClick.AddListener(() => SelectLoadFile(games[index]));
+            newButton.GetComponent<Button>().onClick.AddListener(() => SelectLoadFile(games[index])); // add on click listener
         }
 
+        topLevelCanvas = FindTopLevelParent(gameObject).GetComponent<Canvas>();
+        DontDestroyOnLoad(topLevelCanvas.gameObject); // this only works for root gameObject
     }
+
+    private GameObject FindTopLevelParent(GameObject obj)
+    {
+        Transform parent = obj.transform;
+        while (parent.parent != null)
+        {
+            parent = parent.parent;
+        }
+        return parent.gameObject;
+    }
+
+    // private void OnEnable()
+    // {
+
+
+    // }
 
     private void SelectLoadFile(string name)
     {
         // Debug.Log("Load file name: " + name);
-        StartCoroutine(LoadSceneAndAccessGameController(name));
+        LoadSceneAndAccessGameController(name);
     }
 
-    private IEnumerator LoadSceneAndAccessGameController(string name)
+    IEnumerator LoadGameAfterDelay()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneHome");
+        yield return new WaitForSeconds(2.0f);
 
-        // wait until scene fully loaded
-        while (!asyncLoad.isDone)
+        GameObject canvas = GameObject.Find("Canvas");
+        if (canvas != null)
         {
-            yield return null;
+            canvas.SetActive(true);
         }
-
+        else
+        {
+            Debug.LogError("Canvas object not found.");
+        }
         GameObject gameControllerObject = GameObject.Find("GameController");
         if (gameControllerObject != null)
         {
             GameController gameController = gameControllerObject.GetComponent<GameController>();
-            GameLoading gameLoading = gameController.transform.GetChild(0).GetComponent<GameLoading>();
             if (gameController != null)
             {
-                gameLoading.LoadGame(name);
+                GameLoading gameLoading = gameController.transform.GetChild(0).GetComponent<GameLoading>();
+                if (gameLoading != null)
+                {
+                    gameLoading.LoadGame(name);
+                    Debug.Log("Load successfully");
+                    Destroy(topLevelCanvas.gameObject);
+                }
+                else
+                {
+                    Debug.LogError("GameLoading component not found.");
+                }
             }
-            else{
-                Debug.LogError("Game controller not found");
-                SceneManager.LoadScene("SceneWelcome"); // go back to menu
+            else
+            {
+                Debug.LogError("GameController component not found.");
             }
         }
         else
         {
             Debug.LogError("GameController object not found in the scene.");
         }
+    }
+
+    private void LoadSceneAndAccessGameController(string name)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneHome");
+
+        asyncLoad.completed += (asyncOperation) =>
+        {
+            StartCoroutine(LoadGameAfterDelay());
+        };
+
+
     }
 }

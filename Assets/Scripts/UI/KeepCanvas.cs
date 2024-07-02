@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,17 +27,42 @@ public class KeepCanvas : MonoBehaviour
 
     private void InitializeCanvas()
     {
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        if (canvases.Length>=2){
-            foreach (Canvas cv in canvases){
-                if (cv.gameObject.scene.name!="DontDestroyOnLoad"){
-                    cv.gameObject.SetActive(false);
+        try{
+            List<Canvas> canvases = FindObjectsOfType<Canvas>().ToList();
+            bool hasDontDestroyOnLoad = false;
+            if (canvases.Count>=2){
+                foreach (Canvas cv in canvases){
+                    // if (cv.gameObject.name!="Canvas"){
+                    //     cv.gameObject.SetActive(false);
+                    // }
+
+                    if (cv.gameObject.name=="Canvas"){
+                        if (!hasDontDestroyOnLoad){
+                            canvas = cv;
+                        }
+
+                        if (cv.gameObject.scene.name=="DontDestroyOnLoad"){
+                            hasDontDestroyOnLoad = true;
+                        }
+                    }
+
                 }
             }
-        }
 
-        canvas = canvases[0];
-        DontDestroyOnLoad(canvas);
+            if (hasDontDestroyOnLoad){ // keep dontdestroyonload canvas
+                foreach (Canvas cv in canvases)
+                {
+                    if (cv.gameObject.scene.name!="DontDestroyOnLoad"){
+                        cv.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            DontDestroyOnLoad(canvas);
+        } catch (Exception err){
+            Debug.LogError(err.Message);
+        }
+       
     }
 
 }

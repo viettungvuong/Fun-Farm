@@ -20,8 +20,9 @@ public class GameSaving : MonoBehaviour
     private Renderer renderer;
 
     public bool NewGame(string gameName){
+        this.gameName = gameName;
         if (SaveGame()){ // save beforehand
-            this.gameName = gameName;
+            Debug.Log("saved successfully");
             return true;
         }
         else{
@@ -108,6 +109,8 @@ public class GameSaving : MonoBehaviour
 
             string plantFile = Path.Combine(saveDirectory, "plant.data");
             File.WriteAllText(plantFile, SavePlants());
+
+            Debug.Log(GameLoading.LoadGames().Count);
             return true;
         }
         catch (Exception e)

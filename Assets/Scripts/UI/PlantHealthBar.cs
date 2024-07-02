@@ -26,7 +26,7 @@ public class PlantHealthBar : MonoBehaviour
 
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         healthSlider.gameObject.SetActive(true);
         healthSlider.enabled = true;

@@ -10,7 +10,6 @@ public class GameLoading : MonoBehaviour
 {
     public static List<string> LoadGames()
     {
-        // Fetch subfolders from the saves folder
         List<string> gameNames = new List<string>();
 
         string savesDirectory = Path.Combine(Application.persistentDataPath, "saves");
@@ -18,11 +17,18 @@ public class GameLoading : MonoBehaviour
         if (Directory.Exists(savesDirectory))
         {
             string[] directories = Directory.GetDirectories(savesDirectory);
-            return directories.ToList();
+            foreach (string directory in directories)
+            {
+                string directoryName = Path.GetFileName(directory);
+                gameNames.Add(directoryName);
+            }
+        }
+        else
+        {
+            Debug.LogError("Saves directory does not exist: " + savesDirectory);
         }
 
-        return null;
-
+        return gameNames;
     }
 
     public static bool GameNameExists(string gameName)

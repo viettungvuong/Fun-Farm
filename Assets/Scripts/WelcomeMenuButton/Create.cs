@@ -8,10 +8,23 @@ public class Create : MonoBehaviour
 {
     static string gameName;
     public TMP_InputField inputField;
+    private Canvas topLevelCanvas;
 
     void Start()
     {
         inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
+        topLevelCanvas = FindTopLevelParent(gameObject).GetComponent<Canvas>();
+        DontDestroyOnLoad(topLevelCanvas.gameObject); // this only works for root gameObject
+    }
+
+    private GameObject FindTopLevelParent(GameObject obj)
+    {
+        Transform parent = obj.transform;
+        while (parent.parent != null)
+        {
+            parent = parent.parent;
+        }
+        return parent.gameObject;
     }
 
     void OnInputFieldValueChanged(string newValue)
@@ -33,6 +46,8 @@ public class Create : MonoBehaviour
             return;
         }
 
+        Debug.Log("Creating a new game");
+
         PlayerMode playerMode;
         if (gameObject.name=="SurvivalMode"){
             playerMode = PlayerMode.SURVIVAL;
@@ -41,36 +56,50 @@ public class Create : MonoBehaviour
             playerMode = PlayerMode.CREATIVE;
         }
 
-        IEnumerator LoadSceneAndAccessGameController()
+        void LoadSceneAndAccessGameController()
         {
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneHome");
-
-            // wait until scene fully loaded
-            while (!asyncLoad.isDone)
+            asyncLoad.completed += (asyncOperation) =>
             {
-                yield return null;
-            }
+                Debug.Log("100% save");
+                topLevelCanvas.enabled = false;
 
-            GameSaving gameSaving = GameObject.Find("Savegame").GetComponent<GameSaving>();
+                StartCoroutine(SaveGameAfterDelay());
+            };
+        }
+
+        IEnumerator SaveGameAfterDelay()
+        {
+            yield return new WaitForSeconds(1.0f); // wait 5 sécs
+
+            Debug.Log("Delayed 1 secs");
+
+            GameObject canvas = GameObject.Find("Canvas");
+            canvas.SetActive(true); // re enable main game canvas
+
+            Debug.Log("Creating a new game");
+
+            GameSaving gameSaving = GameObject.Find("SaveGame").GetComponent<GameSaving>();
             if (gameSaving != null)
             {
-                if (gameSaving.NewGame(gameName)){
+                if (gameSaving.NewGame(gameName))
+                {
+                    Debug.Log("Saved new game successfully");
                     PlayerUnit.playerMode = playerMode;
-                }
-                else{
-                    Debug.LogError("Error when creating a new game");
-                    // hiện error ở đây
-                    SceneManager.LoadScene("SceneWelcome"); // go back to menu
-                }
 
+                    Destroy(topLevelCanvas.gameObject);
+                }
+                else
+                {
+                    Debug.LogError("Error when creating a new game");
+                }
             }
             else
             {
-                Debug.LogError("GameController object not found in the scene.");
-                SceneManager.LoadScene("SceneWelcome"); // go back to menu
+                Debug.LogError("GameSaving component not found on 'SaveGame' object");
             }
         }
 
-        StartCoroutine(LoadSceneAndAccessGameController());
+        LoadSceneAndAccessGameController();
     }
 }
