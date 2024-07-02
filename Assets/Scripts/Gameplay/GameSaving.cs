@@ -15,7 +15,7 @@ public class GameSaving : MonoBehaviour
 
     public GameObject savingPanelPrefab;
 
-    private string gameName;
+    private string gameName = "Untitled";
 
     public void NewGame(string gameName){
         this.gameName = gameName;
