@@ -15,6 +15,16 @@ public class GameSaving : MonoBehaviour
 
     public GameObject savingPanelPrefab;
 
+    private string gameName;
+
+    public void NewGame(string gameName){
+        this.gameName = gameName;
+    }
+
+    public string GetName(){
+        return gameName;
+    }
+
     void Start()
     {
         InitializeReferences();
@@ -65,20 +75,26 @@ public class GameSaving : MonoBehaviour
 
         try
         {
-            string playerFile = Application.persistentDataPath + "/player.data";
+            string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", gameName);
+            if (!Directory.Exists(saveDirectory))
+            {
+                Directory.CreateDirectory(saveDirectory);
+            }
+
+            string playerFile = Path.Combine(saveDirectory, "player.data");
             File.WriteAllText(playerFile, SavePlayer());
 
-            string playerDefendFile = Application.persistentDataPath + "/playerDefend.data";
+            string playerDefendFile = Path.Combine(saveDirectory, "playerDefend.data");
             File.WriteAllText(playerDefendFile, SavePlayerDefend());
 
-            string playerGunFile = Application.persistentDataPath + "/playerGun.data";
+            string playerGunFile = Path.Combine(saveDirectory, "playerGun.data");
             Debug.Log(SavePlayerGun());
             File.WriteAllText(playerGunFile, SavePlayerGun());
 
-            string timeFile = Application.persistentDataPath + "/time.data";
+            string timeFile = Path.Combine(saveDirectory, "time.data");
             File.WriteAllText(timeFile, SaveTime());
 
-            string plantFile = Application.persistentDataPath + "/plant.data";
+            string plantFile = Path.Combine(saveDirectory, "plant.data");
             File.WriteAllText(plantFile, SavePlants());
             return true;
         }
@@ -89,12 +105,12 @@ public class GameSaving : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void LateUpdate() {
         if (SkeletonGenerate.skeletons <= 0 && SlimeGenerate.slimes <= 0){
-            gameObject.SetActive(true);
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else{
-            gameObject.SetActive(false);
+            transform.localScale = new Vector3(0, 0, 0);
         }
     }
 

@@ -6,6 +6,29 @@ using System;
 
 public class GameLoading : MonoBehaviour
 {
+    public static List<string> LoadGames(){
+        // fetch subfolders from the saves folder
+        List<string> gameNames = new List<string>();
+
+        string savesDirectory = Path.Combine(Application.persistentDataPath, "saves");
+
+        if (Directory.Exists(savesDirectory))
+        {
+            string[] directories = Directory.GetDirectories(savesDirectory);
+            foreach (string directory in directories)
+            {
+                string gameName = Path.GetFileName(directory);
+                gameNames.Add(gameName);
+            }
+        }
+
+        return gameNames;
+    }
+
+    void LoadGame(string gameName){
+        GameSaving gameSaving = transform.parent.GetComponent<GameSaving>();
+        gameSaving.NewGame(gameName); 
+    }
 
     private string playerJsonFileName, playerDefendJsonFileName, playerGunJsonFileName, timeJsonFileName, plantsJsonFileName;
 
