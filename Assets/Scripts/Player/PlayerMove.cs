@@ -50,6 +50,8 @@ public class PlayerMove : MonoBehaviour
 
     public Sprite[] spriteOrientation;
 
+    public ParticleSystem dustTrail;
+
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -157,8 +159,10 @@ public class PlayerMove : MonoBehaviour
 
         if (holdArrowKey) // holding arrow key => walking
         {
+            DustTrailPlay();
             if (!changingAnimation)
-            { // not playing animation => idle
+            { // not playing orientation change animation => currently idle
+
                 if (prevOrientation != orientation) // changing orientation when walking
                 {
                     StartOrientationChange(); // play animation to change orientation
@@ -168,18 +172,19 @@ public class PlayerMove : MonoBehaviour
                     animator.Play(GetWalkAnimationName());
                 }
             }
+
         }
         else // not hold arrow key => idle
         {
             if (SceneManager.GetActiveScene().name != "SceneHome")
             {
-                animator.Play(GetIdleAnimationName());
+                animator.Play(GetIdleAnimationName()); // idle
             }
             else
             {
                 if (playerPlant.isPlanting == false && playerAttack.isAttacking == false && playerGun.isShooting == false)
                 { // not planting or attacking then start the idle animation
-                    animator.Play(GetIdleAnimationName());
+                    animator.Play(GetIdleAnimationName()); // idle
                 }
             }
         }
@@ -191,6 +196,14 @@ public class PlayerMove : MonoBehaviour
         }
 
         // CheckFootprint(); // check all footprints in game
+    }
+
+    private void DustTrailPlay(){
+        // change dust trail color
+        var main = dustTrail.main;
+        main.startColor = MapManager.instance.GetTrailColor(rb.position);
+
+        dustTrail.Play();
     }
 
     private void FixedUpdate()
@@ -281,8 +294,25 @@ public class PlayerMove : MonoBehaviour
 
     public void SetOrientation(Orientation newOrientation)
     {
+        const float xTrailLeft = -0.3f;
+        const float xTrailRight = 0.3f;
+
+        void FlipSprite(bool flip)
+        {
+            spriteRenderer.flipX = flip;
+            float x;
+            if (flip){
+                x = xTrailRight;
+            }
+            else{
+                x = xTrailLeft;
+            }
+            float y = dustTrail.transform.localPosition.y;
+            dustTrail.transform.localPosition = new Vector3(x, y);
+        }
+
+
         orientation = newOrientation;
-        spriteRenderer.flipX = orientation == Orientation.LEFT;
 
         switch (orientation)
         {
@@ -290,7 +320,6 @@ public class PlayerMove : MonoBehaviour
                 spriteRenderer.sprite = spriteOrientation[1];
                 arrowSprite.flipY = true; // flip arrow
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-
                 break;
             case Orientation.DOWN:
                 spriteRenderer.sprite = spriteOrientation[0];
@@ -301,11 +330,13 @@ public class PlayerMove : MonoBehaviour
                 spriteRenderer.sprite = spriteOrientation[2];
                 arrowSprite.flipY = false;
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
+                FlipSprite(true); // Flip sprite to the left
                 break;
             case Orientation.RIGHT:
                 spriteRenderer.sprite = spriteOrientation[2];
                 arrowSprite.flipY = false;
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+                FlipSprite(false); // Flip sprite to the right
                 break;
         }
 
@@ -338,7 +369,7 @@ public class PlayerMove : MonoBehaviour
 
     private void StartOrientationChange()
     {
-        changingAnimation = true;
+        changingAnimation = true; // orientation change
         animator.Play(GetIdleAnimationName());
         Invoke(nameof(EndOrientationChange), GameController.GetAnimationLength(animator, GetIdleAnimationName()));
     }

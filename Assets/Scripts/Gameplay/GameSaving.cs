@@ -17,6 +17,8 @@ public class GameSaving : MonoBehaviour
 
     private string gameName = "Untitled";
 
+    private Renderer renderer;
+
     public void NewGame(string gameName){
         this.gameName = gameName;
     }
@@ -27,6 +29,7 @@ public class GameSaving : MonoBehaviour
 
     void Start()
     {
+        renderer = GetComponent<Renderer>();
         InitializeReferences();
     }
 
@@ -44,6 +47,7 @@ public class GameSaving : MonoBehaviour
         time = TimeManage.instance;
         plant = PlantPos.instance;
     }
+
 
     bool SaveGame()
     {
@@ -107,10 +111,10 @@ public class GameSaving : MonoBehaviour
 
     private void LateUpdate() {
         if (SkeletonGenerate.skeletons <= 0 && SlimeGenerate.slimes <= 0){
-            transform.localScale = new Vector3(1, 1, 1);
+            renderer.enabled = true;
         }
         else{
-            transform.localScale = new Vector3(0, 0, 0);
+            renderer.enabled = false;
         }
     }
 

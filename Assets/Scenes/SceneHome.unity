@@ -3847,7 +3847,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000008d69bc64
+  m_ApplyToSortingLayers: 000000008d69bc642585c372
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -9169,8 +9169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe57f073be41e48929999f77ea331af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHour: 19
-  currentMinute: 37
+  currentHour: 6
+  currentMinute: 0
   currentDay: 1
   updateIntervalSeconds: 1.5
   timeText: {fileID: 330589925}
