@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Linq;
 
 public class GameLoading : MonoBehaviour
 {
@@ -16,14 +17,11 @@ public class GameLoading : MonoBehaviour
         if (Directory.Exists(savesDirectory))
         {
             string[] directories = Directory.GetDirectories(savesDirectory);
-            foreach (string directory in directories)
-            {
-                string gameName = Path.GetFileName(directory);
-                gameNames.Add(gameName);
-            }
+            return directories.ToList();
         }
 
-        return gameNames;
+        return null;
+
     }
 
     public void LoadGame(string gameName)
@@ -47,7 +45,7 @@ public class GameLoading : MonoBehaviour
             PlantPos.instance.Deserialize();
             PlantManager.instance.Load(); // Load information about plant
         }
-        
+
         GameSaving gameSaving = transform.parent.GetComponent<GameSaving>();
         gameSaving.NewGame(gameName);
 
