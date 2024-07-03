@@ -9,6 +9,7 @@ public class CoinJumpOutAnimation : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 endPosition;
     private float startTime;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -16,6 +17,9 @@ public class CoinJumpOutAnimation : MonoBehaviour
 
         endPosition = startPosition + direction;
         startTime = Time.time;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
 
         Debug.Log($"Start Position: {startPosition}");
         Debug.Log($"End Position: {endPosition}");
