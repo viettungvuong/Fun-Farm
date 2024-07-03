@@ -53,9 +53,9 @@ public class PlantHealthBar : MonoBehaviour
         {
             var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
 
-            if (lastTimeWatered != null && lastTimeWatered is DateTime lastWateredTime)
+            if (lastTimeWatered != null && lastTimeWatered.HasValue)
             {
-                double timeDiff = (DateTime.Now-(DateTime)lastTimeWatered).TotalSeconds;
+                double timeDiff = (DateTime.Now-lastTimeWatered.Value).TotalSeconds;
                 if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving to remove inaccurate calculation (idle between openings of the game)
                     if (plant.lastOpenedTime > (DateTime)lastTimeWatered)
                     {

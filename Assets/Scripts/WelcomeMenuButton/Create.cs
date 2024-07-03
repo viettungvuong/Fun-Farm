@@ -70,7 +70,7 @@ public class Create : MonoBehaviour
 
         IEnumerator SaveGameAfterDelay()
         {
-            yield return new WaitForSeconds(1.0f); // wait 5 sécs
+            yield return new WaitForSeconds(1.5f); // wait 5 sécs
 
             Debug.Log("Delayed 1 secs");
 

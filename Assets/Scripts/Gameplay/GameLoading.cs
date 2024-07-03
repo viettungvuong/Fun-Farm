@@ -6,6 +6,64 @@ using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
+public abstract class DataSerialize{
+    public static T Deserialize<T>(string json) where T : DataSerialize
+    {
+        return JsonUtility.FromJson<T>(json);
+    }
+}
+
+[Serializable]
+public class TimeData: DataSerialize
+{
+    public int currentHour;
+    public int currentMinute;
+    public int currentDay;
+
+    public static TimeData Deserialize(string json)
+    {
+        return DataSerialize.Deserialize<TimeData>(json);
+    }
+}
+
+[Serializable]
+public class PlayerGunData: DataSerialize
+{
+    public int totalBullets;
+    public int bulletsInClip;
+    public bool ownedGun;
+    public Weapon currentWeapon;
+
+    public static PlayerGunData Deserialize(string json)
+    {
+        return DataSerialize.Deserialize<PlayerGunData>(json);
+    }
+}
+
+[Serializable]
+public class PlayerUnitData: DataSerialize{
+    public int currentMoney;
+    public double currentHealth;
+
+    public static PlayerUnitData Deserialize(string json)
+    {
+        return DataSerialize.Deserialize<PlayerUnitData>(json);
+    }
+}
+
+[Serializable]
+public class PlayerDefendData: DataSerialize
+{
+    public SerializableDictionary<Vector3Int, FenceOrientation> fences = new SerializableDictionary<Vector3Int, FenceOrientation>();
+    public int numberOfFences;
+    public int nextMinuteRefill;
+
+    public static PlayerDefendData Deserialize(string json)
+    {
+        return DataSerialize.Deserialize<PlayerDefendData>(json);
+    }
+}
+
 public class GameLoading : MonoBehaviour
 {
     public static bool? hasToLoad;
@@ -82,14 +140,18 @@ public class GameLoading : MonoBehaviour
         void FetchPlayer(string unitJson, string defendJson, string gunJson)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
-            JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
-            JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
+            // JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
+            // JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
+            // JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
+            player.GetComponent<PlayerUnit>().Reload(PlayerUnitData.Deserialize(unitJson));
+            player.GetComponent<PlayerDefend>().Reload(PlayerDefendData.Deserialize(defendJson));
+            player.GetComponent<PlayerGun>().Reload(PlayerGunData.Deserialize(gunJson));
         }
 
         void FetchTime(string json)
         {
-            JsonUtility.FromJsonOverwrite(json, TimeManage.instance);
+            // JsonUtility.FromJsonOverwrite(json, TimeManage.instance);
+            TimeManage.instance.Reload(TimeData.Deserialize(json));
         }
 
         void FetchPlants(string json)

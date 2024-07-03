@@ -7,10 +7,10 @@ using UnityEngine;
 public class GameSaving : MonoBehaviour
 {
     private GameObject player;
-    private PlayerUnit playerUnit;
-    private PlayerDefend playerDefend;
-    private PlayerGun playerGun;
-    private TimeManage time;
+    private PlayerUnitData playerUnit;
+    private PlayerDefendData playerDefend;
+    private PlayerGunData playerGun;
+    private TimeData time;
     private PlantPos plant;
 
     public GameObject savingPanelPrefab;
@@ -45,7 +45,7 @@ public class GameSaving : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        InitializeReferences();
+
     }
 
     private void InitializeReferences()
@@ -54,12 +54,12 @@ public class GameSaving : MonoBehaviour
 
         if (player != null)
         {
-            playerUnit = player.GetComponent<PlayerUnit>();
-            playerDefend = player.GetComponent<PlayerDefend>();
-            playerGun = player.GetComponent<PlayerGun>();
+            playerUnit = player.GetComponent<PlayerUnit>().Serialize();
+            playerDefend = player.GetComponent<PlayerDefend>().Serialize();
+            playerGun = player.GetComponent<PlayerGun>().Serialize();
         }
 
-        time = TimeManage.instance;
+        time = TimeManage.instance.Serialize();
         plant = PlantPos.instance;
     }
 
@@ -68,32 +68,48 @@ public class GameSaving : MonoBehaviour
     {
         string SavePlayer()
         {
+            if (playerUnit == null)
+                return null;
+
             return JsonUtility.ToJson(playerUnit);
         }
 
         string SavePlayerDefend()
         {
+            if (playerDefend == null)
+                return null;
+
             return JsonUtility.ToJson(playerDefend);
         }
 
         string SavePlayerGun()
         {
+            if (playerGun == null)
+                return null;
+
             return JsonUtility.ToJson(playerGun);
         }
 
         string SaveTime()
         {
+            if (time == null)
+                return null;
+
             return JsonUtility.ToJson(time);
         }
 
         string SavePlants()
         {
+            if (plant == null)
+                return null;
+
             plant.SetSaveTime();
             return JsonUtility.ToJson(plant);
         }
 
         try
         {
+            InitializeReferences();
             string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", gameName);
             if (!Directory.Exists(saveDirectory))
             {
@@ -101,22 +117,65 @@ public class GameSaving : MonoBehaviour
             }
 
             string playerFile = Path.Combine(saveDirectory, "player.data");
-            File.WriteAllText(playerFile, SavePlayer());
+            string json = SavePlayer();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(playerFile, json);
+            }
+            else
+            {
+                Debug.LogError("SavePlayer() returned null. Player data not saved.");
+            }
 
             string playerDefendFile = Path.Combine(saveDirectory, "playerDefend.data");
-            File.WriteAllText(playerDefendFile, SavePlayerDefend());
+            json = SavePlayerDefend();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(playerDefendFile, json);
+            }
+            else
+            {
+                Debug.LogError("SavePlayerDefend() returned null. Player defend data not saved.");
+            }
 
             string playerGunFile = Path.Combine(saveDirectory, "playerGun.data");
-            Debug.Log(SavePlayerGun());
-            File.WriteAllText(playerGunFile, SavePlayerGun());
+            json = SavePlayerGun();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(playerGunFile, json);
+            }
+            else
+            {
+                Debug.LogError("SavePlayerGun() returned null. Player gun data not saved.");
+            }
 
             string timeFile = Path.Combine(saveDirectory, "time.data");
-            File.WriteAllText(timeFile, SaveTime());
+            json = SaveTime();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(timeFile, json);
+            }
+            else
+            {
+                Debug.LogError("SaveTime() returned null. Time data not saved.");
+            }
 
             string plantFile = Path.Combine(saveDirectory, "plant.data");
-            File.WriteAllText(plantFile, SavePlants());
-
-            Debug.Log("Saved successfully "+gameName);
+            json = SavePlants();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(plantFile, json);
+            }
+            else
+            {
+                Debug.LogError("SavePlants() returned null. Plant data not saved.");
+            }
+           
             return true;
         }
         catch (Exception e)

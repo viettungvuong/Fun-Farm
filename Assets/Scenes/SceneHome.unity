@@ -21894,8 +21894,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTakingWood: 0
-  fenceHorizontal: {fileID: 11400000, guid: ea2ddf1687e9b404980d681126e11742, type: 2}
-  fenceVertical: {fileID: 11400000, guid: 33fa1b25d5dfb4ec298d8552e19ccfdb, type: 2}
+  fenceHorizontal: {fileID: 11400000, guid: a19ccd8cc0e334e969ac63006c5ea8fa, type: 2}
+  fenceVertical: {fileID: 11400000, guid: 653d46d144a2e486da14f20af1f0915a, type: 2}
   fenceText: {fileID: 20982660}
   intervalBetweenRefill: 45
 --- !u!1660057539 &9223372036854775807
