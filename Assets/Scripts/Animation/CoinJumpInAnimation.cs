@@ -9,13 +9,18 @@ public class CoinJumpInAnimation : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 endPosition;
     private float startTime;
+    private AudioSource audioSource;
+
 
     void Start()
     {
         startPosition = transform.position;
 
-        endPosition = startPosition - direction;
+        endPosition = startPosition - direction*0.5f;
         startTime = Time.time;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
 
         Debug.Log($"Start Position: {startPosition}");
         Debug.Log($"End Position: {endPosition}");
@@ -27,6 +32,8 @@ public class CoinJumpInAnimation : MonoBehaviour
         float t = (Time.time - startTime) / moveDuration;
         t = Mathf.Clamp01(t); // Ensure t stays within 0 and 1
         transform.position = Vector2.Lerp(startPosition, endPosition, t);
+       
+
 
         Debug.Log($"Current Position: {transform.position}");
         if (t >= 1f)

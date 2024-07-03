@@ -30,6 +30,14 @@ public class PlantedPlant
         tilePaths = new List<string>();
 
         tiles = plant.tiles.ToList();
+
+        string temp = "TILE: ";
+        foreach (var tile in tiles)
+        {
+            temp += tile.name;
+        }
+        Debug.Log(temp);
+        
         SaveTilePaths();
 
         this.gridPosition = gridPosition;

@@ -188,6 +188,7 @@ public class PlantManager : MonoBehaviour
             {
                 if (plant.currentStage >= plant.maxStage)
                 {
+                    
                     continue; // max level so do nothing
                 }
 
@@ -214,6 +215,9 @@ public class PlantManager : MonoBehaviour
                         if (plant.currentStage == plant.maxStage)
                         {
                             PlantTilemapShader tileShaderManager = GetComponent<PlantTilemapShader>();
+                            Debug.Log("FINAL TILE: 1 -> " + plant.tiles[plant.currentStage]);
+                            // Tile finalTile = Resources.Load<Tile>(plant.tiles[plant.currentStage].name + "_Harvest.asset");
+                            // Debug.Log("FINAL TILE: 2 -> " + finalTile);
                             plantMap.SetTile(plant.gridPosition, null); // delete from map for the max plant shader
                             tileShaderManager.ApplyShaderToTile(plant, "PlantMax", 2);
                         }
