@@ -86,7 +86,10 @@ public class PlayerDefend : MonoBehaviour
             }
 
             numberOfFences += 2;
-            fenceText.text = numberOfFences.ToString();
+            if (fenceText!=null){
+                fenceText.text = numberOfFences.ToString();
+            }
+
         }
         if (GameController.HomeScene()==false){
             return; // only in home scene

@@ -726,7 +726,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97531444}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7e824771a05144048ff94050b855b78, type: 3}
   m_Name: 
@@ -4110,36 +4110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc05c69492c104ed68cd95d33fd8f785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &732015820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 362533065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f089cc98125cc495ab4ae0da3c5a16cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 50
-  damage: 30
-  isShooting: 0
-  isReloading: 0
-  clipCapacity: 3
-  totalBullets: 0
-  bulletsInClip: 0
-  ownedGun: 0
-  bulletCount: {fileID: 3540518497192945804}
-  bulletInfo: {fileID: 4413121495220917546}
-  swordSprite: {fileID: -348761495, guid: ec6a8a29b3fa64da7bc7c239bbbf944f, type: 3}
-  gunSprite: {fileID: -983209636, guid: 642bb7f8820cb49b4915479f631219fa, type: 3}
-  weaponShow: {fileID: 1487480023}
-  reloadingIndicator: {fileID: 1361790744}
-  currentWeapon: 1
-  gunUp: {fileID: 1174373404}
-  gunDown: {fileID: 800642118}
-  gunHorizontal: {fileID: 94490431}
 --- !u!1 &800642117
 GameObject:
   m_ObjectHideFlags: 0
@@ -16281,6 +16251,34 @@ PrefabInstance:
       propertyPath: footprints.Array.data[3].footprint
       value: 
       objectReference: {fileID: 11400000, guid: de916d8e68c13434ea93903948520f9a, type: 2}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: gunUp
+      value: 
+      objectReference: {fileID: 1174373404}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: gunDown
+      value: 
+      objectReference: {fileID: 800642118}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: bulletInfo
+      value: 
+      objectReference: {fileID: 4413121495220917546}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: weaponShow
+      value: 
+      objectReference: {fileID: 1487480023}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: bulletCount
+      value: 
+      objectReference: {fileID: 3540518497192945804}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: gunHorizontal
+      value: 
+      objectReference: {fileID: 94490431}
+    - target: {fileID: 4422133172462365599, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
+      propertyPath: reloadingIndicator
+      value: 
+      objectReference: {fileID: 1361790744}
     - target: {fileID: 4549481178296448086, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       propertyPath: gunPanel
       value: 
@@ -16395,9 +16393,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
       insertIndex: -1
       addedObject: {fileID: 732015805}
-    - targetCorrespondingSourceObject: {fileID: 1927298600777772009, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 732015820}
   m_SourcePrefab: {fileID: 100100000, guid: 20417b8e8f5ac4f0ea62f8a22ac50256, type: 3}
 --- !u!212 &3739248931978354438 stripped
 SpriteRenderer:

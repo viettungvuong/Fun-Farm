@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class GameLoading : MonoBehaviour
 {
+    public static bool? hasToLoad;
+    public static string gameName;
     public static List<string> LoadGames()
     {
         List<string> gameNames = new List<string>();
@@ -16,11 +18,15 @@ public class GameLoading : MonoBehaviour
 
         if (Directory.Exists(savesDirectory))
         {
-            string[] directories = Directory.GetDirectories(savesDirectory);
-            foreach (string directory in directories)
+            DirectoryInfo directoryInfo = new DirectoryInfo(savesDirectory);
+            DirectoryInfo[] directories = directoryInfo.GetDirectories();
+
+            // most recent first
+            Array.Sort(directories, (dir1, dir2) => dir2.LastWriteTime.CompareTo(dir1.LastWriteTime));
+
+            foreach (DirectoryInfo directory in directories)
             {
-                string directoryName = Path.GetFileName(directory);
-                gameNames.Add(directoryName);
+                gameNames.Add(directory.Name);
             }
         }
         else
@@ -43,9 +49,35 @@ public class GameLoading : MonoBehaviour
         return false;
     }
 
+    private void Start() {
+        if (hasToLoad!=null&&(bool)hasToLoad&&gameName!=null){
+            bool load = LoadGame(gameName);
+            if (load==false){
+                Debug.LogError("Error when load game");
+            }
+            else{
+                hasToLoad = false;
+                gameName = null;
+            }
+        }
+    }
+
+    private void LateUpdate() {
+        if (hasToLoad!=null&&(bool)hasToLoad&&gameName!=null){
+            bool load = LoadGame(gameName);
+            if (load==false){
+                Debug.LogError("Error when load game");
+            }
+            else{
+                hasToLoad = false;
+                gameName = null;
+            }
+        }
+    }
 
 
-    public void LoadGame(string gameName)
+
+    public bool LoadGame(string gameName)
     {
         void FetchPlayer(string unitJson, string defendJson, string gunJson)
         {
@@ -67,8 +99,7 @@ public class GameLoading : MonoBehaviour
             PlantManager.instance.Load(); // Load information about plant
         }
 
-        GameSaving gameSaving = transform.parent.GetComponent<GameSaving>();
-        gameSaving.NewGame(gameName);
+
 
         string playerJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "player.data");
         string playerDefendJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "playerDefend.data");
@@ -92,16 +123,27 @@ public class GameLoading : MonoBehaviour
             if (!string.IsNullOrEmpty(timeJson))
             {
                 FetchTime(timeJson);
+                Debug.Log(TimeManage.instance.currentMinute);
             }
 
             if (!string.IsNullOrEmpty(plantsJson))
             {
                 FetchPlants(plantsJson);
             }
+
+            GameSaving gameSaving = GameObject.Find("SaveGame").GetComponent<GameSaving>();
+            if (gameSaving==null){
+                Debug.Log("Game saving not found");
+                return false;
+            }
+            gameSaving.NewGame(gameName, save: false);
+            Debug.Log("Loaded " + gameName + " successfully.");
+            return true;
         }
         catch (Exception err)
         {
             Debug.LogError(err);
+            return false;
         }
     }
 

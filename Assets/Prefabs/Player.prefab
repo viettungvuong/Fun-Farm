@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 4549481178296448086}
   - component: {fileID: -9202891944508619798}
   - component: {fileID: -5970118171762299643}
+  - component: {fileID: 4422133172462365599}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -393,6 +394,36 @@ MonoBehaviour:
   blinkSpeed: 10
   blinkDuration: 0.5
   blinkColor: {r: 0.7830189, g: 0.033241354, b: 0.033241354, a: 1}
+--- !u!114 &4422133172462365599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927298600777772009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f089cc98125cc495ab4ae0da3c5a16cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 50
+  damage: 30
+  isShooting: 0
+  isReloading: 0
+  clipCapacity: 3
+  totalBullets: 0
+  bulletsInClip: 0
+  ownedGun: 0
+  bulletCount: {fileID: 0}
+  bulletInfo: {fileID: 0}
+  swordSprite: {fileID: -348761495, guid: ec6a8a29b3fa64da7bc7c239bbbf944f, type: 3}
+  gunSprite: {fileID: -983209636, guid: 642bb7f8820cb49b4915479f631219fa, type: 3}
+  weaponShow: {fileID: 0}
+  reloadingIndicator: {fileID: 0}
+  currentWeapon: 1
+  gunUp: {fileID: 0}
+  gunDown: {fileID: 0}
+  gunHorizontal: {fileID: 0}
 --- !u!1 &4560234531328760781
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,16 +19,22 @@ public class GameSaving : MonoBehaviour
 
     private Renderer renderer;
 
-    public bool NewGame(string gameName){
+    public bool NewGame(string gameName, bool save=true){
         this.gameName = gameName;
-        if (SaveGame()){ // save beforehand
-            Debug.Log("saved successfully");
-            return true;
+        if (save){
+            if (SaveGame()){ // save beforehand
+                Debug.Log("saved successfully");
+                return true;
+            }
+            else{
+                Debug.LogError("Error when saving game");
+                return false;
+            }
         }
         else{
-            Debug.LogError("Error when saving game");
-            return false;
+            return true;
         }
+
 
     }
 
@@ -110,7 +116,7 @@ public class GameSaving : MonoBehaviour
             string plantFile = Path.Combine(saveDirectory, "plant.data");
             File.WriteAllText(plantFile, SavePlants());
 
-            Debug.Log(GameLoading.LoadGames().Count);
+            Debug.Log("Saved successfully "+gameName);
             return true;
         }
         catch (Exception e)

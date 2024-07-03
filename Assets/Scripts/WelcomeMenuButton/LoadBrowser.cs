@@ -38,59 +38,40 @@ public class LoadBrowser : MonoBehaviour
         return parent.gameObject;
     }
 
-    // private void OnEnable()
-    // {
-
-
-    // }
-
     private void SelectLoadFile(string name)
     {
         // Debug.Log("Load file name: " + name);
         LoadSceneAndAccessGameController(name);
     }
 
-    IEnumerator LoadGameAfterDelay()
-    {
-        yield return new WaitForSeconds(2.0f);
+    // IEnumerator LoadGameAfterDelay(string name)
+    // {
+    //     yield return new WaitForSeconds(0.0f);
 
-        GameObject canvas = GameObject.Find("Canvas");
-        if (canvas != null)
-        {
-            canvas.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("Canvas object not found.");
-        }
-        GameObject gameControllerObject = GameObject.Find("GameController");
-        if (gameControllerObject != null)
-        {
-            GameController gameController = gameControllerObject.GetComponent<GameController>();
-            if (gameController != null)
-            {
-                GameLoading gameLoading = gameController.transform.GetChild(0).GetComponent<GameLoading>();
-                if (gameLoading != null)
-                {
-                    gameLoading.LoadGame(name);
-                    Debug.Log("Load successfully");
-                    Destroy(topLevelCanvas.gameObject);
-                }
-                else
-                {
-                    Debug.LogError("GameLoading component not found.");
-                }
-            }
-            else
-            {
-                Debug.LogError("GameController component not found.");
-            }
-        }
-        else
-        {
-            Debug.LogError("GameController object not found in the scene.");
-        }
-    }
+    //     GameObject gameControllerObject = GameObject.Find("GameController");
+    //     if (gameControllerObject != null)
+    //     {
+    //         GameLoading gameLoading = gameControllerObject.transform.GetChild(0).GetComponent<GameLoading>();
+    //         if (gameLoading != null)
+    //         {
+    //             bool load = gameLoading.LoadGame(name);
+    //             if (load){
+    //                 Debug.Log("Load successfully "+name);
+    //                 Destroy(topLevelCanvas.gameObject);
+    //             }
+
+
+    //         }
+    //         else
+    //         {
+    //             Debug.LogError("GameLoading component not found.");
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("GameController object not found in the scene.");
+    //     }
+    // }
 
     private void LoadSceneAndAccessGameController(string name)
     {
@@ -98,7 +79,10 @@ public class LoadBrowser : MonoBehaviour
 
         asyncLoad.completed += (asyncOperation) =>
         {
-            StartCoroutine(LoadGameAfterDelay());
+            topLevelCanvas.enabled = false;
+
+            GameLoading.hasToLoad = true;
+            GameLoading.gameName = name;
         };
 
 
