@@ -15,6 +15,10 @@ public class PlayerPlant : MonoBehaviour
     Rigidbody2D rb;
     PlayerUnit playerUnit;
 
+    public AudioClip audioClip;
+
+    AudioSource audioSource;
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -41,6 +45,10 @@ public class PlayerPlant : MonoBehaviour
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
         playerUnit = GetComponent<PlayerUnit>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        
+
     }
 
     void Update()
@@ -142,7 +150,7 @@ public class PlayerPlant : MonoBehaviour
         {
             return;
         }
-
+        audioSource.clip = audioClip;
         StartCoroutine(WaterTreeCoroutine(worldPosition));
     }
 
@@ -171,6 +179,7 @@ public class PlayerPlant : MonoBehaviour
         }
 
         animator.Play(animationName);
+        audioSource.Play();
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
         isPlanting = false;
     }
