@@ -52,15 +52,28 @@ public class PlayerDefend : MonoBehaviour
 
     public void Reload(PlayerDefendData playerDefendData){
         numberOfFences = playerDefendData.numberOfFences;
+        if (fenceText!=null){
+            fenceText.text = numberOfFences.ToString();
+        }
 
         nextMinuteRefill = playerDefendData.nextMinuteRefill;
 
-        
+        InitializeMap();
 
         foreach (var entry in playerDefendData.fences.entries){
             Vector3Int vt3 = entry.key;
             FenceOrientation fenceOrientation = entry.value;
             fences.Add(vt3, fenceOrientation);
+
+            Tile tile;
+            if (fenceOrientation==FenceOrientation.horizontal){
+                tile = fenceHorizontal;
+            }
+            else{
+                tile = fenceVertical;
+            }
+
+            groundDefenseTilemap.SetTile(vt3, tile);
         }
     }
 

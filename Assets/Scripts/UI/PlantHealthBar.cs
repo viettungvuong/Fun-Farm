@@ -49,26 +49,53 @@ public class PlantHealthBar : MonoBehaviour
 
         // the bar shows time left until the tree is deteriorated
         healthSlider.maxValue = (float)plant.deteriorateTime;
+        UpdateSlider();
+
+
+    }
+
+
+    private void FixedUpdate() {
+        UpdateSliderPosition();
+    }
+    
+    private void UpdateSlider(){
         try
         {
-            var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
+            var nextTimeDeteriorate = PlantManager.instance.GetnextTimeDeteriorate(plant);
 
-            if (lastTimeWatered != null && lastTimeWatered.HasValue)
+            if (nextTimeDeteriorate != null)
             {
-                double timeDiff = (DateTime.Now-lastTimeWatered.Value).TotalSeconds;
-                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving to remove inaccurate calculation (idle between openings of the game)
-                    if (plant.lastOpenedTime > (DateTime)lastTimeWatered)
-                    {
-                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                        timeDiff -= unneededDifference;
-                    }
+                Pair current = new Pair(TimeManage.instance.currentHour, TimeManage.instance.currentMinute);
+
+                int minDiff = Pair.CalculateTimeDifference(current, nextTimeDeteriorate);
+
+
+                healthSlider.value = plant.deteriorateTime-minDiff;
+                float timePercentage = (float)healthSlider.value / (float)plant.deteriorateTime;
+
+
+
+                if (timePercentage>=1f){ // die
+                    healthSlider.gameObject.SetActive(false); 
+                }    
+                if (timePercentage < 0.2f) {
+                    // Health < 20%: green
+                    sliderImageFill.color = Color.green;
+                } else if (timePercentage >= 0.2f && timePercentage < 0.5f) {
+                    // Health between 20% and 50%: yellow to green
+                    sliderImageFill.color = Color.Lerp(Color.green, Color.yellow, (timePercentage - 0.2f) / 0.3f);
+                } else if (timePercentage >= 0.5f && timePercentage < 0.8f) {
+                    // Health between 50% and 80%: orange to yellow
+                    sliderImageFill.color = Color.Lerp(Color.yellow, Color.red, (timePercentage - 0.5f) / 0.3f);
+                } else if (timePercentage >= 0.8f) {
+                    // Health >= 80%: red
+                    sliderImageFill.color = Color.red;
                 }
-                
-                healthSlider.value = (float)timeDiff;
             }
             else
             {
-                Debug.LogWarning("Last time watered is null or not a DateTime.");
+                Debug.LogWarning("Last time watered is null");
                 healthSlider.gameObject.SetActive(false);
                 Destroy(this);
                 return;
@@ -78,13 +105,6 @@ public class PlantHealthBar : MonoBehaviour
         {
             Debug.LogError("Error calculating time difference: " + e.Message);
         }
-
-
-    }
-
-
-    private void FixedUpdate() {
-        UpdateSliderPosition();
     }
 
     private void LateUpdate() {
@@ -101,38 +121,9 @@ public class PlantHealthBar : MonoBehaviour
             healthSlider.gameObject.SetActive(false);
             return;
         }
-        
-        var lastTimeWatered = PlantManager.instance?.GetLastTimeWatered(plant);
-        double timeDiff = (DateTime.Now-(DateTime)lastTimeWatered).TotalSeconds;
-        if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                if (plant.lastOpenedTime > (DateTime)lastTimeWatered) // only calc if lastopen occurs before lastwatered
-                {
-                    double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                    timeDiff -= unneededDifference;
-                }
 
-        }
-        
-        healthSlider.value = (float)timeDiff;
-        float timePercentage = (float)timeDiff / (float)plant.deteriorateTime;
+        UpdateSlider();
 
-
-        if (timePercentage>=1f){ // die
-            healthSlider.gameObject.SetActive(false); 
-        }    
-        if (timePercentage < 0.2f) {
-            // Health < 20%: green
-            sliderImageFill.color = Color.green;
-        } else if (timePercentage >= 0.2f && timePercentage < 0.5f) {
-            // Health between 20% and 50%: yellow to green
-            sliderImageFill.color = Color.Lerp(Color.green, Color.yellow, (timePercentage - 0.2f) / 0.3f);
-        } else if (timePercentage >= 0.5f && timePercentage < 0.8f) {
-            // Health between 50% and 80%: orange to yellow
-            sliderImageFill.color = Color.Lerp(Color.yellow, Color.red, (timePercentage - 0.5f) / 0.3f);
-        } else if (timePercentage >= 0.8f) {
-            // Health >= 80%: red
-            sliderImageFill.color = Color.red;
-        }
 
 
     }

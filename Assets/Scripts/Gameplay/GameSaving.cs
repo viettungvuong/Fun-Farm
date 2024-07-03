@@ -103,7 +103,6 @@ public class GameSaving : MonoBehaviour
             if (plant == null)
                 return null;
 
-            plant.SetSaveTime();
             return JsonUtility.ToJson(plant);
         }
 
@@ -202,7 +201,7 @@ public class GameSaving : MonoBehaviour
             {
                 if (SaveGame()) // only save when all enemies have been killed
                 {
-                    Debug.Log("Saved successfully");
+                    Debug.Log("Saved successfully "+gameName);
                     StartCoroutine(ShowSavingPanel());
                 }
             }
