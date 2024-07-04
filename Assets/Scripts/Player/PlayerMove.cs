@@ -51,6 +51,8 @@ public class PlayerMove : MonoBehaviour
 
     public ParticleSystem dustTrail;
 
+    public GameObject goHomePanel;
+
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -99,8 +101,27 @@ public class PlayerMove : MonoBehaviour
         maxBounds = groundTilemap.localBounds.max;
     }
 
+    private IEnumerator GoHomeCoroutine(){
+        goHomePanel.SetActive(true);
+        goHomePanel.transform.SetAsLastSibling();
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
+        VillagePlayerSpawn.GoBackHome(transform);
+        goHomePanel.SetActive(false);
+    }
+
+
+
+    private void CheckTimeGoHome(){
+        if (TimeManage.instance.IsDay()==false){
+            StopAllCoroutines();
+            StartCoroutine(GoHomeCoroutine());
+        }
+    }
+
     void Update()
     {
+        CheckTimeGoHome(); // check whether it's time to go back home
+
         moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position); // walking speed based on terrain
         bool holdArrowKey = false;
         Orientation prevOrientation = orientation;

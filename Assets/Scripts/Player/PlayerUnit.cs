@@ -61,7 +61,11 @@ public class PlayerUnit : Unit
 
     private void Update() {
         if (die&&Input.GetKey(KeyCode.Space)){
-            SceneManager.LoadScene("SceneWelcome"); // go back to menu
+            GameObject canvasObject = GameObject.Find("Canvas");
+            if (canvasObject!=null){
+                GameController.OpenMenu(canvasObject); // go back to menu
+            }
+
         }
     }
 
@@ -164,18 +168,13 @@ public class PlayerUnit : Unit
         GameObject heart = Instantiate(heartBrokenPrefab, heartBrokenAnim, Quaternion.identity, headTransform);
     }
 
-    private IEnumerator DieCoroutine(){
-        base.animator.SetBool("die", true);
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
-        diePanel.SetActive(true);
-        diePanel.transform.SetAsLastSibling();
-    }
 
     public override void Die(){
         // show die menu
         die = true;
-        StopAllCoroutines();
-        StartCoroutine(DieCoroutine());
+        base.animator.SetBool("die", true);
+        diePanel.SetActive(true);
+        diePanel.transform.SetAsLastSibling();
 
     }
 
