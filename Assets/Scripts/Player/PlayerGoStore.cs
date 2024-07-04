@@ -11,9 +11,6 @@ public class PlayerGoStore : MonoBehaviour
 
             marketPanel.gameObject.SetActive(true);
             marketPanel.transform.SetAsLastSibling(); // bottom of canvas hierarchy
-
-
-
         }
         else if (other.gameObject.name=="GunEntrance"){
             marketPanel.gameObject.SetActive(false);

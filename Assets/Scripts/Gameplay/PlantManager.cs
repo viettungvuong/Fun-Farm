@@ -304,8 +304,8 @@ public class PlantManager : MonoBehaviour
         foreach (PlantedPlant plant in plantsToRemove)
         {
             nextDeteriorate.Remove(plant);
-            Debug.Log("Modified last check fresh time");
             nextLevelTime.Remove(plant);
+            RemovePlant(plant);
         }
     }
 

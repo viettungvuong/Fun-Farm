@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerUnit : Unit
@@ -20,7 +21,9 @@ public class PlayerUnit : Unit
     public GameObject coinJumpInPrefab; 
     public GameObject heartBrokenPrefab;
 
-    public Transform headTransform; 
+    public Transform headTransform;
+
+    private bool die = false;
 
     public PlayerUnitData Serialize(){
         PlayerUnitData playerUnitData = new PlayerUnitData
@@ -54,6 +57,12 @@ public class PlayerUnit : Unit
 
 
         playerMode = PlayerMode.SURVIVAL; // default is survival
+    }
+
+    private void Update() {
+        if (die&&Input.GetKey(KeyCode.Space)){
+            SceneManager.LoadScene("SceneWelcome"); // go back to menu
+        }
     }
 
     private void LateUpdate() {
@@ -158,11 +167,13 @@ public class PlayerUnit : Unit
     private IEnumerator DieCoroutine(){
         base.animator.SetBool("die", true);
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
-        diePanel.SetActive(false);
+        diePanel.SetActive(true);
+        diePanel.transform.SetAsLastSibling();
     }
 
     public override void Die(){
         // show die menu
+        die = true;
         StopAllCoroutines();
         StartCoroutine(DieCoroutine());
 
