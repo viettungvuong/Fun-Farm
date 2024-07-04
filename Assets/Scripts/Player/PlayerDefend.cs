@@ -5,6 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+public enum FenceOrientation{
+    vertical,
+    horizontal,
+    NONE
+}
+
 public class PlayerDefend : MonoBehaviour
 {
     public static PlayerDefend instance;
@@ -12,9 +18,9 @@ public class PlayerDefend : MonoBehaviour
     [HideInInspector] public bool isTakingWood = false;
     private Rigidbody2D rb;
 
-    public FenceUnit fenceHorizontal, fenceVertical;
+    public Tile fenceHorizontal, fenceVertical;
 
-    private Dictionary<Vector3Int, FenceUnit> fences;
+   
 
 
     public TextMeshProUGUI fenceText;
@@ -22,17 +28,72 @@ public class PlayerDefend : MonoBehaviour
     private PlayerMove playerMove;
     private Animator animator;
 
+    private Dictionary<Vector3Int, FenceOrientation> fences;
+
     private int numberOfFences = 0;
     public int intervalBetweenRefill = 45;
     private int nextMinuteRefill = 5;
 
+    public PlayerDefendData Serialize(){
+        PlayerDefendData playerDefendData = new PlayerDefendData
+        {
+            numberOfFences = numberOfFences,
+            nextMinuteRefill = nextMinuteRefill
+        };
+
+        if (fences == null){
+            fences = new Dictionary<Vector3Int, FenceOrientation>();
+        }
+
+        playerDefendData.fences.FromDictionary(fences);
+
+        return playerDefendData;
+    }
+
+    public void Reload(PlayerDefendData playerDefendData){
+        numberOfFences = playerDefendData.numberOfFences;
+        if (fenceText!=null){
+            fenceText.text = numberOfFences.ToString();
+        }
+
+        nextMinuteRefill = playerDefendData.nextMinuteRefill;
+
+        InitializeMap();
+
+        foreach (var entry in playerDefendData.fences.entries){
+            Vector3Int vt3 = entry.key;
+            FenceOrientation fenceOrientation = entry.value;
+            fences.Add(vt3, fenceOrientation);
+
+            Tile tile;
+            if (fenceOrientation==FenceOrientation.horizontal){
+                tile = fenceHorizontal;
+            }
+            else{
+                tile = fenceVertical;
+            }
+
+            groundDefenseTilemap.SetTile(vt3, tile);
+        }
+    }
+
     private void Awake() {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
+
         if (instance==null){
             instance = this;
         }
         else{
             Destroy(this);
         }
+
+        rb = GetComponent<Rigidbody2D>();
+        fences = new Dictionary<Vector3Int, FenceOrientation>();
+        playerMove = GetComponent<PlayerMove>();
+        animator = GetComponent<Animator>();
 
     }
     private void OnDestroy()
@@ -57,21 +118,10 @@ public class PlayerDefend : MonoBehaviour
 
 
     void Start(){
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
-            enabled = false;
-            return;
-        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
-
-        rb = GetComponent<Rigidbody2D>();
-        fences = new Dictionary<Vector3Int, FenceUnit>();
-
-        
-        playerMove = GetComponent<PlayerMove>();
-        animator = GetComponent<Animator>();
- 
 
     }
 
@@ -86,7 +136,10 @@ public class PlayerDefend : MonoBehaviour
             }
 
             numberOfFences += 2;
-            fenceText.text = numberOfFences.ToString();
+            if (fenceText!=null){
+                fenceText.text = numberOfFences.ToString();
+            }
+
         }
         if (GameController.HomeScene()==false){
             return; // only in home scene
@@ -107,17 +160,17 @@ public class PlayerDefend : MonoBehaviour
         {
             // build defense
             if (playerMove.orientation==Orientation.UP||playerMove.orientation==Orientation.DOWN){
-                BuildDefendFence(fenceHorizontal);
+                BuildDefendFence(FenceOrientation.horizontal);
             }
             else{
-                BuildDefendFence(fenceVertical);
+                BuildDefendFence(FenceOrientation.vertical);
             }
 
             buildFenceFlag = false; // ensure it only builds once per key press
         }
     }
 
-    public void BuildDefendFence(FenceUnit fence)
+    public void BuildDefendFence(FenceOrientation fence)
     {
         if (numberOfFences <= 0)
         {
@@ -131,19 +184,24 @@ public class PlayerDefend : MonoBehaviour
             return;
         }
 
-        // Temporarily disable the collider
+        // temporarily disable the collider
         Collider2D tilemapCollider = groundDefenseTilemap.GetComponent<Collider2D>();
         if (tilemapCollider != null)
         {
             tilemapCollider.enabled = false;
         }
 
-        groundDefenseTilemap.SetTile(gridPosition, fence.tile);
+        Tile tile;
+        if (fence==FenceOrientation.horizontal){
+            tile = fenceHorizontal;
+        }
+        else{
+            tile = fenceVertical;
+        }
 
-        FenceUnit cloneFence = Instantiate(fence);
-        cloneFence.health = 100;
+        groundDefenseTilemap.SetTile(gridPosition, tile);
 
-        fences.Add(gridPosition, cloneFence);
+        fences.Add(gridPosition, fence);
         numberOfFences--; // minus one available fence
 
         // rb.position += new Vector2(0.5f, 0.5f); // slightly move to avoid collide the fence => cannot move player
@@ -162,20 +220,20 @@ public class PlayerDefend : MonoBehaviour
     }
 
 
-    public FenceUnit GetDefenceAt(Vector3 worldPosition){
+    public FenceOrientation GetDefenceAt(Vector3 worldPosition){
         Vector3Int cellPosition = groundDefenseTilemap.WorldToCell(worldPosition);
         
         if (!fences.ContainsKey(cellPosition)){
-            return null;
+            return FenceOrientation.NONE;
         }
         else{
             return fences[cellPosition];
         }
     }
 
-    public FenceUnit GetDefenceAt(Vector3Int cellPosition){
+    public FenceOrientation GetDefenceAt(Vector3Int cellPosition){
         if (!fences.ContainsKey(cellPosition)){
-            return null;
+            return FenceOrientation.NONE;
         }
         else{
             return fences[cellPosition];

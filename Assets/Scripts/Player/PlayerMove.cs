@@ -46,7 +46,6 @@ public class PlayerMove : MonoBehaviour
     private PlayerGun playerGun;
 
     public List<FootprintTile> footprints;
-    private Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>> footprintQueue; // save tiles player has been previously
 
     public Sprite[] spriteOrientation;
 
@@ -61,8 +60,6 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
-        footprintQueue = new Queue<Pair<Pair<TileBase, Vector3Int>, DateTime>>();
 
         minBounds = groundTilemap.localBounds.min;
         maxBounds = groundTilemap.localBounds.max;
@@ -266,31 +263,30 @@ public class PlayerMove : MonoBehaviour
         groundTilemap.SetTile(cellPosition, footprintTile);
 
         // add to queue to manage time
-        footprintQueue.Enqueue(new Pair<Pair<TileBase, Vector3Int>, DateTime>(new Pair<TileBase, Vector3Int>(tile, cellPosition), DateTime.Now));
     }
 
-    private void CheckFootprint()
-    {
-        // footprint disappear after 1 min
-        TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
+    // private void CheckFootprint()
+    // {
+    //     // footprint disappear after 1 min
+    //     TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
 
-        while (footprintQueue.Count > 0)
-        {
-            Pair<Pair<TileBase, Vector3Int>, DateTime> footprint = footprintQueue.Peek();
-            if (DateTime.Now - footprint.Second > footprintLifetime)
-            {
-                // remove the footprint from the tilemap
-                Vector3Int position = footprint.First.Second;
-                TileBase originalTile = footprint.First.First;
-                groundTilemap.SetTile(position, originalTile);
-                footprintQueue.Dequeue();
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
+    //     while (footprintQueue.Count > 0)
+    //     {
+    //         Pair<Pair<TileBase, Vector3Int>, DateTime> footprint = footprintQueue.Peek();
+    //         if (DateTime.Now - footprint.Second > footprintLifetime)
+    //         {
+    //             // remove the footprint from the tilemap
+    //             Vector3Int position = footprint.First.Second;
+    //             TileBase originalTile = footprint.First.First;
+    //             groundTilemap.SetTile(position, originalTile);
+    //             footprintQueue.Dequeue();
+    //         }
+    //         else
+    //         {
+    //             break;
+    //         }
+    //     }
+    // }
 
     public void SetOrientation(Orientation newOrientation)
     {

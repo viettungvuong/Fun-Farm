@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
-[Serializable]
 public class TimeManage : MonoBehaviour
 {
     public int currentHour = 6, currentMinute = 0, currentDay = 1;
@@ -19,15 +18,31 @@ public class TimeManage : MonoBehaviour
 
     public static TimeManage instance;
 
+    public TimeData Serialize()
+    {
+        TimeData timeData = new TimeData();
+        timeData.currentHour = currentHour;
+        timeData.currentMinute = currentMinute;
+        timeData.currentDay = currentDay;
+
+
+        return timeData;
+    }
+
+    public void Reload(TimeData timeData)
+    {
+        currentHour = timeData.currentHour;
+        currentMinute = timeData.currentMinute;
+        currentDay = timeData.currentDay;
+    }
+
     private void OnDestroy()
     {
- 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
- 
         InitializeMap();
     }
 
@@ -46,10 +61,8 @@ public class TimeManage : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }  
-    }
+        }
 
-    private void Start() {
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitializeMap();
 
@@ -57,7 +70,8 @@ public class TimeManage : MonoBehaviour
         UpdateLight();
     }
 
-    // Update is called once per frame
+
+
     void Update()
     {
         double secondsDifference = (DateTime.Now - lastUpdated).TotalSeconds;
@@ -78,14 +92,16 @@ public class TimeManage : MonoBehaviour
                 }
             }
             string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
-            if (timeText != null)timeText.text = hourString + ":" + minString;
+            if (timeText != null)
+            {
+                timeText.text = hourString + ":" + minString;
+            }
             UpdateLight();
         }
-
-
     }
 
-    public bool IsDay(){
+    public bool IsDay()
+    {
         return currentHour >= 6 && currentHour <= 18;
     }
 
@@ -107,16 +123,15 @@ public class TimeManage : MonoBehaviour
         else
         {
             // evening
-            if (currentHour >= 18 && currentHour < 24) 
+            if (currentHour >= 18 && currentHour < 24)
             {
                 globalLight.intensity = Mathf.Lerp(maxIntensityNight, minIntensityNight, (currentHour - 18) / 6f);
             }
-            else 
+            else
             {
                 globalLight.intensity = Mathf.Lerp(minIntensityNight, maxIntensityNight, currentHour / 6f);
             }
             globalLight.color = nightColor;
         }
-
     }
 }

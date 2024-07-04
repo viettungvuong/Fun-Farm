@@ -10,11 +10,11 @@ using UnityEngine.Tilemaps;
 public class Plant : ScriptableObject
 {
     public Tile[] tiles;
-    public double levelUpTime;
+    public int levelUpTime;
     [HideInInspector] public int maxHealth = 100;
     public int buyMoney;
     public int harvestMoney;
-    public double deteriorateTime;
+    public int deteriorateTime;
 }
 
 [Serializable]
@@ -77,26 +77,14 @@ public class PlantedPlant
     [NonSerialized] public List<Tile> tiles;
     [SerializeField] private List<string> tilePaths; // tiles are un-serializable so we have to store path
     public Vector3Int gridPosition;
-    public double levelUpTime;
+    public int levelUpTime;
     public int currentStage=0;
     public int maxHealth=100;
     public int health;
     public int maxStage;
     public int buyMoney;
     public int harvestMoney;
-    public double deteriorateTime;
-
-    public DateTime? lastSavedTime, lastOpenedTime; // used for saving game
-    [SerializeField] private double unixTimestampSavedTime;
-
-    public void SetSaveTime(DateTime dateTime){
-        lastSavedTime = dateTime;
-        unixTimestampSavedTime = GameController.SerializeDateTime(dateTime);
-    }
-
-    public void LoadSavetime(){ // when reload game
-        lastSavedTime = GameController.DeserializeDateTime(unixTimestampSavedTime);
-    }
+    public int deteriorateTime;
 
     public override int GetHashCode()
     {

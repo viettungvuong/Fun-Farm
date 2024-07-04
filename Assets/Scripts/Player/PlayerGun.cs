@@ -19,8 +19,8 @@ public class PlayerGun : MonoBehaviour
     [HideInInspector] public bool isShooting = false;
     [HideInInspector] public bool isReloading = false;
 
-    Animator animator;
-    PlayerMove playerMove;
+    private Animator animator;
+    private PlayerMove playerMove;
 
     public int clipCapacity = 3;
     public int totalBullets=0;
@@ -42,6 +42,23 @@ public class PlayerGun : MonoBehaviour
     public Transform gunUp;
     public Transform gunDown;
     public Transform gunHorizontal;
+
+    public PlayerGunData Serialize()
+    {
+        PlayerGunData data = new PlayerGunData();
+        data.totalBullets = totalBullets;
+        data.bulletsInClip = bulletsInClip;
+        data.ownedGun = ownedGun;
+        data.currentWeapon = currentWeapon;
+        return data;
+    }
+
+    public void Reload(PlayerGunData playerGunData){
+        totalBullets = playerGunData.totalBullets;
+        bulletsInClip = playerGunData.bulletsInClip;
+        ownedGun = playerGunData.ownedGun;
+        currentWeapon = playerGunData.currentWeapon;
+    }
 
 
     private void Start()

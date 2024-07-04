@@ -13,7 +13,7 @@ public class PlantManager : MonoBehaviour
     private Tilemap plantMap;
 
     private Dictionary<Vector3Int, PlantedPlant> plantPos; // position of plants
-    private Dictionary<PlantedPlant, DateTime> lastLevelTime, lastCheckFreshTime;
+    private Dictionary<PlantedPlant, Pair> nextLevelTime, nextDeteriorate;
     private Dictionary<PlantedPlant, PlantHealthBar> plantHealthBars;
     // last time this plant was leveled and watered
 
@@ -33,8 +33,8 @@ public class PlantManager : MonoBehaviour
             Destroy(this);
         }
         plantPos = new Dictionary<Vector3Int, PlantedPlant>();
-        lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
-        lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
+        nextLevelTime = new Dictionary<PlantedPlant, Pair>();
+        nextDeteriorate = new Dictionary<PlantedPlant, Pair>();
         plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
 
     }
@@ -65,52 +65,33 @@ public class PlantManager : MonoBehaviour
         PlantPos plantPos = PlantPos.instance;
 
         this.plantPos = new Dictionary<Vector3Int, PlantedPlant>();
-        this.lastCheckFreshTime = new Dictionary<PlantedPlant, DateTime>();
-        this.lastLevelTime = new Dictionary<PlantedPlant, DateTime>();
+        this.nextDeteriorate = new Dictionary<PlantedPlant, Pair>();
+        this.nextLevelTime = new Dictionary<PlantedPlant, Pair>();
         this.plantHealthBars = new Dictionary<PlantedPlant, PlantHealthBar>();
         
-        foreach (var entry in plantPos.SerializedLastLevelTime){
-            PlantedPlant plant = entry.Key;
-            double timeStamp = entry.Value;
 
-            this.lastLevelTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
-        }
-
-        foreach (var entry in plantPos.SerializedLastCheckFreshTime){
-            PlantedPlant plant = entry.Key;
-            double timeStamp = entry.Value;
-
-            this.lastCheckFreshTime.Add(plant, GameController.DeserializeDateTime(timeStamp));
-        }
-
-        foreach (var entry in lastLevelTime.ToList())
+        foreach (var entry in plantPos.SerializedPlantPos) // load plants
         {
-            PlantedPlant plant = entry.Key;
-            DateTime lastTime = entry.Value;
+            Vector3Int cellPosition = entry.Key;
+            PlantedPlant plant = entry.Value;
 
-            lastLevelTime.Remove(plant);
-            DateTime freshValue = lastCheckFreshTime[plant];
-            lastCheckFreshTime.Remove(plant);
-
-            if (!plantPos.SerializedPlantPos.ContainsKey(plant.gridPosition)){
-                continue;
-            }
-
-            PlantPos.instance.RemovePlant(plant, plant.gridPosition); // làm sạch
-
-            Vector3Int cellPosition = plant.gridPosition;
-
-            plant.LoadSavetime(); // load save time
             plant.LoadTilesFromPaths();
 
             this.plantPos.Add(cellPosition, plant); // add to plant pos with updated tiles
 
-            lastLevelTime.Add(plant, lastTime); // update giá trị mới của plant về save time
-            lastCheckFreshTime.Add(plant, freshValue);
+            if (!plantPos.SerializednextLevelTime.ContainsKey(plant)||!plantPos.SerializednextDeteriorate.ContainsKey(plant)){
+                this.plantPos.Remove(cellPosition);
+                plantPos.RemovePlant(plant, cellPosition);
+                continue;
+            }
+            Pair nextLevel = plantPos.SerializednextLevelTime[plant];
 
-            plantPos.LevelPlant(plant, lastTime);
-            plantPos.AddPlant(plant.gridPosition, plant);
-            plantPos.HealthPlant(plant, freshValue);
+            nextLevelTime.Add(plant, nextLevel); 
+            // plantPos.LevelPlant(plant, nextLevel);
+
+            Pair nextDeteriorateTime = plantPos.SerializednextDeteriorate[plant];
+            nextDeteriorate.Add(plant, nextDeteriorateTime);
+            // plantPos.HealthPlant(plant, nextDeteriorateTime);
 
             plantMap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>(); // draw on tilemap
             plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
@@ -172,15 +153,27 @@ public class PlantManager : MonoBehaviour
 
     }
 
+    private Pair AddTime(Pair time, int nextTime)
+    {
+        int currentHours = time.First;
+        int currentMinutes = time.Second;
+
+        int totalMinutes = currentHours * 60 + currentMinutes + nextTime;
+
+        // Calculate new hours and minutes
+        int newHours = (totalMinutes / 60) % 24; 
+        int newMinutes = totalMinutes % 60;      
+
+        return new Pair(newHours, newMinutes);
+    }
+
 
     private void CheckPlantLevel()
     {
-        DateTime now = DateTime.Now;
-
         // update in temp dictionary
-        var updates = new Dictionary<PlantedPlant, DateTime>();
+        var updates = new Dictionary<PlantedPlant, Pair>();
 
-        foreach (var entry in lastLevelTime)
+        foreach (var entry in nextLevelTime)
         {
             PlantedPlant plant = entry.Key;
 
@@ -192,25 +185,19 @@ public class PlantManager : MonoBehaviour
                     continue; // max level so do nothing
                 }
 
-                DateTime lastTime = entry.Value;
-                double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
-                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
+                Pair nextTime = entry.Value;
 
-                    if (plant.lastOpenedTime > lastTime){
-                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                        secondsDifference -= unneededDifference;
-                    }
-
-                }
-
-                if (secondsDifference > plant.levelUpTime)
+                if (TimeManage.instance.currentHour == nextTime.First &&
+                TimeManage.instance.currentMinute == nextTime.Second)
                 {
                     plant.currentStage++;
+                    Pair current = new Pair(TimeManage.instance.currentHour, TimeManage.instance.currentMinute);
                     if (plant.currentStage <=  plant.maxStage)
                     {
                         plantMap.SetTile(plant.gridPosition, plant.tiles[plant.currentStage]);
-                        PlantPos.instance.LevelPlant(plant, now);
-                        updates[plant] = now; // collect the update
+                        Pair next = AddTime(current, plant.levelUpTime);
+                        PlantPos.instance.LevelPlant(plant, next);
+                        updates[plant] = next; // update next level time
 
                         if (plant.currentStage == plant.maxStage)
                         {
@@ -233,7 +220,7 @@ public class PlantManager : MonoBehaviour
 
         foreach (var update in updates)
         {
-            lastLevelTime[update.Key] = update.Value;
+            nextLevelTime[update.Key] = update.Value;
         }
     }
 
@@ -247,12 +234,12 @@ public class PlantManager : MonoBehaviour
         return plantPos.ContainsKey(cellPosition);
     }
 
-    public DateTime? GetLastTimeWatered(PlantedPlant plant){
-        if (lastCheckFreshTime.ContainsKey(plant)==false){
+    public Pair GetnextTimeDeteriorate(PlantedPlant plant){
+        if (nextDeteriorate.ContainsKey(plant)==false){
             return null;
         }
         else{
-            return lastCheckFreshTime[plant];
+            return nextDeteriorate[plant];
         }
     }
 
@@ -285,14 +272,12 @@ public class PlantManager : MonoBehaviour
     }
 
     private void CheckDeterioration(){
-        DateTime now = DateTime.Now;
-
         // update in temp dictionary
         var updates = new Dictionary<PlantedPlant, DateTime>();
 
         List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
 
-        foreach (var entry in lastCheckFreshTime)
+        foreach (var entry in nextDeteriorate)
         {
             try {
                 PlantedPlant plant = entry.Key;
@@ -302,18 +287,10 @@ public class PlantManager : MonoBehaviour
                     continue; // die or max stage
                 }
 
-                DateTime lastTime = entry.Value;
+                Pair nextTime = entry.Value;
 
-                double secondsDifference=Math.Abs((now - lastTime).TotalSeconds);
-                if (plant.lastSavedTime!=null&&plant.lastOpenedTime!=null){ // when saving
-                    if (plant.lastOpenedTime > lastTime){
-                        double unneededDifference = Math.Abs(((DateTime)plant.lastOpenedTime - (DateTime)plant.lastSavedTime).TotalSeconds);
-                        secondsDifference -= unneededDifference;
-                    }
-                }
-
-                if (secondsDifference > plant.deteriorateTime)
-                {
+                if (TimeManage.instance.currentHour == nextTime.First &&
+                TimeManage.instance.currentMinute == nextTime.Second){
                     DamagePlant(plant);
                     plantsToRemove.Add(plant);
                     PlantPos.instance.RemovePlant(plant, plant.gridPosition);
@@ -326,8 +303,9 @@ public class PlantManager : MonoBehaviour
 
         foreach (PlantedPlant plant in plantsToRemove)
         {
-            lastCheckFreshTime.Remove(plant);
-            lastLevelTime.Remove(plant);
+            nextDeteriorate.Remove(plant);
+            Debug.Log("Modified last check fresh time");
+            nextLevelTime.Remove(plant);
         }
     }
 
@@ -398,8 +376,9 @@ public class PlantManager : MonoBehaviour
 
     public void RemovePlant(PlantedPlant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
-        lastCheckFreshTime.Remove(plant);
-        lastLevelTime.Remove(plant);
+        nextDeteriorate.Remove(plant);
+        Debug.Log("Modified last check fresh time");
+        nextLevelTime.Remove(plant);
 
         if (removeOnMap){
             plantMap.SetTile(plant.gridPosition, null);
@@ -419,7 +398,7 @@ public class PlantManager : MonoBehaviour
 
             ColorPlant(plant, Color.black);
 
-            RemovePlant(plant);
+            // RemovePlant(plant);
 
             if (plantHealthBars.ContainsKey(plant))
             {
@@ -477,14 +456,19 @@ public class PlantManager : MonoBehaviour
         if (gridPosition == null||Planted(worldPosition))
             return false;
 
-        DateTime now = DateTime.Now;
         plantPos.Add(gridPosition, plant);
-        lastLevelTime.Add(plant, now);
-        lastCheckFreshTime.Add(plant, now);
+
+        Pair current = new Pair(TimeManage.instance.currentHour, TimeManage.instance.currentMinute);
+
+        Pair nextLevel = AddTime(current, plant.levelUpTime);
+        nextLevelTime.Add(plant, nextLevel);
+        PlantPos.instance.LevelPlant(plant, nextLevel);
+
+        Pair nextDeteriorateTime = AddTime(current, plant.deteriorateTime);
+        nextDeteriorate.Add(plant, nextDeteriorateTime);
+        PlantPos.instance.HealthPlant(plant, nextDeteriorateTime);
 
         PlantPos.instance.AddPlant(gridPosition, plant); // add to serializable matrix
-        PlantPos.instance.LevelPlant(plant, now);
-        PlantPos.instance.HealthPlant(plant, now);
 
         PlantHealthBar plantHealthBar = gameObject.AddComponent<PlantHealthBar>();
         plantHealthBar.Initialize(plant, plantMap, healthSliderPrefab); // add another plant health bar
@@ -507,17 +491,18 @@ public class PlantManager : MonoBehaviour
         DateTime now = DateTime.Now;
         // plant.lastOpenedTime = null;
         // plant.lastSavedTime = null; // no longer needed to keep this
-        // if (lastCheckFreshTime.ContainsKey(plant)){
-        //     lastCheckFreshTime.Remove(plant);
+        // if (nextDeteriorate.ContainsKey(plant)){
+        //     nextDeteriorate.Remove(plant);
         // }
 
-        if (lastCheckFreshTime.ContainsKey(plant)==false){
+        if (nextDeteriorate.ContainsKey(plant)==false){
             return false;
         }
-
-        lastCheckFreshTime[plant] = now;
+        Pair current = new Pair(TimeManage.instance.currentHour, TimeManage.instance.currentMinute);
+        Pair nextDeteriorateTime = AddTime(current, plant.deteriorateTime);
+        nextDeteriorate[plant] = nextDeteriorateTime;
     
-        PlantPos.instance.HealthPlant(plant, now);
+        PlantPos.instance.HealthPlant(plant, nextDeteriorateTime);
         
         ColorPlant(plant, Color.white); // fresh plant again
 

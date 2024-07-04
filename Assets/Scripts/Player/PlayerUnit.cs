@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-[Serializable]
+
 public class PlayerUnit : Unit
 {
     public int maxMoney;
@@ -22,7 +22,20 @@ public class PlayerUnit : Unit
 
     public Transform headTransform; 
 
+    public PlayerUnitData Serialize(){
+        PlayerUnitData playerUnitData = new PlayerUnitData
+        {
+            currentHealth = currentHealth,
+            currentMoney = currentMoney
+        };
+        return playerUnitData;
+    }
 
+    public void Reload(PlayerUnitData playerUnitData)
+    {
+        currentMoney = playerUnitData.currentMoney;
+        currentHealth = playerUnitData.currentHealth;
+    }
     
     public override void Awake()
     {
@@ -41,10 +54,6 @@ public class PlayerUnit : Unit
 
 
         playerMode = PlayerMode.SURVIVAL; // default is survival
-    }
-    void Start()
-    {
-        
     }
 
     private void LateUpdate() {
