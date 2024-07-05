@@ -9,6 +9,7 @@ public class Create : MonoBehaviour
     static string gameName;
     public TMP_InputField inputField;
     private Canvas topLevelCanvas;
+    public TextMeshProUGUI outputError;
 
     void Start()
     {
@@ -43,6 +44,7 @@ public class Create : MonoBehaviour
         if (GameLoading.GameNameExists(gameName)){
             Debug.Log("Game name already taken");
             // hiện error ở đây
+            outputError.text = "GAME NAME ALREADY TAKEN";
             return;
         }
 

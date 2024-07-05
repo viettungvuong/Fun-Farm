@@ -53,6 +53,9 @@ public class PlayerMove : MonoBehaviour
 
     public GameObject goHomePanel;
 
+    public AudioSource audioSource;
+    public AudioClip footstepSound;
+
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -73,6 +76,8 @@ public class PlayerMove : MonoBehaviour
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
         playerGun = GetComponent<PlayerGun>();
+
+        audioSource = GetComponent<AudioSource>();
 
         plantPanel = GameObject.Find("PlantPanel");
     }
@@ -178,6 +183,8 @@ public class PlayerMove : MonoBehaviour
         if (holdArrowKey) // holding arrow key => walking
         {
             DustTrailPlay();
+            MakeFootstepSound();
+            
             if (!changingAnimation)
             { // not playing orientation change animation => currently idle
 
@@ -262,6 +269,13 @@ public class PlayerMove : MonoBehaviour
         previousPos = rb.position;
 
         // AddFootprint(previousPos); // add footprint
+    }
+
+    private void MakeFootstepSound(){
+        if(audioSource.isPlaying==false){
+            audioSource.clip = footstepSound;
+            audioSource.Play();
+        }
     }
 
     private void AddFootprint(Vector3 pos)
