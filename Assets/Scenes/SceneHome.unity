@@ -3894,7 +3894,7 @@ Transform:
   m_GameObject: {fileID: 595198775}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -1.87, z: 0}
+  m_LocalPosition: {x: -0, y: -0.14, z: 0}
   m_LocalScale: {x: 0.52035606, y: 1.6102765, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4422,7 +4422,7 @@ Transform:
   m_GameObject: {fileID: 814598993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0303, y: -1.426, z: 0}
+  m_LocalPosition: {x: -0.0303, y: -1.835, z: 0}
   m_LocalScale: {x: 0.5475201, y: 0.18805665, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4461,7 +4461,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.008303165, y: -0.5318797}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4472,7 +4472,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5148382, y: 2.0637593}
   m_EdgeRadius: 0
 --- !u!212 &814598996
 SpriteRenderer:
@@ -16238,6 +16238,8 @@ MonoBehaviour:
   - {fileID: -585325200, guid: 0e5c1478895b14836a58d244467176f5, type: 3}
   dustTrail: {fileID: 6207627151449194548}
   goHomePanel: {fileID: 297873828}
+  audioSource: {fileID: 0}
+  footstepSound: {fileID: 0}
 --- !u!199 &489242041325740477
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -16537,6 +16539,7 @@ GameObject:
   - component: {fileID: 732015790}
   - component: {fileID: 732015805}
   - component: {fileID: 9129142106021298742}
+  - component: {fileID: 9129142106021298743}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -16815,6 +16818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlanting: 0
   audioClip: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &4818488093124077218
 GameObject:
   m_ObjectHideFlags: 0
@@ -21728,6 +21732,7 @@ MonoBehaviour:
   maxHealth: 100
   damage: 15
   currentHealth: 0
+  playerUnit: {fileID: 0}
   maxMoney: 100
   coinText: {fileID: 970278687}
   currentMoney: 0
@@ -22245,6 +22250,102 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8125, y: 0.39730668}
   m_EdgeRadius: 0
+--- !u!82 &9129142106021298743
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2980073203682211052}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
