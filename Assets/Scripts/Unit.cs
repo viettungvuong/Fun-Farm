@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     public double maxHealth;
     public double damage;
 
-    [HideInInspector] public double currentHealth;
+    public double currentHealth;
 
     protected Animator animator;
 
