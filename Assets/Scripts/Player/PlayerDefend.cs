@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
@@ -20,9 +22,6 @@ public class PlayerDefend : MonoBehaviour
 
     public Tile fenceHorizontal, fenceVertical;
 
-   
-
-
     public TextMeshProUGUI fenceText;
 
     private PlayerMove playerMove;
@@ -30,15 +29,14 @@ public class PlayerDefend : MonoBehaviour
 
     private Dictionary<Vector3Int, FenceOrientation> fences;
 
-    private int numberOfFences = 0;
-    public int intervalBetweenRefill = 45;
-    private int nextMinuteRefill = 5;
+    private int numberOfFences = 5;
+
+
 
     public PlayerDefendData Serialize(){
         PlayerDefendData playerDefendData = new PlayerDefendData
         {
             numberOfFences = numberOfFences,
-            nextMinuteRefill = nextMinuteRefill
         };
 
         if (fences == null){
@@ -56,7 +54,6 @@ public class PlayerDefend : MonoBehaviour
             fenceText.text = numberOfFences.ToString();
         }
 
-        nextMinuteRefill = playerDefendData.nextMinuteRefill;
 
         InitializeMap();
 
@@ -78,10 +75,7 @@ public class PlayerDefend : MonoBehaviour
     }
 
     private void Awake() {
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
-            enabled = false;
-            return;
-        }
+
 
         if (instance==null){
             instance = this;
@@ -118,7 +112,11 @@ public class PlayerDefend : MonoBehaviour
 
 
     void Start(){
-
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            fenceText.gameObject.SetActive(false);
+            return;
+        }
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -129,23 +127,16 @@ public class PlayerDefend : MonoBehaviour
 
     void Update()
     {
-        if (TimeManage.instance.currentMinute==nextMinuteRefill){
-            nextMinuteRefill+= intervalBetweenRefill;
-            if (nextMinuteRefill>=60){
-                nextMinuteRefill -= 60;
-            }
-
-            numberOfFences += 2;
-            if (fenceText!=null){
-                fenceText.text = numberOfFences.ToString();
-            }
-
+        if (TimeManage.instance.currentHour==0&&TimeManage.instance.currentMinute==0){
+            numberOfFences = 10; // refill to 10 fences per day
+            fenceText.text = numberOfFences.ToString();
         }
+
         if (GameController.HomeScene()==false){
             return; // only in home scene
         }
-
-
+        
+        
         if (Input.GetKeyDown(KeyCode.D))
         {
             buildFenceFlag = true;

@@ -29,7 +29,9 @@ public class PlayerUnit : Unit
         PlayerUnitData playerUnitData = new PlayerUnitData
         {
             currentHealth = currentHealth,
-            currentMoney = currentMoney
+            currentMoney = currentMoney,
+            nextSkeletonSpawnMin = SkeletonGenerate.nextMinuteRefill,
+            nextSlimeSpawnMin = SlimeGenerate.nextMinuteRefill
         };
         return playerUnitData;
     }
@@ -38,6 +40,9 @@ public class PlayerUnit : Unit
     {
         currentMoney = playerUnitData.currentMoney;
         currentHealth = playerUnitData.currentHealth;
+        SkeletonGenerate.nextMinuteRefill = playerUnitData.nextSkeletonSpawnMin;
+        SlimeGenerate.nextMinuteRefill = playerUnitData.nextSlimeSpawnMin;
+
     }
     
     public override void Awake()
@@ -171,9 +176,10 @@ public class PlayerUnit : Unit
     private IEnumerator DieCoroutine(){
         die = true;
         base.animator.SetBool("die", true);
-        diePanel.SetActive(true);
+        diePanel.SetActive(true); // show die panel
         diePanel.transform.SetAsLastSibling();
 
+        // wait for animator to complete
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
 
     }

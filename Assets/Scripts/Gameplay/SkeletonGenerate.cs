@@ -10,7 +10,8 @@ public class SkeletonGenerate : Generate
 
     static bool hasSpawned = false, conditionHandled = false;
     public static SkeletonGenerate instance;
-    static int intervalBetweenSpawns = 60, nextMinuteRefill = 40;
+    static int intervalBetweenSpawns = 60; 
+    public static int nextMinuteRefill = 40;
 
     protected override void Awake() {
         base.Awake();

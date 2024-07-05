@@ -109,11 +109,10 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator GoHomeCoroutine(){
         goHomePanel.SetActive(true);
         goHomePanel.transform.SetAsLastSibling();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f); // show panel for 3 secs
         VillagePlayerSpawn.GoBackHome(transform);
         goHomePanel.SetActive(false);
     }
-
 
 
     private void CheckTimeGoHome(){

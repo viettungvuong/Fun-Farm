@@ -63,6 +63,10 @@ public class PlayerGun : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
 
