@@ -17,7 +17,7 @@ public class PlayerPlant : MonoBehaviour
 
     public AudioClip audioClip;
 
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     private void OnDestroy()
     {
