@@ -6,7 +6,5 @@ using UnityEngine.UI;
 public class LoadButton : MonoBehaviour
 {
     public Text loadText;
-
-    
-
+   
 }

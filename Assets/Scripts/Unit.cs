@@ -12,15 +12,28 @@ public class Unit : MonoBehaviour
 
     protected Animator animator;
 
+    public PlayerUnit playerUnit;
+
     public virtual void Awake() // virtual for polymorphism
     {
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+
+        playerUnit = FindObjectOfType<PlayerUnit>();
     }
 
     public void TakeDamage(double inflictedDamage)
     {
         currentHealth -= inflictedDamage;
+
+        if(!gameObject.name.Contains("Slime") && gameObject.name.Contains("Skeleton")){
+            Debug.Log("INNN DAMAGE ANIMATION");
+            if(playerUnit != null){
+                Debug.Log("TAKEN DAMAGE ANIMATION");
+                playerUnit.HealthDamageAnimation();
+            }
+        }
+        
         if (currentHealth<=0){
             Die();
         }

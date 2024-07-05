@@ -94,11 +94,15 @@ public class Create : MonoBehaviour
                 else
                 {
                     Debug.LogError("Error when creating a new game");
+                    //show error
+                    outputError.text = "SOME ERRORS OCCUR";
                 }
             }
             else
             {
                 Debug.LogError("GameSaving component not found on 'SaveGame' object");
+                //show error
+                outputError.text = "SOME ERRORs OCCUR";
             }
         }
 
