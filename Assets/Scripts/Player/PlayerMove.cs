@@ -78,6 +78,8 @@ public class PlayerMove : MonoBehaviour
         playerGun = GetComponent<PlayerGun>();
 
         audioSource = GetComponent<AudioSource>();
+        footstepSound = Resources.Load<AudioClip>("Audio/footstep");
+
 
         plantPanel = GameObject.Find("PlantPanel");
     }

@@ -13,6 +13,8 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 1.0f; 
     public LayerMask enemyLayers; 
     private Collider2D attackCollider;
+    private AudioSource audioSource;
+    private AudioClip swordSound; 
 
     void Start()
     {
@@ -25,6 +27,9 @@ public class PlayerAttack : MonoBehaviour
         playerGun = GetComponent<PlayerGun>();
         animator = GetComponent<Animator>();
         playerUnit = GetComponent<Unit>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        swordSound = Resources.Load<AudioClip>("Audio/sword");
 
         attackCollider = GetComponent<Collider2D>();
         attackCollider.enabled = false; // Ensure the collider is disabled initially
@@ -95,6 +100,9 @@ public class PlayerAttack : MonoBehaviour
 
         animator.SetBool("idle", false);
         animator.Play(animationName);
+
+        audioSource.clip = swordSound;
+        audioSource.Play();
 
         // Enable the attack collider at the start of the attack
         attackCollider.enabled = true;
