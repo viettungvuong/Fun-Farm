@@ -168,13 +168,18 @@ public class PlayerUnit : Unit
         GameObject heart = Instantiate(heartBrokenPrefab, heartBrokenAnim, Quaternion.identity, headTransform);
     }
 
-
-    public override void Die(){
-        // show die menu
+    private IEnumerator DieCoroutine(){
         die = true;
         base.animator.SetBool("die", true);
         diePanel.SetActive(true);
         diePanel.transform.SetAsLastSibling();
+
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
+
+    }
+
+    public override void Die(){
+        StartCoroutine(DieCoroutine());
 
     }
 

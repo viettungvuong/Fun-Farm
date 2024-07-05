@@ -104,7 +104,7 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator GoHomeCoroutine(){
         goHomePanel.SetActive(true);
         goHomePanel.transform.SetAsLastSibling();
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
+        yield return new WaitForSeconds(3f);
         VillagePlayerSpawn.GoBackHome(transform);
         goHomePanel.SetActive(false);
     }
