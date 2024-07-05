@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class LoadBrowser : MonoBehaviour
 {
@@ -10,23 +12,44 @@ public class LoadBrowser : MonoBehaviour
     public GameObject buttonParent;
     private Canvas topLevelCanvas;
 
-    private void Start() {
-        List<string> games;
-        games = GameLoading.LoadGames();
+    private void Start()
+    {
+        InitializeButtons();
+    }
 
+    // Method to initialize the buttons
+    private void InitializeButtons()
+    {
+        // Clear existing buttons first
+        foreach (Transform child in buttonParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        List<string> games = GameLoading.LoadGames();
 
         for (int i = 0; i < games.Count; i++)
         {
             GameObject newButton = Instantiate(buttonPrefab, buttonParent.transform);
-            LoadButton loadButtonComponent = newButton.GetComponent<LoadButton>();
-            loadButtonComponent.loadText.text = games[i];
+            LoadRemoveButton loadButtonComponent = newButton.GetComponent<LoadRemoveButton>();
+            loadButtonComponent.mainButton.loadText.text = games[i];
             int index = i; // Capture the current value of i
-            newButton.GetComponent<Button>().onClick.AddListener(() => SelectLoadFile(games[index])); // add on click listener
+
+            // Add on click listener to the main button to load the game
+            loadButtonComponent.mainButton.GetComponent<Button>().onClick.AddListener(() => SelectLoadFile(games[index]));
+
+            // Add on click listener to the remove button to delete the save and reinitialize the buttons
+            loadButtonComponent.removeButton.GetComponent<Button>().onClick.AddListener(() => {
+                RemoveSave(games[index]);
+                InitializeButtons(); // Re-initialize buttons after deleting a save
+            });
         }
 
+        // Find the top-level canvas and mark it as not to be destroyed on load
         topLevelCanvas = FindTopLevelParent(gameObject).GetComponent<Canvas>();
-        DontDestroyOnLoad(topLevelCanvas.gameObject); // this only works for root gameObject
+        DontDestroyOnLoad(topLevelCanvas.gameObject); // This only works for root gameObject
     }
+
 
     private GameObject FindTopLevelParent(GameObject obj)
     {
@@ -36,6 +59,38 @@ public class LoadBrowser : MonoBehaviour
             parent = parent.parent;
         }
         return parent.gameObject;
+    }
+
+    private void RemoveSave(string name)
+    {
+        Debug.Log("Remove file name: " + name);
+        // Construct the full file path
+        string savesDirectory = Path.Combine(Application.persistentDataPath, "saves", name);
+        savesDirectory = savesDirectory.Replace("\\", "/");
+
+        // Check if the file exists before attempting to delete it
+        if (System.IO.Directory.Exists(savesDirectory))
+        {
+            // Delete all files in the directory
+            foreach (string file in System.IO.Directory.GetFiles(savesDirectory))
+            {
+                System.IO.File.Delete(file);
+            }
+
+            // Delete all subdirectories and their contents
+            foreach (string dir in System.IO.Directory.GetDirectories(savesDirectory))
+            {
+                System.IO.Directory.Delete(dir, true);
+            }
+
+            // Finally, delete the directory itself
+            System.IO.Directory.Delete(savesDirectory);
+            Debug.Log("Save directory removed successfully: " + savesDirectory);
+        }
+        else
+        {
+            Debug.LogWarning("Directory not found: " + savesDirectory);
+        }
     }
 
     private void SelectLoadFile(string name)
