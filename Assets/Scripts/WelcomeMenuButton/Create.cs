@@ -84,10 +84,11 @@ public class Create : MonoBehaviour
             GameSaving gameSaving = GameObject.Find("SaveGame").GetComponent<GameSaving>();
             if (gameSaving != null)
             {
+                PlayerUnit.playerMode = playerMode;
                 if (gameSaving.NewGame(gameName))
                 {
                     Debug.Log("Saved new game successfully");
-                    PlayerUnit.playerMode = playerMode;
+
 
                     Destroy(topLevelCanvas.gameObject);
                 }

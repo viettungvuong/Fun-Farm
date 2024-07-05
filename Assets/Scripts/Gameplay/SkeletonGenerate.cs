@@ -6,12 +6,12 @@ using UnityEngine.Tilemaps;
 
 public class SkeletonGenerate : Generate
 {
-    public static int skeletons = 0;
+    public static int skeletons;
 
-    static bool hasSpawned = false, conditionHandled = false;
+    static bool hasSpawned, conditionHandled;
     public static SkeletonGenerate instance;
     static int intervalBetweenSpawns = 60; 
-    public static int nextMinuteRefill = 40;
+    public static int nextMinuteRefill;
 
     protected override void Awake() {
         base.Awake();
@@ -27,6 +27,14 @@ public class SkeletonGenerate : Generate
     protected override void Start()
     {
         base.Start();
+        nextMinuteRefill = 40;
+        skeletons = 0;
+        hasSpawned = false;
+        conditionHandled = false;
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
 
         objectTag = "Skeleton";
         number = 2;
@@ -36,6 +44,11 @@ public class SkeletonGenerate : Generate
 
     void FixedUpdate()
     {
+            if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
+
         if (TimeManage.instance.IsDay()==true){
             return;
         }

@@ -42,6 +42,11 @@ public class HealthBar : MonoBehaviour
 
 
     private void LateUpdate() {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            gameObject.SetActive(false);
+            enabled = false;
+            return;
+        }
         if (GameController.HomeScene()){
             healthSlider.gameObject.transform.localScale = new Vector3(1, 1, 1); // only show health bar in scene home
         }

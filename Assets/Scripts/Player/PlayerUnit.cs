@@ -30,6 +30,7 @@ public class PlayerUnit : Unit
         {
             currentHealth = currentHealth,
             currentMoney = currentMoney,
+            playerMode = playerMode,
             nextSkeletonSpawnMin = SkeletonGenerate.nextMinuteRefill,
             nextSlimeSpawnMin = SlimeGenerate.nextMinuteRefill
         };
@@ -40,6 +41,7 @@ public class PlayerUnit : Unit
     {
         currentMoney = playerUnitData.currentMoney;
         currentHealth = playerUnitData.currentHealth;
+        playerMode = playerUnitData.playerMode;
         SkeletonGenerate.nextMinuteRefill = playerUnitData.nextSkeletonSpawnMin;
         SlimeGenerate.nextMinuteRefill = playerUnitData.nextSlimeSpawnMin;
 
@@ -61,7 +63,7 @@ public class PlayerUnit : Unit
         }
 
 
-        playerMode = PlayerMode.SURVIVAL; // default is survival
+        // playerMode = PlayerMode.SURVIVAL; // default is survival
     }
 
     private void Update() {

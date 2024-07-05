@@ -7,13 +7,13 @@ using UnityEngine.Tilemaps;
 public class SlimeGenerate : Generate
 {
 
-    public static int slimes = 0;
+    public static int slimes;
 
-    static bool hasSpawned = false, conditionHandled = false;
+    static bool hasSpawned, conditionHandled;
 
     public static SlimeGenerate instance;
     static int intervalBetweenSpawns = 60; 
-    public static int nextMinuteRefill = 30;
+    public static int nextMinuteRefill;
 
     protected override void Awake() {
         base.Awake();
@@ -29,6 +29,15 @@ public class SlimeGenerate : Generate
     protected override void Start()
     {
         base.Start();
+        nextMinuteRefill = 30;
+        slimes = 0;
+        hasSpawned = false;
+        conditionHandled = false;
+
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
 
         objectTag = "Slime";
         number = 3;
@@ -38,6 +47,10 @@ public class SlimeGenerate : Generate
 
     void FixedUpdate()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         if (TimeManage.instance.IsDay()){
             enemyIndicatorIcon.sprite = slimeSprite;
         }

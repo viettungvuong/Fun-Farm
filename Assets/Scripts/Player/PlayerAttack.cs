@@ -32,6 +32,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         if (GameController.HomeScene() == false || playerGun.currentWeapon != Weapon.SWORD)
         {
             return;

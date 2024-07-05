@@ -31,10 +31,7 @@ public abstract class Generate : MonoBehaviour
 
     protected virtual void Start()
     {
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
-            enabled = false;
-            return;
-        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();

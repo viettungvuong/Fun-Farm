@@ -20,15 +20,18 @@ public class PlayerHealth : MonoBehaviour
 
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             healthText.gameObject.SetActive(false);
-
             enabled = false;
-
             return;
         }
     }
 
     void Update()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            healthText.gameObject.SetActive(false);
+            return;
+        }
         float currentTimeOfDay = timeManage.currentHour;
         float timePassed = currentTimeOfDay - previousTimeOfDay;
             if (timePassed < 0) // start a new day

@@ -127,6 +127,11 @@ public class PlayerDefend : MonoBehaviour
 
     void Update()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            fenceText.gameObject.SetActive(false);
+            return;
+        }
         if (TimeManage.instance.currentHour==0&&TimeManage.instance.currentMinute==0){
             numberOfFences = 10; // refill to 10 fences per day
             fenceText.text = numberOfFences.ToString();

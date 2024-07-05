@@ -86,6 +86,10 @@ public class PlayerGun : MonoBehaviour
 
     void Update()
     {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            enabled = false;
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SwitchWeapon();
