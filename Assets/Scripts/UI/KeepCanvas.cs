@@ -52,6 +52,7 @@ public class KeepCanvas : MonoBehaviour
             if (hasDontDestroyOnLoad){ // keep dontdestroyonload canvas
                 foreach (Canvas cv in canvases)
                 {
+                    Debug.Log(cv.gameObject.scene.name);
                     if (cv.gameObject.scene.name!="DontDestroyOnLoad"){
                         Destroy(cv.gameObject);
                     }
