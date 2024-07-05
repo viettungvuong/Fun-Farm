@@ -115,7 +115,6 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-
     private void CheckTimeGoHome(){
         if (TimeManage.instance.IsDay()==false){
             StopAllCoroutines();
