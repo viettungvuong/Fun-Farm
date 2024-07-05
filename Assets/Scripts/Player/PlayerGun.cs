@@ -161,6 +161,9 @@ public class PlayerGun : MonoBehaviour
         bulletInstance.transform.rotation = rotation;
         bulletInstance.SetActive(true);
 
+        audioSource.clip = shootSound;
+        audioSource.Play();
+
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
         bullet.maxRange = range;
         bullet.damage = damage;
