@@ -112,7 +112,7 @@ public class PlantHealthBar : MonoBehaviour
             return;
         }
 
-        if (PlayerUnit.playerMode==PlayerMode.CREATIVE||plant.currentStage == plant.maxStage){
+        if (plant.currentStage == plant.maxStage){
             healthSlider.gameObject.SetActive(false);
             return;
         }
