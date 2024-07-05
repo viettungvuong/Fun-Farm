@@ -47,6 +47,7 @@ public class PlayerPlant : MonoBehaviour
         playerUnit = GetComponent<PlayerUnit>();
 
         audioSource = gameObject.GetComponent<AudioSource>();
+        audioClip = Resources.Load<AudioClip>("Audio/watering");
         
 
     }

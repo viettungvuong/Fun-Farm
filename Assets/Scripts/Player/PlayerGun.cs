@@ -43,6 +43,9 @@ public class PlayerGun : MonoBehaviour
     public Transform gunDown;
     public Transform gunHorizontal;
 
+    private AudioSource audioSource;
+    private AudioClip shootSound; 
+
     public PlayerGunData Serialize()
     {
         PlayerGunData data = new PlayerGunData();
@@ -82,6 +85,9 @@ public class PlayerGun : MonoBehaviour
             reloadingIndicator.fillAmount = 0;
             reloadingIndicator.gameObject.SetActive(false);
         }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        shootSound = Resources.Load<AudioClip>("Audio/shooting");
     }
 
     void Update()
@@ -154,6 +160,9 @@ public class PlayerGun : MonoBehaviour
         GameObject bulletInstance = ObjectPooling.SpawnFromPool("Bullet", spawnPosition);
         bulletInstance.transform.rotation = rotation;
         bulletInstance.SetActive(true);
+
+        audioSource.clip = shootSound;
+        audioSource.Play();
 
         Bullet bullet = bulletInstance.GetComponent<Bullet>();
         bullet.maxRange = range;
