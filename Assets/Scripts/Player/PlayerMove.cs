@@ -57,6 +57,8 @@ public class PlayerMove : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip footstepSound;
 
+    static bool goHome = false;
+
     void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -111,25 +113,28 @@ public class PlayerMove : MonoBehaviour
     }
 
     private IEnumerator GoHomeCoroutine(){
+        goHome = true;
         goHomePanel.SetActive(true);
         goHomePanel.transform.SetAsLastSibling();
-        yield return new WaitForSeconds(3f); // show panel for 3 secs
         VillagePlayerSpawn.GoBackHome(transform);
-        SceneManager.LoadScene("SceneHome");
+        
+        yield return new WaitForSeconds(3f); // show panel for 3 secs
         goHomePanel.SetActive(false);
+        goHome = false;
     }
 
 
     private void CheckTimeGoHome(){
         if (TimeManage.instance.IsDay()==false&&!GameController.HomeScene()){
-            StopAllCoroutines();
             StartCoroutine(GoHomeCoroutine());
         }
     }
 
     void Update()
     {
-        CheckTimeGoHome(); // check whether it's time to go back home
+        if (!goHome){
+            CheckTimeGoHome(); // check whether it's time to go back home
+        }
 
         moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position); // walking speed based on terrain
         bool holdArrowKey = false;
