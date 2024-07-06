@@ -1,4 +1,4 @@
-Shader "Custom/PlantGlowShader"
+Shader "Custom/GlowShader"
 {
     Properties
     {

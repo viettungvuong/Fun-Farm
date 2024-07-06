@@ -177,12 +177,13 @@ public class PlayerUnit : Unit
 
     private IEnumerator DieCoroutine(){
         die = true;
-        base.animator.SetBool("die", true);
-        diePanel.SetActive(true); // show die panel
-        diePanel.transform.SetAsLastSibling();
+        base.animator.Play("Die");
 
         // wait for animator to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die"));
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die")+1f);
+
+        diePanel.SetActive(true); // show die panel
+        diePanel.transform.SetAsLastSibling();
 
     }
 
