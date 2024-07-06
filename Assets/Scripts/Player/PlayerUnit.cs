@@ -23,7 +23,7 @@ public class PlayerUnit : Unit
 
     public Transform headTransform;
 
-    private bool die = false;
+    public bool die = false;
 
     public PlayerUnitData Serialize(){
         PlayerUnitData playerUnitData = new PlayerUnitData
@@ -188,7 +188,10 @@ public class PlayerUnit : Unit
     }
 
     public override void Die(){
-        StartCoroutine(DieCoroutine());
+        if (die==false){
+            StartCoroutine(DieCoroutine());
+        }
+
 
     }
 

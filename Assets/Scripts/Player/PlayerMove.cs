@@ -44,6 +44,7 @@ public class PlayerMove : MonoBehaviour
     private PlayerPlant playerPlant;
     private PlayerAttack playerAttack;
     private PlayerGun playerGun;
+    private PlayerUnit playerUnit;
 
     public List<FootprintTile> footprints;
 
@@ -76,6 +77,7 @@ public class PlayerMove : MonoBehaviour
         playerPlant = GetComponent<PlayerPlant>();
         playerAttack = GetComponent<PlayerAttack>();
         playerGun = GetComponent<PlayerGun>();
+        playerUnit = GetComponent<PlayerUnit>();
 
         audioSource = GetComponent<AudioSource>();
         footstepSound = Resources.Load<AudioClip>("Audio/footstep");
@@ -208,7 +210,8 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                if (playerPlant.isPlanting == false && playerAttack.isAttacking == false && playerGun.isShooting == false)
+                if (playerPlant.isPlanting == false && playerAttack.isAttacking == false && playerGun.isShooting == false
+                && playerUnit.die == false)
                 { // not planting or attacking then start the idle animation
                     animator.Play(GetIdleAnimationName()); // idle
                 }
