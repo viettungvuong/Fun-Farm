@@ -7,18 +7,9 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenu; // Assign in inspector
     public GameObject confirmMenu; // Assign in inspector
-    private bool isShowing;
-
+   
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("ESC click");
-            isShowing = !isShowing;
-            pauseMenu.SetActive(isShowing);
-        }
-    }
+
 
     public void Continue()
     {
@@ -30,10 +21,5 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Exit");
         confirmMenu.SetActive(true);
-    }
-
-    public void Save()
-    {
-        Debug.Log("Save");
     }
 }
