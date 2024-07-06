@@ -15,7 +15,7 @@ public class Create : MonoBehaviour
     {
         inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
         topLevelCanvas = FindTopLevelParent(gameObject).GetComponent<Canvas>();
-        DontDestroyOnLoad(topLevelCanvas.gameObject); // this only works for root gameObject
+        DontDestroyOnLoadManager.DontDestroyOnLoad(topLevelCanvas.gameObject); // this only works for root gameObject
     }
 
     private GameObject FindTopLevelParent(GameObject obj)

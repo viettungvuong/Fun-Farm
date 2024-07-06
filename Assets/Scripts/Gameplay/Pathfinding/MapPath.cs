@@ -12,7 +12,7 @@ public class MapPath : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
         if (instance == null)
         {
             instance = this;

@@ -34,8 +34,9 @@ public class GameController : MonoBehaviour
         transform.localScale = new Vector3(1, 1, 1);
     }
 
-    public static void OpenMenu(GameObject canvasObject){
-        Destroy(canvasObject);
+    public static void OpenMenu(){ // go back to menu
+        // Destroy(canvasObject);
+        DontDestroyOnLoadManager.DestroyAll();
         SceneManager.LoadScene("SceneWelcome");
     }
 

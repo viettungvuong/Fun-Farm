@@ -44,6 +44,9 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
+        if (player == null){
+            return;
+        }
         float clampedX = Mathf.Clamp(player.position.x + offset.x, minBoundary.x + cameraWidth/2 - offset.x, maxBoundary.x - cameraWidth/2 + offset.x);
         float clampedY = Mathf.Clamp(player.position.y + offset.y, minBoundary.y + cameraHeight/2 - offset.y, maxBoundary.y - cameraHeight/2 + offset.y);
         // Debug.Log(clampedX);

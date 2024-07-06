@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wood : MonoBehaviour
 {
     private void Start() {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
     }
     
     private void Update() {

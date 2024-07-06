@@ -52,7 +52,7 @@ public class PlayerUnit : Unit
         base.Awake();
         currentMoney = maxMoney;
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
         if (instance == null)
         {
             instance = this;
@@ -70,7 +70,7 @@ public class PlayerUnit : Unit
         if (die&&Input.GetKey(KeyCode.Space)){
             GameObject canvasObject = GameObject.Find("Canvas");
             if (canvasObject!=null){
-                GameController.OpenMenu(canvasObject); // go back to menu
+                GameController.OpenMenu(); // go back to menu
             }
 
         }

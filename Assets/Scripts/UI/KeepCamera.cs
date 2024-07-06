@@ -14,7 +14,7 @@ public class KeepCamera : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
         }
         else
         {

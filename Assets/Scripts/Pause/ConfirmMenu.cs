@@ -9,7 +9,8 @@ public class ConfirmMenu : MonoBehaviour
 
     public void YesClick()
     {
-        SceneManager.LoadSceneAsync(0); //Open Welcome Menu
+        // SceneManager.LoadSceneAsync(0); //Open Welcome Menu
+        GameController.OpenMenu();
     }
 
     public void NoClick()

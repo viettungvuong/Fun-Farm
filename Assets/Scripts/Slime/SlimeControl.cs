@@ -49,7 +49,7 @@ public class SlimeControl : MonoBehaviour
 
         InitializeMap();
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
 
         plantPositions = new List<Vector3Int>();
         targetPlantPosition = null;

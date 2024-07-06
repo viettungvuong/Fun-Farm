@@ -34,7 +34,7 @@ public class TimeManage : MonoBehaviour
         currentHour = timeData.currentHour;
         currentMinute = timeData.currentMinute;
         currentDay = timeData.currentDay;
-        
+
         string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
         string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
         if (timeText != null)
@@ -60,7 +60,7 @@ public class TimeManage : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
         if (instance == null)
         {
             instance = this;

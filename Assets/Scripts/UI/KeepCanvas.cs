@@ -27,6 +27,9 @@ public class KeepCanvas : MonoBehaviour
 
     private void InitializeCanvas()
     {
+        if (SceneManager.GetActiveScene().name=="SceneWelcome"){
+            return;
+        }
         try{
             List<Canvas> canvases = FindObjectsOfType<Canvas>().ToList();
             bool hasDontDestroyOnLoad = false;
@@ -59,7 +62,7 @@ public class KeepCanvas : MonoBehaviour
                 }
             }
 
-            DontDestroyOnLoad(canvas);
+            DontDestroyOnLoadManager.DontDestroyOnLoad(canvas.gameObject);
         } catch (Exception err){
             Debug.LogError(err.Message);
         }

@@ -47,7 +47,7 @@ public class LoadBrowser : MonoBehaviour
 
         // Find the top-level canvas and mark it as not to be destroyed on load
         topLevelCanvas = FindTopLevelParent(gameObject).GetComponent<Canvas>();
-        DontDestroyOnLoad(topLevelCanvas.gameObject); // This only works for root gameObject
+        DontDestroyOnLoadManager.DontDestroyOnLoad(topLevelCanvas.gameObject); // This only works for root gameObject
     }
 
 
