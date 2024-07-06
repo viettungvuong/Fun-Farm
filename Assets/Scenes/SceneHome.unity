@@ -9611,7 +9611,7 @@ MonoBehaviour:
   currentHour: 6
   currentMinute: 0
   currentDay: 1
-  updateIntervalSeconds: 1.5
+  updateIntervalSeconds: 5
   timeText: {fileID: 330589925}
   dayText: {fileID: 1573718404}
 --- !u!114 &1635994932
@@ -9626,10 +9626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d243e5516954e238f5f7cf3a2d225d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTilemap: {fileID: 0}
-  woodNumber: 6
-  intervalBetweenFenceRefills: 30
-  nextMinuteRefill: 0
 --- !u!114 &1635994933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21822,6 +21818,7 @@ MonoBehaviour:
   coinJumpInPrefab: {fileID: 2370031428210823141, guid: 6c72f5c5f5db34b1497614739dfb79c3, type: 3}
   heartBrokenPrefab: {fileID: 0}
   headTransform: {fileID: 912123363}
+  die: 0
 --- !u!1 &8109906583723888398
 GameObject:
   m_ObjectHideFlags: 0

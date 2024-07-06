@@ -115,12 +115,13 @@ public class PlayerMove : MonoBehaviour
         goHomePanel.transform.SetAsLastSibling();
         yield return new WaitForSeconds(3f); // show panel for 3 secs
         VillagePlayerSpawn.GoBackHome(transform);
+        SceneManager.LoadScene("SceneHome");
         goHomePanel.SetActive(false);
     }
 
 
     private void CheckTimeGoHome(){
-        if (TimeManage.instance.IsDay()==false){
+        if (TimeManage.instance.IsDay()==false&&!GameController.HomeScene()){
             StopAllCoroutines();
             StartCoroutine(GoHomeCoroutine());
         }
@@ -218,11 +219,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if (!TimeManage.instance.IsDay() && !GameController.HomeScene())
-        { // go home when the night comes
-            VillagePlayerSpawn.GoBackHome(transform);
-            SceneManager.LoadScene("SceneHome");
-        }
 
         // CheckFootprint(); // check all footprints in game
     }

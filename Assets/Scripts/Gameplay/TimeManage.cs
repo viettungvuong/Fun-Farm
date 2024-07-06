@@ -102,14 +102,14 @@ public class TimeManage : MonoBehaviour
 
     public bool IsDay()
     {
-        return currentHour >= 6 && currentHour <= 18;
+        return currentHour >= 6 && currentHour < 19;
     }
 
     void UpdateLight()
     {
-        float maxIntensityDay = 2.0f;
+        float maxIntensityDay = 1.0f;
         float maxIntensityNight = 0.85f;
-        float minIntensityDay = 1.0f;
+        float minIntensityDay = 0.8f;
         float minIntensityNight = 0.1f;
         Color dayColor = Color.white;
         Color nightColor = new Color(0.1f, 0.1f, 0.35f); // dark blue
@@ -123,7 +123,7 @@ public class TimeManage : MonoBehaviour
         else
         {
             // evening
-            if (currentHour >= 18 && currentHour < 24)
+            if (currentHour >= 19 && currentHour < 24)
             {
                 globalLight.intensity = Mathf.Lerp(maxIntensityNight, minIntensityNight, (currentHour - 18) / 6f);
             }
