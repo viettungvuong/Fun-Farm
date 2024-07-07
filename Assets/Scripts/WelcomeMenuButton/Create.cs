@@ -65,7 +65,7 @@ public class Create : MonoBehaviour
             {
                 Debug.Log("100% save");
                 topLevelCanvas.enabled = false;
-
+                StopAllCoroutines();
                 StartCoroutine(SaveGameAfterDelay());
             };
         }

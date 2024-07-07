@@ -29,6 +29,7 @@ public class SlimeGenerate : Generate
     protected override void Start()
     {
         base.Start();
+        Debug.Log("Start");
         nextMinuteRefill = 30;
         slimes = 0;
         hasSpawned = false;

@@ -10875,7 +10875,7 @@ MonoBehaviour:
   currentHour: 6
   currentMinute: 0
   currentDay: 1
-  updateIntervalSeconds: 5
+  updateIntervalSeconds: 2.5
   timeText: {fileID: 330589925}
   dayText: {fileID: 1573718404}
 --- !u!114 &1635994932

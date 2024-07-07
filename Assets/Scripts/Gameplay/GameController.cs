@@ -34,10 +34,16 @@ public static class GameController
         transform.localScale = new Vector3(1, 1, 1);
     }
 
-    public static void OpenMenu(){ // go back to menu
+    public static void OpenMenu(){ // completely quit game
         // Destroy(canvasObject);
-        DontDestroyOnLoadManager.DestroyAll();
-        SceneManager.LoadScene("SceneWelcome");
+        // DontDestroyOnLoadManager.DestroyAll();
+        // SceneManager.LoadScene("SceneWelcome");
+        #if UNITY_STANDALONE
+            Application.Quit();
+        #endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
 }
