@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour
     protected Animator animator;
 
     public PlayerUnit playerUnit;
+    private HealthBar healthBar;
 
     public virtual void Awake() // virtual for polymorphism
     {
@@ -45,6 +46,9 @@ public class Unit : MonoBehaviour
         }
         else if (gameObject.name.Contains("Skeleton")){
             SkeletonGenerate.skeletons--;
+        }
+        if (healthBar!=null){
+            healthBar.Disable();
         }
         StartCoroutine(DieCoroutine());
     }
