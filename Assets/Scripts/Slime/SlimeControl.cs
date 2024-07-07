@@ -75,9 +75,9 @@ public class SlimeControl : MonoBehaviour
             return; // only work in home scene
         }
 
-        if ((targetPlantPosition!=null&&(Vector3)rb.position==plantTilemap.CellToWorld((Vector3Int)targetPlantPosition))||PlantManager.instance.DetectPlant(rb.position)){ // detect any plant
+        PlantedPlant plant = PlantManager.instance.DetectPlant(rb.position);
+        if (plant!=null){ // detect any plant
             Debug.Log("Detect plant");
-            PlantedPlant plant = PlantManager.instance.GetPlantAt(rb.position);
             PlantManager.instance.DamagePlant(plant);
 
             Vector3Int cellPosition = plantTilemap.WorldToCell(rb.position);

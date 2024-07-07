@@ -323,25 +323,50 @@ public class PlantManager : MonoBehaviour
         }
     }
 
-    public bool DetectPlant(Vector3 worldPosition)
+    public PlantedPlant DetectPlant(Vector3 worldPosition)
     {
-        float detectionRadius = 0.2f;
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(worldPosition, detectionRadius);
-        
-        foreach (Collider2D hitCollider in hitColliders)
+        Vector3Int[] directions = new Vector3Int[]
         {
-            if (hitCollider.CompareTag("Plant"))
+            new Vector3Int(0, 0, 0), // current cell
+            new Vector3Int(1, 0, 0), // right
+            new Vector3Int(-1, 0, 0), // left
+            new Vector3Int(0, 1, 0), // up
+            new Vector3Int(0, -1, 0), // down
+            new Vector3Int(1, 1, 0), // top-right
+            new Vector3Int(-1, 1, 0), // top-left
+            new Vector3Int(1, -1, 0), // bottom-right
+            new Vector3Int(-1, -1, 0) // bottom-left
+        };
+
+        float threshold = 1f;
+
+        Vector3Int originCellPosition = plantMap.WorldToCell(worldPosition);
+        PlantedPlant nearestPlant = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (Vector3Int direction in directions)
+        {
+            Vector3Int cellPosition = originCellPosition + direction;
+            PlantedPlant plant = GetPlantAt(cellPosition);
+
+            if (plant != null)
             {
-                Vector3Int cellPosition = plantMap.WorldToCell(hitCollider.transform.position);
-                PlantedPlant plant = GetPlantAt(cellPosition);
-                if (plant != null)
+                Vector3 cellWorldPosition = plantMap.CellToWorld(cellPosition);
+                float distance = Vector3.Distance(worldPosition, cellWorldPosition);
+
+                if (distance < nearestDistance)
                 {
-                    return true;
+                    nearestDistance = distance;
+                    nearestPlant = plant;
                 }
             }
         }
-        
-        return false;
+
+        if (nearestDistance>threshold){
+            return null;
+        }
+
+        return nearestPlant;
     }
 
 
