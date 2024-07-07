@@ -137,7 +137,7 @@ public class PlayerPlant : MonoBehaviour
         plantTilemap.SetTile(plantCellPosition, plant.tiles[plant.currentStage]);
     }
 
-    const double waterUsage = 0.15;
+    const float waterUsage = 0.15f;
 
     public void WaterTree(Vector3 worldPosition)
     {
@@ -151,6 +151,9 @@ public class PlayerPlant : MonoBehaviour
         {
             return;
         }
+        // if (playerUnit.remainingWater<waterUsage){
+        //     return;
+        // }
         audioSource.clip = audioClip;
         StartCoroutine(WaterTreeCoroutine(worldPosition));
     }
@@ -181,6 +184,7 @@ public class PlayerPlant : MonoBehaviour
 
         animator.Play(animationName);
         audioSource.Play();
+        playerUnit.UseWater(waterUsage); // use amount of water
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
         isPlanting = false;
     }

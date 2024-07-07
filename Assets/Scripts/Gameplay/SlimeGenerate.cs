@@ -32,7 +32,7 @@ public class SlimeGenerate : Generate
         nextMinuteRefill = 30;
         slimes = 0;
         hasSpawned = false;
-        conditionHandled = false;
+        conditionHandled = false; // bỏ vào start để reset lại giá trị
 
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             enabled = false;
@@ -71,7 +71,7 @@ public class SlimeGenerate : Generate
             int hours = minsDiff / 60;
             int mins = minsDiff - hours * 60;
             string minsString = (mins < 10) ? "0" + mins : mins.ToString();
-            base.remainingTimeText.text = hours + " : " + minsString;
+            base.remainingTimeText.text = hours + ":" + minsString;
 
             hasSpawned = false; // allow spawning once per min
             conditionHandled = false;// allow check home scene and add 1 min only do once per min

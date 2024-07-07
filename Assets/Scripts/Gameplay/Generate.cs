@@ -109,6 +109,10 @@ public abstract class Generate : MonoBehaviour
 
             GameObject spawned = ObjectPooling.SpawnFromPool(objectTag, spawnPosition);
             spawned.SetActive(true);
+            HealthBar healthBar = spawned.GetComponent<HealthBar>();
+            if (healthBar!=null){
+                healthBar.Enable();
+            }
 
             if (spawnPosition.x > player.transform.position.x)
             {

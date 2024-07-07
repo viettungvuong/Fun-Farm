@@ -12,7 +12,7 @@ public class PlayerUnit : Unit
 {
     public int maxMoney;
     public static PlayerUnit instance;
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI coinText, waterText;
     [HideInInspector] public int currentMoney;
     public static PlayerMode playerMode;
     public GameObject diePanel;
@@ -23,7 +23,11 @@ public class PlayerUnit : Unit
 
     public Transform headTransform;
 
+    [HideInInspector] public float remainingWater = 1;
+
     public bool die = false;
+
+    private static bool hasRefilled = false;
 
     public PlayerUnitData Serialize(){
         PlayerUnitData playerUnitData = new PlayerUnitData
@@ -32,7 +36,8 @@ public class PlayerUnit : Unit
             currentMoney = currentMoney,
             playerMode = playerMode,
             nextSkeletonSpawnMin = SkeletonGenerate.nextMinuteRefill,
-            nextSlimeSpawnMin = SlimeGenerate.nextMinuteRefill
+            nextSlimeSpawnMin = SlimeGenerate.nextMinuteRefill,
+            water = remainingWater
         };
         return playerUnitData;
     }
@@ -42,8 +47,11 @@ public class PlayerUnit : Unit
         currentMoney = playerUnitData.currentMoney;
         currentHealth = playerUnitData.currentHealth;
         playerMode = playerUnitData.playerMode;
+        remainingWater = playerUnitData.water;
         SkeletonGenerate.nextMinuteRefill = playerUnitData.nextSkeletonSpawnMin;
         SlimeGenerate.nextMinuteRefill = playerUnitData.nextSlimeSpawnMin;
+
+        waterText.text = remainingWater.ToString();
 
     }
     
@@ -67,6 +75,16 @@ public class PlayerUnit : Unit
     }
 
     private void Update() {
+        if (!die){
+            if (!hasRefilled&&TimeManage.instance.currentMinute==0){ // refill every hour
+                RefillWater();
+            }
+
+            if (hasRefilled&&TimeManage.instance.currentMinute>0) // allow refill again after 0 min passes
+            {
+                hasRefilled = false;
+            }
+        }
         if (die&&Input.GetKey(KeyCode.Space)){
             GameObject canvasObject = GameObject.Find("Canvas");
             if (canvasObject!=null){
@@ -191,8 +209,19 @@ public class PlayerUnit : Unit
         if (die==false){
             StartCoroutine(DieCoroutine());
         }
+    }
 
+    public void UseWater(float amount){
+        if (remainingWater>=amount){
+            remainingWater -= amount;
+            waterText.text = remainingWater.ToString();
+        }
+    }
 
+    private void RefillWater(){
+        hasRefilled = true;
+        remainingWater = 1f;
+        waterText.text = remainingWater.ToString();
     }
 
 

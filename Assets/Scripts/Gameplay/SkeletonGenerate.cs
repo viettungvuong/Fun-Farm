@@ -30,7 +30,7 @@ public class SkeletonGenerate : Generate
         nextMinuteRefill = 40;
         skeletons = 0;
         hasSpawned = false;
-        conditionHandled = false;
+        conditionHandled = false; // bỏ vào start để reset lại giá trị static
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             enabled = false;
             return;

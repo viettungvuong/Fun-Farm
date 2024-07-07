@@ -29,6 +29,7 @@ public class HealthBar : MonoBehaviour
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
+        healthSlider.gameObject.SetActive(false);
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 
 
@@ -81,6 +82,10 @@ public class HealthBar : MonoBehaviour
         Vector2 offset = new Vector2(0f, 1f);
         Vector3 screenPosition = cam.WorldToScreenPoint(position + offset); // change to screen position
         healthSlider.transform.position = screenPosition;
+    }
+
+    public void Enable(){
+        healthSlider.gameObject.SetActive(true);
     }
 
     public void Disable(){

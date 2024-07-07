@@ -45,6 +45,7 @@ public class PlayerUnitData: DataSerialize{
     public int currentMoney;
     public double currentHealth;
     public int nextSlimeSpawnMin, nextSkeletonSpawnMin;
+    public float water;
     public PlayerMode playerMode;
 
     public static PlayerUnitData Deserialize(string json)
