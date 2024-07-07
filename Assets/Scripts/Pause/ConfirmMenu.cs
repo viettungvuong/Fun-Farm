@@ -15,6 +15,7 @@ public class ConfirmMenu : MonoBehaviour
 
     public void NoClick()
     {
+        Time.timeScale = 1;
         confirmMenu.SetActive(false);
     }
 }

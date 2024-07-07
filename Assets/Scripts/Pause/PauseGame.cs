@@ -12,6 +12,7 @@ public class PauseGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESC click");
+            Time.timeScale = 0;
             isShowing = !isShowing;
             pauseMenu.SetActive(isShowing);
         }

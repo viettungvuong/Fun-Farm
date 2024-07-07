@@ -95,7 +95,7 @@ public class PlayerUnit : Unit
     public void UseMoney(int amount){
         currentMoney -= amount;
         if (coinJumpOutPrefab == null) {
-            coinJumpOutPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/CoinJump.prefab");
+            coinJumpOutPrefab = Resources.Load<GameObject>("CoinJump");
             if (coinJumpOutPrefab == null){
                 Debug.LogError("Coin Prefab is not found");
 
@@ -120,7 +120,7 @@ public class PlayerUnit : Unit
 
     public void AddMoney(int amount){
         if (coinJumpInPrefab == null) {
-            coinJumpInPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/CoinEarn.prefab");
+            coinJumpInPrefab = Resources.Load<GameObject>("CoinEarn");
             if (coinJumpInPrefab == null){
                 Debug.LogError("Coin Prefab is not found");
 
@@ -152,7 +152,7 @@ public class PlayerUnit : Unit
 
     public void HealthDamageAnimation() {
         if (heartBrokenPrefab == null) {
-            heartBrokenPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/HeartBroken.prefab");
+            heartBrokenPrefab = Resources.Load<GameObject>("HeartBroken");
             if (heartBrokenPrefab == null){
                 Debug.LogError("Heart Prefab is not found");
 

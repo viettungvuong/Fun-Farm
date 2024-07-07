@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class GameController : MonoBehaviour
+public static class GameController
 {
 
 

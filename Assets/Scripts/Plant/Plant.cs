@@ -59,7 +59,7 @@ public class PlantedPlant
         tilePaths.Clear();
         foreach (var tile in tiles)
         {
-            tilePaths.Add(AssetDatabase.GetAssetPath(tile));
+            tilePaths.Add(tile.name);
         }
     }
 
@@ -68,7 +68,8 @@ public class PlantedPlant
         tiles.Clear();
         foreach (var path in tilePaths)
         {
-            var tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
+            Debug.Log(path);
+            var tile = Resources.Load<Tile>(path);
             tiles.Add(tile);
         }
     }
