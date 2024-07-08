@@ -125,9 +125,12 @@ public class PlayerMove : MonoBehaviour
 
 
     private void CheckTimeGoHome(){
-        if (TimeManage.instance.IsDay()==false&&!GameController.HomeScene()){
-            StartCoroutine(GoHomeCoroutine());
+        if (TimeManage.instance!=null){
+            if (TimeManage.instance.IsDay()==false&&!GameController.HomeScene()){
+                StartCoroutine(GoHomeCoroutine());
+            }
         }
+
     }
 
     void Update()
@@ -135,7 +138,9 @@ public class PlayerMove : MonoBehaviour
         if (!goHome){
             CheckTimeGoHome(); // check whether it's time to go back home
         }
-
+        if (SceneManager.GetActiveScene().name=="SceneInstructions"){
+            return;
+        }
         moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position); // walking speed based on terrain
         bool holdArrowKey = false;
         Orientation prevOrientation = orientation;
@@ -349,31 +354,44 @@ public class PlayerMove : MonoBehaviour
 
         orientation = newOrientation;
 
-        switch (orientation)
-        {
-            case Orientation.UP:
-                spriteRenderer.sprite = spriteOrientation[1];
+    spriteRenderer.flipX = orientation == Orientation.LEFT;
+    switch (orientation)
+    {
+        case Orientation.UP:
+            spriteRenderer.sprite = spriteOrientation[1];
+            if (SceneManager.GetActiveScene().name != "SceneInstructions")
+            {
                 arrowSprite.flipY = true; // flip arrow
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case Orientation.DOWN:
-                spriteRenderer.sprite = spriteOrientation[0];
+            }
+            break;
+        case Orientation.DOWN:
+            spriteRenderer.sprite = spriteOrientation[0];
+            if (SceneManager.GetActiveScene().name != "SceneInstructions")
+            {
                 arrowSprite.flipY = false;
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case Orientation.LEFT:
-                spriteRenderer.sprite = spriteOrientation[2];
+            }
+            break;
+        case Orientation.LEFT:
+            spriteRenderer.sprite = spriteOrientation[2];
+            if (SceneManager.GetActiveScene().name != "SceneInstructions")
+            {
                 arrowSprite.flipY = false;
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, -90);
                 FlipSprite(true); // Flip sprite to the left
-                break;
-            case Orientation.RIGHT:
-                spriteRenderer.sprite = spriteOrientation[2];
+            }
+            break;
+        case Orientation.RIGHT:
+            spriteRenderer.sprite = spriteOrientation[2];
+            if (SceneManager.GetActiveScene().name != "SceneInstructions")
+            {
                 arrowSprite.flipY = false;
                 arrowSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
                 FlipSprite(false); // Flip sprite to the right
-                break;
-        }
+            }
+            break;
+    }
 
         // StartOrientationChange(); // play animation to change orientation
     }
@@ -439,5 +457,40 @@ public class PlayerMove : MonoBehaviour
     {
         changingAnimation = false;
         animator.Play(GetIdleAnimationName());
+    }
+
+    public IEnumerator AutomaticMove(Vector3 destination)
+    {
+        void UpdateOrientation(Vector3 direction)
+        {
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                if (direction.x > 0)
+                    SetOrientation(Orientation.RIGHT);
+                else
+                    SetOrientation(Orientation.LEFT);
+            }
+            else
+            {
+                if (direction.y > 0)
+                    SetOrientation(Orientation.UP);
+                else
+                    SetOrientation(Orientation.DOWN);
+            }
+
+            animator.Play(GetWalkAnimationName()); // Play walking animation based on the orientation
+        }
+        while ((destination - (Vector3)rb.position).sqrMagnitude > 0.01f)
+        {
+            Vector3 direction = (destination - (Vector3)rb.position).normalized;
+            Debug.Log(direction);
+            UpdateOrientation(direction);
+            float speed = 1f;
+
+            rb.position = (Vector3)rb.position + direction * speed * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        rb.MovePosition(destination);
+        animator.Play(GetIdleAnimationName()); // Play idle animation when movement stops
     }
 }

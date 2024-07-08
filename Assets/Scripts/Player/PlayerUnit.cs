@@ -60,7 +60,10 @@ public class PlayerUnit : Unit
         base.Awake();
         currentMoney = maxMoney;
 
-        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
+        if (GameController.HomeScene()){
+            DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
+        }
+
         if (instance == null)
         {
             instance = this;
