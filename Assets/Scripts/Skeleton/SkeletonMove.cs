@@ -249,7 +249,7 @@ public class SkeletonMove : MonoBehaviour
 
     private bool isAttacking = false;
     private float nextAttackTime = 0f; 
-    public float attackCooldown = 0.8f; 
+    public float attackCooldown = 1f; 
 
     private void OnTriggerStay2D(Collider2D other)
     {
