@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Instructions : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static bool ManualOpen = false;
     void Start()
     {
-        
+        CheckFirstTimeOpen();
     }
 
-    // Update is called once per frame
-    void Update()
+    void CheckFirstTimeOpen()
     {
-        
+        // check if the game has been opened before
+        if (PlayerPrefs.HasKey("GameOpened")&&ManualOpen==false)
+        {
+            SceneManager.LoadScene("SceneWelcome");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("GameOpened", 1);
+            PlayerPrefs.Save();
+
+
+        }
+        ManualOpen = true;
     }
 }
