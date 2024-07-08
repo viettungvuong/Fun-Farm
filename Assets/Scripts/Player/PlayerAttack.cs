@@ -58,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy")&&isAttacking)
         {
             Unit enemyUnit = other.GetComponent<Unit>();
             if (enemyUnit != null)
@@ -107,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
         // Enable the attack collider at the start of the attack
         attackCollider.enabled = true;
 
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.5f);
 
         // Disable the attack collider at the end of the attack
         attackCollider.enabled = false;

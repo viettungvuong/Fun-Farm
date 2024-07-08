@@ -68,6 +68,8 @@ public class SlimeControl : MonoBehaviour
     }
 
 
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -75,9 +77,12 @@ public class SlimeControl : MonoBehaviour
             return; // only work in home scene
         }
 
+        if (TimeManage.instance.IsDay()==false){
+            GetComponent<Unit>().Die();
+        }
+
         PlantedPlant plant = PlantManager.instance.DetectPlant(rb.position);
         if (plant!=null){ // detect any plant
-            Debug.Log("Detect plant");
             PlantManager.instance.DamagePlant(plant);
 
             Vector3Int cellPosition = plantTilemap.WorldToCell(rb.position);

@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 6299584313062156107}
   - component: {fileID: 7051225686296782889}
   - component: {fileID: 999189481946926933}
-  - component: {fileID: 3577943110711921317}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Enemy
@@ -382,17 +381,3 @@ MonoBehaviour:
   blinkSpeed: 10
   blinkDuration: 0.5
   blinkColor: {r: 0.9245283, g: 0.06541473, b: 0.06541473, a: 1}
---- !u!114 &3577943110711921317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8409269588054559371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 255516e7c47b9487ca18207690857b49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSliderPrefab: {fileID: 7194675671010064935, guid: 73f593e679dab4509b4c6bb9307acb29, type: 3}
-  healthSlider: {fileID: 0}

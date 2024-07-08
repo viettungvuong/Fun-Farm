@@ -54,6 +54,20 @@ public abstract class Generate : MonoBehaviour
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
     }
 
+    protected string timeString(int nextMinuteRefill){
+        int minsDiff;
+        if (nextMinuteRefill>TimeManage.instance.currentMinute){
+            minsDiff = nextMinuteRefill - TimeManage.instance.currentMinute;
+        }
+        else{
+            minsDiff = nextMinuteRefill+60 - TimeManage.instance.currentMinute;
+        }
+        int hours = minsDiff / 60;
+        int mins = minsDiff - hours * 60;
+        string minsString = (mins < 10) ? "0" + mins : mins.ToString();
+        return hours + ":" + minsString;
+    }
+
 
     protected void Spawn(int number)
     {
@@ -109,10 +123,10 @@ public abstract class Generate : MonoBehaviour
 
             GameObject spawned = ObjectPooling.SpawnFromPool(objectTag, spawnPosition);
             spawned.SetActive(true);
-            HealthBar healthBar = spawned.GetComponent<HealthBar>();
-            if (healthBar!=null){
-                healthBar.Enable();
-            }
+            // HealthBar healthBar = spawned.GetComponent<HealthBar>();
+            // if (healthBar!=null){
+            //     healthBar.Enable();
+            // }
 
             if (spawnPosition.x > player.transform.position.x)
             {

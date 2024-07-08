@@ -29,7 +29,7 @@ public class HealthBar : MonoBehaviour
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
         // save as a child in canvas
-        healthSlider.gameObject.SetActive(false);
+        // healthSlider.gameObject.SetActive(false);
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
 
 
@@ -84,9 +84,13 @@ public class HealthBar : MonoBehaviour
         healthSlider.transform.position = screenPosition;
     }
 
-    public void Enable(){
-        healthSlider.gameObject.SetActive(true);
-    }
+    // public void Enable(){
+    //     if (healthSlider==null){
+    //         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+    //         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
+    //     }
+    //     healthSlider.gameObject.SetActive(true);
+    // }
 
     public void Disable(){
         healthSlider.gameObject.SetActive(false);
