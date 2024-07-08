@@ -34,8 +34,14 @@ public class BuyLand : MonoBehaviour
     }
 
     private void Redraw(){
-        foreach (Vector3Int position in purchasedTilePositions){
+        foreach (Vector3Int position in purchasedTilePositions)
+        {
             expandableGroundTilemap.SetTile(position, newTile);
+
+            Vector3 vt3 = expandableGroundTilemap.CellToWorld(position);
+            Vector3Int decorPos = decorMap.WorldToCell(vt3); // remove decor when purchasing a land
+
+            decorMap.SetTile(decorPos, null);
         }
     }
     private void Awake()
@@ -80,23 +86,6 @@ public class BuyLand : MonoBehaviour
     }
 
 
-
-    void ReloadPurchasedTiles()
-    {
-        // Clear existing tiles
-        expandableGroundTilemap.ClearAllTiles();
-
-        // Redraw purchased tiles
-        foreach (Vector3Int position in purchasedTilePositions)
-        {
-            expandableGroundTilemap.SetTile(position, newTile);
-
-            Vector3 vt3 = expandableGroundTilemap.CellToWorld(position);
-            Vector3Int decorPos = decorMap.WorldToCell(vt3); // remove decor
-
-            decorMap.SetTile(decorPos, null);
-        }
-    }
 
     // Update is called once per frame
     void Update()
