@@ -67,6 +67,16 @@ public class PlayerDefendData: DataSerialize
     }
 }
 
+[Serializable]
+public class BuyLandData: DataSerialize{
+    public List<Vector3Int> purchased;
+
+    public static BuyLandData Deserialize(string json)
+    {
+        return DataSerialize.Deserialize<BuyLandData>(json);
+    }
+}
+
 public class GameLoading : MonoBehaviour
 {
     public static bool? hasToLoad;
@@ -140,7 +150,7 @@ public class GameLoading : MonoBehaviour
 
     public bool LoadGame(string gameName)
     {
-        void FetchPlayer(string unitJson, string defendJson, string gunJson)
+        void FetchPlayer(string unitJson, string defendJson, string gunJson, string buyLandJson)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             // JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
@@ -150,6 +160,7 @@ public class GameLoading : MonoBehaviour
             player.GetComponent<PlayerUnit>().Reload(PlayerUnitData.Deserialize(unitJson));
             player.GetComponent<PlayerDefend>().Reload(PlayerDefendData.Deserialize(defendJson));
             player.GetComponent<PlayerGun>().Reload(PlayerGunData.Deserialize(gunJson));
+            player.GetComponent<BuyLand>().Reload(BuyLandData.Deserialize(buyLandJson));
         }
 
         void FetchTime(string json)
@@ -172,10 +183,12 @@ public class GameLoading : MonoBehaviour
         string playerGunJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "playerGun.data");
         string timeJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "time.data");
         string plantsJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "plant.data");
+        string buyLandJsonFileName = Path.Combine(Application.persistentDataPath, "saves", gameName, "buyLand.data");
 
         string playerJson = LoadJsonFromFile(playerJsonFileName);
         string playerDefendJson = LoadJsonFromFile(playerDefendJsonFileName);
         string playerGunJson = LoadJsonFromFile(playerGunJsonFileName);
+        string buyLandJson = LoadJsonFromFile(buyLandJsonFileName);
         string timeJson = LoadJsonFromFile(timeJsonFileName);
         string plantsJson = LoadJsonFromFile(plantsJsonFileName);
 
@@ -183,7 +196,7 @@ public class GameLoading : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(playerJson) && !string.IsNullOrEmpty(playerDefendJson))
             {
-                FetchPlayer(playerJson, playerDefendJson, playerGunJson);
+                FetchPlayer(playerJson, playerDefendJson, playerGunJson, buyLandJson);
             }
 
             if (!string.IsNullOrEmpty(timeJson))

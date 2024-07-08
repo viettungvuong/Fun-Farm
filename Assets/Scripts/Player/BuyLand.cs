@@ -1,33 +1,116 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class BuyLand : MonoBehaviour
 {
-    public Tilemap expandableGroundTilemap;
+    public static BuyLand Instance { get; private set; } // Singleton instance
+
+    private Tilemap expandableGroundTilemap;
     public TileBase newTile;
-    public GameObject buyLandPanel; // Reference to the buy land panel
+    public GameObject buyLandPanel;
+    public Vector3Int? currentCellPosition;
+
+    // Store purchased tile positions
+    private List<Vector3Int> purchasedTilePositions = new List<Vector3Int>();
+    public BuyLandData Serialize(){
+        BuyLandData buyLandData = new BuyLandData
+        {
+            purchased = purchasedTilePositions
+        };
+
+        return buyLandData;
+    }
+
+    public void Reload(BuyLandData buyLandData){
+        InitializeMap();
+
+        purchasedTilePositions = buyLandData.purchased;
+
+        Redraw();
+    }
+
+    private void Redraw(){
+        foreach (Vector3Int position in purchasedTilePositions){
+            expandableGroundTilemap.SetTile(position, newTile);
+        }
+    }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        InitializeMap();
+    }
+
+    private void OnDestroy()
+    {
+ 
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        if (GameController.HomeScene()){
+            expandableGroundTilemap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
+            Redraw();
+        }
+    }
+
+
+
+    void ReloadPurchasedTiles()
+    {
+        // Clear existing tiles
+        expandableGroundTilemap.ClearAllTiles();
+
+        // Redraw purchased tiles
+        foreach (Vector3Int position in purchasedTilePositions)
+        {
+            expandableGroundTilemap.SetTile(position, newTile);
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (!GameController.HomeScene())
+        {
+            return;
+        }
+
         Vector3Int currentCellPosition = expandableGroundTilemap.WorldToCell(transform.position);
 
         if (CanBuyLand(currentCellPosition))
         {
             buyLandPanel.SetActive(true);
-
-            // if (Input.GetKeyDown(KeyCode.B))
-            // {
-            //     BuyLandAt(targetCellPosition);
-            //     buyLandPanel.SetActive(false); 
-            // }
+            this.currentCellPosition = currentCellPosition;
         }
         else
         {
             buyLandPanel.SetActive(false);
+            this.currentCellPosition = null;
         }
     }
 
@@ -37,12 +120,21 @@ public class BuyLand : MonoBehaviour
         TileBase leftTile = expandableGroundTilemap.GetTile(leftCellPosition);
         TileBase currentTile = expandableGroundTilemap.GetTile(currentCellPosition);
 
-        return leftTile != null && currentTile == null; // can buy land if the left tile is of expandeableGround
-        // and current tile is null (not bought)
+        return leftTile != null && currentTile == null; // can buy land if the left tile is of expandableGround and current tile is null (not bought)
     }
 
-    void BuyLandAt(Vector3Int cellPosition)
+    public bool BuyLandHere()
     {
-        expandableGroundTilemap.SetTile(cellPosition, newTile);
+        if (!currentCellPosition.HasValue)
+        {
+            return false;
+        }
+
+        expandableGroundTilemap.SetTile(currentCellPosition.Value, newTile);
+
+        // save vector3int of purchased tiles
+        purchasedTilePositions.Add(currentCellPosition.Value);
+
+        return true;
     }
 }

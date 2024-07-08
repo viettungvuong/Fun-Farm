@@ -10,6 +10,7 @@ public class GameSaving : MonoBehaviour
     private PlayerUnitData playerUnit;
     private PlayerDefendData playerDefend;
     private PlayerGunData playerGun;
+    private BuyLandData buyLand;
     private TimeData time;
     private PlantPos plant;
 
@@ -57,6 +58,7 @@ public class GameSaving : MonoBehaviour
             playerUnit = player.GetComponent<PlayerUnit>().Serialize();
             playerDefend = player.GetComponent<PlayerDefend>().Serialize();
             playerGun = player.GetComponent<PlayerGun>().Serialize();
+            buyLand = player.GetComponent<BuyLand>().Serialize();
         }
 
         time = TimeManage.instance.Serialize();
@@ -88,6 +90,14 @@ public class GameSaving : MonoBehaviour
                 return null;
 
             return JsonUtility.ToJson(playerGun);
+        }
+
+        string SaveBuyLand()
+        {
+            if (buyLand == null)
+                return null;
+
+            return JsonUtility.ToJson(buyLand);
         }
 
         string SaveTime()
@@ -149,6 +159,18 @@ public class GameSaving : MonoBehaviour
             else
             {
                 Debug.LogError("SavePlayerGun() returned null. Player gun data not saved.");
+            }
+
+            string buyLandFile = Path.Combine(saveDirectory, "buyLand.data");
+            json = SaveBuyLand();
+            if (json != null)
+            {
+                Debug.Log(json);
+                File.WriteAllText(buyLandFile, json);
+            }
+            else
+            {
+                Debug.LogError("SaveBuyLand() returned null. Player gun data not saved.");
             }
 
             string timeFile = Path.Combine(saveDirectory, "time.data");

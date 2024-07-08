@@ -46,7 +46,14 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         map = GameObject.Find("Ground").GetComponent<Tilemap>();
-        expandableMap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
+
+        if (GameController.HomeScene()){
+            expandableMap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
+        }
+        else{
+            expandableMap = null;
+        }
+
 
         dataFromTiles = new Dictionary<TileBase, TileData>();
 
@@ -61,47 +68,108 @@ public class MapManager : MonoBehaviour
 
     public float GetWalkingSpeed(Vector3 worldPosition)
     {
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+       if (expandableMap==null){
+            Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        TileBase tile = map.GetTile(gridPosition);
+            TileBase tile = map.GetTile(gridPosition);
 
-        if (tile == null)
-            return 1f;
+            if (tile == null)
+            {
+                return defaultSpeed;
+            }
 
-        if (dataFromTiles.ContainsKey(tile) == false)
-        {
-            return defaultSpeed;
+            if (!dataFromTiles.ContainsKey(tile))
+            {
+                return defaultSpeed;
+            }
+
+
+            return dataFromTiles[tile].walkSpeed;
+        }
+        else{
+            Vector3Int gridPosition = expandableMap.WorldToCell(worldPosition);
+
+            TileBase tile = expandableMap.GetTile(gridPosition);
+
+            if (tile == null)
+            {
+                // if tile is not found in expandableMap, try map
+                gridPosition = map.WorldToCell(worldPosition);
+                tile = map.GetTile(gridPosition);
+
+                if (tile == null || !dataFromTiles.ContainsKey(tile))
+                    return defaultSpeed;
+            }
+
+            if (!dataFromTiles.ContainsKey(tile))
+            {
+                return defaultSpeed;
+            }
+
+
+            return dataFromTiles[tile].walkSpeed;
         }
 
-        float walkingSpeed = dataFromTiles[tile].walkSpeed;
-
-        return walkingSpeed;
     }
 
-    public Color GetTrailColor(Vector3 worldPosition){
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+    public Color GetTrailColor(Vector3 worldPosition)
+    {
+        if (expandableMap==null){
+            Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        TileBase tile = map.GetTile(gridPosition);
+            TileBase tile = map.GetTile(gridPosition);
 
-        if (tile == null)
-            return Color.white;
+            if (tile == null)
+            {
+                return Color.white;
+            }
 
-        if (dataFromTiles.ContainsKey(tile) == false)
-        {
-            return Color.white;
+            if (!dataFromTiles.ContainsKey(tile))
+            {
+                return Color.white;
+            }
+
+            Color dustTrailColor = dataFromTiles[tile].trailColor;
+
+            return dustTrailColor;
         }
+        else{
+            Vector3Int gridPosition = expandableMap.WorldToCell(worldPosition);
 
-        return dataFromTiles[tile].trailColor;
+            TileBase tile = expandableMap.GetTile(gridPosition);
+
+            if (tile == null)
+            {
+                // if tile is not found in expandableMap, try map
+                gridPosition = map.WorldToCell(worldPosition);
+                tile = map.GetTile(gridPosition);
+
+                if (tile == null||!dataFromTiles.ContainsKey(tile))
+                    return Color.white;
+            }
+
+            if (!dataFromTiles.ContainsKey(tile))
+            {
+                return Color.white;
+            }
+
+            Color dustTrailColor = dataFromTiles[tile].trailColor;
+
+            return dustTrailColor;
+        }
 
     }
 
     public bool Plantable(Vector3 worldPosition)
     {
-        Vector3Int gridPosition = map.WorldToCell(worldPosition);
+        if (GameController.HomeScene()==false){
+            return false;
+        }
+        Vector3Int gridPosition = expandableMap.WorldToCell(worldPosition);
 
         TileBase tile = expandableMap.GetTile(gridPosition);
 
-        if (tile == null || dataFromTiles.ContainsKey(tile)==false)
+        if (tile == null || !dataFromTiles.ContainsKey(tile))
             return false;
 
         bool plantable = dataFromTiles[tile].plantable;

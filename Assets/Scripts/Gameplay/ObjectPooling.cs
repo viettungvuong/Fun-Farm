@@ -60,7 +60,7 @@ public class ObjectPooling : MonoBehaviour
 
     public static GameObject SpawnFromPool(string tag, Vector3 position)
     {
-        if (!poolDictionary.ContainsKey(tag)) // If the pool does not contain this key
+        if (!poolDictionary.ContainsKey(tag)) // if the pool does not contain this key
         {
             // Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
             return null;
@@ -77,7 +77,7 @@ public class ObjectPooling : MonoBehaviour
         objectToSpawn.transform.position = position;
 
         spawnedObjects.Add(new Pair<GameObject, string>(objectToSpawn, tag)); 
-        // Add to the list of spawned objects
+        // add to the list of spawned objects
 
         return objectToSpawn;
     }
