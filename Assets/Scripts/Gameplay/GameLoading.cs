@@ -209,7 +209,7 @@ public class GameLoading : MonoBehaviour
                 FetchPlants(plantsJson);
             }
 
-            GameSaving gameSaving = GameObject.Find("SaveGame").GetComponent<GameSaving>();
+            GameSaving gameSaving = GameSaving.instance;
             if (gameSaving==null){
                 Debug.Log("Game saving not found");
                 return false;

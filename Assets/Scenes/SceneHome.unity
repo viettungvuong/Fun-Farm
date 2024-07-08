@@ -2630,7 +2630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1975896200}
   smoothSpeed: 0.125
-  offset: {x: 6, y: 0, z: 0}
+  offset: {x: 5, y: 0, z: 0}
 --- !u!1 &528858262
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,13 +4161,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814598993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0303, y: -1.835, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.9002998, y: 0.41499996, z: 0}
   m_LocalScale: {x: 0.5475201, y: 0.18805665, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 595198776}
-  m_Father: {fileID: 1177461304}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &814598995
 BoxCollider2D:
@@ -4681,12 +4681,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1597435058}
     m_Modifications:
     - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
+      propertyPath: price
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
       value: 
       objectReference: {fileID: 4413121495220917546}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 1000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
@@ -8401,8 +8405,7 @@ Transform:
   m_LocalPosition: {x: -3.87, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 814598994}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1177461305
@@ -25259,6 +25262,7 @@ SceneRoots:
   - {fileID: 618943015}
   - {fileID: 1783416948598379023}
   - {fileID: 1053880480}
+  - {fileID: 814598994}
   - {fileID: 1177461304}
   - {fileID: 1635994928}
   - {fileID: 51210710}
