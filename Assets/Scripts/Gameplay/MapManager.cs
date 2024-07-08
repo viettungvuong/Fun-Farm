@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
-    private Tilemap map;
+    private Tilemap map, expandableMap;
 
     [SerializeField] private List<TileData> tileDatas;
 
@@ -46,6 +46,7 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         map = GameObject.Find("Ground").GetComponent<Tilemap>();
+        expandableMap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
 
         dataFromTiles = new Dictionary<TileBase, TileData>();
 
@@ -98,7 +99,7 @@ public class MapManager : MonoBehaviour
     {
         Vector3Int gridPosition = map.WorldToCell(worldPosition);
 
-        TileBase tile = map.GetTile(gridPosition);
+        TileBase tile = expandableMap.GetTile(gridPosition);
 
         if (tile == null || dataFromTiles.ContainsKey(tile)==false)
             return false;

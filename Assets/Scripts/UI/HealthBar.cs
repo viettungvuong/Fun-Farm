@@ -28,6 +28,7 @@ public class HealthBar : MonoBehaviour
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         healthSlider = Instantiate(healthSliderPrefab, canvas.transform); // create copy of health slider prefab
+        healthSlider.transform.SetSiblingIndex(0); // render first to make it under everything UI
         // save as a child in canvas
         // healthSlider.gameObject.SetActive(false);
         sliderImageFill = healthSlider.GetComponentsInChildren<Image>().FirstOrDefault(t => t.name == "Fill");
