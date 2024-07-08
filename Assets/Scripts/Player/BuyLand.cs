@@ -9,7 +9,7 @@ public class BuyLand : MonoBehaviour
 {
     public static BuyLand Instance { get; private set; } // Singleton instance
 
-    private Tilemap expandableGroundTilemap;
+    private Tilemap expandableGroundTilemap, decorMap;
     public TileBase newTile;
     public GameObject buyLandPanel;
     public Vector3Int? currentCellPosition;
@@ -74,6 +74,7 @@ public class BuyLand : MonoBehaviour
     {
         if (GameController.HomeScene()){
             expandableGroundTilemap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
+            decorMap = GameObject.Find("Decor").GetComponent<Tilemap>();
             Redraw();
         }
     }
@@ -89,6 +90,11 @@ public class BuyLand : MonoBehaviour
         foreach (Vector3Int position in purchasedTilePositions)
         {
             expandableGroundTilemap.SetTile(position, newTile);
+
+            Vector3 vt3 = expandableGroundTilemap.CellToWorld(position);
+            Vector3Int decorPos = decorMap.WorldToCell(vt3); // remove decor
+
+            decorMap.SetTile(decorPos, null);
         }
     }
 
@@ -131,6 +137,11 @@ public class BuyLand : MonoBehaviour
         }
 
         expandableGroundTilemap.SetTile(currentCellPosition.Value, newTile);
+
+        Vector3 vt3 = expandableGroundTilemap.CellToWorld(currentCellPosition.Value);
+        Vector3Int decorPos = decorMap.WorldToCell(vt3);
+
+        decorMap.SetTile(decorPos, null);
 
         // save vector3int of purchased tiles
         purchasedTilePositions.Add(currentCellPosition.Value);
