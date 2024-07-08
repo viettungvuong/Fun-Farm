@@ -17,13 +17,12 @@ public class GameSaving : MonoBehaviour
 
     public GameObject savingPanelPrefab;
 
-    private string gameName = "Untitled";
 
     private Renderer renderer;
 
 
     public bool NewGame(string gameName, bool save=true){
-        this.gameName = gameName;
+        GameName.name = gameName;
         if (save){
             if (SaveGame()){ // save beforehand
                 Debug.Log("saved successfully");
@@ -42,7 +41,7 @@ public class GameSaving : MonoBehaviour
     }
 
     public string GetName(){
-        return gameName;
+        return GameName.name;
     }
 
     void Start()
@@ -58,9 +57,6 @@ public class GameSaving : MonoBehaviour
 
     }
 
-    private void Update() {
-        Debug.Log(gameName);
-    }
 
     private void InitializeReferences()
     {
@@ -132,7 +128,7 @@ public class GameSaving : MonoBehaviour
         try
         {
             InitializeReferences();
-            string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", gameName);
+            string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", GameName.name);
             if (Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
@@ -230,13 +226,13 @@ public class GameSaving : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Player");
         if (other.gameObject.CompareTag("Player"))
         {
             if (SkeletonGenerate.skeletons <= 0 && SlimeGenerate.slimes <= 0)
             {
                 if (SaveGame()) // only save when all enemies have been killed
                 {
-                    Debug.Log("Saved successfully "+gameName);
                     StartCoroutine(ShowSavingPanel());
                 }
             }

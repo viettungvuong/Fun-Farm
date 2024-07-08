@@ -8,7 +8,6 @@ using UnityEngine.Tilemaps;
 public static class GameController
 {
 
-
     public static float GetAnimationLength(Animator animator, string animationName)
     {
         AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
