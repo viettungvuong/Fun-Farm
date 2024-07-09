@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameSaving : MonoBehaviour
 {
     public static GameSaving instance;
+    public GameObject gameController;
+    private GameName gameName;
     private GameObject player;
     private PlayerUnitData playerUnit;
     private PlayerDefendData playerDefend;
@@ -21,8 +23,8 @@ public class GameSaving : MonoBehaviour
     private Renderer renderer;
 
 
-    public bool NewGame(string gameName, bool save=true){
-        GameName.name = gameName;
+    public bool NewGame(string name, bool save=true){
+        gameName.name = name;
         if (save){
             if (SaveGame()){ // save beforehand
                 Debug.Log("saved successfully");
@@ -41,7 +43,10 @@ public class GameSaving : MonoBehaviour
     }
 
     public string GetName(){
-        return GameName.name;
+        if (gameName!=null){
+            return gameName.name;
+        }
+        return null;
     }
 
     void Start()
@@ -52,9 +57,8 @@ public class GameSaving : MonoBehaviour
         else{
             Destroy(this);
         }
-        DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
         renderer = GetComponent<Renderer>();
-
+        gameName = gameController.GetComponent<GameName>();
     }
 
 
@@ -128,7 +132,7 @@ public class GameSaving : MonoBehaviour
         try
         {
             InitializeReferences();
-            string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", GameName.name);
+            string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", gameName.name);
             if (Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);

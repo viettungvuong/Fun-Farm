@@ -2630,7 +2630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1975896200}
   smoothSpeed: 0.125
-  offset: {x: 5, y: 0, z: 0}
+  offset: {x: 5.5, y: 0, z: 0}
 --- !u!1 &528858262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,7 +2645,7 @@ GameObject:
   - component: {fileID: 528858268}
   - component: {fileID: 528858267}
   - component: {fileID: 528858266}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlantTilemap
   m_TagString: Plant
   m_Icon: {fileID: 0}
@@ -4279,6 +4279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea295cb63a18f4c27a0f45fa1176013a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 1635994926}
   savingPanelPrefab: {fileID: 5801823961032728581, guid: 5b3a651939d724dc69fd9aba65f1a44a, type: 3}
 --- !u!1 &868938671
 GameObject:
@@ -10799,6 +10800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361719698024d4abea0a81824feb8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Untitled
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
