@@ -46,6 +46,7 @@ public class ObjectPooling : MonoBehaviour
 
             if (!gObject.activeInHierarchy) // If the object is not active in the game
             {
+                Debug.Log("Put back into the pool");
                 DespawnToPool(gObject, tag); // Enqueue it back into the pool
                 spawnedObjects.RemoveAt(i);
             }

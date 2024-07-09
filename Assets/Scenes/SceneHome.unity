@@ -908,7 +908,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -475.89682, y: -0.27001953}
+  m_AnchoredPosition: {x: -237.89682, y: -0.27001953}
   m_SizeDelta: {x: 184.03992, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &146011855
@@ -1318,7 +1318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -778, y: -3}
+  m_AnchoredPosition: {x: -540, y: -3}
   m_SizeDelta: {x: 69.39929, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &235900817
@@ -1926,10 +1926,10 @@ RectTransform:
   m_Children:
   - {fileID: 330589924}
   - {fileID: 1573718403}
+  - {fileID: 985118470}
   - {fileID: 1818403778}
   - {fileID: 212621523}
   - {fileID: 139529075}
-  - {fileID: 985118470}
   - {fileID: 235900818}
   m_Father: {fileID: 1597435058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4039,7 +4039,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimap: {fileID: 663717758}
-  mainCamera: {fileID: 519420031}
 --- !u!114 &732015805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4280,7 +4279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea295cb63a18f4c27a0f45fa1176013a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 1635994926}
   savingPanelPrefab: {fileID: 5801823961032728581, guid: 5b3a651939d724dc69fd9aba65f1a44a, type: 3}
 --- !u!1 &868938671
 GameObject:
@@ -4968,7 +4966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -272, y: -0.27001953}
+  m_AnchoredPosition: {x: -873, y: -0.27001953}
   m_SizeDelta: {x: 184.03992, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1053880479
@@ -10801,7 +10799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361719698024d4abea0a81824feb8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Untitled
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
@@ -11076,7 +11073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -966, y: -1}
+  m_AnchoredPosition: {x: -728, y: -1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1832644168

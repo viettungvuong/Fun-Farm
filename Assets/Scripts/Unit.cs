@@ -58,6 +58,6 @@ public class Unit : MonoBehaviour
         animator.SetTrigger("die");
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+0.2f);
         GetComponent<HealthBar>().healthSlider.gameObject.SetActive(false); // delete health bar
-        gameObject.SetActive(false); // delete game object
+        gameObject.SetActive(false); // delete game object // this also push back into the object pool
     }
 }

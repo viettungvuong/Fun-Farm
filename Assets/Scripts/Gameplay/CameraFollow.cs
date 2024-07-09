@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     public Tilemap tilemap;
 
     public float smoothSpeed = 0.125f;  
-    public Vector3 offset;  // offset so voi vi tri player
+    public Vector3 offset;  // offset relative to the player position
 
     Vector2 minBoundary; 
     Vector2 maxBoundary;
@@ -33,25 +33,26 @@ public class CameraFollow : MonoBehaviour
         Vector3 minWorld = tilemap.CellToWorld(min);
         Vector3 maxWorld = tilemap.CellToWorld(max);
 
-        // tim boundary
+        // Find boundaries
         minBoundary = new Vector2(minWorld.x, minWorld.y);
         maxBoundary = new Vector2(maxWorld.x, maxWorld.y);
 
-        // tim chieu dai va chieu cao cua camera
+        // Find camera height and width
         cameraHeight = 2f * mainCamera.orthographicSize; 
         cameraWidth = cameraHeight * mainCamera.aspect;
     }
 
     void LateUpdate()
     {
-        if (player == null){
+        if (player == null)
+        {
             return;
         }
-        float clampedX = Mathf.Clamp(player.position.x + offset.x, minBoundary.x + cameraWidth/2 - offset.x, maxBoundary.x - cameraWidth/2 + offset.x);
-        float clampedY = Mathf.Clamp(player.position.y + offset.y, minBoundary.y + cameraHeight/2 - offset.y, maxBoundary.y - cameraHeight/2 + offset.y);
-        // Debug.Log(clampedX);
-        // Debug.Log(clampedY);
-        Vector3 clampedPosition = new Vector3(clampedX, clampedY, transform.position.z); // clamp de khong qua gioi han
+
+        float clampedX = Mathf.Clamp(player.position.x + offset.x, minBoundary.x + cameraWidth / 2, maxBoundary.x - cameraWidth / 2);
+        float clampedY = Mathf.Clamp(player.position.y + offset.y, minBoundary.y + cameraHeight / 2, maxBoundary.y - cameraHeight / 2);
+
+        Vector3 clampedPosition = new Vector3(clampedX, clampedY, transform.position.z); // keep within boundaries
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, clampedPosition, smoothSpeed);
         transform.position = smoothedPosition;
     }
