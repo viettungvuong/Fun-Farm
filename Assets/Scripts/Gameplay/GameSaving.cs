@@ -133,7 +133,7 @@ public class GameSaving : MonoBehaviour
         {
             InitializeReferences();
             string saveDirectory = Path.Combine(Application.persistentDataPath, "saves", gameName.name);
-            if (Directory.Exists(saveDirectory))
+            if (!Directory.Exists(saveDirectory))
             {
                 Directory.CreateDirectory(saveDirectory);
             }
