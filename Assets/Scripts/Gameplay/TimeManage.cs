@@ -86,7 +86,7 @@ public class TimeManage : MonoBehaviour
         {
             lastUpdated = DateTime.Now;
             currentMinute += 1;
-            string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
+
             if (currentMinute >= 60)
             {
                 currentMinute = 0;
@@ -98,6 +98,7 @@ public class TimeManage : MonoBehaviour
                     dayText.text = "Day " + currentDay.ToString();
                 }
             }
+            string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
             string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
             if (timeText != null)
             {

@@ -118,7 +118,7 @@ public class PlayerDefend : MonoBehaviour
             return;
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
-
+        fenceText.text = numberOfFences.ToString();
         InitializeMap();
 
     }
@@ -200,7 +200,7 @@ public class PlayerDefend : MonoBehaviour
         fences.Add(gridPosition, fence);
         numberOfFences--; // minus one available fence
 
-        // rb.position += new Vector2(0.5f, 0.5f); // slightly move to avoid collide the fence => cannot move player
+        rb.position += new Vector2(0.5f, 0.5f); // slightly move to avoid collide the fence => cannot move player
 
         // Start the coroutine to re-enable the collider after a delay
         if (tilemapCollider != null)
