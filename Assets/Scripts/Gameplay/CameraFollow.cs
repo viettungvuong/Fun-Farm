@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,8 +50,8 @@ public class CameraFollow : MonoBehaviour
             return;
         }
 
-        float clampedX = Mathf.Clamp(player.position.x + offset.x, minBoundary.x + cameraWidth / 2, maxBoundary.x - cameraWidth / 2);
-        float clampedY = Mathf.Clamp(player.position.y + offset.y, minBoundary.y + cameraHeight / 2, maxBoundary.y - cameraHeight / 2);
+        float clampedX = Mathf.Clamp(player.position.x + offset.x*1.3f, minBoundary.x + cameraWidth / 2, maxBoundary.x - cameraWidth / 2);
+        float clampedY = Mathf.Clamp(player.position.y + offset.y*1.3f, minBoundary.y + cameraHeight / 2, maxBoundary.y - cameraHeight / 2);
 
         Vector3 clampedPosition = new Vector3(clampedX, clampedY, transform.position.z); // keep within boundaries
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, clampedPosition, smoothSpeed);

@@ -31,7 +31,7 @@ public class VillagePlayerSpawn : MonoBehaviour
     }
 
     public static void GoBackHome(Transform transform){
-        transform.position = new Vector3(-16.56f, -4.33f);
+        transform.position = new Vector3(-14.56f, -4.33f);
         SceneManager.LoadScene("SceneHome"); // go back home
     }
 }
