@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class GameName : MonoBehaviour
 {
-    public string name = "Untitled";
+    public static string currentGameName = "Untitled";
 }

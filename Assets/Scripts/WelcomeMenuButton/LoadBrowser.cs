@@ -99,34 +99,13 @@ public class LoadBrowser : MonoBehaviour
         LoadSceneAndAccessGameController(name);
     }
 
-    // IEnumerator LoadGameAfterDelay(string name)
-    // {
-    //     yield return new WaitForSeconds(0.0f);
+    IEnumerator LoadGameAfterDelay(string name)
+    {
+        yield return new WaitForSeconds(1.5f);
 
-    //     GameObject gameControllerObject = GameObject.Find("GameController");
-    //     if (gameControllerObject != null)
-    //     {
-    //         GameLoading gameLoading = gameControllerObject.transform.GetChild(0).GetComponent<GameLoading>();
-    //         if (gameLoading != null)
-    //         {
-    //             bool load = gameLoading.LoadGame(name);
-    //             if (load){
-    //                 Debug.Log("Load successfully "+name);
-    //                 Destroy(topLevelCanvas.gameObject);
-    //             }
-
-
-    //         }
-    //         else
-    //         {
-    //             Debug.LogError("GameLoading component not found.");
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("GameController object not found in the scene.");
-    //     }
-    // }
+        GameLoading.hasToLoad = true;
+        GameLoading.gameName = name;
+    }
 
     private void LoadSceneAndAccessGameController(string name)
     {
@@ -136,8 +115,7 @@ public class LoadBrowser : MonoBehaviour
         {
             topLevelCanvas.enabled = false;
 
-            GameLoading.hasToLoad = true;
-            GameLoading.gameName = name;
+            StartCoroutine(LoadGameAfterDelay(name));
         };
 
 

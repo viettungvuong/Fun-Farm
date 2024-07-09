@@ -211,7 +211,7 @@ public class GameLoading : MonoBehaviour
 
             GameSaving gameSaving = GameSaving.instance;
             if (gameSaving==null){
-                Debug.Log("Game saving not found");
+                Debug.LogError("Game saving not found");
                 return false;
             }
             gameSaving.NewGame(gameName, save: false);

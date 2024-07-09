@@ -4039,6 +4039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimap: {fileID: 663717758}
+  mainCamera: {fileID: 519420031}
 --- !u!114 &732015805
 MonoBehaviour:
   m_ObjectHideFlags: 0
