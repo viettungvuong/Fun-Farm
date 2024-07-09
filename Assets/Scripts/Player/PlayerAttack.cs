@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     Unit playerUnit;
     [HideInInspector] public bool isAttacking = false;
     private float nextAttackTime = 0f;
-    public float cooldownTime = 0.5f;
+    public float cooldownTime = 0.2f;
     public float attackRange = 1.0f; 
     public LayerMask enemyLayers; 
     private Collider2D attackCollider;
