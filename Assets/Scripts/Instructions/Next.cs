@@ -36,9 +36,11 @@ public class Next : MonoBehaviour
         this.transform.localScale = new Vector3(0, 0, 0); // hide button
         Vector3 pointA = new Vector3(-7.29f, -3.92f);
         yield return StartCoroutine(playerMove.AutomaticMove(pointA));
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(0.5f); 
         Vector3 pointB = new Vector3(-17.12f, -3.92f);
         yield return StartCoroutine(playerMove.AutomaticMove(pointB));
+        instructions[iteration - 1].transform.GetChild(0).gameObject.SetActive(true); // show Village entry instructions
+        yield return new WaitForSeconds(2f);
 
         SceneManager.LoadScene("SceneWelcome"); // open welcome
     }

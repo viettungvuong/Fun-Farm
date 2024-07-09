@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class Instructions : MonoBehaviour
 {
     public static bool ManualOpen = false;
+    public GameObject canvas;
+    public Camera cam;
     void Start()
     {
         CheckFirstTimeOpen();
@@ -20,7 +22,8 @@ public class Instructions : MonoBehaviour
         {
             PlayerPrefs.SetInt("GameOpened", 1);
             PlayerPrefs.Save();
-
+            canvas.SetActive(true);
+            cam.enabled = true;
 
         }
         ManualOpen = true;

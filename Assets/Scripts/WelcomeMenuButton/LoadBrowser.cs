@@ -105,6 +105,8 @@ public class LoadBrowser : MonoBehaviour
 
         GameLoading.hasToLoad = true;
         GameLoading.gameName = name;
+
+        topLevelCanvas.enabled = false;
     }
 
     private void LoadSceneAndAccessGameController(string name)
@@ -113,7 +115,7 @@ public class LoadBrowser : MonoBehaviour
 
         asyncLoad.completed += (asyncOperation) =>
         {
-            topLevelCanvas.enabled = false;
+
 
             StartCoroutine(LoadGameAfterDelay(name));
         };
