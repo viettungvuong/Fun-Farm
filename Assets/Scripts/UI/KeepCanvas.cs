@@ -8,10 +8,13 @@ using UnityEngine.SceneManagement;
 public class KeepCanvas : MonoBehaviour
 {
     private Canvas canvas;
+    public static bool showCanvas = false;
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitializeCanvas();
+
+        showCanvas = false;
     }
 
     private void OnDestroy()
@@ -67,6 +70,15 @@ public class KeepCanvas : MonoBehaviour
             Debug.LogError(err.Message);
         }
        
+    }
+
+    private void Update() {
+        if (showCanvas){
+            canvas.enabled = true;
+        }
+        else{
+            canvas.enabled = false;
+        }
     }
 
 }

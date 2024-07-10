@@ -106,7 +106,7 @@ public class LoadBrowser : MonoBehaviour
 
         GameLoading.hasToLoad = true;
         GameLoading.gameName = name;
-
+        KeepCanvas.showCanvas = true;
 
     }
 
@@ -116,8 +116,6 @@ public class LoadBrowser : MonoBehaviour
 
         asyncLoad.completed += (asyncOperation) =>
         {
-
-
             StartCoroutine(LoadGameAfterDelay(name));
         };
 

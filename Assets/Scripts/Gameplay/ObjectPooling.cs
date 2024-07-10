@@ -36,7 +36,7 @@ public class ObjectPooling : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         for (int i = spawnedObjects.Count - 1; i >= 0; i--)
         {

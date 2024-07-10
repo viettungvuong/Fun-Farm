@@ -72,12 +72,14 @@ public class Create : MonoBehaviour
 
         IEnumerator SaveGameAfterDelay()
         {
-            yield return new WaitForSeconds(1.5f); // wait 5 sécs
+            yield return new WaitForSeconds(0.5f); // wait 5 sécs
 
             Debug.Log("Delayed 1 secs");
 
-            GameObject canvas = GameObject.Find("Canvas");
-            canvas.SetActive(true); // re enable main game canvas
+            // GameObject canvas = GameObject.Find("Canvas");
+            // canvas.SetActive(true); // re enable main game canvas
+
+            KeepCanvas.showCanvas = true;
 
             Debug.Log("Creating a new game");
 
