@@ -101,12 +101,13 @@ public class LoadBrowser : MonoBehaviour
 
     IEnumerator LoadGameAfterDelay(string name)
     {
-        yield return new WaitForSeconds(1.5f);
+        topLevelCanvas.enabled = false;
+        yield return new WaitForSeconds(0.5f);
 
         GameLoading.hasToLoad = true;
         GameLoading.gameName = name;
 
-        topLevelCanvas.enabled = false;
+
     }
 
     private void LoadSceneAndAccessGameController(string name)

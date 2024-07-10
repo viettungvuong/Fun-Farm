@@ -61,6 +61,9 @@ public class PlayerGun : MonoBehaviour
         bulletsInClip = playerGunData.bulletsInClip;
         ownedGun = playerGunData.ownedGun;
         currentWeapon = playerGunData.currentWeapon;
+
+        bulletCount.text = bulletsInClip + "/" + totalBullets;
+
     }
 
 

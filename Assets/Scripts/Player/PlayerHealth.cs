@@ -13,6 +13,14 @@ public class PlayerHealth : MonoBehaviour
     public TextMeshProUGUI healthText;
     public static bool healthDeteriorated = false;
 
+    private void Awake() {
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+            healthText.gameObject.SetActive(false);
+            enabled = false;
+            return;
+        }
+    }
+
     void Start()
     {
         playerUnit = GetComponent<PlayerUnit>();
