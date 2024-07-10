@@ -52,7 +52,7 @@ public class PlayerUnit : Unit
         SlimeGenerate.nextMinuteRefill = playerUnitData.nextSlimeSpawnMin;
 
         waterText.text = remainingWater.ToString();
-
+        
     }
     
     public override void Awake()
@@ -72,6 +72,8 @@ public class PlayerUnit : Unit
         {
             Destroy(gameObject);
         }
+
+        hasRefilled = false;
 
 
         // playerMode = PlayerMode.SURVIVAL; // default is survival
@@ -197,15 +199,14 @@ public class PlayerUnit : Unit
     }
 
     private IEnumerator DieCoroutine(){
-        die = true;
+        diePanel.SetActive(true); // show die panel
+        diePanel.transform.SetAsLastSibling();
         base.animator.Play("Die");
 
         // wait for animator to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die")+1f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die")+2f);
 
-        diePanel.SetActive(true); // show die panel
-        diePanel.transform.SetAsLastSibling();
-
+        die = true;
     }
 
     public override void Die(){

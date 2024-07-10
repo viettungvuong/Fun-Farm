@@ -121,6 +121,8 @@ public class PlayerDefend : MonoBehaviour
         fenceText.text = numberOfFences.ToString();
         InitializeMap();
 
+        isTakingWood = false;
+
     }
 
     private bool buildFenceFlag = false;

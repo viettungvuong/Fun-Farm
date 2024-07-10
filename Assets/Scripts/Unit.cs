@@ -17,8 +17,9 @@ public class Unit : MonoBehaviour
 
     public virtual void Awake() // virtual for polymorphism
     {
-        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+
+        animator = GetComponent<Animator>();
 
         playerUnit = FindObjectOfType<PlayerUnit>();
     }
