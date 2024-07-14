@@ -159,5 +159,16 @@ public class SlimeControl : MonoBehaviour
     //     }
     // }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Vector2 otherPosition = other.transform.position;
+            Vector2 directionAwayFromOther = (rb.position - otherPosition).normalized;
+
+            // opposite direction of player
+            rb.position = rb.position + directionAwayFromOther * 0.5f;
+        }
+    }
 
 }

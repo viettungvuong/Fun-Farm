@@ -54,7 +54,15 @@ public class SkeletonMove : MonoBehaviour
             if (status!=SkeletonStatus.NONE){
                 return;
             }
-            if (skeletonMoves[SkeletonStatus.TorchSabotage].Count==0){
+
+            // count available torches
+            int availableTorches = 0;
+            foreach (var torch in torches){
+                if (torch.gameObject.GetComponent<Torch>().sabotaged==false){
+                    availableTorches++;
+                }
+            }
+            if (availableTorches>=1&&skeletonMoves[SkeletonStatus.TorchSabotage].Count==0){
                 // decide this will be torch sabotage
                 skeletonMoves[SkeletonStatus.TorchSabotage].Add(this);
                 status = SkeletonStatus.TorchSabotage;
@@ -249,7 +257,31 @@ public class SkeletonMove : MonoBehaviour
 
     private bool isAttacking = false;
     private float nextAttackTime = 0f; 
-    public float attackCooldown = 1f; 
+    public float attackCooldown = 1.5f; 
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player")&&other.gameObject.GetComponent<PlayerAttack>().isAttacking)
+        { // dodge player
+            DodgePlayer(other.gameObject.transform);
+        }
+        else if (other.gameObject.CompareTag("Torch"))
+        {
+            Debug.Log("Attacked torch");
+            SabotageTorch();
+        }
+    }
+
+    private void DodgePlayer(Transform player){
+        Vector2 otherPosition = player.position;
+        Vector2 directionAwayFromOther = (rb.position - otherPosition).normalized;
+
+        // opposite direction of player
+        rb.MovePosition((Vector3)rb.position + (Vector3)directionAwayFromOther * 0.1f * Time.deltaTime);
+        UpdateOrientation();
+        skeletonPos = rb.position; 
+    }
+
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -493,11 +525,4 @@ public class SkeletonMove : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("Torch"))
-        {
-            Debug.Log("Attacked torch");
-            SabotageTorch();
-        }
-    }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class TorchControl : MonoBehaviour
 {
     Light2D torchLight;
-    int intervalBetweenRelight = 30, nextMinuteRefill = 0;    
+    int intervalBetweenRelight = 20, nextMinuteRefill = 0;    
     bool isLightDimmed = false;
     Torch torch;
 

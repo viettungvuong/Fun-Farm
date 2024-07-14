@@ -11,6 +11,7 @@ public class PlayerPlant : MonoBehaviour
     private Tilemap plantTilemap;
 
     PlayerMove playerMove;
+    SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rb;
     PlayerUnit playerUnit;
@@ -45,6 +46,7 @@ public class PlayerPlant : MonoBehaviour
         playerMove = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
         playerUnit = GetComponent<PlayerUnit>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         audioSource = gameObject.GetComponent<AudioSource>();
         audioClip = Resources.Load<AudioClip>("Audio/watering");
@@ -81,6 +83,35 @@ public class PlayerPlant : MonoBehaviour
         StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition))));
     }
 
+    private Orientation GetTileToPlayerOrientation(Vector3 playerPosition)
+    {
+        Vector3 tileCenter = plantTilemap.GetCellCenterWorld(plantTilemap.WorldToCell(playerPosition));
+        Vector3 direction = tileCenter - playerPosition;
+
+        if (playerMove.orientation==Orientation.LEFT||playerMove.orientation==Orientation.RIGHT)
+        {
+            if (direction.x > 0)
+            {
+                return Orientation.RIGHT;
+            }
+            else
+            {
+                return Orientation.LEFT;
+            }
+        }
+        else
+        {
+            if (direction.y > 0)
+            {
+                return Orientation.UP;
+            }
+            else
+            {
+                return Orientation.DOWN;
+            }
+        }
+    }
+
    private IEnumerator PlantTreeCoroutine(Vector3 worldPosition, PlantedPlant plant)
     {
         Vector3Int plantCellPosition = plantTilemap.WorldToCell(worldPosition);
@@ -93,29 +124,13 @@ public class PlayerPlant : MonoBehaviour
             yield break;
         }
 
-        // direction between plant and player
-        Orientation GetTileToPlayerOrientation()
-        {
-            Vector3Int direction = plantCellPosition - playerCellPosition;
-
-            if (direction.x==0&&direction.y==0){ // the same position
-                return playerMove.orientation;
-            }
-
-            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-            {
-                return direction.x >= 0 ? Orientation.RIGHT : Orientation.LEFT;
-            }
-            else
-            {
-                return direction.y >= 0 ? Orientation.UP : Orientation.DOWN;
-            }
-        }
 
         isPlanting = true;
         string animationName;
 
-        switch (GetTileToPlayerOrientation())
+        Orientation orientation = GetTileToPlayerOrientation(playerCellPosition);
+        spriteRenderer.flipX = false;
+        switch (orientation)
         {
             case Orientation.UP:
                 animationName = "PlayerPlantUp";
@@ -125,6 +140,9 @@ public class PlayerPlant : MonoBehaviour
                 break;
             default:
                 animationName = "PlayerPlantHorizontal";
+                if (orientation==Orientation.LEFT){
+                    spriteRenderer.flipX = true;
+                }
                 break;
         }
 
@@ -169,7 +187,10 @@ public class PlayerPlant : MonoBehaviour
         isPlanting = true;
         string animationName;
 
-        switch (playerMove.orientation)
+
+        Orientation orientation = GetTileToPlayerOrientation(plantTilemap.WorldToCell(worldPosition));
+        spriteRenderer.flipX = false;
+        switch (orientation)
         {
             case Orientation.UP:
                 animationName = "PlayerWaterUp";
@@ -179,6 +200,9 @@ public class PlayerPlant : MonoBehaviour
                 break;
             default:
                 animationName = "PlayerWaterHorizontal";
+                if (orientation==Orientation.LEFT){
+                    spriteRenderer.flipX = true;
+                }
                 break;
         }
 

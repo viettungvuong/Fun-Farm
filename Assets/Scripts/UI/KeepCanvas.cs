@@ -73,6 +73,9 @@ public class KeepCanvas : MonoBehaviour
     }
 
     private void Update() {
+        if (canvas==null){
+            return;
+        }
         if (showCanvas){
             canvas.enabled = true;
         }

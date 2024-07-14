@@ -23549,7 +23549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeManage: {fileID: 1635994931}
-  maxHealthDecreasePerDay: 50
   healthText: {fileID: 1070202812}
 --- !u!114 &3752086022790692918
 MonoBehaviour:
@@ -28569,7 +28568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damage: 15
+  damage: 5
   currentHealth: 0
   playerUnit: {fileID: 0}
   maxMoney: 100

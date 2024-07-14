@@ -116,7 +116,7 @@ public class TimeManage : MonoBehaviour
     void UpdateLight()
     {
         float maxIntensityDay = 1.0f;
-        float maxIntensityNight = 0.85f;
+        float maxIntensityNight = 0.65f;
         float minIntensityDay = 0.8f;
         float minIntensityNight = 0.1f;
         Color dayColor = Color.white;
@@ -124,7 +124,7 @@ public class TimeManage : MonoBehaviour
 
         if (IsDay())
         {
-            // Day time (from 6 AM to 6 PM)
+            // Day time (from 6 AM to 7 PM)
             globalLight.intensity = Mathf.Lerp(minIntensityDay, maxIntensityDay, (currentHour - 6) / 12f);
             globalLight.color = dayColor;
         }
