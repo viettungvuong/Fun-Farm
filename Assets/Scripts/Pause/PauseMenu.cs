@@ -10,7 +10,10 @@ public class PauseMenu : MonoBehaviour
    
     // Update is called once per frame
 
-
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+    }
     public void Continue()
     {
         Debug.Log("Continue");
