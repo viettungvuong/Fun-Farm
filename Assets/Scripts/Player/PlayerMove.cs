@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    private Tilemap groundTilemap, highlightTilemap;
+    private Tilemap groundTilemap, highlightTilemap, footprintTilemap;
     public Tile highlightTile;
     private GameObject plantPanel;
 
@@ -74,6 +74,7 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeGroundTilemap();
@@ -110,21 +111,20 @@ public class PlayerMove : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Re-initialize the groundTilemap when a new scene is loaded
+        InitializeGroundTilemap();
+
         // clear footprint
         while (footprintQueue.Count>0){
             FootprintTime footprint = footprintQueue.Peek();
             DeleteFootprint(footprint.pos);
         }
-
-        // Re-initialize the groundTilemap when a new scene is loaded
-        InitializeGroundTilemap();
-
-
     }
 
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+        footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
 
         if (GameController.HomeScene())
         {
@@ -329,8 +329,7 @@ public class PlayerMove : MonoBehaviour
         {
             return;
         }
-        groundTilemap.SetTile(cellPosition, footprintTile); // add footprint
-
+        footprintTilemap.SetTile(cellPosition, footprintTile); // add footprint to footprint map
 
         // add to footprint queue
         FootprintPos footprintPos = new FootprintPos
@@ -353,7 +352,7 @@ public class PlayerMove : MonoBehaviour
         // remove the footprint from the tilemap
         Vector3Int position = pos.pos;
         TileBase originalTile = pos.footprint;
-        groundTilemap.SetTile(position, originalTile);
+        footprintTilemap.SetTile(position, null);
         footprintQueue.Dequeue();
     }
 
