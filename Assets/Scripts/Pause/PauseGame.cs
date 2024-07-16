@@ -9,6 +9,7 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
+        isShowing = pauseMenu.activeSelf;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESC click");
