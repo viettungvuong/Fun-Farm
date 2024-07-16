@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -11,11 +12,17 @@ public class Bullet : MonoBehaviour
     private Camera cam;
     public LayerMask enemyLayers;
 
+
+    private SpriteRenderer spriteRenderer;
+    private Sprite originalSprite;
+    public Sprite boomSprite;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalSprite = spriteRenderer.sprite;
     }
 
     public void Shoot(Vector2 direction)
@@ -25,8 +32,15 @@ public class Bullet : MonoBehaviour
         rb.velocity = direction * speed;
     }
 
-     private void OnTriggerEnter2D(Collider2D other)
+    private IEnumerator boom(){
+        spriteRenderer.sprite = boomSprite;
+        yield return new WaitForSeconds(1f);
+        spriteRenderer.sprite = originalSprite;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.gameObject.CompareTag("Enemy"))
         {
             Unit enemyUnit = other.GetComponent<Unit>();
@@ -41,6 +55,10 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        StartCoroutine(boom());
     }
 
 

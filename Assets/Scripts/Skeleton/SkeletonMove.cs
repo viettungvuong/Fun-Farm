@@ -180,7 +180,6 @@ public class SkeletonMove : MonoBehaviour
         foreach (var node in path){
             strPath += node;
         }
-        Debug.Log(strPath);
 
         Vector3 targetPosition;
 
@@ -204,6 +203,10 @@ public class SkeletonMove : MonoBehaviour
             if (Vector3.Distance(rb.position, targetPosition) < 0.1f)
             {
                 currentPathIndex++;
+                if (currentPathIndex>=0){
+                    path[currentPathIndex-1].Occupied = false; // mark the previous node as not occupied anymore
+                }
+                path[currentPathIndex].Occupied = true;
             }
         }
 
@@ -353,7 +356,7 @@ public class SkeletonMove : MonoBehaviour
         float minus = 0.1f;
         float it = 1;
         while (!goalNode.IsWalkable){
-            goalNode = mapPath.GetNode(new Vector3(goal.x, goal.y - minus*it, goal.z));
+            goalNode = mapPath.GetNode(new Vector3(goal.x, goal.y - minus*it, goal.z)); // try to get to walkable range
             it++;
         }
 
@@ -380,7 +383,7 @@ public class SkeletonMove : MonoBehaviour
                 return RetracePath(startNode, goalNode);
             }
 
-            foreach (Node neighbor in GetNeighbors(currentNode))
+            foreach (Node neighbor in GetNeighbors(currentNode)) // get neighbors
             {
                 if (!neighbor.IsWalkable || closedList.Contains(neighbor))
                 {
@@ -394,7 +397,7 @@ public class SkeletonMove : MonoBehaviour
                     neighbor.HCost = GetDistance(neighbor, goalNode);
                     neighbor.Parent = currentNode;
 
-                    if (!openList.Contains(neighbor))
+                    if (!openList.Contains(neighbor)&&!neighbor.Occupied)
                     {
                         openList.Add(neighbor);
                     }
