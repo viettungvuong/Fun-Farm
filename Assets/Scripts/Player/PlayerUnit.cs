@@ -29,6 +29,8 @@ public class PlayerUnit : Unit
 
     private static bool hasRefilled = false;
 
+    private TextMeshProUGUI textDie;
+
     public PlayerUnitData Serialize(){
         PlayerUnitData playerUnitData = new PlayerUnitData
         {
@@ -75,6 +77,8 @@ public class PlayerUnit : Unit
 
         hasRefilled = false;
 
+        textDie = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
 
         // playerMode = PlayerMode.SURVIVAL; // default is survival
     }
@@ -102,7 +106,14 @@ public class PlayerUnit : Unit
     private void LateUpdate() {
         if (coinText != null) coinText.text = currentMoney.ToString();
 
-        if (currentHealth<=0||(currentMoney==0&&PlantManager.instance.GetNumberOfPlants()==0)){
+        if (currentHealth<=0||(currentMoney<=0&&PlantManager.instance.GetNumberOfPlants()==0)){
+            if (currentMoney==0&&PlantManager.instance.GetNumberOfPlants()==0){
+                textDie.text = "NO MONEY LEFT TO SURVIVE";
+            }
+            else{
+                textDie.text = "YOU DIED!";
+            }
+
             Die(); // run die animation
         }
     }
@@ -201,7 +212,8 @@ public class PlayerUnit : Unit
     private IEnumerator DieCoroutine(){
         diePanel.SetActive(true); // show die panel
         diePanel.transform.SetAsLastSibling();
-        base.animator.Play("Die");
+
+        animator.Play("Die");
 
         // wait for animator to complete
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die")+2f);

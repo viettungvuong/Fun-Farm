@@ -7,7 +7,7 @@ public class BuyLandButton : MonoBehaviour
 {
     public PlayerUnit playerUnit;
     private Image image;
-    int amount = 50;
+    public int amount = 50;
     private void Start() {
         image = GetComponent<Image>();
     }
