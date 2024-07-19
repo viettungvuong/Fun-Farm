@@ -59,7 +59,22 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         Debug.Log("Collide");
-        StartCoroutine(boom());
+        StartCoroutine(boom()); 
+        
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Unit enemyUnit = other.gameObject.GetComponent<Unit>();
+            if (enemyUnit != null)
+            {
+                enemyUnit.TakeDamage(damage);
+
+                HitFlash hitFlash = other.gameObject.GetComponent<HitFlash>();
+                if (hitFlash != null)
+                {
+                    hitFlash.Flash();
+                }
+            }
+        }
     }
 
 
