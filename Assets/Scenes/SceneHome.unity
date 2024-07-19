@@ -10915,7 +10915,7 @@ MonoBehaviour:
     size: 30
   - tag: Skeleton
     prefab: {fileID: 897796513909803230, guid: 603a7957cb28744a3854fa51ab6a4641, type: 3}
-    size: 25
+    size: 3
   - tag: Bullet
     prefab: {fileID: 5092340193427532778, guid: 21b20ae15dd584c5393baa68a00ff2b5, type: 3}
     size: 200
@@ -20187,9 +20187,9 @@ MonoBehaviour:
   isShooting: 0
   isReloading: 0
   clipCapacity: 3
-  totalBullets: 10
-  bulletsInClip: 3
-  ownedGun: 1
+  totalBullets: 0
+  bulletsInClip: 0
+  ownedGun: 0
   bulletCount: {fileID: 3540518497192945804}
   bulletInfo: {fileID: 4413121495220917546}
   swordSprite: {fileID: -348761495, guid: ec6a8a29b3fa64da7bc7c239bbbf944f, type: 3}
