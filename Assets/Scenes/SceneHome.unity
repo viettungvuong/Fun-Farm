@@ -4668,7 +4668,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 30
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
@@ -4676,7 +4676,7 @@ PrefabInstance:
       objectReference: {fileID: 4413121495220917546}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 0
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
@@ -10865,7 +10865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileDatas:
-  - {fileID: 11400000, guid: 54f8797f4fdc44f3d935b8f84e274323, type: 2}
+  - {fileID: 11400000, guid: a2b1806dc38654397958ee3551bc9864, type: 2}
   - {fileID: 11400000, guid: a2b1806dc38654397958ee3551bc9864, type: 2}
   - {fileID: 11400000, guid: 65e90770fb42f40608fb10bcdd74aee8, type: 2}
 --- !u!4 &1635994928
@@ -20187,9 +20187,9 @@ MonoBehaviour:
   isShooting: 0
   isReloading: 0
   clipCapacity: 3
-  totalBullets: 0
-  bulletsInClip: 0
-  ownedGun: 0
+  totalBullets: 10
+  bulletsInClip: 3
+  ownedGun: 1
   bulletCount: {fileID: 3540518497192945804}
   bulletInfo: {fileID: 4413121495220917546}
   swordSprite: {fileID: -348761495, guid: ec6a8a29b3fa64da7bc7c239bbbf944f, type: 3}

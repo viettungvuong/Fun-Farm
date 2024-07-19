@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  boomSprite: {fileID: 0}
+  boomSprite: {fileID: 866427356, guid: e36ff245fd3e34cd5ae4c18df3eabfc9, type: 3}
 --- !u!50 &5895855745612784526
 Rigidbody2D:
   serializedVersion: 4
@@ -163,7 +163,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

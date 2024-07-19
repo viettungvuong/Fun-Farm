@@ -12,10 +12,11 @@ public class Bullet : MonoBehaviour
     private Camera cam;
     public LayerMask enemyLayers;
 
-
     private SpriteRenderer spriteRenderer;
     private Sprite originalSprite;
     public Sprite boomSprite;
+
+    private bool hit = false;
 
     private void Awake()
     {
@@ -32,35 +33,18 @@ public class Bullet : MonoBehaviour
         rb.velocity = direction * speed;
     }
 
-    private IEnumerator boom(){
+    private IEnumerator Boom()
+    {
         spriteRenderer.sprite = boomSprite;
-        yield return new WaitForSeconds(1f);
-        spriteRenderer.sprite = originalSprite;
+        yield return new WaitForSeconds(0.2f);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        hit = true;
+        rb.velocity = Vector2.zero; // stop the bullet movement
 
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Unit enemyUnit = other.GetComponent<Unit>();
-            if (enemyUnit != null)
-            {
-                enemyUnit.TakeDamage(damage);
-
-                HitFlash hitFlash = other.GetComponent<HitFlash>();
-                if (hitFlash != null)
-                {
-                    hitFlash.Flash();
-                }
-            }
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("Collide");
-        StartCoroutine(boom()); 
-        
         if (other.gameObject.CompareTag("Enemy"))
         {
             Unit enemyUnit = other.gameObject.GetComponent<Unit>();
@@ -75,17 +59,22 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
-    }
 
+        Debug.Log("Collide");
+        StartCoroutine(Boom()); 
+    }
 
     private void Update()
     {
+        if (hit)
+        {
+            return;
+        }
+        
         float distanceTraveled = Vector2.Distance(initialPosition, transform.position);
         if (distanceTraveled >= maxRange)
         {
             gameObject.SetActive(false);
         }
-       
     }
-
 }
