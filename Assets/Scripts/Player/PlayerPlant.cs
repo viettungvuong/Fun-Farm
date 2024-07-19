@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using static PlayerUnit;
 
 public class PlayerPlant : MonoBehaviour
 {
@@ -65,7 +66,8 @@ public class PlayerPlant : MonoBehaviour
             WaterTree(rb.position);
         }
     }
-
+    
+    #region plant
     public void PlantTree(Vector3 worldPosition, Plant plant)
     {
         bool plantable = MapManager.instance.Plantable(worldPosition);
@@ -74,12 +76,12 @@ public class PlayerPlant : MonoBehaviour
             return;
         }
 
-        if (!playerUnit.SufficientMoney(plant.buyMoney))
+        if (!playerUnit.moneyManager.SufficientMoney(plant.buyMoney))
         {
             return;
         }
 
-        playerUnit.UseMoney(plant.buyMoney);
+        playerUnit.moneyManager.UseMoney(plant.buyMoney);
         StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition))));
     }
 
@@ -154,7 +156,9 @@ public class PlayerPlant : MonoBehaviour
  
         plantTilemap.SetTile(plantCellPosition, plant.tiles[plant.currentStage]);
     }
+    #endregion
 
+    #region water
     const float waterUsage = 0.15f;
 
     public void WaterTree(Vector3 worldPosition)
@@ -208,8 +212,9 @@ public class PlayerPlant : MonoBehaviour
 
         animator.Play(animationName);
         audioSource.Play();
-        playerUnit.UseWater(waterUsage); // use amount of water
+        playerUnit.waterManager.UseWater(waterUsage); // use amount of water
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName) + 1f);
         isPlanting = false;
     }
+    #endregion
 }

@@ -1,15 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class PlayerUnit : Unit
 {
+    #region Fields
     public int maxMoney;
     public static PlayerUnit instance;
     public TextMeshProUGUI coinText, waterText;
@@ -31,7 +27,15 @@ public class PlayerUnit : Unit
 
     private TextMeshProUGUI textDie;
 
-    public PlayerUnitData Serialize(){
+    public MoneyManager moneyManager;
+    public HealthManager healthManager;
+    public WaterManager waterManager;
+    public DieManager dieManager;
+    #endregion
+
+    #region Serialization
+    public PlayerUnitData Serialize()
+    {
         PlayerUnitData playerUnitData = new PlayerUnitData
         {
             currentHealth = currentHealth,
@@ -54,13 +58,19 @@ public class PlayerUnit : Unit
         SlimeGenerate.nextMinuteRefill = playerUnitData.nextSlimeSpawnMin;
 
         waterText.text = remainingWater.ToString();
-        
     }
-    
+    #endregion
+
+    #region Unity Lifecycle
     public override void Awake()
     {
         base.Awake();
         currentMoney = maxMoney;
+
+        moneyManager = new MoneyManager(this);
+        healthManager = new HealthManager(this);
+        waterManager = new WaterManager(this);
+        dieManager = new DieManager(this);
 
         if (GameController.HomeScene()){
             DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
@@ -78,36 +88,31 @@ public class PlayerUnit : Unit
         hasRefilled = false;
 
         textDie = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-
-        // playerMode = PlayerMode.SURVIVAL; // default is survival
     }
 
     private void Update() {
         if (!die){
-            if (!hasRefilled&&TimeManage.instance.currentMinute==0){ // refill every hour
-                RefillWater();
+            if (!hasRefilled && TimeManage.instance.currentMinute == 0) { // refill every hour
+                waterManager.RefillWater();
             }
 
-            if (hasRefilled&&TimeManage.instance.currentMinute>0) // allow refill again after 0 min passes
-            {
+            if (hasRefilled && TimeManage.instance.currentMinute > 0) { // allow refill again after 0 min passes
                 hasRefilled = false;
             }
         }
-        if (die&&Input.GetKey(KeyCode.Space)){
+        if (die && Input.GetKey(KeyCode.Space)){
             GameObject canvasObject = GameObject.Find("Canvas");
-            if (canvasObject!=null){
+            if (canvasObject != null){
                 GameController.OpenMenu(); // go back to menu
             }
-
         }
     }
 
     private void LateUpdate() {
         if (coinText != null) coinText.text = currentMoney.ToString();
 
-        if (currentHealth<=0||(currentMoney<=0&&PlantManager.instance.GetNumberOfPlants()==0)){
-            if (currentMoney==0&&PlantManager.instance.GetNumberOfPlants()==0){
+        if (currentHealth <= 0 || (currentMoney <= 0 && PlantManager.instance.GetNumberOfPlants() == 0)){
+            if (currentMoney == 0 && PlantManager.instance.GetNumberOfPlants() == 0){
                 textDie.text = "NO MONEY LEFT TO SURVIVE";
             }
             else{
@@ -117,128 +122,179 @@ public class PlayerUnit : Unit
             Die(); // run die animation
         }
     }
+    #endregion
 
-    public bool SufficientMoney(int amount){
-        return currentMoney >= amount;
-    }
-
-    public bool EatNeeded(double healthRecovered){
-        return currentHealth+healthRecovered<=maxHealth;
-    }
-
-    public void UseMoney(int amount){
-        currentMoney -= amount;
-        if (coinJumpOutPrefab == null) {
-            coinJumpOutPrefab = Resources.Load<GameObject>("CoinJump");
-            if (coinJumpOutPrefab == null){
-                Debug.LogError("Coin Prefab is not found");
-
-            }
-        }
-        if (headTransform == null)
-        {
-            Transform head = transform.Find("Head"); 
-            if (head != null)
-            {
-                headTransform = head;
-            }
-            else
-            {
-                Debug.LogError("Head transform not found as a child of PlayerUnit.");
-            }
-        }
-        
-        Vector2 coinPosition = (Vector2) headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
-        GameObject coin = Instantiate(coinJumpOutPrefab, coinPosition, Quaternion.identity, headTransform);
-    }
-
-    public void AddMoney(int amount){
-        if (coinJumpInPrefab == null) {
-            coinJumpInPrefab = Resources.Load<GameObject>("CoinEarn");
-            if (coinJumpInPrefab == null){
-                Debug.LogError("Coin Prefab is not found");
-
-            }
-        }
-        if (headTransform == null)
-        {
-            Transform head = transform.Find("Head"); 
-            if (head != null)
-            {
-                headTransform = head;
-            }
-            else
-            {
-                Debug.LogError("Head transform not found as a child of PlayerUnit.");
-            }
-        }
-        
-        Vector2 coinPosition = (Vector2) headTransform.position + Vector2.up * 0.75f; // Adjust the offset as needed
-        GameObject coin = Instantiate(coinJumpInPrefab, coinPosition, Quaternion.identity, headTransform);
-        currentMoney += amount;
-    }
-
-
-
-    public void RecoverHealth(double healthRecovered){
-        currentHealth = Math.Max(currentHealth + healthRecovered, maxHealth);
-    }
-
-    public void HealthDamageAnimation() {
-        if (heartBrokenPrefab == null) {
-            heartBrokenPrefab = Resources.Load<GameObject>("HeartBroken");
-            if (heartBrokenPrefab == null){
-                Debug.LogError("Heart Prefab is not found");
-
-            }
-        }
-        if (headTransform == null)
-        {
-            Transform head = transform.Find("Head"); 
-            if (head != null)
-            {
-                headTransform = head;
-            }
-            else
-            {
-                Debug.LogError("Head transform not found as a child of PlayerUnit.");
-            }
-        }
-        
-        Vector2 heartBrokenAnim = (Vector2) headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
-        GameObject heart = Instantiate(heartBrokenPrefab, heartBrokenAnim, Quaternion.identity, headTransform);
-    }
-
-    private IEnumerator DieCoroutine(){
-        diePanel.SetActive(true); // show die panel
-        diePanel.transform.SetAsLastSibling();
-
-        animator.Play("Die");
-
-        // wait for animator to complete
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, "Die")+2f);
-
-        die = true;
-    }
-
+    #region Die Methods
     public override void Die(){
-        if (die==false){
-            StartCoroutine(DieCoroutine());
+        if (!die){
+            StartCoroutine(dieManager.DieCoroutine());
         }
     }
 
-    public void UseWater(float amount){
-        if (remainingWater>=amount){
-            remainingWater -= amount;
-            waterText.text = remainingWater.ToString();
+    public class DieManager
+    {
+        private PlayerUnit playerUnit;
+
+        public DieManager(PlayerUnit playerUnit)
+        {
+            this.playerUnit = playerUnit;
+        }
+
+        public IEnumerator DieCoroutine()
+        {
+            playerUnit.diePanel.SetActive(true); // show die panel
+            playerUnit.diePanel.transform.SetAsLastSibling();
+
+            playerUnit.animator.Play("Die");
+
+            // wait for animator to complete
+            yield return new WaitForSeconds(GameController.GetAnimationLength(playerUnit.animator, "Die") + 2f);
+
+            playerUnit.die = true;
         }
     }
+    #endregion
 
-    private void RefillWater(){
-        hasRefilled = true;
-        remainingWater = 1f;
-        waterText.text = remainingWater.ToString();
+    #region Money Management
+    public class MoneyManager
+    {
+        private PlayerUnit playerUnit;
+
+        public MoneyManager(PlayerUnit playerUnit)
+        {
+            this.playerUnit = playerUnit;
+        }
+
+        public void UseMoney(int amount)
+        {
+            playerUnit.currentMoney -= amount;
+            if (playerUnit.coinJumpOutPrefab == null) {
+                playerUnit.coinJumpOutPrefab = Resources.Load<GameObject>("CoinJump");
+                if (playerUnit.coinJumpOutPrefab == null){
+                    Debug.LogError("Coin Prefab is not found");
+                }
+            }
+            if (playerUnit.headTransform == null)
+            {
+                Transform head = playerUnit.transform.Find("Head"); 
+                if (head != null)
+                {
+                    playerUnit.headTransform = head;
+                }
+                else
+                {
+                    Debug.LogError("Head transform not found as a child of PlayerUnit.");
+                }
+            }
+            
+            Vector2 coinPosition = (Vector2) playerUnit.headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
+            GameObject coin = UnityEngine.Object.Instantiate(playerUnit.coinJumpOutPrefab, coinPosition, Quaternion.identity, playerUnit.headTransform);
+        }
+
+        public void AddMoney(int amount)
+        {
+            if (playerUnit.coinJumpInPrefab == null) {
+                playerUnit.coinJumpInPrefab = Resources.Load<GameObject>("CoinEarn");
+                if (playerUnit.coinJumpInPrefab == null){
+                    Debug.LogError("Coin Prefab is not found");
+                }
+            }
+            if (playerUnit.headTransform == null)
+            {
+                Transform head = playerUnit.transform.Find("Head"); 
+                if (head != null)
+                {
+                    playerUnit.headTransform = head;
+                }
+                else
+                {
+                    Debug.LogError("Head transform not found as a child of PlayerUnit.");
+                }
+            }
+            
+            Vector2 coinPosition = (Vector2) playerUnit.headTransform.position + Vector2.up * 0.75f; // Adjust the offset as needed
+            GameObject coin = UnityEngine.Object.Instantiate(playerUnit.coinJumpInPrefab, coinPosition, Quaternion.identity, playerUnit.headTransform);
+            playerUnit.currentMoney += amount;
+        }
+
+        public bool SufficientMoney(int amount)
+        {
+            return playerUnit.currentMoney >= amount;
+        }
     }
+    #endregion
 
+    #region Health Management
+    public class HealthManager
+    {
+        private PlayerUnit playerUnit;
 
+        public HealthManager(PlayerUnit playerUnit)
+        {
+            this.playerUnit = playerUnit;
+        }
+
+        public void RecoverHealth(double healthRecovered)
+        {
+            playerUnit.currentHealth = Math.Max(playerUnit.currentHealth + healthRecovered, playerUnit.maxHealth);
+        }
+
+        public bool EatNeeded(double healthRecovered)
+        {
+            return playerUnit.currentHealth + healthRecovered <= playerUnit.maxHealth;
+        }
+
+        public void HealthDamageAnimation()
+        {
+            if (playerUnit.heartBrokenPrefab == null) {
+                playerUnit.heartBrokenPrefab = Resources.Load<GameObject>("HeartBroken");
+                if (playerUnit.heartBrokenPrefab == null){
+                    Debug.LogError("Heart Prefab is not found");
+                }
+            }
+            if (playerUnit.headTransform == null)
+            {
+                Transform head = playerUnit.transform.Find("Head"); 
+                if (head != null)
+                {
+                    playerUnit.headTransform = head;
+                }
+                else
+                {
+                    Debug.LogError("Head transform not found as a child of PlayerUnit.");
+                }
+            }
+            
+            Vector2 heartBrokenAnim = (Vector2) playerUnit.headTransform.position + Vector2.up * 0.5f; // Adjust the offset as needed
+            GameObject heart = UnityEngine.Object.Instantiate(playerUnit.heartBrokenPrefab, heartBrokenAnim, Quaternion.identity, playerUnit.headTransform);
+        }
+    }
+    #endregion
+
+    #region Water Management
+    public class WaterManager
+    {
+        private PlayerUnit playerUnit;
+
+        public WaterManager(PlayerUnit playerUnit)
+        {
+            this.playerUnit = playerUnit;
+        }
+
+        public void UseWater(float amount)
+        {
+            if (playerUnit.remainingWater >= amount){
+                playerUnit.remainingWater -= amount;
+                playerUnit.waterText.text = playerUnit.remainingWater.ToString();
+            }
+        }
+
+        public void RefillWater()
+        {
+            hasRefilled = true;
+            playerUnit.remainingWater = 1f;
+            playerUnit.waterText.text = playerUnit.remainingWater.ToString();
+        }
+    }
+    #endregion
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static PlayerUnit;
 
 public class BuyLandButton : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class BuyLandButton : MonoBehaviour
         image = GetComponent<Image>();
     }
     private void LateUpdate() {
-        if (!playerUnit.SufficientMoney(amount)) {
+        if (!playerUnit.moneyManager.SufficientMoney(amount)) {
             image.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
         }
         else {
@@ -38,9 +39,9 @@ public class BuyLandButton : MonoBehaviour
 
             transform.localPosition = originalPosition;
         }
-        if (playerUnit.SufficientMoney(amount)&&BuyLand.Instance.currentCellPosition.HasValue){
+        if (playerUnit.moneyManager.SufficientMoney(amount)&&BuyLand.Instance.currentCellPosition.HasValue){
             if (BuyLand.Instance.BuyLandHere()){
-                playerUnit.UseMoney(amount);
+                playerUnit.moneyManager.UseMoney(amount);
             }
         }
         else{

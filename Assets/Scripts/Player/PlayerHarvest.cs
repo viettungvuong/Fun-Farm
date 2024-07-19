@@ -26,7 +26,7 @@ public class PlayerHarvest : MonoBehaviour
             plantManager.RemovePlant(plant, removeOnMap: true);
 
             // Add money to player account
-            playerUnit.AddMoney(plant.harvestMoney);
+            playerUnit.moneyManager.AddMoney(plant.harvestMoney);
         }
     }
 }

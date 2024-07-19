@@ -30,7 +30,7 @@ public class FoodButton : MonoBehaviour
     }
 
     private void LateUpdate() {
-        if (!player.SufficientMoney(food.price)||!player.EatNeeded(food.healthRecovered)) {
+        if (!player.moneyManager.SufficientMoney(food.price)||!player.healthManager.EatNeeded(food.healthRecovered)) {
             background.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
             Color colorBg = new Color(144f / 255f, 144f / 255f, 144f / 255f);
             priceBg.color = colorBg;
@@ -65,10 +65,10 @@ public class FoodButton : MonoBehaviour
             transform.localPosition = originalPosition;
         }
 
-        if (player.SufficientMoney(food.price)&&player.EatNeeded(food.healthRecovered)){
-            player.UseMoney(food.price);
+        if (player.moneyManager.SufficientMoney(food.price)&&player.healthManager.EatNeeded(food.healthRecovered)){
+            player.moneyManager.UseMoney(food.price);
 
-            player.RecoverHealth(food.healthRecovered);
+            player.healthManager.RecoverHealth(food.healthRecovered);
         }
         else{
             

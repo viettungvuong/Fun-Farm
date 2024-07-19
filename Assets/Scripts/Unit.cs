@@ -32,7 +32,7 @@ public class Unit : MonoBehaviour
             Debug.Log("INNN DAMAGE ANIMATION");
             if(playerUnit != null){
                 Debug.Log("TAKEN DAMAGE ANIMATION");
-                playerUnit.HealthDamageAnimation();
+                playerUnit.healthManager.HealthDamageAnimation();
             }
         }
         

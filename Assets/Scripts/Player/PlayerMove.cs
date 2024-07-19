@@ -304,6 +304,8 @@ public class PlayerMove : MonoBehaviour
         AddFootprint(previousPos); // add footprint
     }
 
+    #region footprint
+
     private void MakeFootstepSound(){
         if(audioSource.isPlaying==false){
             audioSource.clip = footstepSound;
@@ -374,7 +376,9 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region walk
     public void SetOrientation(Orientation newOrientation)
     {
         const float xTrail = 0.3f;
@@ -535,4 +539,5 @@ public class PlayerMove : MonoBehaviour
         rb.MovePosition(destination);
         animator.Play(GetIdleAnimationName()); // Play idle animation when movement stops
     }
+    #endregion
 }
