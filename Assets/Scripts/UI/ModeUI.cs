@@ -9,17 +9,17 @@ public class ModeUI : MonoBehaviour
 
     const float maxWidth = 1500;
     const float minWidth = 800;
-    bool set = false;
+    // bool set = false;
 
     private void Start() {
-        set = false;
+        // set = false;
     }
 
     void Update()
     {
-        if (set){
-            return;
-        }
+        // if (set){
+        //     return;
+        // }
         if (PlayerUnit.playerMode == PlayerMode.SURVIVAL){
             fence.SetActive(true);
             health.SetActive(true);
@@ -34,7 +34,7 @@ public class ModeUI : MonoBehaviour
 
             infoPanel.sizeDelta = new Vector2(minWidth, infoPanel.sizeDelta.y);
         }
-        set = true;
+        // set = true;
     }
 
     // void Start()

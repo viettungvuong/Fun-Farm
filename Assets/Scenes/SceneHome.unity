@@ -4676,7 +4676,7 @@ PrefabInstance:
       objectReference: {fileID: 4413121495220917546}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
