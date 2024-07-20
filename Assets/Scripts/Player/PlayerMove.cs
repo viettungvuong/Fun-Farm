@@ -229,10 +229,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     StartOrientationChange(); // play animation to change orientation
                 }
-                else if (prevOrientation == orientation)  // not changing orientation but still walking
-                {
-                    animator.Play(GetWalkAnimationName());
-                }
+                animator.Play(GetWalkAnimationName());
             }
 
         }
@@ -284,7 +281,6 @@ public class PlayerMove : MonoBehaviour
 
             if (GameController.HomeScene() && MapManager.instance.Plantable(rb.position)) // plantable position
             {
-                Debug.Log("Plantable");
                 // Only highlight if highlightTile is assigned
                 if (highlightTile != null)
                 {
@@ -294,7 +290,6 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("Not plantable");
                 highlightTilemap.SetTile(cellPosition, null);
                 plantPanel.SetActive(false);// hide planting panel when the position is not plantable
             }
