@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1690069389
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 335d4ba32d5e14a7dae4de6a74e99102, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -106,6 +106,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  boomSprite: {fileID: 866427356, guid: e36ff245fd3e34cd5ae4c18df3eabfc9, type: 3}
 --- !u!50 &5895855745612784526
 Rigidbody2D:
   serializedVersion: 4
@@ -208,7 +209,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5092340193427532778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -20,13 +21,23 @@ public struct FootprintTile {
     public TileBase footprint;
 }
 
+public struct FootprintPos{
+    public TileBase footprint;
+    public Vector3Int pos;
+}
+
+public struct FootprintTime{
+    public FootprintPos pos;
+    public DateTime time;
+}
+
 public class PlayerMove : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     Animator animator;
     Rigidbody2D rb;
 
-    private Tilemap groundTilemap, highlightTilemap;
+    private Tilemap groundTilemap, highlightTilemap, footprintTilemap;
     public Tile highlightTile;
     private GameObject plantPanel;
 
@@ -57,10 +68,13 @@ public class PlayerMove : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip footstepSound;
 
+    private Queue<FootprintTime> footprintQueue;
+
     static bool goHome = false;
 
     void Awake()
     {
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeGroundTilemap();
@@ -84,6 +98,8 @@ public class PlayerMove : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         footstepSound = Resources.Load<AudioClip>("Audio/footstep");
 
+        footprintQueue = new Queue<FootprintTime>();
+
 
         plantPanel = GameObject.Find("PlantPanel");
     }
@@ -97,11 +113,18 @@ public class PlayerMove : MonoBehaviour
     {
         // Re-initialize the groundTilemap when a new scene is loaded
         InitializeGroundTilemap();
+
+        // clear footprint
+        while (footprintQueue.Count>0){
+            FootprintTime footprint = footprintQueue.Peek();
+            DeleteFootprint(footprint.pos);
+        }
     }
 
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
+        footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
 
         if (GameController.HomeScene())
         {
@@ -230,7 +253,7 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        // CheckFootprint(); // check all footprints in game
+        CheckFootprint(); // check all footprints in game
     }
 
     private void DustTrailPlay(){
@@ -278,8 +301,10 @@ public class PlayerMove : MonoBehaviour
 
         previousPos = rb.position;
 
-        // AddFootprint(previousPos); // add footprint
+        AddFootprint(previousPos); // add footprint
     }
+
+    #region footprint
 
     private void MakeFootstepSound(){
         if(audioSource.isPlaying==false){
@@ -294,45 +319,66 @@ public class PlayerMove : MonoBehaviour
 
         TileBase footprintTile = null;
         TileBase tile = groundTilemap.GetTile(cellPosition);
-        foreach (FootprintTile ft in footprints)
+        foreach (FootprintTile ft in footprints) // iterate through all footprints
         {
             if (ft.original == tile)
             {
-                footprintTile = ft.footprint;
+                footprintTile = ft.footprint; // get footprint of the current tile
+                break;
             }
         }
         if (footprintTile == null)
         {
             return;
         }
-        groundTilemap.SetTile(cellPosition, footprintTile);
+        footprintTilemap.SetTile(cellPosition, footprintTile); // add footprint to footprint map
+
+        // add to footprint queue
+        FootprintPos footprintPos = new FootprintPos
+        {
+            pos = cellPosition,
+            footprint = footprintTile
+        };
+
+        FootprintTime footprintTime = new FootprintTime {
+            pos = footprintPos,
+            time = DateTime.Now
+        };
+
 
         // add to queue to manage time
+        footprintQueue.Enqueue(footprintTime);
     }
 
-    // private void CheckFootprint()
-    // {
-    //     // footprint disappear after 1 min
-    //     TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
+    private void DeleteFootprint(FootprintPos pos){
+        // remove the footprint from the tilemap
+        Vector3Int position = pos.pos;
+        TileBase originalTile = pos.footprint;
+        footprintTilemap.SetTile(position, null);
+        footprintQueue.Dequeue();
+    }
 
-    //     while (footprintQueue.Count > 0)
-    //     {
-    //         Pair<Pair<TileBase, Vector3Int>, DateTime> footprint = footprintQueue.Peek();
-    //         if (DateTime.Now - footprint.Second > footprintLifetime)
-    //         {
-    //             // remove the footprint from the tilemap
-    //             Vector3Int position = footprint.First.Second;
-    //             TileBase originalTile = footprint.First.First;
-    //             groundTilemap.SetTile(position, originalTile);
-    //             footprintQueue.Dequeue();
-    //         }
-    //         else
-    //         {
-    //             break;
-    //         }
-    //     }
-    // }
+    private void CheckFootprint()
+    {
+        // footprint disappear after 1 min
+        TimeSpan footprintLifetime = TimeSpan.FromSeconds(10);
 
+        while (footprintQueue.Count > 0)
+        {
+            FootprintTime footprint = footprintQueue.Peek();
+            if (DateTime.Now - footprint.time > footprintLifetime)
+            {
+                DeleteFootprint(footprint.pos);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    #endregion
+
+    #region walk
     public void SetOrientation(Orientation newOrientation)
     {
         const float xTrail = 0.3f;
@@ -493,4 +539,5 @@ public class PlayerMove : MonoBehaviour
         rb.MovePosition(destination);
         animator.Play(GetIdleAnimationName()); // Play idle animation when movement stops
     }
+    #endregion
 }

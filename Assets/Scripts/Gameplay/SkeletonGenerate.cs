@@ -44,12 +44,12 @@ public class SkeletonGenerate : Generate
 
     void FixedUpdate()
     {
-            if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
+        if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             enabled = false;
             return;
         }
 
-        if (TimeManage.instance.IsDay()==true){
+        if (TimeManage.instance.IsDay()==true||skeletons>0){
             return;
         }
 

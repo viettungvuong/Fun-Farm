@@ -19,7 +19,7 @@ public class PlantMaxShader : MonoBehaviour
             PlantManager.instance.RemovePlant(plant, removeOnMap: true);
 
             // Add money to player account
-            playerUnit.AddMoney(plant.harvestMoney);
+            playerUnit.moneyManager.AddMoney(plant.harvestMoney);
         }
     }
 }

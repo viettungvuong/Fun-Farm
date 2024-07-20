@@ -43,7 +43,7 @@ public class PlantButton : MonoBehaviour
         if (plant==null){
             return;
         }
-        if (!playerUnit.SufficientMoney(plant.buyMoney)) {
+        if (!playerUnit.moneyManager.SufficientMoney(plant.buyMoney)) {
             background.color = new Color(161f / 255f, 161f / 255f, 161f / 255f); 
             priceBg.color = new Color(144f / 255f, 144f / 255f, 144f / 255f); 
         }
@@ -74,7 +74,7 @@ public class PlantButton : MonoBehaviour
             transform.localPosition = originalPosition;
         }
         
-        if (!playerUnit.SufficientMoney(plant.buyMoney)) {
+        if (!playerUnit.moneyManager.SufficientMoney(plant.buyMoney)) {
             // shake button
             StartCoroutine(ShakeButton());
             return;

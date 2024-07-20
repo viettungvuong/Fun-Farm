@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
         
         if (!healthDeteriorated&&TimeManage.instance.currentMinute==0){
             playerUnit.currentHealth -= healthDecrease;
-            playerUnit.HealthDamageAnimation();
+            playerUnit.healthManager.HealthDamageAnimation();
             healthDeteriorated = true;
 
         }

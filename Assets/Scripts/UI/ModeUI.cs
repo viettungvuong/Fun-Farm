@@ -4,48 +4,33 @@ using UnityEngine;
 
 public class ModeUI : MonoBehaviour
 {
+    public static ModeUI Instance { get; private set; }
+
+    public RectTransform infoPanel;
     public GameObject fence, health, enemy;
 
-    void Awake()
-    {
-        if (PlayerUnit.playerMode == PlayerMode.SURVIVAL){
-            fence.SetActive(true);
-            health.SetActive(true);
-            enemy.SetActive(true);
-        }
-        else{
-            fence.SetActive(false);
-            health.SetActive(false);
-            enemy.SetActive(false);
-        }
-    }
+    const float maxWidth = 1500;
+    const float minWidth = 800;
 
-    void Start()
-    {
-        if (PlayerUnit.playerMode == PlayerMode.SURVIVAL){
-            fence.SetActive(true);
-            health.SetActive(true);
-            enemy.SetActive(true);
-        }
-        else{
-            fence.SetActive(false);
-            health.SetActive(false);
-            enemy.SetActive(false);
-        }
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Update()
     {
-        if (PlayerUnit.playerMode == PlayerMode.SURVIVAL){
+
+        if (PlayerUnit.playerMode == PlayerMode.SURVIVAL)
+        {
             fence.SetActive(true);
             health.SetActive(true);
             enemy.SetActive(true);
+            infoPanel.sizeDelta = new Vector2(maxWidth, infoPanel.sizeDelta.y);
         }
-        else{
+        else
+        {
             fence.SetActive(false);
             health.SetActive(false);
             enemy.SetActive(false);
+            infoPanel.sizeDelta = new Vector2(minWidth, infoPanel.sizeDelta.y);
         }
     }
 }
+        
