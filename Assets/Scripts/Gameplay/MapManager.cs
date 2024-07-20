@@ -169,6 +169,7 @@ public class MapManager : MonoBehaviour
 
         TileBase tile = expandableMap.GetTile(gridPosition);
 
+
         if (tile == null || !dataFromTiles.ContainsKey(tile))
             return false;
 

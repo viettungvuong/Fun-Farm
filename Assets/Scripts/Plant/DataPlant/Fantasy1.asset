@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0590306386184ad38e0c872ab6b3495, type: 2}
   - {fileID: 11400000, guid: 3b84dcaf84ac44fb6a824cd1b77065e6, type: 2}
   - {fileID: 11400000, guid: 0e91fa1b9e13e4429adf6c8c184646f3, type: 2}
-  - {fileID: 11400000, guid: 05b0aea9f11964c53ab1c4204588c332, type: 2}
+  - {fileID: 11400000, guid: 51fbe07ea27c54059a755d404680fe3a, type: 2}
   levelUpTime: 100
   maxHealth: 100
   buyMoney: 200
