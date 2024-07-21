@@ -9,6 +9,10 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
+        if (GameController.HomeScene() == false)
+        {
+            return;
+        }
         isShowing = pauseMenu.activeSelf;
         if (Input.GetKeyDown(KeyCode.Escape))
         {

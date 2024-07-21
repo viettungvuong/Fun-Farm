@@ -41,7 +41,8 @@ public class Next : MonoBehaviour
         yield return StartCoroutine(playerMove.AutomaticMove(pointB));
         instructions[iteration - 1].transform.GetChild(0).gameObject.SetActive(true); // show Village entry instructions
         yield return new WaitForSeconds(2f);
-
+        PlayerPrefs.SetInt("GameOpened", 1);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("SceneWelcome"); // open welcome
     }
 }
