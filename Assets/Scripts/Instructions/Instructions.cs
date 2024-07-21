@@ -20,8 +20,8 @@ public class Instructions : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("GameOpened", 1);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetInt("GameOpened", 1);
+            //PlayerPrefs.Save();
             canvas.SetActive(true);
             cam.enabled = true;
 

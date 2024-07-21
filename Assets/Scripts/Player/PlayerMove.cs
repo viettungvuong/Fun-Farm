@@ -124,10 +124,11 @@ public class PlayerMove : MonoBehaviour
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
-        footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
+
 
         if (GameController.HomeScene())
         {
+            footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
             highlightTilemap = GameObject.Find("Highlight").GetComponent<Tilemap>();
         }
 
@@ -249,8 +250,11 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        if (GameController.HomeScene())
+        {
+            CheckFootprint(); // check all footprints in game
+        }
 
-        CheckFootprint(); // check all footprints in game
     }
 
     private void DustTrailPlay(){
@@ -298,7 +302,11 @@ public class PlayerMove : MonoBehaviour
 
         previousPos = rb.position;
 
-        AddFootprint(previousPos); // add footprint
+        if (GameController.HomeScene())
+        {
+            AddFootprint(previousPos); // add footprint
+        }
+
     }
 
     #region footprint

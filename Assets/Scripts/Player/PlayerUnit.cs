@@ -74,6 +74,7 @@ public class PlayerUnit : Unit
 
         if (GameController.HomeScene()){
             DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
+            textDie = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         }
 
         if (instance == null)
@@ -87,7 +88,7 @@ public class PlayerUnit : Unit
 
         hasRefilled = false;
 
-        textDie = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
     }
 
     private void Update() {
