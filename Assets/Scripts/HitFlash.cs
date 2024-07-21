@@ -24,7 +24,6 @@ public class HitFlash : MonoBehaviour
         {
             blinkTimer += Time.deltaTime;
 
-            // Calculate blink effect using sine function based on time
             float blink = Mathf.Abs(Mathf.Sin(Time.time * blinkSpeed));
             Color currentColor = Color.Lerp(originalColor, blinkColor, blink);
             spriteRenderer.color = currentColor;

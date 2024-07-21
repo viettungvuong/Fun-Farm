@@ -115,29 +115,55 @@ public class TimeManage : MonoBehaviour
 
     void UpdateLight()
     {
-        float maxIntensityDay = 1.0f;
+        float maxIntensityDay = 1.5f;
         float maxIntensityNight = 0.65f;
         float minIntensityDay = 0.8f;
         float minIntensityNight = 0.1f;
+
         Color dayColor = Color.white;
         Color nightColor = new Color(0.1f, 0.1f, 0.35f); // dark blue
 
-        if (IsDay())
+        // Dawn (5 AM to 6 AM)
+        if (currentHour >= 5 && currentHour < 6)
         {
-            // Day time (from 6 AM to 7 PM)
-            globalLight.intensity = Mathf.Lerp(minIntensityDay, maxIntensityDay, (currentHour - 6) / 12f);
+            float t = (currentHour - 5f) / 1f;
+            globalLight.intensity = Mathf.Lerp(minIntensityNight, minIntensityDay, t);
+            globalLight.color = Color.Lerp(nightColor, dayColor, t);
+        }
+        // Day time (6 AM to 4 PM)
+        else if (currentHour >= 6 && currentHour < 16)
+        {
+            if (currentHour < 12) // Morning transition from 6 AM to 12 PM
+            {
+                float t = (currentHour - 6f) / 6f;
+                globalLight.intensity = Mathf.Lerp(minIntensityDay, maxIntensityDay, t);
+            }
+            else // Afternoon transition from 12 PM to 4 PM
+            {
+                float t = (currentHour - 12f) / 4f;
+                globalLight.intensity = Mathf.Lerp(maxIntensityDay, minIntensityDay, t);
+            }
             globalLight.color = dayColor;
         }
+        // Evening (4 PM to 8 PM)
+        else if (currentHour >= 16 && currentHour < 20)
+        {
+            float t = (currentHour - 16f) / 4f;
+            globalLight.intensity = Mathf.Lerp(minIntensityDay, maxIntensityNight, t);
+            globalLight.color = Color.Lerp(dayColor, nightColor, t);
+        }
+        // Night time (8 PM to 5 AM)
         else
         {
-            // evening
-            if (currentHour >= 19 && currentHour < 24)
+            if (currentHour >= 20)
             {
-                globalLight.intensity = Mathf.Lerp(maxIntensityNight, minIntensityNight, (currentHour - 18) / 6f);
+                float t = (currentHour - 20f) / 4f;
+                globalLight.intensity = Mathf.Lerp(maxIntensityNight, minIntensityNight, t);
             }
             else
             {
-                globalLight.intensity = Mathf.Lerp(minIntensityNight, maxIntensityNight, currentHour / 6f);
+                float t = (currentHour + 4f) / 5f; // From midnight to dawn
+                globalLight.intensity = Mathf.Lerp(minIntensityNight, maxIntensityNight, t);
             }
             globalLight.color = nightColor;
         }

@@ -10,10 +10,8 @@ public class Bullet : MonoBehaviour
     private Vector2 direction;
     private Rigidbody2D rb;
     private Camera cam;
-    public LayerMask enemyLayers;
 
     private SpriteRenderer spriteRenderer;
-    private Sprite originalSprite;
     public Sprite boomSprite;
 
     private bool hit = false;
@@ -23,7 +21,6 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalSprite = spriteRenderer.sprite;
     }
 
     public void Shoot(Vector2 direction)
