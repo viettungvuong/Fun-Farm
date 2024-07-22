@@ -83,8 +83,11 @@ public class MapManager : MonoBehaviour
                 return defaultSpeed;
             }
 
-
-            return dataFromTiles[tile].walkSpeed;
+            float walkSpeed = dataFromTiles[tile].walkSpeed;
+            if (Weather.instance.currentWeather == WeatherType.Rainy){
+                walkSpeed *= 0.5f;
+            }
+            return walkSpeed;
         }
         else{
             Vector3Int gridPosition = expandableMap.WorldToCell(worldPosition);
@@ -107,7 +110,11 @@ public class MapManager : MonoBehaviour
             }
 
 
-            return dataFromTiles[tile].walkSpeed;
+            float walkSpeed = dataFromTiles[tile].walkSpeed;
+            if (Weather.instance.currentWeather == WeatherType.Rainy){
+                walkSpeed *= 0.5f;
+            }
+            return walkSpeed;
         }
 
     }

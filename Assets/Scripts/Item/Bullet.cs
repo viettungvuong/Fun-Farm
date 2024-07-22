@@ -57,7 +57,6 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        Debug.Log("Collide");
         StartCoroutine(Boom()); 
     }
 

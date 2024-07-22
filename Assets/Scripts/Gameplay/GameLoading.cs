@@ -19,6 +19,7 @@ public class TimeData: DataSerialize
     public int currentHour;
     public int currentMinute;
     public int currentDay;
+    public WeatherType weatherType;
 
     public static TimeData Deserialize(string json)
     {

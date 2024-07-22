@@ -22,7 +22,7 @@ TagManager:
   - Player
   - Minimap
   - GroundDecor
-  - 
+  - Effects
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: Misc
     uniqueID: 1925416229
+    locked: 0
+  - name: Effects
+    uniqueID: 1453070589
     locked: 0

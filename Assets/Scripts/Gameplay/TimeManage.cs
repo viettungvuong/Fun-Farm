@@ -24,6 +24,7 @@ public class TimeManage : MonoBehaviour
         timeData.currentHour = currentHour;
         timeData.currentMinute = currentMinute;
         timeData.currentDay = currentDay;
+        timeData.weatherType = Weather.instance.currentWeather;
 
 
         return timeData;
@@ -35,12 +36,16 @@ public class TimeManage : MonoBehaviour
         currentMinute = timeData.currentMinute;
         currentDay = timeData.currentDay;
 
+        Weather.instance.currentWeather = timeData.weatherType;
+        Weather.instance.UpdateWeather();
+
         string minString = currentMinute < 10 ? "0" + currentMinute.ToString() : currentMinute.ToString();
         string hourString = currentHour < 10 ? "0" + currentHour.ToString() : currentHour.ToString();
         if (timeText != null)
         {
             timeText.text = hourString + ":" + minString;
         }
+
     }
 
     private void OnDestroy()

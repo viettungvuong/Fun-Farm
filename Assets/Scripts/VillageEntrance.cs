@@ -9,11 +9,14 @@ public class VillageEntrance : MonoBehaviour
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             return;
         }
-        if (other.gameObject.name=="Player"&&TimeManage.instance.IsDay()){
-            // move to village scene
-            if (SkeletonGenerate.skeletons<=0&&SlimeGenerate.slimes<=0){
-                SceneManager.LoadScene("SceneVillage");
+        if (other.gameObject.name=="Player"){
+            if (TimeManage.instance.IsDay()&&Weather.instance.currentWeather==WeatherType.Sunny){
+                // move to village scene
+                if (SkeletonGenerate.skeletons<=0&&SlimeGenerate.slimes<=0){
+                    SceneManager.LoadScene("SceneVillage");
+                }
             }
+
 
         }
     }

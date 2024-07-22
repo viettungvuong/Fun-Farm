@@ -45,6 +45,8 @@ public class PlantManager : MonoBehaviour
 
         InitializeMap();
         firstOpen = false;
+
+        currentDeteriorateMin = TimeManage.instance.currentMinute;
     }
 
 
@@ -167,7 +169,7 @@ public class PlantManager : MonoBehaviour
         return new Pair(newHours, newMinutes);
     }
 
-
+    #region plantlevel
     private void CheckPlantLevel()
     {
         // update in temp dictionary
@@ -223,6 +225,7 @@ public class PlantManager : MonoBehaviour
             nextLevelTime[update.Key] = update.Value;
         }
     }
+    #endregion
 
     public bool Planted(Vector3 worldPosition){
         Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
@@ -271,6 +274,8 @@ public class PlantManager : MonoBehaviour
         return positions;
     }
 
+    #region deteriorate
+    private static int currentDeteriorateMin; // ensure rain deteriorate delay only apply once per min
     private void CheckDeterioration(){
         // update in temp dictionary
         var updates = new Dictionary<PlantedPlant, DateTime>();
@@ -289,6 +294,20 @@ public class PlantManager : MonoBehaviour
 
                 Pair nextTime = entry.Value;
 
+                if (currentDeteriorateMin!=TimeManage.instance.currentMinute&&Weather.instance.currentWeather == WeatherType.Rainy) // rainy then delay deteriorate
+                {
+                    nextTime.Second += 1;
+                    if (nextTime.Second >= 60)
+                    {
+                        nextTime.Second -= 60;
+                        nextTime.First += 1;
+                        if (nextTime.First >= 24)
+                        {
+                            nextTime.First -= 24;
+                        }
+                    }
+                }
+
                 if (TimeManage.instance.currentHour == nextTime.First &&
                 TimeManage.instance.currentMinute == nextTime.Second){
                     DamagePlant(plant);
@@ -301,6 +320,8 @@ public class PlantManager : MonoBehaviour
             
         }
 
+        currentDeteriorateMin = TimeManage.instance.currentMinute;
+
         foreach (PlantedPlant plant in plantsToRemove)
         {
             nextDeteriorate.Remove(plant);
@@ -308,6 +329,7 @@ public class PlantManager : MonoBehaviour
             RemovePlant(plant);
         }
     }
+    #endregion
 
     public bool DetectPlant(Vector3Int cellPosition){
         TileBase tile = plantMap.GetTile(cellPosition);
