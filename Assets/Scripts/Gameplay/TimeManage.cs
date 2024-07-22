@@ -55,10 +55,10 @@ public class TimeManage : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        InitializeMap();
+        InitializeLight();
     }
 
-    private void InitializeMap()
+    private void InitializeLight()
     {
         globalLight = GameObject.Find("Global Light 2D").GetComponent<Light2D>();
     }
@@ -76,7 +76,7 @@ public class TimeManage : MonoBehaviour
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-        InitializeMap();
+        InitializeLight();
 
         lastUpdated = DateTime.Now;
         UpdateLight();

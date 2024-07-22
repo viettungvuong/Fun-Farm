@@ -20264,12 +20264,12 @@ Transform:
   m_GameObject: {fileID: 3407911397364267846}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7.43, y: 7.91, z: 0}
+  m_LocalPosition: {x: 0, y: 7.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6966509103240509662}
-  m_Father: {fileID: 1783416948598379023}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &1783416948598379023
 Transform:
@@ -20291,7 +20291,6 @@ Transform:
   - {fileID: 94490431}
   - {fileID: 1174373404}
   - {fileID: 912123363}
-  - {fileID: 1471514863914649044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2166819691984082990
@@ -25953,7 +25952,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 180, y: 0, z: 0}
-    m_Scale: {x: 76.87932, y: 1, z: 2.1402717}
+    m_Scale: {x: 76.87932, y: 1, z: 5.329632}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -35900,4 +35899,5 @@ SceneRoots:
   - {fileID: 51210710}
   - {fileID: 1958961544}
   - {fileID: 1597435058}
+  - {fileID: 1471514863914649044}
   - {fileID: 69580854}
