@@ -10,7 +10,7 @@ public class VillageEntrance : MonoBehaviour
             return;
         }
         if (other.gameObject.name=="Player"){
-            if (TimeManage.instance.IsDay()&&Weather.instance.currentWeather==WeatherType.Sunny){
+            if (TimeManage.instance.IsDay()){
                 // move to village scene
                 if (SkeletonGenerate.skeletons<=0&&SlimeGenerate.slimes<=0){
                     SceneManager.LoadScene("SceneVillage");

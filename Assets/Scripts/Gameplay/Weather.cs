@@ -17,6 +17,7 @@ public class Weather : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoadManager.DontDestroyOnLoad(rainParticleSystem.gameObject);
         if (instance == null)
         {
             instance = this;
@@ -31,7 +32,7 @@ public class Weather : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateWeather();
+        // UpdateWeather();
         if (TimeManage.instance.currentMinute == 30 && toggled == false){
             ToggleWeather();
             toggled = true;

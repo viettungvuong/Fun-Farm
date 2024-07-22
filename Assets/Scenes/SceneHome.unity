@@ -10845,6 +10845,7 @@ GameObject:
   - component: {fileID: 1635994937}
   - component: {fileID: 1635994938}
   - component: {fileID: 1635994939}
+  - component: {fileID: 1635994940}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -11055,6 +11056,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361719698024d4abea0a81824feb8e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1635994940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635994926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042ff82e4606e4a1fad418891fd3ceea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeather: 0
+  rainParticleSystem: {fileID: 3590350288796785850}
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
@@ -20248,13 +20263,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3407911397364267846}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 7.43, y: 7.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6966509103240509662}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1783416948598379023}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &1783416948598379023
 Transform:
@@ -20276,6 +20291,7 @@ Transform:
   - {fileID: 94490431}
   - {fileID: 1174373404}
   - {fileID: 912123363}
+  - {fileID: 1471514863914649044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2166819691984082990
@@ -25937,7 +25953,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 180, y: 0, z: 0}
-    m_Scale: {x: 37.283783, y: 1, z: 2.1402717}
+    m_Scale: {x: 76.87932, y: 1, z: 2.1402717}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -35885,4 +35901,3 @@ SceneRoots:
   - {fileID: 1958961544}
   - {fileID: 1597435058}
   - {fileID: 69580854}
-  - {fileID: 1471514863914649044}

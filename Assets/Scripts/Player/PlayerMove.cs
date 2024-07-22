@@ -124,11 +124,11 @@ public class PlayerMove : MonoBehaviour
     private void InitializeGroundTilemap()
     {
         groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
-
+        footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
 
         if (GameController.HomeScene())
         {
-            footprintTilemap = GameObject.Find("Footprint").GetComponent<Tilemap>();
+
             highlightTilemap = GameObject.Find("Highlight").GetComponent<Tilemap>();
         }
 
@@ -302,10 +302,7 @@ public class PlayerMove : MonoBehaviour
 
         previousPos = rb.position;
 
-        if (GameController.HomeScene())
-        {
-            AddFootprint(previousPos); // add footprint
-        }
+        AddFootprint(previousPos); // add footprint
 
     }
 
@@ -324,6 +321,7 @@ public class PlayerMove : MonoBehaviour
 
         TileBase footprintTile = null;
         TileBase tile = groundTilemap.GetTile(cellPosition);
+        Debug.Log(tile.name);
         foreach (FootprintTile ft in footprints) // iterate through all footprints
         {
             if (ft.original == tile)

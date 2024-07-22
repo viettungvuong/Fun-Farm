@@ -278,7 +278,6 @@ public class PlantManager : MonoBehaviour
     private static int currentDeteriorateMin; // ensure rain deteriorate delay only apply once per min
     private void CheckDeterioration(){
         // update in temp dictionary
-        var updates = new Dictionary<PlantedPlant, DateTime>();
 
         List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
 
@@ -306,6 +305,7 @@ public class PlantManager : MonoBehaviour
                             nextTime.First -= 24;
                         }
                     }
+                    nextDeteriorate[plant] = nextTime;
                 }
 
                 if (TimeManage.instance.currentHour == nextTime.First &&
