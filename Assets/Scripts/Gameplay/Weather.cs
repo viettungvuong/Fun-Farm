@@ -13,6 +13,8 @@ public class Weather : MonoBehaviour
     private Light2D globalLight;
     public WeatherType currentWeather;
     public ParticleSystem rainParticleSystem;
+    public AudioSource audioSource;
+    public AudioClip rainSound;
     private static bool toggled = false;
     public static Weather instance;
 
@@ -47,12 +49,13 @@ public class Weather : MonoBehaviour
         InitializeLight();
         UpdateWeather();
 
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        // UpdateWeather();
+        UpdateWeather();
         if (TimeManage.instance.currentMinute == 30 && toggled == false){
             ToggleWeather();
             toggled = true;
@@ -71,10 +74,17 @@ public class Weather : MonoBehaviour
             if (TimeManage.instance.IsDay()){
                 globalLight.intensity = 0.6f; // make sky darker
             }
+
+            if (audioSource.isPlaying==false){
+                audioSource.clip = rainSound;
+                audioSource.Play();
+            }
+
         }
         else
         {
             rainParticleSystem.Stop();
+            audioSource.Stop();
         }
     }
 

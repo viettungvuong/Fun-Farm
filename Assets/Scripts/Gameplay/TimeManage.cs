@@ -109,7 +109,11 @@ public class TimeManage : MonoBehaviour
             {
                 timeText.text = hourString + ":" + minString;
             }
-            UpdateLight();
+
+            if (IsDay()&&Weather.instance.currentWeather!=WeatherType.Rainy){
+                UpdateLight();
+            }
+
         }
     }
 

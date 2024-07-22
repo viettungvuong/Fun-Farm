@@ -11070,6 +11070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeather: 0
   rainParticleSystem: {fileID: 3590350288796785850}
+  audioSource: {fileID: 69580853}
+  rainSound: {fileID: 8300000, guid: dd67b767ebabf4d35a0557d9bcf78fa2, type: 3}
 --- !u!224 &1728328442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7466982996562592990, guid: 7b497f2dafa58468ca6e593792eb0d21, type: 3}
@@ -26767,7 +26769,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -3696665515696150500, guid: 8e341858180ab8e49a2af7f87d64a34b, type: 3}
+    - sprite: {fileID: 322508798, guid: a41755c82f48d47d4bfdd1c779af2377, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
