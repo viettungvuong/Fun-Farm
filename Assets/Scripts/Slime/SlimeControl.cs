@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 public class SlimeControl : MonoBehaviour
 {
     private float moveSpeed;
-    private Tilemap plantTilemap;
+    private Tilemap groundTilemap, plantTilemap;
 
     List<Vector3Int> plantPositions;
     private float targetTimeLimit = 20f; // Time limit to reach a plant in seconds
@@ -20,31 +20,26 @@ public class SlimeControl : MonoBehaviour
     private float nextMoveTime = 0f;  // To track the next allowed move time
 
     Animator animator;
-
     Rigidbody2D rb;
-
 
     private void OnDestroy()
     {
- 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
- 
         InitializeMap();
     }
 
     private void InitializeMap()
     {
         plantTilemap = GameObject.Find("PlantTilemap").GetComponent<Tilemap>();
+        groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
     }
-
 
     void Start()
     {
- 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         InitializeMap();
@@ -58,39 +53,49 @@ public class SlimeControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update() {
-        if (GameController.HomeScene()){
+    private void Update()
+    {
+        if (GameController.HomeScene())
+        {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
-        else{
+        else
+        {
             gameObject.transform.localScale = new Vector3(0, 0, 0); // hide
         }
     }
 
+    int PlantCount()
+    {
+        var plants = PlantManager.instance.FindAllPlants(notIncludeMax: true);
+        plantPositions = plants.Distinct().ToList();
+        return plantPositions.Count;
+    }
 
-
-
-    // Update is called once per frame
     void FixedUpdate()
     {
-        if (GameController.HomeScene()==false){
+        if (GameController.HomeScene() == false)
+        {
             return; // only work in home scene
         }
 
-        if (TimeManage.instance.IsDay()==false){
+        if (TimeManage.instance.IsDay() == false)
+        {
             GetComponent<Unit>().Die();
         }
 
         PlantedPlant plant = PlantManager.instance.DetectPlant(rb.position);
-        if (plant!=null){ // detect any plant
+        if (plant != null) // detect any plant
+        {
             PlantManager.instance.DamagePlant(plant);
 
             Vector3Int cellPosition = plantTilemap.WorldToCell(rb.position);
-            if (cellPosition == targetPlantPosition){
+            if (cellPosition == targetPlantPosition)
+            {
                 targetPlantPosition = SetRandomTargetPosition(); // reset target if reached
             }
 
-            timeSpent = 0f; 
+            timeSpent = 0f;
 
             nextMoveTime = Time.time + cooldownTime;
         }
@@ -106,37 +111,58 @@ public class SlimeControl : MonoBehaviour
 
             if (targetPlantPosition == null)
             {
-                // Double check whether new plant on the map
-                var plants = PlantManager.instance.FindAllPlants(notIncludeMax: true);
-                plantPositions.AddRange(plants);
-                plantPositions = plantPositions.Distinct().ToList();
-
-                if (plantPositions.Count > 0)
+                if (PlantCount() > 0)
                 {
                     targetPlantPosition = SetRandomTargetPosition(); // Random plant on the tilemap
                 }
                 else
                 {
-                    return; // stop because no target plant
+                    Vector3 moveBack = GetEdgePosition(); // Move to the edge of the tilemap
+                    MoveTowardsPosition(moveBack);
+                    return;
                 }
             }
+
             Vector3 plantPosition = plantTilemap.CellToWorld((Vector3Int)targetPlantPosition);
-            if (Vector3.Distance(rb.position, plantPosition) >= 0.001f)
-            { // move towards target plant
+            MoveTowardsPosition(plantPosition);
+        }
+    }
 
-                var step = moveSpeed * Time.deltaTime; // calculate distance to move
-                Vector2 newPosition = Vector2.MoveTowards(rb.position, plantPosition, step);
-                rb.MovePosition(newPosition);                
-                timeSpent += Time.deltaTime;
+    void MoveTowardsPosition(Vector3 targetPosition)
+    {
+        if (Vector3.Distance(rb.position, targetPosition) >= 0.001f)
+        { // move towards target position
+            var step = moveSpeed * Time.deltaTime; // calculate distance to move
+            Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, step);
+            rb.MovePosition(newPosition);
+            timeSpent += Time.deltaTime;
 
-                if (timeSpent >= targetTimeLimit)
+            if (timeSpent >= targetTimeLimit)
+            {
+                if (PlantCount() > 0)
                 {
                     targetPlantPosition = SetRandomTargetPosition();
-                    timeSpent = 0f; // reset timer for the new target
                 }
-            }
+                else
+                {
+                    targetPlantPosition = null;
+                }
 
+                timeSpent = 0f; // reset timer for the new target
+            }
         }
+    }
+
+    Vector3 GetEdgePosition()
+    {
+        BoundsInt groundBounds = groundTilemap.cellBounds;
+        int offset = 1;
+        int middleY = groundBounds.yMin + (groundBounds.size.y / 2);
+        return groundTilemap.CellToWorld(new Vector3Int(
+             groundBounds.xMax - offset,
+             Random.Range(groundBounds.yMin + offset, middleY - offset),
+             0
+         ));
     }
 
     Vector3Int SetRandomTargetPosition()
@@ -144,31 +170,4 @@ public class SlimeControl : MonoBehaviour
         int random = Random.Range(0, plantPositions.Count);
         return plantPositions[random];
     }
-
-    // Slime only damages the plant, not the player
-
-
-    // private void OnCollisionEnter2D(Collision2D other) {
-    //     if (other.gameObject.CompareTag("Wood")||other.gameObject.CompareTag("Tree")){
-    //         Vector2 displacement = other.contacts[0].normal * 0.1f;
-    //         while (other.collider.bounds.Intersects(GetComponent<Collider2D>().bounds)) {
-    //             transform.position += (Vector3)displacement;
-    //         }
-
-    //         // move by displacement vector to move out of the wood
-    //     }
-    // }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Vector2 otherPosition = other.transform.position;
-            Vector2 directionAwayFromOther = (rb.position - otherPosition).normalized;
-
-            // opposite direction of player
-            rb.position = rb.position + directionAwayFromOther * 0.1f;
-        }
-    }
-
 }

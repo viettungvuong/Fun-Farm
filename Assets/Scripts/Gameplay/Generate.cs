@@ -84,29 +84,12 @@ public abstract class Generate : MonoBehaviour
             do
             {
                 Vector3Int randomCell;
-                int edge = Random.Range(0, 2); 
 
-                switch (edge)
-                {
-                    case 0: // Left edge
-                        randomCell = new Vector3Int(
-                            groundBounds.xMin + offset,
-                            Random.Range(groundBounds.yMin + offset, middleY - offset),
-                            0
-                        );
-                        break;
-                    case 1: // Right edge
-                        randomCell = new Vector3Int(
-                            groundBounds.xMax - offset,
-                            Random.Range(groundBounds.yMin + offset, middleY - offset),
-                            0
-                        );
-                        break;
-                    default:
-                        randomCell = new Vector3Int(); 
-                        break;
-                }
-
+                randomCell = new Vector3Int(
+                    groundBounds.xMax - offset,
+                    Random.Range(groundBounds.yMin + offset, middleY - offset),
+                    0
+                );
                 spawnPosition = groundTilemap.CellToWorld(randomCell);
 
                 attempts++;

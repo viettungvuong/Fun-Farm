@@ -35397,6 +35397,7 @@ MonoBehaviour:
   headTransform: {fileID: 912123363}
   remainingWater: 1
   die: 0
+  textDie: {fileID: 1109166926}
 --- !u!1 &8109906583723888398
 GameObject:
   m_ObjectHideFlags: 0

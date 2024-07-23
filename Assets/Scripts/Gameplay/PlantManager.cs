@@ -429,7 +429,6 @@ public class PlantManager : MonoBehaviour
 
     public void RemovePlant(PlantedPlant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
-        Debug.Log(plantPos.Keys.Count);
         nextDeteriorate.Remove(plant);
         nextLevelTime.Remove(plant);
 

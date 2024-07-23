@@ -25,7 +25,7 @@ public class PlayerUnit : Unit
 
     private static bool hasRefilled = false;
 
-    private TextMeshProUGUI textDie;
+    public TextMeshProUGUI textDie;
 
     public MoneyManager moneyManager;
     public HealthManager healthManager;
@@ -74,7 +74,6 @@ public class PlayerUnit : Unit
 
         if (GameController.HomeScene()){
             DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
-            textDie = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         }
 
         if (instance == null)
