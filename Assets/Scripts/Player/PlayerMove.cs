@@ -321,7 +321,9 @@ public class PlayerMove : MonoBehaviour
 
         TileBase footprintTile = null;
         TileBase tile = groundTilemap.GetTile(cellPosition);
-        Debug.Log(tile.name);
+        if (tile==null){
+            return;
+        }
         foreach (FootprintTile ft in footprints) // iterate through all footprints
         {
             if (ft.original == tile)

@@ -280,6 +280,7 @@ public class PlantManager : MonoBehaviour
         // update in temp dictionary
 
         List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
+        Dictionary<PlantedPlant, Pair> updatedNextDeteriorate = new Dictionary<PlantedPlant, Pair>();
 
         foreach (var entry in nextDeteriorate)
         {
@@ -305,7 +306,7 @@ public class PlantManager : MonoBehaviour
                             nextTime.First -= 24;
                         }
                     }
-                    nextDeteriorate[plant] = nextTime;
+                    updatedNextDeteriorate[plant] = nextTime;
                 }
 
                 if (TimeManage.instance.currentHour == nextTime.First &&
@@ -321,6 +322,11 @@ public class PlantManager : MonoBehaviour
         }
 
         currentDeteriorateMin = TimeManage.instance.currentMinute;
+
+        foreach (var entry in updatedNextDeteriorate)
+        {
+            nextDeteriorate[entry.Key] = entry.Value;
+        }
 
         foreach (PlantedPlant plant in plantsToRemove)
         {
