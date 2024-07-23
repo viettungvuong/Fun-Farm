@@ -55,7 +55,7 @@ public class Weather : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateWeather();
+        //UpdateWeather();
         if (TimeManage.instance.currentMinute == 30 && toggled == false){
             ToggleWeather();
             toggled = true;
