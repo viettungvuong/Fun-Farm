@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a542ac137446441bbbafbd2e1f4b5f5, type: 2}
   levelUpTime: 60
   maxHealth: 100
-  buyMoney: 70
-  harvestMoney: 100
+  buyMoney: 50
+  harvestMoney: 80
   deteriorateTime: 55

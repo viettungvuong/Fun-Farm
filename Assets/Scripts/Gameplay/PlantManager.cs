@@ -311,7 +311,7 @@ public class PlantManager : MonoBehaviour
 
                 if (TimeManage.instance.currentHour == nextTime.First &&
                 TimeManage.instance.currentMinute == nextTime.Second){
-                    DamagePlant(plant);
+                    DamagePlant(plant); // remove plant sau
                     plantsToRemove.Add(plant);
                     PlantPos.instance.RemovePlant(plant, plant.gridPosition);
                 } 
@@ -328,12 +328,12 @@ public class PlantManager : MonoBehaviour
             nextDeteriorate[entry.Key] = entry.Value;
         }
 
-        foreach (PlantedPlant plant in plantsToRemove)
-        {
-            nextDeteriorate.Remove(plant);
-            nextLevelTime.Remove(plant);
-            RemovePlant(plant);
-        }
+        //foreach (PlantedPlant plant in plantsToRemove)
+        //{
+        //    //nextDeteriorate.Remove(plant);
+        //    //nextLevelTime.Remove(plant);
+        //    RemovePlant(plant);
+        //}
     }
     #endregion
 
@@ -429,8 +429,8 @@ public class PlantManager : MonoBehaviour
 
     public void RemovePlant(PlantedPlant plant, bool removeOnMap=false){
         plantPos.Remove(plant.gridPosition); // remove plant
+        Debug.Log(plantPos.Keys.Count);
         nextDeteriorate.Remove(plant);
-        Debug.Log("Modified last check fresh time");
         nextLevelTime.Remove(plant);
 
         if (removeOnMap){
@@ -459,7 +459,7 @@ public class PlantManager : MonoBehaviour
                 if (healthBar != null)
                 {
                     healthBar.healthSlider.gameObject.SetActive(false); // plant dies => disable health slider
-                    healthBar.gameObject.SetActive(false);
+                    //healthBar.gameObject.SetActive(false);
                 }
                 plantHealthBars.Remove(plant);
             }
@@ -467,6 +467,8 @@ public class PlantManager : MonoBehaviour
             {
                 Debug.LogWarning("Plant health bar not found in dictionary for plant: " + plant.gridPosition);
             }
+
+            RemovePlant(plant);
         }
         catch (Exception e)
         {
@@ -506,8 +508,12 @@ public class PlantManager : MonoBehaviour
     public bool AddPlant(Vector3 worldPosition, PlantedPlant plant){
         Vector3Int gridPosition = plantMap.WorldToCell(worldPosition);
 
-        if (gridPosition == null||Planted(worldPosition))
+        if (gridPosition == null || Planted(worldPosition))
+        {
+            Debug.Log("cannot plant");
             return false;
+        }
+
 
         plantPos.Add(gridPosition, plant);
 

@@ -16,8 +16,8 @@ public class HearBrokenAnimation : MonoBehaviour
         endPosition = startPosition + direction*0.5f;
         startTime = Time.time;
 
-        Debug.Log($"Start Position: {startPosition}");
-        Debug.Log($"End Position: {endPosition}");
+        //Debug.Log($"Start Position: {startPosition}");
+        //Debug.Log($"End Position: {endPosition}");
 
     }
 

@@ -81,7 +81,7 @@ public class PlayerPlant : MonoBehaviour
             return;
         }
 
-        playerUnit.moneyManager.UseMoney(plant.buyMoney);
+
         StartCoroutine(PlantTreeCoroutine(worldPosition, new PlantedPlant(plant, plantTilemap.WorldToCell(worldPosition))));
     }
 
@@ -126,6 +126,7 @@ public class PlayerPlant : MonoBehaviour
             yield break;
         }
 
+        playerUnit.moneyManager.UseMoney(plant.buyMoney);
 
         isPlanting = true;
         string animationName;
@@ -153,6 +154,8 @@ public class PlayerPlant : MonoBehaviour
         yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
 
         isPlanting = false;
+
+        plantTilemap.SetTile(plantCellPosition, null);
  
         plantTilemap.SetTile(plantCellPosition, plant.tiles[plant.currentStage]);
     }

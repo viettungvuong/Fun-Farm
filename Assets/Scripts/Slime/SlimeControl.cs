@@ -97,7 +97,7 @@ public class SlimeControl : MonoBehaviour
 
         if (Time.time >= nextMoveTime) // Only move if cooldown period has passed
         {
-            moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 0.5f;
+            moveSpeed = MapManager.instance.GetWalkingSpeed(rb.position) * 2f;
 
             if (targetPlantPosition != null && PlantManager.instance.GetPlantAt((Vector3Int)targetPlantPosition) == null)
             {
@@ -167,7 +167,7 @@ public class SlimeControl : MonoBehaviour
             Vector2 directionAwayFromOther = (rb.position - otherPosition).normalized;
 
             // opposite direction of player
-            rb.position = rb.position + directionAwayFromOther * 0.5f;
+            rb.position = rb.position + directionAwayFromOther * 0.1f;
         }
     }
 

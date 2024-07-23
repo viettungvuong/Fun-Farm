@@ -157,7 +157,7 @@ public class GameLoading : MonoBehaviour
             // JsonUtility.FromJsonOverwrite(unitJson, player.GetComponent<PlayerUnit>());
             // JsonUtility.FromJsonOverwrite(defendJson, player.GetComponent<PlayerDefend>());
             // JsonUtility.FromJsonOverwrite(gunJson, player.GetComponent<PlayerGun>());
-            Debug.Log(defendJson);
+            //Debug.Log(defendJson);
             player.GetComponent<PlayerUnit>().Reload(PlayerUnitData.Deserialize(unitJson));
             player.GetComponent<PlayerDefend>().Reload(PlayerDefendData.Deserialize(defendJson));
             player.GetComponent<PlayerGun>().Reload(PlayerGunData.Deserialize(gunJson));
@@ -216,7 +216,7 @@ public class GameLoading : MonoBehaviour
                 return false;
             }
             gameSaving.NewGame(gameName, save: false);
-            Debug.Log("Loaded " + gameName + " successfully.");
+            //Debug.Log("Loaded " + gameName + " successfully.");
             return true;
         }
         catch (Exception err)

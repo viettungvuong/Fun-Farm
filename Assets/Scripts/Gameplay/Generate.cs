@@ -113,7 +113,7 @@ public abstract class Generate : MonoBehaviour
 
             } while ((MapManager.instance.Plantable(spawnPosition) || PlantManager.instance.Planted(spawnPosition)
                 || Physics2D.OverlapCircle(spawnPosition, 1.5f, enemyLayer)
-                || Physics2D.OverlapCircle(spawnPosition, 7f, playerLayer)
+                || Physics2D.OverlapCircle(spawnPosition, 5f, playerLayer)
                 || Physics2D.OverlapCircle(spawnPosition, 2f, obstacleLayer)) && attempts < 200);
 
             if (attempts >= 200)

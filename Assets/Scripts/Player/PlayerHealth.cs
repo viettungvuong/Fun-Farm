@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         playerUnit = GetComponent<PlayerUnit>();
-        Debug.Log(playerUnit.currentHealth);
+
         if (PlayerUnit.playerMode==PlayerMode.CREATIVE){
             healthText.gameObject.SetActive(false);
             enabled = false;
