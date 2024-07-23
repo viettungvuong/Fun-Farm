@@ -260,7 +260,7 @@ public class SkeletonMove : MonoBehaviour
 
     private bool isAttacking = false;
     private float nextAttackTime = 0f; 
-    public float attackCooldown = 1.5f; 
+    public float attackCooldown = 2.5f; 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -296,7 +296,6 @@ public class SkeletonMove : MonoBehaviour
 
             Unit playerUnit = other.gameObject.GetComponent<Unit>(); // repeatedly attack player
             playerUnit.TakeDamage(unit.damage);
-
             other.gameObject.GetComponent<HitFlash>().Flash(); // flash player
 
             StartCoroutine(AttackCooldown());
@@ -342,6 +341,7 @@ public class SkeletonMove : MonoBehaviour
 
         animator.ResetTrigger("attack");
         animator.SetBool("walk", true);
+
     }
 
     private List<Node> AStarPathfinding(Vector3 start, Vector3 goal)
@@ -352,7 +352,7 @@ public class SkeletonMove : MonoBehaviour
         {
             return null;
         }
-
+        
         float minus = 0.1f;
         float it = 1;
         while (!goalNode.IsWalkable){

@@ -49,7 +49,7 @@ public class SkeletonGenerate : Generate
             return;
         }
 
-        if (TimeManage.instance.IsDay()==true||skeletons>0){
+        if (TimeManage.instance.IsDay()==true||skeletons>0){ // not spawn when skeletons still there
             return;
         }
 
@@ -79,6 +79,7 @@ public class SkeletonGenerate : Generate
             if (nextMinuteRefill>=60){
                 nextMinuteRefill -= 60;
             }
+            Debug.Log(nextMinuteRefill);
             base.remainingTimeText.text = timeString(nextMinuteRefill);
             skeletons += number;
             Spawn(number);

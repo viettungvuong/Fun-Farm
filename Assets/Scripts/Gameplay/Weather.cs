@@ -18,6 +18,8 @@ public class Weather : MonoBehaviour
     private static bool toggled = false;
     public static Weather instance;
 
+    public static int rainDuration = 0;
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -63,6 +65,7 @@ public class Weather : MonoBehaviour
         else if (TimeManage.instance.currentMinute != 30){
             toggled = false;
         }
+
     }
 
     public void UpdateWeather()
@@ -79,10 +82,12 @@ public class Weather : MonoBehaviour
                 audioSource.clip = rainSound;
                 audioSource.Play();
             }
+            rainDuration++;
 
         }
         else
         {
+            rainDuration = 0; // reset rain
             rainParticleSystem.Stop();
             audioSource.Stop();
         }

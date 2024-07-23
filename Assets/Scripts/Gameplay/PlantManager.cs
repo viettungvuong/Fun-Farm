@@ -46,7 +46,6 @@ public class PlantManager : MonoBehaviour
         InitializeMap();
         firstOpen = false;
 
-        currentDeteriorateMin = TimeManage.instance.currentMinute;
     }
 
 
@@ -275,66 +274,69 @@ public class PlantManager : MonoBehaviour
     }
 
     #region deteriorate
-    private static int currentDeteriorateMin; // ensure rain deteriorate delay only apply once per min
-    private void CheckDeterioration(){
-        // update in temp dictionary
 
+    private void CheckDeterioration()
+    {
+        // Update in temp dictionary
         List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
         Dictionary<PlantedPlant, Pair> updatedNextDeteriorate = new Dictionary<PlantedPlant, Pair>();
-
+        Debug.Log(nextDeteriorate.Values.ToArray()[0].Second);
         foreach (var entry in nextDeteriorate)
         {
-            try {
+            try
+            {
                 PlantedPlant plant = entry.Key;
 
                 if (plant.health <= 0 || plant.currentStage == plant.maxStage)
                 {
-                    continue; // die or max stage
+                    continue; // Plant is dead or at max stage
                 }
 
                 Pair nextTime = entry.Value;
 
-                if (currentDeteriorateMin!=TimeManage.instance.currentMinute&&Weather.instance.currentWeather == WeatherType.Rainy) // rainy then delay deteriorate
+                // check if it is raining and update rain duration
+                if (Weather.instance.currentWeather == WeatherType.Rainy)
                 {
-                    nextTime.Second += 1;
-                    if (nextTime.Second >= 60)
+
+                    if (Weather.rainDuration == 15) // Every 30 mins of rain
                     {
-                        nextTime.Second -= 60;
-                        nextTime.First += 1;
-                        if (nextTime.First >= 24)
+                        nextTime.Second += 5; // delay deterioration by 10 mins
+                        if (nextTime.Second >= 60)
                         {
-                            nextTime.First -= 24;
+                            nextTime.Second -= 60;
+                            nextTime.First += 1;
+                            if (nextTime.First >= 24)
+                            {
+                                nextTime.First -= 24;
+                            }
                         }
+                        // reset rain duration
+                        Weather.rainDuration = 1;
                     }
                     updatedNextDeteriorate[plant] = nextTime;
                 }
 
+                // Check if it's time to deteriorate the plant
                 if (TimeManage.instance.currentHour == nextTime.First &&
-                TimeManage.instance.currentMinute == nextTime.Second){
-                    DamagePlant(plant); // remove plant sau
+                    TimeManage.instance.currentMinute == nextTime.Second)
+                {
+                    DamagePlant(plant); // Remove plant
                     plantsToRemove.Add(plant);
                     PlantPos.instance.RemovePlant(plant, plant.gridPosition);
-                } 
-            } catch (Exception err){
+                }
+            }
+            catch (Exception err)
+            {
                 Debug.LogError($"Error updating plant water: {err.Message}");
             }
-            
         }
-
-        currentDeteriorateMin = TimeManage.instance.currentMinute;
 
         foreach (var entry in updatedNextDeteriorate)
         {
             nextDeteriorate[entry.Key] = entry.Value;
         }
-
-        //foreach (PlantedPlant plant in plantsToRemove)
-        //{
-        //    //nextDeteriorate.Remove(plant);
-        //    //nextLevelTime.Remove(plant);
-        //    RemovePlant(plant);
-        //}
     }
+
     #endregion
 
     public bool DetectPlant(Vector3Int cellPosition){

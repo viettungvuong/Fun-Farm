@@ -92,6 +92,11 @@ public class TimeManage : MonoBehaviour
             lastUpdated = DateTime.Now;
             currentMinute += 1;
 
+            if (Weather.instance.currentWeather == WeatherType.Rainy)
+            {
+                Weather.rainDuration++;
+            }
+
             if (currentMinute >= 60)
             {
                 currentMinute = 0;

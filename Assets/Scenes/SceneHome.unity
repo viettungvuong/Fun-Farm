@@ -35383,7 +35383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  damage: 5
+  damage: 15
   currentHealth: 0
   playerUnit: {fileID: 0}
   maxMoney: 100

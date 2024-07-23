@@ -107,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
         // Enable the attack collider at the start of the attack
         attackCollider.enabled = true;
 
-        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName)+2f);
+        yield return new WaitForSeconds(GameController.GetAnimationLength(animator, animationName));
 
         // Disable the attack collider at the end of the attack
         attackCollider.enabled = false;
