@@ -41,7 +41,7 @@ public class SlimeGenerate : Generate
         }
 
         objectTag = "Slime";
-        number = 3;
+        number = 2;
     }
 
 

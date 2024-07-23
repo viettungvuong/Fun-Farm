@@ -28,7 +28,7 @@ public class GameSaving : MonoBehaviour
         else{
             Destroy(this);
         }
-        renderer = GetComponent<Renderer>();
+        renderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
 

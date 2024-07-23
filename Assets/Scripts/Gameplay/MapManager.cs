@@ -85,7 +85,7 @@ public class MapManager : MonoBehaviour
 
             float walkSpeed = dataFromTiles[tile].walkSpeed;
             if (Weather.instance.currentWeather == WeatherType.Rainy){
-                walkSpeed *= 0.5f;
+                walkSpeed *= 0.8f;
             }
             return walkSpeed;
         }
@@ -112,7 +112,7 @@ public class MapManager : MonoBehaviour
 
             float walkSpeed = dataFromTiles[tile].walkSpeed;
             if (Weather.instance.currentWeather == WeatherType.Rainy){
-                walkSpeed *= 0.5f;
+                walkSpeed *= 0.8f;
             }
             return walkSpeed;
         }
