@@ -280,7 +280,7 @@ public class PlantManager : MonoBehaviour
         // Update in temp dictionary
         List<PlantedPlant> plantsToRemove = new List<PlantedPlant>();
         Dictionary<PlantedPlant, Pair> updatedNextDeteriorate = new Dictionary<PlantedPlant, Pair>();
-        Debug.Log(nextDeteriorate.Values.ToArray()[0].Second);
+
         foreach (var entry in nextDeteriorate)
         {
             try
