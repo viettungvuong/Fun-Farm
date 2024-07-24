@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    private Tilemap groundTilemap, highlightTilemap, footprintTilemap;
+    private Tilemap groundTilemap, highlightTilemap, footprintTilemap, expandableTilemap;
     public Tile highlightTile;
     private GameObject plantPanel;
 
@@ -128,7 +128,7 @@ public class PlayerMove : MonoBehaviour
 
         if (GameController.HomeScene())
         {
-
+            expandableTilemap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
             highlightTilemap = GameObject.Find("Highlight").GetComponent<Tilemap>();
         }
 
@@ -317,6 +317,10 @@ public class PlayerMove : MonoBehaviour
 
     private void AddFootprint(Vector3 pos)
     {
+        if (expandableTilemap.GetTile(expandableTilemap.WorldToCell(pos)) != null)
+        {
+            return;
+        }
         Vector3Int cellPosition = groundTilemap.WorldToCell(pos);
 
         TileBase footprintTile = null;

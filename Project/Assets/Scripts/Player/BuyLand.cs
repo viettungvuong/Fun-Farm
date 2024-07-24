@@ -9,7 +9,7 @@ public class BuyLand : MonoBehaviour
 {
     public static BuyLand Instance { get; private set; } // Singleton instance
 
-    private Tilemap expandableGroundTilemap, decorMap;
+    private Tilemap expandableGroundTilemap, decorMap, groundTilemap;
     public TileBase newTile;
     public GameObject buyLandPanel;
     public Vector3Int? currentCellPosition;
@@ -81,6 +81,7 @@ public class BuyLand : MonoBehaviour
         if (GameController.HomeScene()){
             expandableGroundTilemap = GameObject.Find("ExpandableGround").GetComponent<Tilemap>();
             decorMap = GameObject.Find("Decor").GetComponent<Tilemap>();
+            groundTilemap = GameObject.Find("Ground").GetComponent<Tilemap>();
             Redraw();
         }
     }

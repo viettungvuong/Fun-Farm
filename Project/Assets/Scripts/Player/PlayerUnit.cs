@@ -148,9 +148,11 @@ public class PlayerUnit : Unit
             playerUnit.animator.Play("Die");
 
             // wait for animator to complete
-            yield return new WaitForSeconds(GameController.GetAnimationLength(playerUnit.animator, "Die") + 2f);
+            yield return new WaitForSeconds(GameController.GetAnimationLength(playerUnit.animator, "Die") + 4f);
 
             playerUnit.die = true;
+
+            GameController.OpenMenu();
         }
     }
     #endregion
