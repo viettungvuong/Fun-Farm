@@ -1,0 +1,270 @@
+{ "cat":"", "pid":12345, "tid":0, "ts":0, "ph":"M", "name":"process_name", "args": { "name":"bee_backend" } }
+,{ "pid":12345, "tid":0, "ts":1721786887818891, "dur":14555, "ph":"X", "name": "DriverInitData",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786887833455, "dur":96, "ph":"X", "name": "RemoveStaleOutputs",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786887833599, "dur":182, "ph":"X", "name": "BuildQueueInit",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786887836075, "dur":51, "ph":"X", "name": "EmitFirstTimeEnqueue",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Data.DataSetExtensions.dll" }}
+,{ "pid":12345, "tid":0, "ts":1721786887836366, "dur":138, "ph":"X", "name": "EmitFirstTimeEnqueue",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/mscorlib.dll" }}
+,{ "pid":12345, "tid":0, "ts":1721786887836634, "dur":65, "ph":"X", "name": "EmitFirstTimeEnqueue",  "args": { "detail":"WriteText Library/Bee/artifacts/WinPlayerBuildProgram/Data/app.info" }}
+,{ "pid":12345, "tid":0, "ts":1721786887836916, "dur":92, "ph":"X", "name": "EmitFirstTimeEnqueue",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/Browsers/Compat.browser" }}
+,{ "pid":12345, "tid":0, "ts":1721786887837136, "dur":77, "ph":"X", "name": "EmitFirstTimeEnqueue",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/Browsers/Compat.browser" }}
+,{ "pid":12345, "tid":0, "ts":1721786887833794, "dur":3552, "ph":"X", "name": "EnqueueRequestedNodes",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786887837347, "dur":164446, "ph":"X", "name": "WaitForBuildFinished", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786888001794, "dur":158, "ph":"X", "name": "JoinBuildThread",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786888002025, "dur":1386, "ph":"X", "name": "Tundra",  "args": { "detail":"Write AllBuiltNodes" }}
+,{ "pid":12345, "tid":1, "ts":1721786887834158, "dur":3332, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887837492, "dur":375, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887837868, "dur":1126, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887840459, "dur":859, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/mconfig/config.xml" }}
+,{ "pid":12345, "tid":1, "ts":1721786887841378, "dur":447, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/machine.config" }}
+,{ "pid":12345, "tid":1, "ts":1721786887842301, "dur":676, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887841868, "dur":1119, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/web.config" }}
+,{ "pid":12345, "tid":1, "ts":1721786887843045, "dur":478, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/machine.config" }}
+,{ "pid":12345, "tid":1, "ts":1721786887843547, "dur":728, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/2.0/settings.map" }}
+,{ "pid":12345, "tid":1, "ts":1721786887844310, "dur":1151, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/EmbedRuntime/MonoPosixHelper.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887845496, "dur":4058, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/mscorlib.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887849571, "dur":1004, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Runtime.Serialization.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887850595, "dur":696, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.EnterpriseServices.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887851318, "dur":1288, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Core.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887853037, "dur":456, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887852637, "dur":867, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Burst.Unsafe.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887853531, "dur":502, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.State.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887854054, "dur":556, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887854643, "dur":763, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Tilemap.Extras.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887855426, "dur":2225, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.SpriteShape.Runtime.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887857697, "dur":1055, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.WindModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887858774, "dur":489, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityWebRequestWWWModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887859289, "dur":1019, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityWebRequestAudioModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887860332, "dur":1419, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityAnalyticsModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887861791, "dur":1200, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TerrainModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887869104, "dur":752, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887863013, "dur":6854, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.StreamingModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887869940, "dur":1081, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.CrashReportingModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887871470, "dur":10082, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AndroidJNIModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721786887882435, "dur":111, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721786887881577, "dur":984, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level1" }}
+,{ "pid":12345, "tid":1, "ts":1721786887882602, "dur":4378, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers.assets.resS" }}
+,{ "pid":12345, "tid":1, "ts":1721786887887015, "dur":114765, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721786887834061, "dur":3300, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721786887837364, "dur":1620, "ph":"X", "name": "CheckDagSignatures",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721786887859591, "dur":1307, "ph":"X", "name": "WriteText",  "args": { "detail":"Library/Bee/artifacts/csharpactions/boot.config_tyr4.info" }}
+,{ "pid":12345, "tid":2, "ts":1721786887860901, "dur":82, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721786887860993, "dur":74, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\ScriptingAssemblies.json" }}
+,{ "pid":12345, "tid":2, "ts":1721786887861284, "dur":484, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\Bee\\Playerf00b45b7-inputdata.json" }}
+,{ "pid":12345, "tid":2, "ts":1721786887860900, "dur":1230, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"AddBootConfigGUID Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721786887863257, "dur":137195, "ph":"X", "name": "AddBootConfigGUID",  "args": { "detail":"Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721786888001170, "dur":229, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\Bee\\artifacts\\WinPlayerBuildProgram\\boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721786888001169, "dur":232, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721786888001411, "dur":349, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/boot.config" }}
+,{ "pid":12345, "tid":3, "ts":1721786887834130, "dur":3259, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887837392, "dur":200, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887837592, "dur":106, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887837699, "dur":1292, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887839176, "dur":131, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Assembly-CSharp.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887839308, "dur":62, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.IK.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887839371, "dur":330, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887839703, "dur":62, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Config.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887839767, "dur":290, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840058, "dur":63, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840122, "dur":241, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840364, "dur":118, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.SpriteShape.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840483, "dur":52, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.PixelPerfect.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840537, "dur":246, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.TextMeshPro.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840784, "dur":55, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887840840, "dur":490, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887841331, "dur":226, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Burst.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887841558, "dur":398, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Core.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887841957, "dur":86, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Animation.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887842044, "dur":55, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Tilemap.Extras.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887842100, "dur":194, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\UnityEngine.UI.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887842344, "dur":67, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Common.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887842449, "dur":115, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Timeline.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887842565, "dur":448, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Mathematics.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887843014, "dur":56, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Shaders.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887843071, "dur":58, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.State.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887838996, "dur":4220, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"GenerateNativePluginsForAssemblies Library/Bee/artifacts/WinPlayerBuildProgram/AsyncPluginsFromLinker" }}
+,{ "pid":12345, "tid":3, "ts":1721786887843448, "dur":597, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Plugins/x86_64/lib_burst_generated.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887844080, "dur":404, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/2.0/Browsers/Compat.browser" }}
+,{ "pid":12345, "tid":3, "ts":1721786887844496, "dur":392, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Temp\\StagingArea\\WindowsPlayer.exe" }}
+,{ "pid":12345, "tid":3, "ts":1721786887844495, "dur":394, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm.exe" }}
+,{ "pid":12345, "tid":3, "ts":1721786887844902, "dur":763, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm.exe" }}
+,{ "pid":12345, "tid":3, "ts":1721786887845688, "dur":4436, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Xml.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887850145, "dur":518, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Net.Http.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887850682, "dur":1055, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Drawing.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887851776, "dur":679, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.ComponentModel.Composition.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887853014, "dur":330, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887852487, "dur":866, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/netstandard.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887853380, "dur":646, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Collections.LowLevel.ILSupport.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887854050, "dur":539, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Timeline.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887854609, "dur":719, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UI.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887855348, "dur":644, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.PixelPerfect.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887856080, "dur":747, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Core.Runtime.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887856855, "dur":842, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Assembly-CSharp.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887857715, "dur":3470, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.VideoModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887861207, "dur":786, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TextRenderingModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887862017, "dur":2365, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.SubsystemsModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887864403, "dur":385, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ScreenCaptureModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887864810, "dur":427, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ProfilerModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887865259, "dur":753, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.Physics2DModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887866035, "dur":497, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.NVIDIAModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887866555, "dur":601, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.LocalizationModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887867177, "dur":408, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.InputModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887867607, "dur":476, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ImageConversionModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887868117, "dur":438, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.GridModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887869091, "dur":756, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721786887868611, "dur":1247, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.DirectorModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887869888, "dur":507, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.DSPGraphModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887871224, "dur":611, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AudioModule.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887871864, "dur":24207, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/UnityPlayer.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721786887896090, "dur":105755, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887834087, "dur":3281, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887837371, "dur":201, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887837572, "dur":156, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887837729, "dur":1271, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887839305, "dur":1996, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/config" }}
+,{ "pid":12345, "tid":4, "ts":1721786887841348, "dur":460, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/settings.map" }}
+,{ "pid":12345, "tid":4, "ts":1721786887842301, "dur":686, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887841853, "dur":1141, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/Browsers/Compat.browser" }}
+,{ "pid":12345, "tid":4, "ts":1721786887843044, "dur":813, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/DefaultWsdlHelpGenerator.aspx" }}
+,{ "pid":12345, "tid":4, "ts":1721786887843889, "dur":617, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/2.0/machine.config" }}
+,{ "pid":12345, "tid":4, "ts":1721786887844544, "dur":1049, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Resources/unity default resources" }}
+,{ "pid":12345, "tid":4, "ts":1721786887845664, "dur":3875, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887849561, "dur":659, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Security.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887850240, "dur":477, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.IO.Compression.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887850737, "dur":1797, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Data.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887852949, "dur":534, "ph":"X", "name": "EmitNodeStart",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887853486, "dur":668, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Runtime.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887854177, "dur":504, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Common.Runtime.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887854702, "dur":734, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.Core.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887855456, "dur":2103, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Collections.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887857579, "dur":625, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.XRModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887858226, "dur":603, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.VehiclesModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887858898, "dur":540, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityWebRequestTextureModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887859458, "dur":1095, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityCurlModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887860572, "dur":652, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UIModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887861247, "dur":1141, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TextCoreTextEngineModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887869615, "dur":319, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721786887862409, "dur":7532, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.SubstanceModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887869965, "dur":892, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ClusterRendererModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887871667, "dur":1277, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AccessibilityModule.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721786887872962, "dur":877, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets1.assets.resS" }}
+,{ "pid":12345, "tid":4, "ts":1721786887873875, "dur":1286, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets1.assets" }}
+,{ "pid":12345, "tid":4, "ts":1721786887875182, "dur":4343, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.assets" }}
+,{ "pid":12345, "tid":4, "ts":1721786887879549, "dur":3546, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.assets" }}
+,{ "pid":12345, "tid":4, "ts":1721786887883105, "dur":118687, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887834116, "dur":3263, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887837384, "dur":272, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887837657, "dur":1332, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887854237, "dur":489, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/app.info" }}
+,{ "pid":12345, "tid":5, "ts":1721786887854736, "dur":1170, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Burst.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887855926, "dur":1630, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.Flow.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887857579, "dur":668, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887858264, "dur":1034, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.VRModule.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887859317, "dur":1098, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityWebRequestAssetBundleModule.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887860438, "dur":792, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UmbraModule.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887868927, "dur":905, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887861252, "dur":8592, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TextCoreFontEngineModule.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887873079, "dur":861, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ClothModule.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721786887873963, "dur":3575, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.resource" }}
+,{ "pid":12345, "tid":5, "ts":1721786887877568, "dur":1667, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/RuntimeInitializeOnLoads.json" }}
+,{ "pid":12345, "tid":5, "ts":1721786887879255, "dur":3519, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.assets.resS" }}
+,{ "pid":12345, "tid":5, "ts":1721786887884383, "dur":363, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721786887882793, "dur":1965, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers" }}
+,{ "pid":12345, "tid":5, "ts":1721786887884779, "dur":117011, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887834147, "dur":3250, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887837399, "dur":203, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887837603, "dur":1389, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887839405, "dur":2255, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/UnityCrashHandler64.exe" }}
+,{ "pid":12345, "tid":6, "ts":1721786887842069, "dur":780, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887841693, "dur":1168, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/DefaultWsdlHelpGenerator.aspx" }}
+,{ "pid":12345, "tid":6, "ts":1721786887842903, "dur":523, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/settings.map" }}
+,{ "pid":12345, "tid":6, "ts":1721786887843466, "dur":494, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/Browsers/Compat.browser" }}
+,{ "pid":12345, "tid":6, "ts":1721786887843990, "dur":415, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/2.0/DefaultWsdlHelpGenerator.aspx" }}
+,{ "pid":12345, "tid":6, "ts":1721786887844454, "dur":4386, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/EmbedRuntime/mono-2.0-bdwgc.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887849362, "dur":926, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.ServiceModel.Internals.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887850309, "dur":1304, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.IO.Compression.FileSystem.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887851635, "dur":1062, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Configuration.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887853663, "dur":57, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887852745, "dur":986, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.Antlr3.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887853809, "dur":1365, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Mathematics.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887855202, "dur":5102, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887860328, "dur":680, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityConnectModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887861032, "dur":565, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TilemapModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887861618, "dur":1408, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TerrainPhysicsModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887863050, "dur":1232, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.SpriteShapeModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887864306, "dur":451, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.SharedInternalsModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887864778, "dur":467, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.PropertiesModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887867843, "dur":88, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887865268, "dur":2676, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.PerformanceReportingModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887869702, "dur":242, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887867964, "dur":1986, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.HotReloadModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887869982, "dur":1087, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ClusterInputModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887871305, "dur":527, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AnimationModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887871853, "dur":434, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AIModule.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721786887872304, "dur":420, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets3.assets" }}
+,{ "pid":12345, "tid":6, "ts":1721786887872742, "dur":3179, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.assets.resS" }}
+,{ "pid":12345, "tid":6, "ts":1721786887875941, "dur":3094, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/ScriptingAssemblies.json" }}
+,{ "pid":12345, "tid":6, "ts":1721786887879064, "dur":495, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Resources/unity_builtin_extra" }}
+,{ "pid":12345, "tid":6, "ts":1721786887879585, "dur":1431, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level3" }}
+,{ "pid":12345, "tid":6, "ts":1721786887881042, "dur":566, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level2" }}
+,{ "pid":12345, "tid":6, "ts":1721786887882442, "dur":200, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721786887881626, "dur":1045, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level0" }}
+,{ "pid":12345, "tid":6, "ts":1721786887882702, "dur":1709, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers.assets" }}
+,{ "pid":12345, "tid":6, "ts":1721786887884424, "dur":117395, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887834185, "dur":3308, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887837498, "dur":342, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887837840, "dur":1168, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887841972, "dur":1081, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887839682, "dur":3389, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/browscap.ini" }}
+,{ "pid":12345, "tid":7, "ts":1721786887843512, "dur":3208, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/2.0/web.config" }}
+,{ "pid":12345, "tid":7, "ts":1721786887846752, "dur":1955, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Xml.Linq.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887848766, "dur":914, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Transactions.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887850833, "dur":75, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887849744, "dur":1217, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Numerics.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887850990, "dur":1444, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/System.Data.DataSetExtensions.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887853317, "dur":187, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887852464, "dur":1051, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Mono.Security.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887853542, "dur":703, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887854265, "dur":392, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.InternalAPIEngineBridge.001.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887854677, "dur":633, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Animation.Runtime.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887855331, "dur":592, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.TextMeshPro.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887855958, "dur":680, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Config.Runtime.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887856659, "dur":997, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.IK.Runtime.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887857695, "dur":566, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.VirtualTexturingModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887858284, "dur":664, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.VFXModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887858970, "dur":448, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityWebRequestModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887859441, "dur":961, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityTestProtocolModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887860422, "dur":562, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UnityAnalyticsCommonModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887861011, "dur":965, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UIElementsModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887862016, "dur":1948, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.TLSModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887864017, "dur":445, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.SpriteMaskModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887864483, "dur":406, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887864912, "dur":409, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.PhysicsModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887865341, "dur":1619, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ParticleSystemModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887867001, "dur":477, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.JSONSerializeModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887867500, "dur":441, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.InputLegacyModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887867963, "dur":469, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.IMGUIModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887869556, "dur":357, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721786887868450, "dur":1473, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.GIModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887869967, "dur":751, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ContentLoadModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887871195, "dur":597, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AssetBundleModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887871812, "dur":440, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ARModule.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721786887872286, "dur":444, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets3.assets.resS" }}
+,{ "pid":12345, "tid":7, "ts":1721786887872748, "dur":2379, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.assets" }}
+,{ "pid":12345, "tid":7, "ts":1721786887875156, "dur":3985, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.assets.resS" }}
+,{ "pid":12345, "tid":7, "ts":1721786887879161, "dur":8471, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.resource" }}
+,{ "pid":12345, "tid":7, "ts":1721786887887644, "dur":114155, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887834220, "dur":3284, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887837504, "dur":371, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887837875, "dur":1158, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887854399, "dur":527, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.5/web.config" }}
+,{ "pid":12345, "tid":8, "ts":1721786887854948, "dur":914, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721786887868209, "dur":64, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887855888, "dur":12395, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721786887868378, "dur":88, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.GameCenterModule.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721786887869212, "dur":663, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721786887868479, "dur":1403, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.GameCenterModule.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721786887870020, "dur":2640, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.CoreModule.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721786887872680, "dur":16578, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.resource" }}
+,{ "pid":12345, "tid":8, "ts":1721786887889271, "dur":112506, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721786888005448, "dur":1030, "ph":"X", "name": "ProfilerWriteOutput" }
+,
