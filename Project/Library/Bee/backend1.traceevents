@@ -1,135 +1,129 @@
 { "cat":"", "pid":12345, "tid":0, "ts":0, "ph":"M", "name":"process_name", "args": { "name":"bee_backend" } }
-,{ "pid":12345, "tid":0, "ts":1721789377279712, "dur":1331, "ph":"X", "name": "DriverInitData",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377281050, "dur":162, "ph":"X", "name": "RemoveStaleOutputs",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377281277, "dur":202, "ph":"X", "name": "BuildQueueInit",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377281497, "dur":2872, "ph":"X", "name": "EnqueueRequestedNodes",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377284371, "dur":109531, "ph":"X", "name": "WaitForBuildFinished", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377393903, "dur":118, "ph":"X", "name": "JoinBuildThread",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377394166, "dur":1732, "ph":"X", "name": "Tundra",  "args": { "detail":"Write AllBuiltNodes" }}
-,{ "pid":12345, "tid":1, "ts":1721789377281754, "dur":2626, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":1, "ts":1721789377284382, "dur":1864, "ph":"X", "name": "CheckDagSignatures",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":1, "ts":1721789377286733, "dur":197, "ph":"X", "name": "WriteText",  "args": { "detail":"Library/Bee/artifacts/csharpactions/boot.config_tyr4.info" }}
-,{ "pid":12345, "tid":1, "ts":1721789377286933, "dur":57, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\boot.config" }}
-,{ "pid":12345, "tid":1, "ts":1721789377286999, "dur":58, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\ScriptingAssemblies.json" }}
-,{ "pid":12345, "tid":1, "ts":1721789377287176, "dur":241, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
-,{ "pid":12345, "tid":1, "ts":1721789377287419, "dur":383, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
-,{ "pid":12345, "tid":1, "ts":1721789377286932, "dur":1001, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"AddBootConfigGUID Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
-,{ "pid":12345, "tid":1, "ts":1721789377288320, "dur":104246, "ph":"X", "name": "AddBootConfigGUID",  "args": { "detail":"Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
-,{ "pid":12345, "tid":1, "ts":1721789377393340, "dur":80, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\Bee\\artifacts\\WinPlayerBuildProgram\\boot.config" }}
-,{ "pid":12345, "tid":1, "ts":1721789377393339, "dur":82, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/boot.config" }}
-,{ "pid":12345, "tid":1, "ts":1721789377393434, "dur":413, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/boot.config" }}
-,{ "pid":12345, "tid":2, "ts":1721789377281833, "dur":2566, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":2, "ts":1721789377284402, "dur":277, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":2, "ts":1721789377284679, "dur":1615, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":2, "ts":1721789377286374, "dur":53, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":2, "ts":1721789377286518, "dur":382, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Temp\\StagingArea\\WindowsPlayer.exe" }}
-,{ "pid":12345, "tid":2, "ts":1721789377286518, "dur":382, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm.exe" }}
-,{ "pid":12345, "tid":2, "ts":1721789377286912, "dur":245, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Burst.dll" }}
-,{ "pid":12345, "tid":2, "ts":1721789377286912, "dur":245, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Burst.dll" }}
-,{ "pid":12345, "tid":2, "ts":1721789377287169, "dur":271, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
-,{ "pid":12345, "tid":2, "ts":1721789377287168, "dur":273, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Collections.dll" }}
-,{ "pid":12345, "tid":2, "ts":1721789377287579, "dur":55, "ph":"X", "name": "EmitNodeUpToDate",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ClothModule.dll" }}
-,{ "pid":12345, "tid":2, "ts":1721789377287688, "dur":2988, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets3.assets.resS" }}
-,{ "pid":12345, "tid":2, "ts":1721789377290702, "dur":3276, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.resource" }}
-,{ "pid":12345, "tid":2, "ts":1721789377294024, "dur":1380, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.assets" }}
-,{ "pid":12345, "tid":2, "ts":1721789377295428, "dur":977, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level1" }}
-,{ "pid":12345, "tid":2, "ts":1721789377296448, "dur":3392, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers.assets.resS" }}
-,{ "pid":12345, "tid":2, "ts":1721789377299849, "dur":94027, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377281789, "dur":2597, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377284389, "dur":211, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377284601, "dur":94, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377284695, "dur":1556, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286327, "dur":75, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286471, "dur":165, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286666, "dur":154, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Timeline.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286665, "dur":155, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Timeline.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286832, "dur":97, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Animation.Runtime.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286831, "dur":99, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Animation.Runtime.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286941, "dur":532, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Runtime.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377286940, "dur":533, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377287543, "dur":50, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":3, "ts":1721789377287594, "dur":245, "ph":"X", "name": "EmitNodeUpToDate",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ContentLoadModule.dll" }}
-,{ "pid":12345, "tid":3, "ts":1721789377287851, "dur":2934, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.assets.resS" }}
-,{ "pid":12345, "tid":3, "ts":1721789377290817, "dur":5614, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.assets.resS" }}
-,{ "pid":12345, "tid":3, "ts":1721789377296460, "dur":1874, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers.assets" }}
-,{ "pid":12345, "tid":3, "ts":1721789377298353, "dur":95538, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":4, "ts":1721789377281819, "dur":2573, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":4, "ts":1721789377284395, "dur":327, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":4, "ts":1721789377284722, "dur":1531, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":4, "ts":1721789377286475, "dur":131, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Assembly-CSharp.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377286607, "dur":64, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.IK.Runtime.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377286672, "dur":383, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.Runtime.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377287056, "dur":50, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Config.Runtime.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377287107, "dur":295, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377287404, "dur":192, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
-,{ "pid":12345, "tid":4, "ts":1721789377286259, "dur":1430, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"GenerateNativePluginsForAssemblies Library/Bee/artifacts/WinPlayerBuildProgram/AsyncPluginsFromLinker" }}
-,{ "pid":12345, "tid":4, "ts":1721789377287938, "dur":3849, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets1.assets.resS" }}
-,{ "pid":12345, "tid":4, "ts":1721789377297655, "dur":190, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":4, "ts":1721789377291864, "dur":6498, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.resource" }}
-,{ "pid":12345, "tid":4, "ts":1721789377298371, "dur":95524, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377281854, "dur":2551, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377284414, "dur":177, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377284592, "dur":293, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377284885, "dur":1372, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377286323, "dur":120, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":5, "ts":1721789377286668, "dur":89, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipeline.Universal.ShaderLibrary.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377286667, "dur":91, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377286769, "dur":253, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\UnityEngine.UI.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377286769, "dur":254, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.UI.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287097, "dur":101, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.SpriteShape.Runtime.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287096, "dur":103, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.SpriteShape.Runtime.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287210, "dur":235, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287209, "dur":236, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.Flow.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287588, "dur":121, "ph":"X", "name": "EmitNodeUpToDate",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AssetBundleModule.dll" }}
-,{ "pid":12345, "tid":5, "ts":1721789377287735, "dur":10595, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.resource" }}
-,{ "pid":12345, "tid":5, "ts":1721789377298352, "dur":95549, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377281881, "dur":2534, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377284417, "dur":333, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377284750, "dur":1543, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286355, "dur":87, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286493, "dur":59, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286659, "dur":79, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Shaders.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286658, "dur":81, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286752, "dur":78, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Common.Runtime.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286751, "dur":80, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Common.Runtime.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286841, "dur":448, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Core.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377286840, "dur":449, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.Core.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377287584, "dur":57, "ph":"X", "name": "EmitNodeUpToDate",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.AudioModule.dll" }}
-,{ "pid":12345, "tid":6, "ts":1721789377287718, "dur":3823, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets3.assets" }}
-,{ "pid":12345, "tid":6, "ts":1721789377291604, "dur":1236, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Resources/unity_builtin_extra" }}
-,{ "pid":12345, "tid":6, "ts":1721789377297694, "dur":158, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":6, "ts":1721789377292865, "dur":5502, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/resources.assets.resS" }}
-,{ "pid":12345, "tid":6, "ts":1721789377298379, "dur":95511, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377281910, "dur":2544, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377284461, "dur":404, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377284865, "dur":1469, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286348, "dur":75, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286426, "dur":52, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/MonoBleedingEdge/etc/mono/4.0/machine.config" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286657, "dur":93, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.State.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286657, "dur":94, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.VisualScripting.State.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286763, "dur":50, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.InternalAPIEngineBridge.001.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286762, "dur":52, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.InternalAPIEngineBridge.001.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286826, "dur":128, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Tilemap.Extras.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377286825, "dur":130, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.2D.Tilemap.Extras.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377287026, "dur":279, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.TextMeshPro.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377287025, "dur":281, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.TextMeshPro.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377287595, "dur":258, "ph":"X", "name": "EmitNodeUpToDate",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/UnityEngine.ClusterInputModule.dll" }}
-,{ "pid":12345, "tid":7, "ts":1721789377287868, "dur":1497, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets2.assets" }}
-,{ "pid":12345, "tid":7, "ts":1721789377297460, "dur":345, "ph":"X", "name": "EmitNodeFinish",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":7, "ts":1721789377289392, "dur":8933, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets1.assets" }}
-,{ "pid":12345, "tid":7, "ts":1721789377298371, "dur":1199, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/globalgamemanagers" }}
-,{ "pid":12345, "tid":7, "ts":1721789377299580, "dur":94299, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":8, "ts":1721789377281938, "dur":2534, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":8, "ts":1721789377284473, "dur":394, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":8, "ts":1721789377284868, "dur":1407, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":8, "ts":1721789377286365, "dur":114, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":8, "ts":1721789377286663, "dur":523, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Mathematics.dll" }}
-,{ "pid":12345, "tid":8, "ts":1721789377286662, "dur":525, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Unity.Mathematics.dll" }}
-,{ "pid":12345, "tid":8, "ts":1721789377287336, "dur":3553, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/Managed/Assembly-CSharp.dll" }}
-,{ "pid":12345, "tid":8, "ts":1721789377290915, "dur":3067, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/sharedassets0.assets" }}
-,{ "pid":12345, "tid":8, "ts":1721789377294026, "dur":870, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level3" }}
-,{ "pid":12345, "tid":8, "ts":1721789377294924, "dur":539, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level2" }}
-,{ "pid":12345, "tid":8, "ts":1721789377295485, "dur":3739, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/Build/Fun Farm_Data/level0" }}
-,{ "pid":12345, "tid":8, "ts":1721789377299238, "dur":94636, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
-,{ "pid":12345, "tid":0, "ts":1721789377398498, "dur":410, "ph":"X", "name": "ProfilerWriteOutput" }
+,{ "pid":12345, "tid":0, "ts":1721792674049534, "dur":9643, "ph":"X", "name": "DriverInitData",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674059186, "dur":211, "ph":"X", "name": "RemoveStaleOutputs",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674059467, "dur":200, "ph":"X", "name": "BuildQueueInit",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674059686, "dur":3444, "ph":"X", "name": "EnqueueRequestedNodes",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674063133, "dur":117855, "ph":"X", "name": "WaitForBuildFinished", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674180989, "dur":161, "ph":"X", "name": "JoinBuildThread",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674181237, "dur":1747, "ph":"X", "name": "Tundra",  "args": { "detail":"Write AllBuiltNodes" }}
+,{ "pid":12345, "tid":1, "ts":1721792674060064, "dur":3080, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721792674063148, "dur":1929, "ph":"X", "name": "CheckDagSignatures",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721792674067318, "dur":559, "ph":"X", "name": "WriteText",  "args": { "detail":"Library/Bee/artifacts/csharpactions/boot.config_tyr4.info" }}
+,{ "pid":12345, "tid":1, "ts":1721792674067887, "dur":126, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\boot.config" }}
+,{ "pid":12345, "tid":1, "ts":1721792674068038, "dur":73, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\PlayerDataCache\\Win64\\Data\\ScriptingAssemblies.json" }}
+,{ "pid":12345, "tid":1, "ts":1721792674068124, "dur":53, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"D:\\Unity\\2022.3.29f1\\Editor\\Data\\PlaybackEngines\\WindowsStandaloneSupport\\Variations\\mono\\Managed\\UnityEngine.AndroidJNIModule.dll" }}
+,{ "pid":12345, "tid":1, "ts":1721792674067880, "dur":588, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"AddBootConfigGUID Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
+,{ "pid":12345, "tid":1, "ts":1721792674068721, "dur":1646, "ph":"X", "name": "StoreTimestampsOfNonGeneratedInputFiles",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":1, "ts":1721792674071236, "dur":108357, "ph":"X", "name": "AddBootConfigGUID",  "args": { "detail":"Library/Bee/artifacts/WinPlayerBuildProgram/boot.config" }}
+,{ "pid":12345, "tid":1, "ts":1721792674180370, "dur":86, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Library\\Bee\\artifacts\\WinPlayerBuildProgram\\boot.config" }}
+,{ "pid":12345, "tid":1, "ts":1721792674180369, "dur":89, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/boot.config" }}
+,{ "pid":12345, "tid":1, "ts":1721792674180491, "dur":444, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/boot.config" }}
+,{ "pid":12345, "tid":2, "ts":1721792674060149, "dur":3023, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721792674063175, "dur":437, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721792674063612, "dur":1559, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065433, "dur":124, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.State.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065432, "dur":126, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.VisualScripting.State.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065573, "dur":57, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipeline.Universal.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065572, "dur":59, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065644, "dur":52, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.InternalAPIEngineBridge.001.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065642, "dur":54, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.InternalAPIEngineBridge.001.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065709, "dur":238, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\UnityEngine.UI.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065708, "dur":239, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/UnityEngine.UI.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065965, "dur":73, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674065963, "dur":75, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674066054, "dur":365, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.TextMeshPro.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674066053, "dur":367, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.TextMeshPro.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674066866, "dur":3016, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Assembly-CSharp.dll" }}
+,{ "pid":12345, "tid":2, "ts":1721792674069904, "dur":4668, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets0.assets" }}
+,{ "pid":12345, "tid":2, "ts":1721792674074597, "dur":3345, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/globalgamemanagers.assets" }}
+,{ "pid":12345, "tid":2, "ts":1721792674077953, "dur":103028, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674060132, "dur":3031, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674063167, "dur":211, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674063378, "dur":251, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674063630, "dur":1455, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065248, "dur":156, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065436, "dur":276, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Shaders.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065435, "dur":278, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065726, "dur":74, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Tilemap.Extras.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065725, "dur":76, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.2D.Tilemap.Extras.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065816, "dur":505, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Core.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674065814, "dur":508, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.VisualScripting.Core.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674066338, "dur":269, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674066337, "dur":271, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.VisualScripting.Flow.dll" }}
+,{ "pid":12345, "tid":3, "ts":1721792674066858, "dur":4963, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets2.assets.resS" }}
+,{ "pid":12345, "tid":3, "ts":1721792674071842, "dur":2265, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/resources.assets" }}
+,{ "pid":12345, "tid":3, "ts":1721792674074130, "dur":3152, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/level0" }}
+,{ "pid":12345, "tid":3, "ts":1721792674077292, "dur":103675, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674060101, "dur":3052, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674063158, "dur":253, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674063411, "dur":205, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674063616, "dur":2706, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674066334, "dur":181, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721792674066323, "dur":193, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":4, "ts":1721792674066865, "dur":2345, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets3.assets" }}
+,{ "pid":12345, "tid":4, "ts":1721792674069238, "dur":2320, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets1.assets" }}
+,{ "pid":12345, "tid":4, "ts":1721792674071637, "dur":279, "ph":"X", "name": "EmitNodeStart",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":4, "ts":1721792674071929, "dur":916, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Resources/unity_builtin_extra" }}
+,{ "pid":12345, "tid":4, "ts":1721792674072865, "dur":4403, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/level2" }}
+,{ "pid":12345, "tid":4, "ts":1721792674077279, "dur":103686, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721792674060178, "dur":3009, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721792674063189, "dur":311, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721792674063501, "dur":1625, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065133, "dur":81, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"D:\\Unity\\2022.3.29f1\\Editor\\Data\\PlaybackEngines\\WindowsStandaloneSupport\\Variations\\win64_player_nondevelopment_mono\\MonoBleedingEdge\\etc\\mono\\mconfig\\config.xml" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065127, "dur":88, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/MonoBleedingEdge/etc/mono/mconfig/config.xml" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065263, "dur":552, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"Temp\\StagingArea\\WindowsPlayer.exe" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065262, "dur":554, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm.exe" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065835, "dur":308, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Burst.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721792674065834, "dur":309, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.Burst.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721792674066162, "dur":215, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.SpriteShape.Runtime.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721792674066160, "dur":218, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.2D.SpriteShape.Runtime.dll" }}
+,{ "pid":12345, "tid":5, "ts":1721792674066697, "dur":202, "ph":"X", "name": "OutputFilesMissingFor",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":5, "ts":1721792674066915, "dur":2298, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets2.assets" }}
+,{ "pid":12345, "tid":5, "ts":1721792674069238, "dur":2896, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets0.resource" }}
+,{ "pid":12345, "tid":5, "ts":1721792674072201, "dur":5015, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/level3" }}
+,{ "pid":12345, "tid":5, "ts":1721792674077248, "dur":907, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/globalgamemanagers" }}
+,{ "pid":12345, "tid":5, "ts":1721792674078165, "dur":102820, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721792674060169, "dur":3012, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721792674063184, "dur":334, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721792674063519, "dur":1563, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065447, "dur":180, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Timeline.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065446, "dur":182, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.Timeline.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065642, "dur":111, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Common.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065641, "dur":113, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.2D.Common.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065771, "dur":109, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.Animation.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065770, "dur":111, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.2D.Animation.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065895, "dur":750, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674065893, "dur":753, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll" }}
+,{ "pid":12345, "tid":6, "ts":1721792674066964, "dur":4632, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets2.resource" }}
+,{ "pid":12345, "tid":6, "ts":1721792674071648, "dur":7147, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/resources.resource" }}
+,{ "pid":12345, "tid":6, "ts":1721792674078808, "dur":102155, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721792674060207, "dur":2989, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721792674063198, "dur":393, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721792674063591, "dur":1594, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":7, "ts":1721792674065441, "dur":625, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Mathematics.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674065440, "dur":627, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.Mathematics.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674066086, "dur":60, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.PixelPerfect.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674066085, "dur":62, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.2D.PixelPerfect.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674066164, "dur":384, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674066163, "dur":386, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"CopyFiles E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/Managed/Unity.Collections.dll" }}
+,{ "pid":12345, "tid":7, "ts":1721792674066857, "dur":2653, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets3.assets.resS" }}
+,{ "pid":12345, "tid":7, "ts":1721792674069535, "dur":4132, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets0.assets.resS" }}
+,{ "pid":12345, "tid":7, "ts":1721792674073698, "dur":528, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/level1" }}
+,{ "pid":12345, "tid":7, "ts":1721792674074274, "dur":5568, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/globalgamemanagers.assets.resS" }}
+,{ "pid":12345, "tid":7, "ts":1721792674079852, "dur":101114, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721792674060232, "dur":3051, "ph":"X", "name": "FirstLock",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721792674063283, "dur":236, "ph":"X", "name": "EarlyStatNonGeneratedFile",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721792674063520, "dur":1564, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":8, "ts":1721792674065317, "dur":147, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Assembly-CSharp.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674065465, "dur":73, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.2D.IK.Runtime.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674065539, "dur":441, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.Runtime.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674065981, "dur":59, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Universal.Config.Runtime.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674066042, "dur":360, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.VisualScripting.Flow.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674066403, "dur":55, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.RenderPipelines.Core.ShaderLibrary.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674066459, "dur":226, "ph":"X", "name": "ComputeFileSignatureSha1",  "args": { "detail":"E:\\Game-Projects\\Fun-Farm\\Project\\Library\\Bee\\PlayerScriptAssemblies\\Unity.Collections.dll" }}
+,{ "pid":12345, "tid":8, "ts":1721792674065089, "dur":1704, "ph":"X", "name": "CheckInputSignature",  "args": { "detail":"GenerateNativePluginsForAssemblies Library/Bee/artifacts/WinPlayerBuildProgram/AsyncPluginsFromLinker" }}
+,{ "pid":12345, "tid":8, "ts":1721792674067068, "dur":4583, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/sharedassets1.assets.resS" }}
+,{ "pid":12345, "tid":8, "ts":1721792674071694, "dur":5564, "ph":"X", "name": "CopyFiles",  "args": { "detail":"E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm_Data/resources.assets.resS" }}
+,{ "pid":12345, "tid":8, "ts":1721792674077266, "dur":103721, "ph":"X", "name": "WaitingForWork", "cname":"thread_state_sleeping",  "args": { "detail":"" }}
+,{ "pid":12345, "tid":0, "ts":1721792674185660, "dur":434, "ph":"X", "name": "ProfilerWriteOutput" }
 ,

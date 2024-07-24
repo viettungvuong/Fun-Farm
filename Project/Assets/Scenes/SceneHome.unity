@@ -4796,7 +4796,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1384743696645888842, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
@@ -4804,7 +4804,7 @@ PrefabInstance:
       objectReference: {fileID: 4413121495220917546}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: price
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6257552806582056933, guid: 396b07aacd5f34fb6b35cc809bd0578b, type: 3}
       propertyPath: bulletPanel
@@ -11063,7 +11063,7 @@ MonoBehaviour:
   currentHour: 6
   currentMinute: 0
   currentDay: 1
-  updateIntervalSeconds: 2.5
+  updateIntervalSeconds: 2
   timeText: {fileID: 330589925}
   dayText: {fileID: 1573718404}
 --- !u!114 &1635994932

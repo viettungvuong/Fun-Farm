@@ -265,6 +265,66 @@ ScriptsOnlyBuild:
     fullTypeName: PlantButton
     methodName: ChoosePlant
   - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
     fullTypeName: GunButton
     methodName: ChooseGun
   - assembly: Assembly-CSharp
@@ -291,66 +351,6 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: GunButton
     methodName: ChooseGun
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
   - assembly: Unity.RenderPipelines.Core.Runtime
     fullTypeName: UnityEngine.Rendering.UI.DebugUIHandlerButton
     methodName: OnAction
@@ -439,53 +439,14 @@ ScriptsOnlyBuild:
     fullTypeName: PlantButton
     methodName: ChoosePlant
   - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
+    fullTypeName: PlantButton
+    methodName: ChoosePlant
   - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
+    fullTypeName: PlantButton
+    methodName: ChoosePlant
   - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
-  - assembly: Assembly-CSharp
-    fullTypeName: FoodButton
-    methodName: ChooseFood
+    fullTypeName: PlantButton
+    methodName: ChoosePlant
   - assembly: Assembly-CSharp
     fullTypeName: PlantButton
     methodName: ChoosePlant
@@ -523,14 +484,53 @@ ScriptsOnlyBuild:
     fullTypeName: PlantButton
     methodName: ChoosePlant
   - assembly: Assembly-CSharp
-    fullTypeName: PlantButton
-    methodName: ChoosePlant
+    fullTypeName: FoodButton
+    methodName: ChooseFood
   - assembly: Assembly-CSharp
-    fullTypeName: PlantButton
-    methodName: ChoosePlant
+    fullTypeName: FoodButton
+    methodName: ChooseFood
   - assembly: Assembly-CSharp
-    fullTypeName: PlantButton
-    methodName: ChoosePlant
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
+  - assembly: Assembly-CSharp
+    fullTypeName: FoodButton
+    methodName: ChooseFood
   - assembly: Assembly-CSharp
     fullTypeName: PlantButton
     methodName: ChoosePlant
@@ -666,29 +666,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 7126}
     - Class: 114
-      Script: {instanceID: 7280}
+      Script: {instanceID: 7246}
     - Class: 114
-      Script: {instanceID: 7616}
+      Script: {instanceID: 7282}
     - Class: 114
-      Script: {instanceID: 7638}
+      Script: {instanceID: 7618}
     - Class: 114
-      Script: {instanceID: 7806}
+      Script: {instanceID: 7640}
     - Class: 114
-      Script: {instanceID: 7976}
+      Script: {instanceID: 7808}
     - Class: 114
-      Script: {instanceID: 8074}
+      Script: {instanceID: 7978}
     - Class: 114
-      Script: {instanceID: 8340}
+      Script: {instanceID: 8076}
     - Class: 114
-      Script: {instanceID: 8522}
+      Script: {instanceID: 8342}
     - Class: 114
-      Script: {instanceID: 8730}
+      Script: {instanceID: 8524}
     - Class: 114
-      Script: {instanceID: 8858}
+      Script: {instanceID: 8732}
     - Class: 114
-      Script: {instanceID: 8948}
+      Script: {instanceID: 8860}
     - Class: 114
-      Script: {instanceID: 8980}
+      Script: {instanceID: 8950}
     - Class: 114
       Script: {instanceID: 9100}
     - Class: 114
@@ -901,25 +901,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 7126}
     - Class: 114
-      Script: {instanceID: 7280}
+      Script: {instanceID: 7282}
     - Class: 114
-      Script: {instanceID: 7616}
+      Script: {instanceID: 7618}
     - Class: 114
-      Script: {instanceID: 7958}
+      Script: {instanceID: 7960}
     - Class: 114
-      Script: {instanceID: 8022}
+      Script: {instanceID: 8024}
     - Class: 114
-      Script: {instanceID: 8156}
+      Script: {instanceID: 8158}
     - Class: 114
-      Script: {instanceID: 8340}
+      Script: {instanceID: 8342}
     - Class: 114
-      Script: {instanceID: 8522}
+      Script: {instanceID: 8524}
     - Class: 114
-      Script: {instanceID: 8730}
+      Script: {instanceID: 8732}
     - Class: 114
-      Script: {instanceID: 8858}
+      Script: {instanceID: 8860}
     - Class: 114
-      Script: {instanceID: 8948}
+      Script: {instanceID: 8950}
     - Class: 114
       Script: {instanceID: 9156}
     - Class: 114
@@ -1038,11 +1038,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 832}
     - Class: 114
-      Script: {instanceID: 8160}
+      Script: {instanceID: 8162}
     - Class: 114
-      Script: {instanceID: 8340}
+      Script: {instanceID: 8342}
     - Class: 114
-      Script: {instanceID: 8858}
+      Script: {instanceID: 8860}
     - Class: 114
       Script: {instanceID: 10412}
     - Class: 114
@@ -1107,11 +1107,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5604}
     - Class: 114
-      Script: {instanceID: 8340}
+      Script: {instanceID: 8342}
     - Class: 114
-      Script: {instanceID: 8522}
+      Script: {instanceID: 8524}
     - Class: 114
-      Script: {instanceID: 8858}
+      Script: {instanceID: 8860}
     - Class: 114
       Script: {instanceID: 9008}
     - Class: 114
@@ -2127,6 +2127,12 @@ ScriptsOnlyBuild:
     className: Volume
   - hash:
       serializedVersion: 2
+      Hash: 4159e0c2dbe00201902ea68b3de86865
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: BuyLand
+  - hash:
+      serializedVersion: 2
       Hash: 4257952ad3e18bcaa996a4d76c12570c
     assemblyName: Assembly-CSharp
     namespaceName: 
@@ -2425,12 +2431,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: VariablesAsset
-  - hash:
-      serializedVersion: 2
-      Hash: 8062daa080db26780adb58c7225f25fe
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TimeManage
   - hash:
       serializedVersion: 2
       Hash: 426a56a845445951d72d54f0b1ddfd71
@@ -3057,14 +3057,14 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 4159e0c2dbe00201902ea68b3de86865
+      Hash: 8062daa080db26780adb58c7225f25fe
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: BuyLand
+    className: TimeManage
   platform: 19
   scenePathNames:
   - Assets/Scenes/SceneInstructions.unity
   - Assets/Scenes/SceneWelcome.unity
   - Assets/Scenes/SceneHome.unity
   - Assets/Scenes/SceneVillage.unity
-  playerPath: E:/Game-Projects/Fun-Farm/Build/Fun Farm.exe
+  playerPath: E:/Game-Projects/Fun-Farm/BuildHack/Fun Farm.exe
